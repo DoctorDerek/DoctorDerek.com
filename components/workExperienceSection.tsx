@@ -18,62 +18,14 @@ const WorkExperienceSection = () => {
   const workExperienceList = {
     firstSlide: [
       {
-        duration: "01/2023 - Present",
-        position: "Senior Full-Stack Developer",
-        company: "Premium",
-      },
-      {
         duration: "06/2001 - Present",
-        position: "Front-End Developer",
+        position: "Full-stack Software Engineer",
         company: "Freelance",
       },
-      {
-        duration: "08/2019 - Present",
-        position: "React Technical Writer (JavaScript)",
-        company: "Medium",
-      },
     ],
-    secondSlide: [
-      {
-        duration: "09/2022 - 12/2022",
-        position: "Lead Front-End Engineer",
-        company: "Gemini Sports Analytics",
-      },
-      {
-        duration: "05/2022 - 08/2022",
-        position: "Developer Advocate (React)",
-        company: "Propel Data Cloud",
-      },
-      {
-        duration: "11/2021 - 05/2022",
-        position: "Senior Lead Platform Architect",
-        company: "Hilton",
-      },
-    ],
-    thirdSlide: [
-      {
-        duration: "08/2021 - 11/2021",
-        position: "Marketing Technologist (React)",
-        company: "Loop",
-      },
-      {
-        duration: "10/2020 - 03/2021",
-        position: "Bootcamp Instructor (HTML)",
-        company: "Nucamp Coding Bootcamp",
-      },
-      {
-        duration: "04/2020 - 06/2020",
-        position: "Developer Advocate for Volt",
-        company: "Volusion",
-      },
-    ],
-    fourthSlide: [
-      {
-        duration: "09/2019 - 11/2019",
-        position: "Front-End Developer (React)",
-        company: "Brookbush Institute of Human Movement Science",
-      },
-    ],
+    secondSlide: [],
+    thirdSlide: [],
+    fourthSlide: [],
   }
   /**Displays work experience for large breakpoints */
   const combinedLists = workExperienceList.firstSlide.concat(

@@ -10,8 +10,7 @@
     "format": "prettier --write .",
     "test": "jest test --collectCoverage",
     "test:watch": "jest test --watch",
-    "test:watchAll": "jest test --watchAll",
-    "generateTypes": "graphql-codegen"
+    "test:watchAll": "jest test --watchAll"
   },
   "dependencies": {
     "@fullpage/react-fullpage": "^0.1.40",
@@ -31,10 +30,6 @@
     "xstate": "4.38.2"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "5.0.0",
-    "@graphql-codegen/typescript": "4.0.1",
-    "@graphql-codegen/typescript-operations": "4.0.1",
-    "@graphql-codegen/typescript-react-query": "4.1.0",
     "@testing-library/jest-dom": "6.1.3",
     "@testing-library/react": "14.0.0",
     "@types/node": "20.6.0",

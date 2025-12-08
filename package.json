@@ -16,7 +16,6 @@
     "@fullpage/react-fullpage": "^0.1.40",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "2.0.18",
-    "@rive-app/react-canvas": "^4.2.1",
     "keen-slider": "^6.8.6",
     "next": "^13.4.19",
     "react-dom": "^18.2.0",

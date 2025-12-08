@@ -5712,7 +5712,6 @@ __metadata:
     prettier: "npm:^3.0.3"
     prettier-plugin-tailwindcss: "npm:^0.5.4"
     react-dom: "npm:^18.2.0"
-    react-hook-form: "npm:7.46.1"
     react-parallax-tilt: "npm:^1.7.212"
     react-query: "npm:3.39.3"
     sharp: "npm:0.32.5"
@@ -6050,15 +6049,6 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/66dfc5f93e13d0674e78ef41f92ed21dfb80f9c4ac4ac25a4b51046d41d4d2186abc915b897f69d3d0ebbffe6184e7c5876f2af26bfa956f179225d921be713a
-  languageName: node
-  linkType: hard
-
-"react-hook-form@npm:7.46.1":
-  version: 7.46.1
-  resolution: "react-hook-form@npm:7.46.1"
-  peerDependencies:
-    react: ^16.8.0 || ^17 || ^18
-  checksum: 10c0/05377ee81083be98eef9fdb686c04f1309a3ca86a196d2aa48aa1bd0158ed54bbf8ab96bad19ef695dde8cd1a9b1e327ef35348fb30b496e0161da616154ff47
   languageName: node
   linkType: hard
 

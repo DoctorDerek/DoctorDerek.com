@@ -19,7 +19,6 @@
     "keen-slider": "^6.8.6",
     "next": "^13.4.19",
     "react-dom": "^18.2.0",
-    "react-hook-form": "7.46.1",
     "react-parallax-tilt": "^1.7.212",
     "react-query": "3.39.3",
     "sharp": "0.32.5",

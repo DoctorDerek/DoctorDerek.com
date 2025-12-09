@@ -1735,6 +1735,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"doctor-derek@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "doctor-derek@workspace:."
+  dependencies:
+    "@fullpage/react-fullpage": "npm:^0.1.40"
+    "@headlessui/react": "npm:^1.7.17"
+    "@heroicons/react": "npm:2.0.18"
+    "@tailwindcss/postcss": "npm:^4.1.17"
+    "@types/node": "npm:20.6.0"
+    "@types/react-dom": "npm:18.2.7"
+    eslint: "npm:9.39.1"
+    eslint-config-next: "npm:16.0.8"
+    eslint-config-prettier: "npm:10.1.8"
+    keen-slider: "npm:^6.8.6"
+    next: "npm:^13.4.19"
+    postcss: "npm:8.5.6"
+    prettier: "npm:^3.7.4"
+    prettier-plugin-tailwindcss: "npm:^0.7.2"
+    react-dom: "npm:^18.2.0"
+    react-parallax-tilt: "npm:^1.7.212"
+    sharp: "npm:0.32.5"
+    tailwindcss: "npm:^4.1.17"
+    typescript: "npm:5.2.2"
+    typewriter-effect: "npm:^2.21.0"
+  languageName: unknown
+  linkType: soft
+
 "doctrine@npm:^2.1.0":
   version: 2.1.0
   resolution: "doctrine@npm:2.1.0"
@@ -3913,7 +3940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.4, nanoid@npm:^3.3.6":
+"nanoid@npm:^3.3.4":
   version: 3.3.6
   resolution: "nanoid@npm:3.3.6"
   bin:
@@ -4308,33 +4335,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pokedex@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "pokedex@workspace:."
-  dependencies:
-    "@fullpage/react-fullpage": "npm:^0.1.40"
-    "@headlessui/react": "npm:^1.7.17"
-    "@heroicons/react": "npm:2.0.18"
-    "@tailwindcss/postcss": "npm:^4.1.17"
-    "@types/node": "npm:20.6.0"
-    "@types/react-dom": "npm:18.2.7"
-    eslint: "npm:9.39.1"
-    eslint-config-next: "npm:16.0.8"
-    eslint-config-prettier: "npm:10.1.8"
-    keen-slider: "npm:^6.8.6"
-    next: "npm:^13.4.19"
-    postcss: "npm:8.4.29"
-    prettier: "npm:^3.7.4"
-    prettier-plugin-tailwindcss: "npm:^0.7.2"
-    react-dom: "npm:^18.2.0"
-    react-parallax-tilt: "npm:^1.7.212"
-    sharp: "npm:0.32.5"
-    tailwindcss: "npm:^4.1.17"
-    typescript: "npm:5.2.2"
-    typewriter-effect: "npm:^2.21.0"
-  languageName: unknown
-  linkType: soft
-
 "possible-typed-array-names@npm:^1.0.0":
   version: 1.1.0
   resolution: "possible-typed-array-names@npm:1.1.0"
@@ -4353,18 +4353,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.4.29":
-  version: 8.4.29
-  resolution: "postcss@npm:8.4.29"
-  dependencies:
-    nanoid: "npm:^3.3.6"
-    picocolors: "npm:^1.0.0"
-    source-map-js: "npm:^1.0.2"
-  checksum: 10c0/b50b7ad4ac6c9ba029eda4381863570b7aed2672ffae2566ef109e556bae01823a51180409877ff2cce1fe186025751c7191c301eafc07b0d90c630ab5e0365c
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.4.41":
+"postcss@npm:8.5.6, postcss@npm:^8.4.41":
   version: 8.5.6
   resolution: "postcss@npm:8.5.6"
   dependencies:

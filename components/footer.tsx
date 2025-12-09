@@ -26,13 +26,13 @@ export default function Footer() {
                   id="email-address"
                   autoComplete="email"
                   required
-                  className="w-9/12 appearance-none border-0 bg-white px-3 py-1.5 text-base shadow-sm ring-1 ring-inset ring-white/10 placeholder:text-lg placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:w-64 sm:text-sm sm:leading-6 lg:w-3/5 lg:py-5 lg:pl-4"
+                  className="w-9/12 appearance-none border-0 bg-white px-3 py-1.5 text-base shadow-xs ring-1 ring-inset ring-white/10 placeholder:text-lg placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:w-64 sm:text-sm sm:leading-6 lg:w-3/5 lg:py-5 lg:pl-4"
                   placeholder="Your email address"
                 />
                 <div className="w-1/4 md:w-[40%] lg:w-1/4">
                   <button
                     type="submit"
-                    className="text-md w-full rounded-tr-2xl bg-[#311B4D] px-3 py-6 font-semibold text-[#FFE366] shadow-sm md:py-4 lg:py-5 lg:text-xl"
+                    className="text-md w-full rounded-tr-2xl bg-[#311B4D] px-3 py-6 font-semibold text-[#FFE366] shadow-xs md:py-4 lg:py-5 lg:text-xl"
                   >
                     Sign up
                   </button>

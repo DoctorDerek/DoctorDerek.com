@@ -26,7 +26,7 @@ export default function Navbar() {
   return (
     <div className="h-[7vh] md:h-0">
       {/* ======== NAVBAR ======= */}
-      <div className="sticky top-0 z-40 flex h-full bg-[#FFE366] shadow-sm sm:gap-x-6 sm:px-6 md:h-screen md:w-14 md:px-0">
+      <div className="sticky top-0 z-40 flex h-full bg-[#FFE366] shadow-xs sm:gap-x-6 sm:px-6 md:h-screen md:w-14 md:px-0">
         <div className="flex w-full md:flex-col">
           <div className="w-1/4 pl-3 pt-3 md:order-2 md:h-[40vh] md:w-full md:pl-0 md:pt-0">
             <Link href="/" className="md:block md:h-1/2 md:w-full md:pt-4">

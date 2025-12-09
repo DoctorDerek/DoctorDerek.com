@@ -74,7 +74,7 @@ function DisplaySections({
 }: {
   sections: StaticImageData[]
   /** The aspect ratio of the images, i.e. desktop | mobile */
-  aspect: "aspect-[5760/3200]" | "aspect-[1500/2668]"
+  aspect: "aspect-5760/3200" | "aspect-1500/2668"
 }) {
   return (
     <ReactFullpage
@@ -181,7 +181,7 @@ export default function Home() {
       {width < 768 && (
         <DisplaySections
           sections={MobileSections}
-          aspect="aspect-[1500/2668]"
+          aspect="aspect-1500/2668"
         />
       )}
       {width >= 768 && <MedLrgDevices />}

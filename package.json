@@ -7,10 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write .",
-    "test": "jest test --collectCoverage",
-    "test:watch": "jest test --watch",
-    "test:watchAll": "jest test --watchAll"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@fullpage/react-fullpage": "^0.1.40",

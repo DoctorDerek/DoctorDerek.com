@@ -998,6 +998,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react@npm:19.2.7":
+  version: 19.2.7
+  resolution: "@types/react@npm:19.2.7"
+  dependencies:
+    csstype: "npm:^3.2.2"
+  checksum: 10c0/a7b75f1f9fcb34badd6f84098be5e35a0aeca614bc91f93d2698664c0b2ba5ad128422bd470ada598238cebe4f9e604a752aead7dc6f5a92261d0c7f9b27cfd1
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:8.49.0":
   version: 8.49.0
   resolution: "@typescript-eslint/eslint-plugin@npm:8.49.0"
@@ -1574,6 +1583,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"csstype@npm:^3.2.2":
+  version: 3.2.3
+  resolution: "csstype@npm:3.2.3"
+  checksum: 10c0/cd29c51e70fa822f1cecd8641a1445bed7063697469d35633b516e60fe8c1bde04b08f6c5b6022136bb669b64c63d4173af54864510fbb4ee23281801841a3ce
+  languageName: node
+  linkType: hard
+
 "damerau-levenshtein@npm:^1.0.8":
   version: 1.0.8
   resolution: "damerau-levenshtein@npm:1.0.8"
@@ -1702,6 +1718,7 @@ __metadata:
     "@heroicons/react": "npm:2.0.18"
     "@tailwindcss/postcss": "npm:^4.1.17"
     "@types/node": "npm:24.10.2"
+    "@types/react": "npm:19.2.7"
     "@types/react-dom": "npm:19.2.3"
     eslint: "npm:9.39.1"
     eslint-config-next: "npm:16.0.8"
@@ -1711,6 +1728,7 @@ __metadata:
     postcss: "npm:8.5.6"
     prettier: "npm:^3.7.4"
     prettier-plugin-tailwindcss: "npm:^0.7.2"
+    react: "npm:^19.2.1"
     react-dom: "npm:^19.2.1"
     react-parallax-tilt: "npm:^1.7.212"
     sharp: "npm:0.34.5"
@@ -4002,6 +4020,13 @@ __metadata:
     react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/c5b6d911c2d37f835c99bd6bbdeeb1ef168003f720ecdc3caf80857f8f67ec325d9d7baaef60156fabe5cf5f741ad9aa98c92088e35b901e38ecda87a72fd38b
+  languageName: node
+  linkType: hard
+
+"react@npm:^19.2.1":
+  version: 19.2.1
+  resolution: "react@npm:19.2.1"
+  checksum: 10c0/2b5eaf407abb3db84090434c20d6c5a8e447ab7abcd8fe9eaf1ddc299babcf31284ee9db7ea5671d21c85ac5298bd632fa1a7da1ed78d5b368a537f5e1cd5d62
   languageName: node
   linkType: hard
 

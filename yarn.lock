@@ -365,7 +365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fullpage/react-fullpage@npm:^0.1.49":
+"@fullpage/react-fullpage@npm:^0":
   version: 0.1.49
   resolution: "@fullpage/react-fullpage@npm:0.1.49"
   dependencies:
@@ -375,7 +375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@headlessui/react@npm:^2.2.9":
+"@headlessui/react@npm:^2":
   version: 2.2.9
   resolution: "@headlessui/react@npm:2.2.9"
   dependencies:
@@ -391,7 +391,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@heroicons/react@npm:2.2.0":
+"@heroicons/react@npm:^2":
   version: 2.2.0
   resolution: "@heroicons/react@npm:2.2.0"
   peerDependencies:
@@ -1095,7 +1095,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/postcss@npm:^4.1.17":
+"@tailwindcss/postcss@npm:^4":
   version: 4.1.17
   resolution: "@tailwindcss/postcss@npm:4.1.17"
   dependencies:
@@ -1157,16 +1157,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:24.10.2":
-  version: 24.10.2
-  resolution: "@types/node@npm:24.10.2"
+"@types/node@npm:^24":
+  version: 24.10.3
+  resolution: "@types/node@npm:24.10.3"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/560c894e1a9bf7468718ceca8cd520361fd0d3fcc0b020c2f028fc722b28b5b56aecd16736a9b753d52a14837c066cf23480a8582ead59adc63a7e4333bc976c
+  checksum: 10c0/58ddaf9ce3dd9d3aa55f7dfacb7b8f16481ad64a47b99f1890fa3d4498d1958def78699838f422c0a81851d6be8b9de7ffc344435a60abcf02c0e2c085008b20
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:19.2.3":
+"@types/react-dom@npm:^19":
   version: 19.2.3
   resolution: "@types/react-dom@npm:19.2.3"
   peerDependencies:
@@ -1175,7 +1175,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:19.2.7":
+"@types/react@npm:^19":
   version: 19.2.7
   resolution: "@types/react@npm:19.2.7"
   dependencies:
@@ -1666,11 +1666,11 @@ __metadata:
   linkType: hard
 
 "baseline-browser-mapping@npm:^2.9.0":
-  version: 2.9.5
-  resolution: "baseline-browser-mapping@npm:2.9.5"
+  version: 2.9.6
+  resolution: "baseline-browser-mapping@npm:2.9.6"
   bin:
     baseline-browser-mapping: dist/cli.js
-  checksum: 10c0/581bd4f578a1b5ccd48ad0155f760c412803f02e97259deec99150b87c95766266b607b09aefa65da96dc5b925165706d675f10413630e767391e26a4f7afcdf
+  checksum: 10c0/9d9bae544342c02200e0a489d4caf3611a2a517d0d7a8c97e1dd7d640ac18d2784710bf08375b5951fb9034bd18d902b50797d90218a33b88e6244ae917f881f
   languageName: node
   linkType: hard
 
@@ -1943,28 +1943,29 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "doctor-derek@workspace:."
   dependencies:
-    "@fullpage/react-fullpage": "npm:^0.1.49"
-    "@headlessui/react": "npm:^2.2.9"
-    "@heroicons/react": "npm:2.2.0"
-    "@tailwindcss/postcss": "npm:^4.1.17"
-    "@types/node": "npm:24.10.2"
-    "@types/react": "npm:19.2.7"
-    "@types/react-dom": "npm:19.2.3"
-    eslint: "npm:9.39.1"
-    eslint-config-next: "npm:16.0.8"
-    eslint-config-prettier: "npm:10.1.8"
-    keen-slider: "npm:^6.8.6"
-    next: "npm:^16.0.8"
-    postcss: "npm:8.5.6"
-    prettier: "npm:^3.7.4"
-    prettier-plugin-tailwindcss: "npm:^0.7.2"
-    react: "npm:^19.2.1"
-    react-dom: "npm:^19.2.1"
-    react-parallax-tilt: "npm:^1.7.315"
-    sharp: "npm:0.34.5"
-    tailwindcss: "npm:^4.1.17"
-    typescript: "npm:5.9.3"
-    typewriter-effect: "npm:^2.22.0"
+    "@fullpage/react-fullpage": "npm:^0"
+    "@headlessui/react": "npm:^2"
+    "@heroicons/react": "npm:^2"
+    "@tailwindcss/postcss": "npm:^4"
+    "@types/node": "npm:^24"
+    "@types/react": "npm:^19"
+    "@types/react-dom": "npm:^19"
+    eslint: "npm:^9"
+    eslint-config-next: "npm:^16"
+    eslint-config-prettier: "npm:^10"
+    keen-slider: "npm:^6"
+    motion: "npm:^12"
+    next: "npm:^16"
+    postcss: "npm:^8"
+    prettier: "npm:^3"
+    prettier-plugin-tailwindcss: "npm:^0"
+    react: "npm:^19"
+    react-dom: "npm:^19"
+    react-parallax-tilt: "npm:^1"
+    sharp: "npm:^0"
+    tailwindcss: "npm:^4"
+    typescript: "npm:^5"
+    typewriter-effect: "npm:^2"
   languageName: unknown
   linkType: soft
 
@@ -2167,7 +2168,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:16.0.8":
+"eslint-config-next@npm:^16":
   version: 16.0.8
   resolution: "eslint-config-next@npm:16.0.8"
   dependencies:
@@ -2190,7 +2191,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:10.1.8":
+"eslint-config-prettier@npm:^10":
   version: 10.1.8
   resolution: "eslint-config-prettier@npm:10.1.8"
   peerDependencies:
@@ -2369,7 +2370,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:9.39.1":
+"eslint@npm:^9":
   version: 9.39.1
   resolution: "eslint@npm:9.39.1"
   dependencies:
@@ -2567,6 +2568,28 @@ __metadata:
   dependencies:
     is-callable: "npm:^1.2.7"
   checksum: 10c0/0e0b50f6a843a282637d43674d1fb278dda1dd85f4f99b640024cfb10b85058aac0cc781bf689d5fe50b4b7f638e91e548560723a4e76e04fe96ae35ef039cee
+  languageName: node
+  linkType: hard
+
+"framer-motion@npm:^12.23.26":
+  version: 12.23.26
+  resolution: "framer-motion@npm:12.23.26"
+  dependencies:
+    motion-dom: "npm:^12.23.23"
+    motion-utils: "npm:^12.23.6"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/7dbbc4a392b969804e04a056e3d89a55bf31572dc7f6cd79050b90616fbb84a1762e4ac4e2537c735d347bbf4ceebea126f5c090234149b12cffa3ea6c518a34
   languageName: node
   linkType: hard
 
@@ -3200,7 +3223,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"keen-slider@npm:^6.8.6":
+"keen-slider@npm:^6":
   version: 6.8.6
   resolution: "keen-slider@npm:6.8.6"
   checksum: 10c0/612553f15c5af61bf23f5defe414e7d314406a109e2d944c4253f7862e3666f2ab9bae0e43bf84f41678878ca1d90d38831845bb496dfd747ed84efc7d34efdd
@@ -3456,6 +3479,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"motion-dom@npm:^12.23.23":
+  version: 12.23.23
+  resolution: "motion-dom@npm:12.23.23"
+  dependencies:
+    motion-utils: "npm:^12.23.6"
+  checksum: 10c0/139705731085063519b88f23fcc5b1c13e15707a4ff3365da02ef9a4bf2a2d8ebed9a151c57e7f215ccd9e822365d93c16e28e619fbf25611f61dcff5ee81d75
+  languageName: node
+  linkType: hard
+
+"motion-utils@npm:^12.23.6":
+  version: 12.23.6
+  resolution: "motion-utils@npm:12.23.6"
+  checksum: 10c0/c058e8ba6423b3baa63e985bcc669877ee7d9579d938f5348b4e60c5ea1b4b33dd7f4877434436a4a5807f3cf00370d3fd4079a6fdd6309c5c87aa62b311a897
+  languageName: node
+  linkType: hard
+
+"motion@npm:^12":
+  version: 12.23.26
+  resolution: "motion@npm:12.23.26"
+  dependencies:
+    framer-motion: "npm:^12.23.26"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/80ac9c2caaa149fb6feaad4146294b304dda52a643360063eb7a672bf7e7c8e134ec201ddcfafc0a918113004aed939ddbacf546b0e2297ea23955c78235c497
+  languageName: node
+  linkType: hard
+
 "ms@npm:^2.1.1, ms@npm:^2.1.3":
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
@@ -3488,7 +3548,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^16.0.8":
+"next@npm:^16":
   version: 16.0.8
   resolution: "next@npm:16.0.8"
   dependencies:
@@ -3755,7 +3815,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:8.5.6, postcss@npm:^8.4.41":
+"postcss@npm:^8, postcss@npm:^8.4.41":
   version: 8.5.6
   resolution: "postcss@npm:8.5.6"
   dependencies:
@@ -3773,7 +3833,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-tailwindcss@npm:^0.7.2":
+"prettier-plugin-tailwindcss@npm:^0":
   version: 0.7.2
   resolution: "prettier-plugin-tailwindcss@npm:0.7.2"
   peerDependencies:
@@ -3831,7 +3891,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.7.4":
+"prettier@npm:^3":
   version: 3.7.4
   resolution: "prettier@npm:3.7.4"
   bin:
@@ -3874,7 +3934,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^19.2.1":
+"react-dom@npm:^19":
   version: 19.2.1
   resolution: "react-dom@npm:19.2.1"
   dependencies:
@@ -3892,7 +3952,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-parallax-tilt@npm:^1.7.315":
+"react-parallax-tilt@npm:^1":
   version: 1.7.315
   resolution: "react-parallax-tilt@npm:1.7.315"
   peerDependencies:
@@ -3902,7 +3962,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^19.2.1":
+"react@npm:^19":
   version: 19.2.1
   resolution: "react@npm:19.2.1"
   checksum: 10c0/2b5eaf407abb3db84090434c20d6c5a8e447ab7abcd8fe9eaf1ddc299babcf31284ee9db7ea5671d21c85ac5298bd632fa1a7da1ed78d5b368a537f5e1cd5d62
@@ -4124,7 +4184,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharp@npm:0.34.5, sharp@npm:^0.34.4":
+"sharp@npm:^0, sharp@npm:^0.34.4":
   version: 0.34.5
   resolution: "sharp@npm:0.34.5"
   dependencies:
@@ -4429,7 +4489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:4.1.17, tailwindcss@npm:^4.1.17":
+"tailwindcss@npm:4.1.17, tailwindcss@npm:^4":
   version: 4.1.17
   resolution: "tailwindcss@npm:4.1.17"
   checksum: 10c0/1fecf618ba9895e068e5a6d842b978f56a815bc849a28338cebbcb07b13df763715c2f8848def938403c73d59f08ffff33a4b83a977a9e38fa56adc60d1d56c8
@@ -4567,7 +4627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.9.3":
+"typescript@npm:^5":
   version: 5.9.3
   resolution: "typescript@npm:5.9.3"
   bin:
@@ -4577,7 +4637,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5#optional!builtin<compat/typescript>":
   version: 5.9.3
   resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
@@ -4587,7 +4647,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typewriter-effect@npm:^2.22.0":
+"typewriter-effect@npm:^2":
   version: 2.22.0
   resolution: "typewriter-effect@npm:2.22.0"
   dependencies:

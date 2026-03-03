@@ -19,7 +19,9 @@
     showLineNumbers: false,
     truncateBase64: false,
     copyToClipboard: false,
-    includeEmptyDirectories: false,
+    // Include full directory structure (full file list) including excluded:
+    includeFullDirectoryStructure: true,
+    includeEmptyDirectories: true,
     git: {
       sortByChanges: true,
       sortByChangesMaxCommits: 100,

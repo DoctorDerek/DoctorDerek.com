@@ -19,7 +19,7 @@
     showLineNumbers: false,
     truncateBase64: false,
     copyToClipboard: false,
-    // Include full directory structure (full file list) including excluded:
+    // Include full directory structure for reference (but not full file list):
     includeFullDirectoryStructure: true,
     includeEmptyDirectories: true,
     git: {

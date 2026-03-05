@@ -39,6 +39,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:9.39.2"],\
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
+          ["jiti", "npm:2.6.1"],\
           ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
@@ -2537,6 +2538,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:9.39.2"],\
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
+          ["jiti", "npm:2.6.1"],\
           ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
@@ -2816,7 +2818,7 @@ const RAW_RUNTIME_STATE =
           ["ignore", "npm:5.3.2"],\
           ["imurmurhash", "npm:0.1.4"],\
           ["is-glob", "npm:4.0.3"],\
-          ["jiti", null],\
+          ["jiti", "npm:2.6.1"],\
           ["json-stable-stringify-without-jsonify", "npm:1.0.1"],\
           ["lodash.merge", "npm:4.6.2"],\
           ["minimatch", "npm:3.1.2"],\

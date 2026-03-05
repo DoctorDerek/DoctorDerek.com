@@ -33,9 +33,9 @@ const IntroSection = () => {
   return (
     <div className="yw-bg-img flex h-[90vh] flex-col md:h-screen">
       <div className="mx-auto w-4/5 pt-4 md:w-[90%]">
-        <div className="text-3xl text-[#FB70AA] md:text-5xl lg:text-7xl">
+        <p className="text-3xl text-[#FB70AA] md:text-5xl lg:text-7xl">
           <Typewriter />
-        </div>
+        </p>
       </div>
       {/* ========= ICON LINKS ============ */}
       <div className="mx-auto mt-auto w-4/5 pt-4 md:w-[90%] lg:mb-8">

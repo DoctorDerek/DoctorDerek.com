@@ -1,4 +1,6 @@
 import ReactFullpage from "@fullpage/react-fullpage"
+import Image, { StaticImageData } from "next/image"
+import { useEffect, useState } from "react"
 import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/aboutSection"
 import WorkExperienceSection from "@/components/workExperienceSection"

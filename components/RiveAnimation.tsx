@@ -1,13 +1,18 @@
-import dynamic from "next/dynamic"
-import { useState } from "react"
-
-const Rive = dynamic(
-  () => import("@rive-app/react-canvas").then((mod) => mod.default),
-  { ssr: false },
-)
+import React, { useState } from "react"
+import { useRive, Layout, Fit, Alignment } from "@rive-app/react-canvas"
 
 export default function RiveAnimation() {
   const [hasError, setHasError] = useState(false)
+
+  const { RiveComponent } = useRive({
+    src: "/animation.riv",
+    autoplay: true,
+    layout: new Layout({
+      fit: Fit.Cover,
+      alignment: Alignment.Center,
+    }),
+    onLoadError: () => setHasError(true),
+  })
 
   if (hasError) {
     return (
@@ -21,12 +26,7 @@ export default function RiveAnimation() {
 
   return (
     <div className="pointer-events-none absolute inset-0 z-10 h-full w-full">
-      <Rive
-        src="/animation.riv"
-        className="h-full w-full"
-        // @ts-expect-error onLoadError is not in the types but exists in the component
-        onLoadError={() => setHasError(true)}
-      />
+      <RiveComponent className="h-full w-full" />
     </div>
   )
 }

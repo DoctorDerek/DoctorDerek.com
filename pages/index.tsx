@@ -37,7 +37,11 @@ import PostsSection from "@/components/PostsSection"
 import SectionContainer from "@/components/sectionContainer"
 import TopSection from "@/components/TopSection"
 import MedLrgDevices from "@/components/medLrgDevices"
-import RiveAnimation from "@/components/RiveAnimation"
+import dynamic from "next/dynamic"
+
+const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
+  ssr: false,
+})
 
 const DesktopSections = [
   D0_Intro_Animation,

@@ -13,6 +13,7 @@
     "@fullpage/react-fullpage": "^0",
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
+    "@rive-app/react-canvas": "^4.27.0",
     "keen-slider": "^6",
     "motion": "^12",
     "next": "^16",

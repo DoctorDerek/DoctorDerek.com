@@ -47,6 +47,7 @@ export default function NavIcons({
       <a
         href="https://www.linkedin.com/in/derek-austin/"
         target="_blank"
+        rel="noopener noreferrer"
         className="flex items-center"
       >
         <svg
@@ -88,6 +89,7 @@ export default function NavIcons({
       <a
         href="https://github.com/DoctorDerek"
         target="_blank"
+        rel="noopener noreferrer"
         className="flex items-center"
       >
         <svg
@@ -110,6 +112,7 @@ export default function NavIcons({
       <a
         href="https://doctorderek.medium.com/"
         target="_blank"
+        rel="noopener noreferrer"
         className="flex items-center"
       >
         <svg
@@ -132,6 +135,7 @@ export default function NavIcons({
       <a
         href="https://www.amazon.com/dp/B0BRJDLJ43"
         target="_blank"
+        rel="noopener noreferrer"
         className="flex items-center"
       >
         <svg

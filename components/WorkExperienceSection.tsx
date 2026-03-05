@@ -3,13 +3,13 @@ import Image from "next/image"
 import codeIcon from "images/codeIcon.svg"
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
-import EmailIcon from "./emailIcon"
-import LinkedinIcon from "./linkedinIcon"
-import ResumeIcon from "./resumeIcon"
-import GithubIcon from "./githubIcon"
-import MediumIcon from "./mediumIcon"
-import BookLinkIcon from "./bookLinkIcon"
-import WorkExpSlider from "./workExpSlider"
+import EmailIcon from "./EmailIcon"
+import LinkedinIcon from "./LinkedinIcon"
+import ResumeIcon from "./ResumeIcon"
+import GithubIcon from "./GithubIcon"
+import MediumIcon from "./MediumIcon"
+import BookLinkIcon from "./BookLinkIcon"
+import WorkExpSlider from "./WorkExpSlider"
 
 const WorkExperienceSection = () => {
   const [sliderRef, slider] = useKeenSlider({ loop: true })
@@ -214,6 +214,7 @@ const WorkExperienceSection = () => {
               className="text-lg text-[#311B4D] md:flex lg:text-xl"
               href="https://www.linkedin.com/in/derek-austin/"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <LinkedinIcon fill="#F38B57" />
               <span className="ml-1 hidden pt-1 lg:block">Linkedin</span>
@@ -226,6 +227,7 @@ const WorkExperienceSection = () => {
               href="https://github.com/DoctorDerek"
               className="text-lg text-[#311B4D] md:flex lg:text-xl"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <GithubIcon fill="#F38B57" />
               <span className="ml-1 hidden pt-1 lg:block">Github</span>
@@ -234,6 +236,7 @@ const WorkExperienceSection = () => {
               href="https://doctorderek.medium.com/"
               className="text-lg text-[#311B4D] md:flex lg:text-xl"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <MediumIcon fill="#F38B57" />
               <span className="ml-1 hidden pt-1 lg:block ">Medium</span>
@@ -242,6 +245,7 @@ const WorkExperienceSection = () => {
               className="text-[#311B4D] md:flex lg:text-xl"
               href="https://www.amazon.com/dp/B0BRJDLJ43"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <BookLinkIcon fill="#F38B57" />
               <span className="ml-1 hidden pt-1 lg:block">Book</span>

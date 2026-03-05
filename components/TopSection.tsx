@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Logo from "@/images/Logo.svg"
-import Navbar from "./navbar"
+import Navbar from "./Navbar"
 import ReactParallaxTilt from "react-parallax-tilt"
 
 /** Helper function to join Tailwind CSS classNames. Filters out falsy values */

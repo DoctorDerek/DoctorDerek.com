@@ -1,9 +1,9 @@
-import EmailIcon from "./emailIcon"
-import LinkedinIcon from "./linkedinIcon"
-import ResumeIcon from "./resumeIcon"
-import GithubIcon from "./githubIcon"
-import MediumIcon from "./mediumIcon"
-import BookLinkIcon from "./bookLinkIcon"
+import EmailIcon from "./EmailIcon"
+import LinkedinIcon from "./LinkedinIcon"
+import ResumeIcon from "./ResumeIcon"
+import GithubIcon from "./GithubIcon"
+import MediumIcon from "./MediumIcon"
+import BookLinkIcon from "./BookLinkIcon"
 
 export default function Footer() {
   return (
@@ -57,6 +57,7 @@ export default function Footer() {
                   className="text-lg text-[#311B4D] md:flex lg:text-xl"
                   href="https://www.linkedin.com/in/derek-austin/"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <LinkedinIcon fill="#F38B57" />
                   <span className="restoramedium ml-2 hidden pt-1 md:block">
@@ -76,6 +77,7 @@ export default function Footer() {
                   href="https://github.com/DoctorDerek"
                   className="text-lg text-[#311B4D] md:flex lg:text-xl"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <GithubIcon fill="#F38B57" />
                   <span className="restoramedium ml-2 hidden pt-1 md:block">
@@ -86,6 +88,7 @@ export default function Footer() {
                   href="https://doctorderek.medium.com/"
                   className="text-lg text-[#311B4D] md:flex lg:text-xl"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <MediumIcon fill="#F38B57" />
                   <span className="restoramedium ml-2 hidden pt-1 md:block">
@@ -96,6 +99,7 @@ export default function Footer() {
                   className="lg:xl text-lg text-[#311B4D] md:flex"
                   href="https://www.amazon.com/dp/B0BRJDLJ43"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <BookLinkIcon fill="#F38B57" />
                   <span className="restoramedium ml-2 hidden pt-1 md:block">

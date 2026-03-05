@@ -14,7 +14,6 @@ import BookLinkIcon from "./bookLinkIcon"
 const navigation = [
   { name: "About", href: "#", current: true },
   { name: "Experience", href: "#", current: false },
-  { name: "Portfolio", href: "#", current: false },
   { name: "Testimonials", href: "#", current: false },
   { name: "Blog", href: "#", current: false },
   { name: "Contact", href: "#", current: false },

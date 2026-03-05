@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/aboutSection"
 import WorkExperienceSection from "@/components/workExperienceSection"
-import Portfolio from "@/components/Portfolio"
 import Testimonials from "@/components/testimonials"
 import BlogSection from "@/components/blogSection"
 import ContactSection from "@/components/contactSection"
@@ -39,11 +38,6 @@ export default function MedLrgDevices() {
             {/*========= WORK EXPERIENCE SECTION ========= */}
             <div className="section bg-[#FFE366]">
               <WorkExperienceSection />
-            </div>
-
-            {/*========= PORTFOLIO SECTION ========= */}
-            <div className="section bg-[#FB70AA]">
-              <Portfolio />
             </div>
 
             {/*========= TESIMONIALS SECTION ========= */}

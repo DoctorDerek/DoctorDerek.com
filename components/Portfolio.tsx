@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useKeenSlider } from "keen-slider/react"
-import Modal from "./modal"
+import Modal from "./Modal"
 
 /** Item in the array is each slide in the slider */
 const projects = [

@@ -4,12 +4,12 @@ import Image from "next/image"
 import Logo from "images/Logo.png"
 import medLrgLogo from "images/medLrgLogo.svg"
 import Link from "next/link"
-import EmailIcon from "./emailIcon"
-import LinkedinIcon from "./linkedinIcon"
-import ResumeIcon from "./resumeIcon"
-import GithubIcon from "./githubIcon"
-import MediumIcon from "./mediumIcon"
-import BookLinkIcon from "./bookLinkIcon"
+import EmailIcon from "./EmailIcon"
+import LinkedinIcon from "./LinkedinIcon"
+import ResumeIcon from "./ResumeIcon"
+import GithubIcon from "./GithubIcon"
+import MediumIcon from "./MediumIcon"
+import BookLinkIcon from "./BookLinkIcon"
 
 const navigation = [
   { name: "About", href: "#", current: true },

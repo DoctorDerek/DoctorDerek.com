@@ -65,6 +65,7 @@ const BlogSection = () => {
               <a
                 href="#"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="block rounded-tr-2xl bg-[#FFE366] px-1 py-4 text-center text-lg font-medium"
               >
                 View All Posts

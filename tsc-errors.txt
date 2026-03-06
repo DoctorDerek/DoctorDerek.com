@@ -1,0 +1,35 @@
+components/AboutSection.tsx(55,17): error TS1005: '</' expected.
+components/AboutSection.tsx(56,1): error TS1185: Merge conflict marker encountered.
+components/AboutSection.tsx(107,9): error TS1128: Declaration or statement expected.
+components/AboutSection.tsx(108,7): error TS1109: Expression expected.
+components/AboutSection.tsx(109,5): error TS1109: Expression expected.
+components/AboutSection.tsx(110,3): error TS1109: Expression expected.
+components/BlogSection.tsx(101,78): error TS1005: '</' expected.
+components/BlogSection.tsx(102,1): error TS1185: Merge conflict marker encountered.
+components/BlogSection.tsx(138,15): error TS1128: Declaration or statement expected.
+components/BlogSection.tsx(139,13): error TS1109: Expression expected.
+components/BlogSection.tsx(140,11): error TS1109: Expression expected.
+components/BlogSection.tsx(141,9): error TS1109: Expression expected.
+components/BlogSection.tsx(142,7): error TS1109: Expression expected.
+components/BlogSection.tsx(143,5): error TS1109: Expression expected.
+components/BlogSection.tsx(144,3): error TS1109: Expression expected.
+components/Footer.tsx(1,1): error TS1185: Merge conflict marker encountered.
+components/Footer.tsx(4,6): error TS17008: JSX element 'footer' has no corresponding closing tag.
+components/Footer.tsx(5,8): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/Footer.tsx(16,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/Footer.tsx(37,3): error TS1109: Expression expected.
+components/Footer.tsx(140,1): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,2): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,3): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,4): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,6): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,7): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(145,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+components/Footer.tsx(146,1): error TS1005: '</' expected.
+components/MedLrgDevices.tsx(4,1): error TS1185: Merge conflict marker encountered.
+components/MedLrgDevices.tsx(6,1): error TS1185: Merge conflict marker encountered.
+components/MedLrgDevices.tsx(7,1): error TS1185: Merge conflict marker encountered.
+components/WorkExperienceSection.tsx(26,1): error TS1185: Merge conflict marker encountered.
+components/WorkExperienceSection.tsx(27,1): error TS1185: Merge conflict marker encountered.
+components/WorkExperienceSection.tsx(30,1): error TS1185: Merge conflict marker encountered.

@@ -14,6 +14,12 @@ import TopSection from "@/components/TopSection"
 import Footer from "@/components/Footer"
 import MedLrgDevices from "@/components/MedLrgDevices"
 import getMediumPosts, { MediumPost } from "@/utils/medium"
+import SectionContainer from "@/components/SectionContainer"
+import dynamic from "next/dynamic"
+
+const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
+  ssr: false,
+})
 
 export async function getStaticProps() {
   const posts = await getMediumPosts()
@@ -111,11 +117,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <iframe
-        allowFullScreen
-        src="https://rive.app/s/0PCnhbxltU_9fMHg94CxVg/embed"
-        className="pointer-events-none absolute inset-0 z-10 h-full w-full"
-      />
+      <RiveAnimation />
 
       {width > 0 && width < 1024 && (
         <DisplaySections

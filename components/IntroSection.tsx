@@ -1,9 +1,9 @@
-import EmailIcon from "./emailIcon"
-import LinkedinIcon from "./linkedinIcon"
-import ResumeIcon from "./resumeIcon"
-import GithubIcon from "./githubIcon"
-import MediumIcon from "./mediumIcon"
-import BookLinkIcon from "./bookLinkIcon"
+import EmailIcon from "./EmailIcon"
+import LinkedinIcon from "./LinkedinIcon"
+import ResumeIcon from "./ResumeIcon"
+import GithubIcon from "./GithubIcon"
+import MediumIcon from "./MediumIcon"
+import BookLinkIcon from "./BookLinkIcon"
 import TypewriterComponent, {
   type Options,
   type TypewriterClass,
@@ -25,11 +25,11 @@ export default function IntroSection() {
   return (
     <div className="yw-bg-img flex h-[90vh] flex-col md:h-screen">
       <div className="mx-auto w-4/5 pt-4 md:w-[90%]">
-        <p className="text-3xl text-[#FB70AA] md:text-5xl lg:text-7xl">
+        <div className="text-3xl text-[#FB70AA] md:text-5xl lg:text-7xl">
           <Typewriter />
-        </p>
+        </div>
       </div>
-      <div className="mx-auto mt-auto w-4/5 pt-4 md:w-[90%] lg:mb-8">
+      <div className="mx-auto mt-auto w-4/5 pt-4 md:w-[90%] lg:mb-8 mb-12">
         <div className="w-3/4 md:w-11/12 lg:w-3/5">
           <div className="flex justify-around py-6 md:mx-auto lg:justify-between">
             <a
@@ -98,7 +98,6 @@ export default function IntroSection() {
           <div className="mt-4 border-t-2 border-[#d6bb61] md:w-5/12 lg:mt-8 lg:w-1/3" />
         </div>
       </div>
-
       <div className="mx-auto mb-10  mt-2 w-4/5 md:w-[90%]">
         <p className="pb-3 pt-3 text-2xl font-extralight text-[#998F8F] lg:mb-8 lg:text-3xl">
           Clients

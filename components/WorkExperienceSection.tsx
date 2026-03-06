@@ -1,3 +1,4 @@
+
 export default function WorkExperienceSection() {
   const evolution = [
     { period: "2025–2026 (Today)", skills: "Godot C# & GDScript | AI Context Engineer (15-20+ Million Tokens Exchanged)" },
@@ -17,6 +18,7 @@ export default function WorkExperienceSection() {
             <span className="text-2xl text-[#311B4D]">{item.skills}</span>
           </div>
         ))}
+
       </div>
     </div>
   )

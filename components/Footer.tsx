@@ -1,3 +1,4 @@
+
 export default function Footer() {
   return (
     <footer className="bg-[#311B4D] text-white p-12">

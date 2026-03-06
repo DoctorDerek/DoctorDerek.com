@@ -15,6 +15,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
     },
   })
 
+
   return (
     <div className="org-bg-img h-screen">
       <div className="h-full md:flex md:pt-20 lg:pt-0 ">
@@ -58,11 +59,42 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
           <div className=" mx-auto mb-8 mt-auto w-4/5 text-white md:hidden">
             <div className="flex py-2">
               <p className="text-4xl">&darr;</p>
-              <h4 className="my-auto ml-2 text-lg">Read posts</h4>
+            <div className="mt-3">
+              <p className="text-lg">6k followers on Medium</p>
+            </div>
+
+            {/* ========== Sign Up =========== */}
+            <div className="rounded-tl-2xl py-6">
+              <div className="">
+                {/* Line divider */}
+                <div className="mb-7 mt-2 w-4/5 border-t-2 border-[#cd7656]"></div>
+                <h3 className="pb-3 text-xl">
+                  Join over 160 email subscribers
+                </h3>
+                <form className="flex">
+                  <input
+                    type="email"
+                    name="email-address"
+                    id="email-address"
+                    autoComplete="email"
+                    required
+                    className="w-9/12 min-w-0 appearance-none border-0 bg-white px-3 py-5 text-base placeholder:text-lg placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:w-64 sm:text-sm sm:leading-6 xl:w-full"
+                    placeholder="Your email address"
+                  />
+                  <div className="w-1/4">
+                    <button
+                      type="submit"
+                      className="text-md flex w-full items-center justify-center rounded-tr-md bg-[#311B4D] py-5 font-semibold text-[#FFE366]"
+                    >
+                      Sign up
+                    </button>
+                  </div>
+                </form>
             </div>
           </div>
         </div>
 
+        {/* ========== Read Posts with Arrow =========== */}
         <div className="hidden h-full md:block md:w-1/2 md:pl-4 lg:flex lg:w-2/3 lg:flex-col">
           <div className="mt-4 w-[95%] lg:mb-auto lg:mt-auto lg:w-4/5">
             <div className="lg:my-auto">
@@ -101,6 +133,9 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                     </div>
                   </div>
                 ))}
+
+              </div>
+            </div>
               </div>
             </div>
           </div>

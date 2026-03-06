@@ -2,6 +2,7 @@ import DerekAustin from "@/images/DerekAustin.png"
 import Image from "next/image"
 
 export default function AboutSection() {
+  /* TECHNOLOGIES USED, IN YELLOW BACKGROUND */
   const techStack = [
     "Node.js",
     "Typescript",
@@ -16,6 +17,7 @@ export default function AboutSection() {
     "Cypress",
     "React Testing Library",
     "Playwright",
+
   ]
 
   return (
@@ -25,6 +27,7 @@ export default function AboutSection() {
           <h2 className="text-7xl md:text-8xl lg:text-9xl lg:font-semibold">
             About
           </h2>
+          {/* ======== TECH STACK ========= */}
           <div className="absolute inset-y-1/2 right-0 hidden h-9 w-[45%] md:block lg:inset-y-2/3">
             <div>
               <p className="pb-3 text-xl">Tech Stack</p>
@@ -42,6 +45,7 @@ export default function AboutSection() {
           </div>
         </div>
         <div className="relative h-[80vh] md:h-[70vh] overflow-y-auto">
+          {/* ======= DR DEREK AUSTIN IMAGE ========= */}
           <div className="w-[65%] overflow-hidden rounded-tr-[6rem] md:w-1/2 md:rounded-tr-[4.5rem] lg:w-[45%]">
             <Image
               src={DerekAustin}

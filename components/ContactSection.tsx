@@ -1,7 +1,7 @@
 import Image from "next/image"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
-import Footer from "./footer"
+import Footer from "./Footer"
 
 const ContactSection = () => {
   return (

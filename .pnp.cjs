@@ -31,6 +31,7 @@ const RAW_RUNTIME_STATE =
           ["@fullpage/react-fullpage", "npm:0.1.49"],\
           ["@headlessui/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.9"],\
           ["@heroicons/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.0"],\
+          ["@rive-app/react-canvas", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0"],\
           ["@tailwindcss/postcss", "npm:4.1.18"],\
           ["@types/node", "npm:24.10.4"],\
           ["@types/react", "npm:19.2.7"],\
@@ -39,6 +40,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:9.39.2"],\
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
+          ["jiti", "npm:2.6.1"],\
           ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
@@ -1213,6 +1215,38 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/__virtual__/@react-types-shared-virtual-831dd1a48f/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/@react-types-shared-npm-3.32.1-f047abfdd7-10c0.zip/node_modules/@react-types/shared/",\
         "packageDependencies": [\
           ["@react-types/shared", "virtual:d3bffa8b8f5aaac1dd002c80137a6fe7f253567ceaeaead8d8efa554b213cd9f661b5c29d03cb7e0aecc6f483786fd8689274a5f5199efddd7a41529b9f28feb#npm:3.32.1"],\
+          ["@types/react", "npm:19.2.7"],\
+          ["react", "npm:19.2.3"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@rive-app/canvas", [\
+      ["npm:2.35.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/@rive-app-canvas-npm-2.35.0-02b9117002-10c0.zip/node_modules/@rive-app/canvas/",\
+        "packageDependencies": [\
+          ["@rive-app/canvas", "npm:2.35.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@rive-app/react-canvas", [\
+      ["npm:4.27.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/@rive-app-react-canvas-npm-4.27.0-8b4d380540-10c0.zip/node_modules/@rive-app/react-canvas/",\
+        "packageDependencies": [\
+          ["@rive-app/react-canvas", "npm:4.27.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0", {\
+        "packageLocation": "./.yarn/__virtual__/@rive-app-react-canvas-virtual-02f2ec3f49/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/@rive-app-react-canvas-npm-4.27.0-8b4d380540-10c0.zip/node_modules/@rive-app/react-canvas/",\
+        "packageDependencies": [\
+          ["@rive-app/canvas", "npm:2.35.0"],\
+          ["@rive-app/react-canvas", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0"],\
           ["@types/react", "npm:19.2.7"],\
           ["react", "npm:19.2.3"]\
         ],\
@@ -2529,6 +2563,7 @@ const RAW_RUNTIME_STATE =
           ["@fullpage/react-fullpage", "npm:0.1.49"],\
           ["@headlessui/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.9"],\
           ["@heroicons/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.0"],\
+          ["@rive-app/react-canvas", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0"],\
           ["@tailwindcss/postcss", "npm:4.1.18"],\
           ["@types/node", "npm:24.10.4"],\
           ["@types/react", "npm:19.2.7"],\
@@ -2537,6 +2572,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:9.39.2"],\
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
+          ["jiti", "npm:2.6.1"],\
           ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
@@ -2816,7 +2852,7 @@ const RAW_RUNTIME_STATE =
           ["ignore", "npm:5.3.2"],\
           ["imurmurhash", "npm:0.1.4"],\
           ["is-glob", "npm:4.0.3"],\
-          ["jiti", null],\
+          ["jiti", "npm:2.6.1"],\
           ["json-stable-stringify-without-jsonify", "npm:1.0.1"],\
           ["lodash.merge", "npm:4.6.2"],\
           ["minimatch", "npm:3.1.2"],\
@@ -6128,16 +6164,16 @@ function convertToBigIntStats(stats) {
     if (Object.hasOwn(stats, key)) {
       const element = stats[key];
       if (typeof element === `number`) {
-        bigintStats[key] = BigInt(element);
+        bigintStats[key] = BigInt(Math.floor(element));
       } else if (nodeUtils__namespace.types.isDate(element)) {
         bigintStats[key] = new Date(element);
       }
     }
   }
-  bigintStats.atimeNs = bigintStats.atimeMs * BigInt(1e6);
-  bigintStats.mtimeNs = bigintStats.mtimeMs * BigInt(1e6);
-  bigintStats.ctimeNs = bigintStats.ctimeMs * BigInt(1e6);
-  bigintStats.birthtimeNs = bigintStats.birthtimeMs * BigInt(1e6);
+  bigintStats.atimeNs = bigintStats.atimeMs * BigInt(1e6) + BigInt(Math.floor(stats.atimeMs % 1 * 1e3)) * BigInt(1e3);
+  bigintStats.mtimeNs = bigintStats.mtimeMs * BigInt(1e6) + BigInt(Math.floor(stats.mtimeMs % 1 * 1e3)) * BigInt(1e3);
+  bigintStats.ctimeNs = bigintStats.ctimeMs * BigInt(1e6) + BigInt(Math.floor(stats.ctimeMs % 1 * 1e3)) * BigInt(1e3);
+  bigintStats.birthtimeNs = bigintStats.birthtimeMs * BigInt(1e6) + BigInt(Math.floor(stats.birthtimeMs % 1 * 1e3)) * BigInt(1e3);
   return bigintStats;
 }
 function areStatsEqual(a, b) {

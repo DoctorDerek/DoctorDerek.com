@@ -23,20 +23,25 @@ import M6_Blog_B from "@/images/M6_Blog_B.jpg"
 import M7_Contact from "@/images/M7_Contact.jpg"
 import Image, { StaticImageData } from "next/image"
 import { useEffect, useState } from "react"
-import Layout from "@/components/layout"
-import Navbar from "@/components/navbar"
+import Layout from "@/components/Layout"
+import Navbar from "@/components/Navbar"
 import IntroSection from "@/components/IntroSection"
-import AboutSection from "@/components/aboutSection"
-import TechStackSection from "@/components/techStackSection"
-import WorkExperienceSection from "@/components/workExperienceSection"
+import AboutSection from "@/components/AboutSection"
+import TechStackSection from "@/components/TechStackSection"
+import WorkExperienceSection from "@/components/WorkExperienceSection"
 import Portfolio from "@/components/Portfolio"
-import Testimonials from "@/components/testimonials"
-import BlogSection from "@/components/blogSection"
-import ContactSection from "@/components/contactSection"
+import Testimonials from "@/components/Testimonials"
+import BlogSection from "@/components/BlogSection"
+import ContactSection from "@/components/ContactSection"
 import PostsSection from "@/components/PostsSection"
-import SectionContainer from "@/components/sectionContainer"
+import SectionContainer from "@/components/SectionContainer"
 import TopSection from "@/components/TopSection"
-import MedLrgDevices from "@/components/medLrgDevices"
+import MedLrgDevices from "@/components/MedLrgDevices"
+import dynamic from "next/dynamic"
+
+const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
+  ssr: false,
+})
 
 const DesktopSections = [
   D0_Intro_Animation,
@@ -168,14 +173,7 @@ export default function Home() {
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      {/* <Rive src="https://cdn.rive.app/animations/vehicles.riv" /> */}
-      <iframe
-        allowFullScreen
-        src="https://rive.app/s/0PCnhbxltU_9fMHg94CxVg/embed"
-        // We use "pointer-events-none" to prevent capturing scroll or clicks.
-        className="pointer-events-none absolute inset-0 z-10 h-full w-full"
-      />
-      {/* <Rive src="https://rive.app/s/0PCnhbxltU_9fMHg94CxVg/embed" /> */}
+      <RiveAnimation />
 
       {/* ======= LAYOUT ===== */}
       {width < 768 && (

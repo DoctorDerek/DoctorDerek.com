@@ -13,12 +13,14 @@
     "@fullpage/react-fullpage": "^0",
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
+    "@rive-app/react-canvas": "^4.27.0",
     "keen-slider": "^6",
     "motion": "^12",
     "next": "^16",
     "react": "^19",
     "react-dom": "^19",
     "react-parallax-tilt": "^1",
+    "rss-parser": "^3.13.0",
     "sharp": "^0",
     "typewriter-effect": "^2"
   },
@@ -30,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "^16",
     "eslint-config-prettier": "^10",
+    "jiti": "^2.6.1",
     "postcss": "^8",
     "prettier": "^3",
     "prettier-plugin-tailwindcss": "^0",
@@ -39,5 +42,5 @@
   "engines": {
     "node": "24.x"
   },
-  "packageManager": "yarn@4.12.0"
+  "packageManager": "yarn@4.13.0"
 }

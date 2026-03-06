@@ -1,0 +1,24 @@
+components/AboutSection.tsx(24,6): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/AboutSection.tsx(25,8): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/AboutSection.tsx(106,1): error TS1005: '</' expected.
+components/BlogSection.tsx(20,6): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/BlogSection.tsx(21,8): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/BlogSection.tsx(144,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+components/BlogSection.tsx(146,1): error TS1005: '</' expected.
+components/Footer.tsx(1,1): error TS1185: Merge conflict marker encountered.
+components/Footer.tsx(4,6): error TS17008: JSX element 'footer' has no corresponding closing tag.
+components/Footer.tsx(5,8): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/Footer.tsx(16,10): error TS17008: JSX element 'div' has no corresponding closing tag.
+components/Footer.tsx(37,3): error TS1109: Expression expected.
+components/Footer.tsx(140,1): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,2): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,3): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,4): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,5): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,6): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(140,7): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+components/Footer.tsx(145,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+components/Footer.tsx(146,1): error TS1005: '</' expected.
+components/MedLrgDevices.tsx(4,1): error TS1185: Merge conflict marker encountered.
+components/MedLrgDevices.tsx(6,1): error TS1185: Merge conflict marker encountered.
+components/MedLrgDevices.tsx(7,1): error TS1185: Merge conflict marker encountered.

@@ -4,12 +4,12 @@ import Image from "next/image"
 import Logo from "images/Logo.png"
 import medLrgLogo from "images/medLrgLogo.svg"
 import Link from "next/link"
-import EmailIcon from "./emailIcon"
-import LinkedinIcon from "./linkedinIcon"
-import ResumeIcon from "./resumeIcon"
-import GithubIcon from "./githubIcon"
-import MediumIcon from "./mediumIcon"
-import BookLinkIcon from "./bookLinkIcon"
+import EmailIcon from "./EmailIcon"
+import LinkedinIcon from "./LinkedinIcon"
+import ResumeIcon from "./ResumeIcon"
+import GithubIcon from "./GithubIcon"
+import MediumIcon from "./MediumIcon"
+import BookLinkIcon from "./BookLinkIcon"
 
 const navigation = [
   { name: "About", href: "#", current: true },
@@ -100,21 +100,31 @@ export default function Navbar() {
                   <a
                     href="https://www.linkedin.com/in/derek-austin/"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <LinkedinIcon fill="white" />
                   </a>
                   <a href="">
                     <ResumeIcon fill="white" />
                   </a>
-                  <a href="https://github.com/DoctorDerek" target="_blank">
+                  <a
+                    href="https://github.com/DoctorDerek"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <GithubIcon fill="white" />
                   </a>
-                  <a href="https://doctorderek.medium.com/" target="_blank">
+                  <a
+                    href="https://doctorderek.medium.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <MediumIcon fill="white" />
                   </a>
                   <a
                     href="https://www.amazon.com/dp/B0BRJDLJ43"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <BookLinkIcon fill="white" />
                   </a>
@@ -130,6 +140,7 @@ export default function Navbar() {
                 className="mb-2 block"
                 href="https://www.linkedin.com/in/derek-austin/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <LinkedinIcon fill="#F38B57" />
               </a>
@@ -140,6 +151,7 @@ export default function Navbar() {
                 className="mb-2 block"
                 href="https://github.com/DoctorDerek"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <GithubIcon fill="#F38B57" />
               </a>
@@ -147,6 +159,7 @@ export default function Navbar() {
                 className="mb-2 block"
                 href="https://doctorderek.medium.com/"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <MediumIcon fill="#F38B57" />
               </a>
@@ -154,6 +167,7 @@ export default function Navbar() {
                 className="mb-2 block"
                 href="https://www.amazon.com/dp/B0BRJDLJ43"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <BookLinkIcon fill="#F38B57" />
               </a>

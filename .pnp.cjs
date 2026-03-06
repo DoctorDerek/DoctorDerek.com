@@ -31,6 +31,7 @@ const RAW_RUNTIME_STATE =
           ["@fullpage/react-fullpage", "npm:0.1.49"],\
           ["@headlessui/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.9"],\
           ["@heroicons/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.0"],\
+          ["@rive-app/react-canvas", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0"],\
           ["@tailwindcss/postcss", "npm:4.1.18"],\
           ["@types/node", "npm:24.10.4"],\
           ["@types/react", "npm:19.2.7"],\
@@ -39,6 +40,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:9.39.2"],\
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
+          ["jiti", "npm:2.6.1"],\
           ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
@@ -48,6 +50,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
           ["react-parallax-tilt", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:1.7.315"],\
+          ["rss-parser", "npm:3.13.0"],\
           ["sharp", "npm:0.34.5"],\
           ["tailwindcss", "npm:4.1.18"],\
           ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
@@ -1213,6 +1216,38 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/__virtual__/@react-types-shared-virtual-831dd1a48f/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/@react-types-shared-npm-3.32.1-f047abfdd7-10c0.zip/node_modules/@react-types/shared/",\
         "packageDependencies": [\
           ["@react-types/shared", "virtual:d3bffa8b8f5aaac1dd002c80137a6fe7f253567ceaeaead8d8efa554b213cd9f661b5c29d03cb7e0aecc6f483786fd8689274a5f5199efddd7a41529b9f28feb#npm:3.32.1"],\
+          ["@types/react", "npm:19.2.7"],\
+          ["react", "npm:19.2.3"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@rive-app/canvas", [\
+      ["npm:2.35.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/@rive-app-canvas-npm-2.35.0-02b9117002-10c0.zip/node_modules/@rive-app/canvas/",\
+        "packageDependencies": [\
+          ["@rive-app/canvas", "npm:2.35.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@rive-app/react-canvas", [\
+      ["npm:4.27.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/@rive-app-react-canvas-npm-4.27.0-8b4d380540-10c0.zip/node_modules/@rive-app/react-canvas/",\
+        "packageDependencies": [\
+          ["@rive-app/react-canvas", "npm:4.27.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0", {\
+        "packageLocation": "./.yarn/__virtual__/@rive-app-react-canvas-virtual-02f2ec3f49/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/@rive-app-react-canvas-npm-4.27.0-8b4d380540-10c0.zip/node_modules/@rive-app/react-canvas/",\
+        "packageDependencies": [\
+          ["@rive-app/canvas", "npm:2.35.0"],\
+          ["@rive-app/react-canvas", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0"],\
           ["@types/react", "npm:19.2.7"],\
           ["react", "npm:19.2.3"]\
         ],\
@@ -2529,6 +2564,7 @@ const RAW_RUNTIME_STATE =
           ["@fullpage/react-fullpage", "npm:0.1.49"],\
           ["@headlessui/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.9"],\
           ["@heroicons/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.0"],\
+          ["@rive-app/react-canvas", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0"],\
           ["@tailwindcss/postcss", "npm:4.1.18"],\
           ["@types/node", "npm:24.10.4"],\
           ["@types/react", "npm:19.2.7"],\
@@ -2537,6 +2573,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:9.39.2"],\
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
+          ["jiti", "npm:2.6.1"],\
           ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
@@ -2546,6 +2583,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
           ["react-parallax-tilt", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:1.7.315"],\
+          ["rss-parser", "npm:3.13.0"],\
           ["sharp", "npm:0.34.5"],\
           ["tailwindcss", "npm:4.1.18"],\
           ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
@@ -2601,6 +2639,15 @@ const RAW_RUNTIME_STATE =
           ["enhanced-resolve", "npm:5.18.4"],\
           ["graceful-fs", "npm:4.2.11"],\
           ["tapable", "npm:2.3.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["entities", [\
+      ["npm:2.2.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/entities-npm-2.2.0-0fc8d5b2f7-10c0.zip/node_modules/entities/",\
+        "packageDependencies": [\
+          ["entities", "npm:2.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2816,7 +2863,7 @@ const RAW_RUNTIME_STATE =
           ["ignore", "npm:5.3.2"],\
           ["imurmurhash", "npm:0.1.4"],\
           ["is-glob", "npm:4.0.3"],\
-          ["jiti", null],\
+          ["jiti", "npm:2.6.1"],\
           ["json-stable-stringify-without-jsonify", "npm:1.0.1"],\
           ["lodash.merge", "npm:4.6.2"],\
           ["minimatch", "npm:3.1.2"],\
@@ -5052,6 +5099,17 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["rss-parser", [\
+      ["npm:3.13.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/rss-parser-npm-3.13.0-eb7c12b2b0-10c0.zip/node_modules/rss-parser/",\
+        "packageDependencies": [\
+          ["entities", "npm:2.2.0"],\
+          ["rss-parser", "npm:3.13.0"],\
+          ["xml2js", "npm:0.5.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["run-parallel", [\
       ["npm:1.2.0", {\
         "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/run-parallel-npm-1.2.0-3f47ff2034-10c0.zip/node_modules/run-parallel/",\
@@ -5095,6 +5153,15 @@ const RAW_RUNTIME_STATE =
           ["es-errors", "npm:1.3.0"],\
           ["is-regex", "npm:1.2.1"],\
           ["safe-regex-test", "npm:1.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["sax", [\
+      ["npm:1.5.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/sax-npm-1.5.0-d40bca2226-10c0.zip/node_modules/sax/",\
+        "packageDependencies": [\
+          ["sax", "npm:1.5.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5871,6 +5938,26 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["xml2js", [\
+      ["npm:0.5.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/xml2js-npm-0.5.0-06e57a2771-10c0.zip/node_modules/xml2js/",\
+        "packageDependencies": [\
+          ["sax", "npm:1.5.0"],\
+          ["xml2js", "npm:0.5.0"],\
+          ["xmlbuilder", "npm:11.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["xmlbuilder", [\
+      ["npm:11.0.1", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/xmlbuilder-npm-11.0.1-b8b04dc929-10c0.zip/node_modules/xmlbuilder/",\
+        "packageDependencies": [\
+          ["xmlbuilder", "npm:11.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["yallist", [\
       ["npm:3.1.1", {\
         "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/yallist-npm-3.1.1-a568a556b4-10c0.zip/node_modules/yallist/",\
@@ -6128,16 +6215,16 @@ function convertToBigIntStats(stats) {
     if (Object.hasOwn(stats, key)) {
       const element = stats[key];
       if (typeof element === `number`) {
-        bigintStats[key] = BigInt(element);
+        bigintStats[key] = BigInt(Math.floor(element));
       } else if (nodeUtils__namespace.types.isDate(element)) {
         bigintStats[key] = new Date(element);
       }
     }
   }
-  bigintStats.atimeNs = bigintStats.atimeMs * BigInt(1e6);
-  bigintStats.mtimeNs = bigintStats.mtimeMs * BigInt(1e6);
-  bigintStats.ctimeNs = bigintStats.ctimeMs * BigInt(1e6);
-  bigintStats.birthtimeNs = bigintStats.birthtimeMs * BigInt(1e6);
+  bigintStats.atimeNs = bigintStats.atimeMs * BigInt(1e6) + BigInt(Math.floor(stats.atimeMs % 1 * 1e3)) * BigInt(1e3);
+  bigintStats.mtimeNs = bigintStats.mtimeMs * BigInt(1e6) + BigInt(Math.floor(stats.mtimeMs % 1 * 1e3)) * BigInt(1e3);
+  bigintStats.ctimeNs = bigintStats.ctimeMs * BigInt(1e6) + BigInt(Math.floor(stats.ctimeMs % 1 * 1e3)) * BigInt(1e3);
+  bigintStats.birthtimeNs = bigintStats.birthtimeMs * BigInt(1e6) + BigInt(Math.floor(stats.birthtimeMs % 1 * 1e3)) * BigInt(1e3);
   return bigintStats;
 }
 function areStatsEqual(a, b) {

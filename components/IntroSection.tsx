@@ -98,16 +98,6 @@ export default function IntroSection() {
           <div className="mt-4 border-t-2 border-[#d6bb61] md:w-5/12 lg:mt-8 lg:w-1/3" />
         </div>
       </div>
-      <div className="mx-auto mb-10  mt-2 w-4/5 md:w-[90%]">
-        <p className="pb-3 pt-3 text-2xl font-extralight text-[#998F8F] lg:mb-8 lg:text-3xl">
-          Clients
-        </p>
-        <div className="flex w-full justify-between">
-          <p className="w-1/4 text-4xl font-medium text-[#998F8F]">Logo</p>
-          <p className="w-1/4 text-4xl font-medium text-[#998F8F]">Logo</p>
-          <p className="w-1/4 text-4xl font-medium text-[#998F8F]">Logo</p>
-        </div>
-      </div>
     </div>
   )
 }

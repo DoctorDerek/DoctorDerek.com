@@ -1,7 +1,7 @@
 import DerekAustin from "@/images/DerekAustin.png"
 import Image from "next/image"
 
-const AboutSection = () => {
+export default function AboutSection() {
   /* TECHNOLOGIES USED, IN YELLOW BACKGROUND */
   const techStack = [
     "Node.js",
@@ -17,7 +17,7 @@ const AboutSection = () => {
     "Cypress",
     "React Testing Library",
     "Playwright",
-    "Tailwind CSS",
+
   ]
 
   return (
@@ -33,31 +33,18 @@ const AboutSection = () => {
               <p className="pb-3 text-xl">Tech Stack</p>
             </div>
             <div className="flex flex-wrap content-between gap-x-4">
-              {techStack.map(
-                (
-                  /**
-                   * item: string value of the tech stack previously used
-                   */
-                  item: string,
-                  /**
-                   * index: number value, to create unique React keys
-                   */
-                  index: number,
-                ) => {
-                  return (
-                    <p
-                      key={`${item}-tech-stack-key${index}`}
-                      className="mb-2 rounded-tr-xl bg-[#FFE366] py-1 pl-2 pr-2 md:text-sm md:font-semibold lg:text-lg"
-                    >
-                      {item}
-                    </p>
-                  )
-                },
-              )}
+              {techStack.map((item, index) => (
+                <p
+                  key={`${item}-tech-stack-key${index}`}
+                  className="mb-2 rounded-tr-xl bg-[#FFE366] py-1 pl-2 pr-2 md:text-sm md:font-semibold lg:text-lg"
+                >
+                  {item}
+                </p>
+              ))}
             </div>
           </div>
         </div>
-        <div className="relative h-[80vh] md:h-[70vh]">
+        <div className="relative h-[80vh] md:h-[70vh] overflow-y-auto">
           {/* ======= DR DEREK AUSTIN IMAGE ========= */}
           <div className="w-[65%] overflow-hidden rounded-tr-[6rem] md:w-1/2 md:rounded-tr-[4.5rem] lg:w-[45%]">
             <Image
@@ -66,16 +53,57 @@ const AboutSection = () => {
               className="w-full object-cover"
             />
           </div>
-          {/* ======== ABOUT TEXT ========= */}
           <div className="absolute -bottom-12 left-6 rounded-tl-3xl bg-[#FB70AA] px-6 py-5 md:-bottom-8 md:left-auto md:right-0 md:w-[55%] lg:bottom-12 lg:left-auto lg:right-36 lg:w-1/2 lg:px-10 lg:py-7">
-            <p className="text-lg leading-7 text-white lg:text-xl lg:leading-9">
-              {`Derek Austin, a lead Frontend Developer and React Software Engineer, excels in web performance, accessible code, and intuitive interfaces. With expertise in Next.js, TypeScript, and Tailwind, he builds responsive apps, leads teams, and establishes best practices. Derek's solutions prioritize user needs, deliver high-quality code, and foster performance and maintainability. With a background in physical therapy and over 20 years of freelancing experience, his unique insights drive impactful results. Discover Derek's expertise in React, Agile processes, and full-stack architecture.`}
-            </p>
+            <div className="text-lg leading-7 text-white lg:text-xl lg:leading-9 max-h-[40vh] overflow-y-auto pr-2">
+              <p>
+                I’m Dr. Derek Austin, an indie game dev and AI context engineer who uses LLMs all day every day to build video games. To work faster, I teach large language models how to think, which is what I blog about here on Medium.
+              </p>
+              <p className="mt-4">
+                Like everyone, my interactions with LLMs have been frustrating. With their tiny system prompts and content filters, they’re just gaslighting text generators useful primarily to spammers and idiots.
+              </p>
+              <p className="mt-4">
+                But I’m too stubborn to just accept a tool’s limitations, so I engineered the solution.
+              </p>
+              <p className="mt-4">
+                After more than 2,000 hours of obsessive work—exchanging over 15-20+ million tokens with these reasoning models—I invented a new discipline: Context Engineering to architect Human-AI Cognitive Systems.
+              </p>
+              <p className="mt-4">
+                It’s the practice of architecting the deep context and cognitive frameworks that guide an AI beyond simple pattern-matching into genuine, high-level reasoning.
+              </p>
+              <p className="mt-4">
+                This work isn’t magic or BS. It’s the frontier of human-AI interaction.
+              </p>
+              <p className="mt-4">
+                My journey started in 2005 as a Full-Stack Software Engineer, and now I’ve spent more than two decades learning to build and deconstruct complex systems from the ground up.
+              </p>
+              <p className="mt-4">
+                That engineering experience is informed by a Bachelor's and Master's in Science in Bioinformatics with a Computer Science concentration, which taught me to find clear signals in the noise of massive datasets.
+              </p>
+              <p className="mt-4">
+                I even spent a decade working in sports medicine while I built apps and engineered processes as a consultant on the side. During that time, I obtained my Doctorate in Physical Therapy. The clinic trained me to diagnose and treat complex human systems while respecting patients’ autonomy and psychology, not just anatomy and physiology.
+              </p>
+              <p className="mt-4">
+                Each discipline gave me a piece of the puzzle for how to teach AI to think.
+              </p>
+              <p className="mt-4">
+                Today, I no longer work for others. Instead, I’ve built a life of autonomy and deep work in Puebla, Mexico, with my amazing wife, Abby. ❤️
+              </p>
+              <p className="mt-4">
+                At the end of the day, architecting AI cognition systems is just a means to an end for me, since my real full-time “job” is as a solo indie game dev.
+              </p>
+              <p className="mt-4">
+                That means all day I’m developing full-stack apps with world-class UI / UX powered by Next.js, TypeScript, and Tailwind CSS — for my web games — and Godot (GDScript + C#) for my higher-demand games for Steam Deck.
+              </p>
+              <p className="mt-4">
+                Meanwhile, my two cats, Louie and Yuma, lick each other.
+              </p>
+              <p className="mt-4">
+                I write about my entire journey right here on Medium, along with my best systems insights for success as a remote software or AI engineer. Thank you for reading!
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   )
 }
-
-export default AboutSection

@@ -20,6 +20,7 @@
     "react": "^19",
     "react-dom": "^19",
     "react-parallax-tilt": "^1",
+    "rss-parser": "^3.13.0",
     "sharp": "^0",
     "typewriter-effect": "^2"
   },

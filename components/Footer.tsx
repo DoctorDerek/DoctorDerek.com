@@ -1,114 +1,30 @@
-import EmailIcon from "./EmailIcon"
-import LinkedinIcon from "./LinkedinIcon"
-import ResumeIcon from "./ResumeIcon"
-import GithubIcon from "./GithubIcon"
-import MediumIcon from "./MediumIcon"
-import BookLinkIcon from "./BookLinkIcon"
 
 export default function Footer() {
   return (
-    <footer
-      className="mt-auto md:w-full lg:ml-auto lg:w-11/12"
-      aria-labelledby="footer-heading"
-    >
-      <div className="mx-auto lg:ml-auto lg:mr-0 lg:w-full lg:pl-12 lg:pt-32">
-        <div className="">
-          {/* ======= SIGN UP ========== */}
-          <div className="rounded-tl-3xl bg-[#FB70AA] py-6 md:ml-auto md:w-4/5 md:rounded-tl-[3.5rem] md:py-8 md:pl-4 lg:py-16 lg:pl-16">
-            <div className="mx-auto w-11/12">
-              <h3 className="pb-3 text-xl md:pb-4 md:text-lg lg:text-xl">
-                Join over 160 email subscribers
-              </h3>
-              <form className="flex">
-                <input
-                  type="email"
-                  name="email-address"
-                  id="email-address"
-                  autoComplete="email"
-                  required
-                  className="w-9/12 appearance-none border-0 bg-white px-3 py-1.5 text-base shadow-xs ring-1 ring-inset ring-white/10 placeholder:text-lg placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:w-64 sm:text-sm sm:leading-6 lg:w-3/5 lg:py-5 lg:pl-4"
-                  placeholder="Your email address"
-                />
-                <div className="w-1/4 md:w-[40%] lg:w-1/4">
-                  <button
-                    type="submit"
-                    className="text-md w-full rounded-tr-2xl bg-[#311B4D] px-3 py-6 font-semibold text-[#FFE366] shadow-xs md:py-4 lg:py-5 lg:text-xl"
-                  >
-                    Sign up
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-          {/* ======= FOOTER LINKS ========== */}
-          <div className="bg-[#FB70AA] md:bg-transparent">
-            <div className="rounded-tl-3xl bg-[#FFE366] md:rounded-tl-[3.5rem]">
-              <div className="flex grid-cols-2 grid-rows-3 justify-around py-6 md:ml-8 md:grid md:w-3/4 md:gap-y-2.5 md:py-8 lg:w-1/2 lg:gap-y-6 lg:pb-12 lg:pl-14 lg:pt-14">
-                <a
-                  className="text-lg text-[#311B4D] md:flex lg:text-xl"
-                  href="mailto:derekraustin@gmail.com"
-                >
-                  <EmailIcon fill="#F38B57" />
-                  <span className="restoramedium ml-2 hidden pt-1 md:block">
-                    Email
-                  </span>
-                </a>
-                <a
-                  className="text-lg text-[#311B4D] md:flex lg:text-xl"
-                  href="https://www.linkedin.com/in/derek-austin/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <LinkedinIcon fill="#F38B57" />
-                  <span className="restoramedium ml-2 hidden pt-1 md:block">
-                    Linkedin
-                  </span>
-                </a>
-                <a
-                  href="#"
-                  className="text-lg  text-[#311B4D] md:flex lg:text-xl"
-                >
-                  <ResumeIcon fill="#F38B57" />
-                  <span className="restoramedium ml-2 hidden pt-1 md:block">
-                    Resume
-                  </span>
-                </a>
-                <a
-                  href="https://github.com/DoctorDerek"
-                  className="text-lg text-[#311B4D] md:flex lg:text-xl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <GithubIcon fill="#F38B57" />
-                  <span className="restoramedium ml-2 hidden pt-1 md:block">
-                    Github
-                  </span>
-                </a>
-                <a
-                  href="https://doctorderek.medium.com/"
-                  className="text-lg text-[#311B4D] md:flex lg:text-xl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MediumIcon fill="#F38B57" />
-                  <span className="restoramedium ml-2 hidden pt-1 md:block">
-                    Medium
-                  </span>
-                </a>
-                <a
-                  className="lg:xl text-lg text-[#311B4D] md:flex"
-                  href="https://www.amazon.com/dp/B0BRJDLJ43"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <BookLinkIcon fill="#F38B57" />
-                  <span className="restoramedium ml-2 hidden pt-1 md:block">
-                    Book
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
+    <footer className="bg-[#311B4D] text-white p-12">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+          <h3 className="text-2xl font-bold mb-4 uppercase tracking-wider text-[#FB70AA]">AI Disclosure</h3>
+          <ul className="space-y-2 text-lg opacity-90">
+            <li>• Hello fellow human! I’m Dr. Derek Austin. This website is NOT AI-generated slop.</li>
+            <li>• Voice/Writing: 100% Human (Me!). No AI dubbing or AI-generated text content.</li>
+            <li>• Visuals: Real photos (Unsplash, Unsplash+, and public domain) & LLM-assisted Python data visualizations. No AI images. No AI video.</li>
+            <li>• Script: 100% human-verified & edited. I use LLMs for polyglot research, data visualization, research synthesis, drafting assistance, fact-checking, pronunciation help, and proofreading.</li>
+            <li>• Please support real, human creators by liking & subscribing!</li>
+          </ul>
+        </div>
+        <div>
+          <h3 className="text-2xl font-bold mb-4 uppercase tracking-wider text-[#B9E3FF]">Website Disclaimer</h3>
+          <ul className="space-y-2 text-sm opacity-70">
+            <li>• I have taken care when crafting my opinions and compiling data / facts, but errors WILL occur. **Please fact check me!**</li>
+            <li>• This content is for entertainment and educational purposes ONLY. It does NOT constitute career, financial, legal, health, psychological, or any other type of professional advice.</li>
+            <li>• I have included ALL content relating to the conduct, views, activities, and/or aspects of ALL persons or characters for ENTERTAINMENT PURPOSES ONLY.</li>
+            <li>• This website does NOT represent an assertion of fact on those matters or any matters related to ANY persons, living or dead.</li>
+            <li>• ALL included data / facts should be considered illustrative, NOT definitive; thus, the website’s veracity should not be relied on under ANY circumstances beyond ENTERTAINMENT.</li>
+            <li>• THIS WEBSITE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED!</li>
+            <li>• IN NO EVENT SHALL I BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THIS WEBSITE.</li>
+            <li>• Side effects may include systems thinking. BROWSE AT YOUR OWN RISK! 😉🫡🦝</li>
+          </ul>
         </div>
       </div>
     </footer>

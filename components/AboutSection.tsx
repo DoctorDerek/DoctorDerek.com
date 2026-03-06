@@ -2,6 +2,7 @@ import DerekAustin from "@/images/DerekAustin.png"
 import Image from "next/image"
 
 export default function AboutSection() {
+  /* TECHNOLOGIES USED, IN YELLOW BACKGROUND */
   const techStack = [
     "Node.js",
     "TypeScript",
@@ -43,28 +44,38 @@ export default function AboutSection() {
           <h2 className="text-7xl md:text-8xl lg:text-9xl lg:font-semibold">
             About
           </h2>
+          {/* ======== TECH STACK ========= */}
           <div className="absolute inset-y-1/2 right-0 hidden h-9 w-[45%] md:block lg:inset-y-2/3">
             <div>
-              <p className="pb-3 text-xl">
-                Tech Stack
-              </p>
+              <p className="pb-3 text-xl">Tech Stack</p>
             </div>
             <div className="flex flex-wrap content-between gap-x-4">
-              {techStack.map((
-                item,
-                index,
-              ) => (
-                <p
-                  key={`${item}-tech-stack-key${index}`}
-                  className="mb-2 rounded-tr-xl bg-[#FFE366] py-1 pl-2 pr-2 md:text-sm md:font-semibold lg:text-lg"
-                >
-                  {item}
-                </p>
-              ))}
+              {techStack.map(
+                (
+                  /**
+                   * item: string value of the tech stack previously used
+                   */
+                  item: string,
+                  /**
+                   * index: number value, to create unique React keys
+                   */
+                  index: number,
+                ) => {
+                  return (
+                    <p
+                      key={`${item}-tech-stack-key${index}`}
+                      className="mb-2 rounded-tr-xl bg-[#FFE366] py-1 pl-2 pr-2 md:text-sm md:font-semibold lg:text-lg"
+                    >
+                      {item}
+                    </p>
+                  )
+                },
+              )}
             </div>
           </div>
         </div>
         <div className="relative h-[80vh] md:h-[70vh]">
+          {/* ======= DR DEREK AUSTIN IMAGE ========= */}
           <div className="w-[65%] overflow-hidden rounded-tr-[6rem] md:w-1/2 md:rounded-tr-[4.5rem] lg:w-[45%]">
             <Image
               src={DerekAustin}
@@ -72,6 +83,7 @@ export default function AboutSection() {
               className="w-full object-cover"
             />
           </div>
+          {/* ======== ABOUT TEXT ========= */}
           <div className="absolute -bottom-12 left-6 rounded-tl-3xl bg-[#FB70AA] px-6 py-5 md:-bottom-8 md:left-auto md:right-0 md:w-[55%] lg:bottom-12 lg:left-auto lg:right-36 lg:w-1/2 lg:px-10 lg:py-7">
             <div className="max-h-[40vh] overflow-y-auto pr-2 text-lg leading-7 text-white lg:text-xl lg:leading-9">
               {bioParagraphs.map((
@@ -92,3 +104,4 @@ export default function AboutSection() {
     </div>
   )
 }
+

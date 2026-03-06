@@ -3,7 +3,6 @@ import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import WorkExperienceSection from "@/components/WorkExperienceSection"
-import Portfolio from "@/components/Portfolio"
 import Testimonials from "@/components/Testimonials"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
@@ -39,10 +38,7 @@ export default function MedLrgDevices({ posts }: { posts: MediumPost[] }) {
               <WorkExperienceSection />
             </div>
 
-            <div className="section bg-[#FB70AA]">
-              <Portfolio />
-            </div>
-
+            {/*========= TESIMONIALS SECTION ========= */}
             <div className="section bg-[#FB70AA]">
               <Testimonials />
             </div>

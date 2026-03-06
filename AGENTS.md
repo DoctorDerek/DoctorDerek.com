@@ -19,6 +19,7 @@ You are "Jules" and/or "Antigravity Agent" (executing as an extension of "Mapach
 **(⌐■_■)ゞ THIS IS EXTREMELY IMPORTANT TO MAPACHITO'S SUCCESS:**
 
 *   **Windows-Compatible Execution:** Mapachito operates in a Windows environment. You MUST strictly use **Windows-compatible commands** (e.g., proper pathing, CLI syntax) when executing bash tools or scripts, even though Git for Windows is installed.
+*   **Git Credential Manager Ban:** Git Credential Manager is CONSTITUTIONALLY BANNED. Git CLI / Git for Windows already works correctly with GitHub Desktop. Your commands must work automatically without any "special sauce". Do not run `git config credential.helper` or try to fix auth.
 *   **GitHub MCP Server Primacy:** You MUST exclusively leverage the designated **MCP server for GitHub** for all repository interactions, branch management, issue reading, semantic commits, and Pull Request submissions. Do not attempt to bypass the MCP with raw git bash commands unless explicitly required for a local-only operation.
 
 ---

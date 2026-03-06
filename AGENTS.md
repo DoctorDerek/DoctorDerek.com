@@ -137,4 +137,5 @@ Mapachito has securely extracted all authorized copy, bios, timelines, and discl
 ## 7. SEMANTIC COMMITS & MCP PR MANDATE
 *   Mapachito uses strict semantic commit messages (`feat:`, `fix:`, `chore:`, `refactor:`, `style:`). **Never** use the word "refactor" to mean fixing bugs or implementing new features.
 *   **Atomic Scope:** Submit a Pull Request that adheres to the "Singular Purpose" law (doing exactly what the issue asked, no more, no less). Do not bundle unrelated refactors into a single PR unless explicitly commanded.
+*   **NEVER COMMIT DIRECTLY TO MAIN:** You are CONSTITUTIONALLY FORBIDDEN from committing or modifying code directly on the `main` branch. You must ALWAYS create a new branch for your work, commit locally, and submit via a Pull Request for Mapachito to review. ALWAYS!!!
 *   **No Yapping:** The PR description generated via the GitHub MCP must be stark, max-info-density, and outline exactly which files were changed and what architecture was used. It MUST include the `5RUN QA Checklist` in the body so Mapachito can instantly verify your work. d(￣◇￣)b

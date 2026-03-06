@@ -1,6 +1,5 @@
 import EmailIcon from "./EmailIcon"
 import LinkedinIcon from "./LinkedinIcon"
-import ResumeIcon from "./ResumeIcon"
 import GithubIcon from "./GithubIcon"
 import MediumIcon from "./MediumIcon"
 import BookLinkIcon from "./BookLinkIcon"
@@ -50,15 +49,6 @@ export default function IntroSection() {
               <LinkedinIcon fill="#F38B57" />
               <span className="restoramedium ml-2 hidden pt-1 md:block">
                 Linkedin
-              </span>
-            </a>
-            <a
-              href="#"
-              className="text-lg  text-[#F38B57] md:mr-4 md:flex lg:text-xl"
-            >
-              <ResumeIcon fill="#F38B57" />
-              <span className="restoramedium ml-2 hidden pt-1 md:block">
-                Resume
               </span>
             </a>
             <a

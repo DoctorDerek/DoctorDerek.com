@@ -1,41 +1,39 @@
 import ReactFullpage from "@fullpage/react-fullpage"
-import Image, { StaticImageData } from "next/image"
-import { useEffect, useState } from "react"
 import IntroSection from "@/components/IntroSection"
-import AboutSection from "@/components/aboutSection"
-import WorkExperienceSection from "@/components/workExperienceSection"
-import Testimonials from "@/components/testimonials"
-import BlogSection from "@/components/blogSection"
-import ContactSection from "@/components/contactSection"
+import AboutSection from "@/components/AboutSection"
+import AiConsultancySection from "@/components/AiConsultancySection"
+import WorkExperienceSection from "@/components/WorkExperienceSection"
+import Testimonials from "@/components/Testimonials"
+import BlogSection from "@/components/BlogSection"
+import ContactSection from "@/components/ContactSection"
 import TopSection from "@/components/TopSection"
+import Footer from "@/components/Footer"
+import { MediumPost } from "@/utils/medium"
 
-/* Displays sections based on medium or large screen size */
-export default function MedLrgDevices() {
+export default function MedLrgDevices({ posts }: { posts: MediumPost[] }) {
   return (
     <ReactFullpage
       credits={{ enabled: false }}
       navigation
       render={() => {
-        // We don't need any of the props here, but I list them for reference
-        //  render={({ state, fullpageApi }) => {
         return (
           <ReactFullpage.Wrapper>
-            {/* ========= TOP IMAGE ============ */}
             <div className="section h-screen bg-[#FFE366]">
               <TopSection />
             </div>
 
-            {/* ========= INTRO SECTION ============ */}
             <div className="section intro flex h-screen flex-col bg-[#FFE366] md:flex-row">
               <IntroSection />
             </div>
 
-            {/*========= ABOUT SECTION ========= */}
             <div className="section flex h-screen flex-col bg-[#b9e3ff] md:flex-row">
               <AboutSection />
             </div>
 
-            {/*========= WORK EXPERIENCE SECTION ========= */}
+            <div className="section bg-[#b9e3ff]">
+              <AiConsultancySection />
+            </div>
+
             <div className="section bg-[#FFE366]">
               <WorkExperienceSection />
             </div>
@@ -45,14 +43,16 @@ export default function MedLrgDevices() {
               <Testimonials />
             </div>
 
-            {/* ========= BLOG SECTION ============ */}
             <div className="section bg-[#F38B57]">
-              <BlogSection />
+              <BlogSection posts={posts} />
             </div>
 
-            {/* ========= CONTACT SECTION ============ */}
             <div className="section">
               <ContactSection />
+            </div>
+
+            <div className="section fp-auto-height">
+              <Footer />
             </div>
           </ReactFullpage.Wrapper>
         )

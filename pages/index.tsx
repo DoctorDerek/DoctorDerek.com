@@ -1,110 +1,63 @@
 import Head from "next/head"
 import ReactFullpage from "@fullpage/react-fullpage"
-import D0_Intro_Animation from "@/images/D0_Intro_Animation.jpg"
-import D1_Intro from "@/images/D1_Intro.jpg"
-import D2_About from "@/images/D2_About.jpg"
-import D3_Experience from "@/images/D3_Experience.jpg"
-import D4_Portfolio from "@/images/D4_Portfolio.jpg"
-import D5_Testimonials from "@/images/D5_Testimonials.jpg"
-import D6_Blog from "@/images/D6_Blog.jpg"
-import D7_Contact_Original from "@/images/D7_Contact_Original.jpg"
-import M0_Intro_Animation from "@/images/M0_Intro_Animation.jpg"
-import M1_Intro from "@/images/M1_Intro.jpg"
-import M2_About_A from "@/images/M2_About_A.jpg"
-import M2_About_B from "@/images/M2_About_B.jpg"
-import M3_Experience_A from "@/images/M3_Experience_A.jpg"
-import M3_Experience_B from "@/images/M3_Experience_B.jpg"
-import M3_Experience_C from "@/images/M3_Experience_C.jpg"
-import M3_Experience_D from "@/images/M3_Experience_D.jpg"
-import M4_Portfolio from "@/images/M4_Portfolio.jpg"
-import M5_Testimonials from "@/images/M5_Testimonials.jpg"
-import M6_Blog_A from "@/images/M6_Blog_A.jpg"
-import M6_Blog_B from "@/images/M6_Blog_B.jpg"
-import M7_Contact from "@/images/M7_Contact.jpg"
-import Image, { StaticImageData } from "next/image"
 import { useEffect, useState } from "react"
-import Layout from "@/components/layout"
-import Navbar from "@/components/navbar"
 import IntroSection from "@/components/IntroSection"
-import AboutSection from "@/components/aboutSection"
-import TechStackSection from "@/components/techStackSection"
-import WorkExperienceSection from "@/components/workExperienceSection"
-import Testimonials from "@/components/testimonials"
-import BlogSection from "@/components/blogSection"
-import ContactSection from "@/components/contactSection"
+import AboutSection from "@/components/AboutSection"
+import AiConsultancySection from "@/components/AiConsultancySection"
+import WorkExperienceSection from "@/components/WorkExperienceSection"
+import Testimonials from "@/components/Testimonials"
+import BlogSection from "@/components/BlogSection"
+import ContactSection from "@/components/ContactSection"
 import PostsSection from "@/components/PostsSection"
-import SectionContainer from "@/components/sectionContainer"
 import TopSection from "@/components/TopSection"
-import MedLrgDevices from "@/components/medLrgDevices"
+import Footer from "@/components/Footer"
+import MedLrgDevices from "@/components/MedLrgDevices"
+import getMediumPosts, { MediumPost } from "@/utils/medium"
+import SectionContainer from "@/components/SectionContainer"
+import dynamic from "next/dynamic"
 
-const DesktopSections = [
-  D0_Intro_Animation,
-  D1_Intro,
-  D2_About,
-  D3_Experience,
-  D4_Portfolio,
-  D5_Testimonials,
-  D6_Blog,
-  D7_Contact_Original,
-]
+const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
+  ssr: false,
+})
 
-const MobileSections = [
-  M0_Intro_Animation,
-  M1_Intro,
-  M2_About_A,
-  M2_About_B,
-  M3_Experience_A,
-  M3_Experience_B,
-  M3_Experience_C,
-  M3_Experience_D,
-  M4_Portfolio,
-  M5_Testimonials,
-  M6_Blog_A,
-  M6_Blog_B,
-  M7_Contact,
-]
-
-/** Helper function to join Tailwind CSS classNames. Filters out falsy values */
-const classNames = (...args: string[]) => args.filter(Boolean).join(" ")
+export async function getStaticProps() {
+  const posts = await getMediumPosts()
+  return {
+    props: {
+      posts,
+    },
+    revalidate: 86400,
+  }
+}
 
 function DisplaySections({
-  sections,
-  aspect,
+  posts,
 }: {
-  sections: StaticImageData[]
-  /** The aspect ratio of the images, i.e. desktop | mobile */
-  aspect: "aspect-5760/3200" | "aspect-1500/2668"
+  posts: MediumPost[]
 }) {
   return (
     <ReactFullpage
       credits={{ enabled: false }}
       navigation
       render={() => {
-        // We don't need any of the props here, but I list them for reference
-        //  render={({ state, fullpageApi }) => {
         return (
           <ReactFullpage.Wrapper>
-            {/* ========= TOP IMAGE ============ */}
             <div className="section h-screen bg-[#FFE366]">
               <TopSection />
             </div>
 
-            {/* ========= INTRO SECTION ============ */}
             <div className="section intro flex h-screen flex-col bg-[#FFE366] md:flex-row">
               <IntroSection />
             </div>
 
-            {/*========= ABOUT SECTION ========= */}
             <div className="section flex h-screen flex-col bg-[#b9e3ff] md:flex-row">
               <AboutSection />
             </div>
 
-            {/*===== ABOUT SECTION WITH TECH STACK ====== */}
             <div className="section flex h-screen flex-col bg-[#b9e3ff]">
-              <TechStackSection />
+              <AiConsultancySection />
             </div>
 
-            {/*========= WORK EXPERIENCE SECTION ========= */}
             <div className="section bg-[#FFE366]">
               <WorkExperienceSection />
             </div>
@@ -114,19 +67,20 @@ function DisplaySections({
               <Testimonials />
             </div>
 
-            {/* ========= BLOG SECTION ============ */}
             <div className="section bg-[#F38B57]">
-              <BlogSection />
+              <BlogSection posts={posts} />
             </div>
 
-            {/* ========= POSTS SECTION ============ */}
             <div className="section bg-[#F38B57]">
-              <PostsSection />
+              <PostsSection posts={posts} />
             </div>
 
-            {/* ========= CONTACT SECTION ============ */}
             <div className="section">
               <ContactSection />
+            </div>
+
+            <div className="section fp-auto-height">
+              <Footer />
             </div>
           </ReactFullpage.Wrapper>
         )
@@ -135,23 +89,20 @@ function DisplaySections({
   )
 }
 
-/** Custom hook that returns the current window width for mobile vs. desktop */
 function useWindowWidth() {
   const [width, setWidth] = useState(0)
-  // We need to have a `useEffect` wrapper to prevent hydration errors.
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (!width) setWidth(window.innerWidth)
-      window.addEventListener("resize", () => setWidth(window.innerWidth))
+      const handleResize = () => setWidth(window.innerWidth)
+      window.addEventListener("resize", handleResize)
+      return () => window.removeEventListener("resize", handleResize)
     }
   }, [width])
   return { width }
 }
 
-/** Unfortunately, we have to use a hook to determine the width to
- * conditionally render mobile and desktop because otherwise fullPage.js will
- * find all of the "hidden" `<div>` elements with the className of "section" */
-export default function Home() {
+export default function Home({ posts }: { posts: MediumPost[] }) {
   const { width } = useWindowWidth()
   return (
     <>
@@ -162,23 +113,14 @@ export default function Home() {
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      {/* <Rive src="https://cdn.rive.app/animations/vehicles.riv" /> */}
-      <iframe
-        allowFullScreen
-        src="https://rive.app/s/0PCnhbxltU_9fMHg94CxVg/embed"
-        // We use "pointer-events-none" to prevent capturing scroll or clicks.
-        className="pointer-events-none absolute inset-0 z-10 h-full w-full"
-      />
-      {/* <Rive src="https://rive.app/s/0PCnhbxltU_9fMHg94CxVg/embed" /> */}
+      <RiveAnimation />
 
-      {/* ======= LAYOUT ===== */}
-      {width < 768 && (
+      {width > 0 && width < 1024 && (
         <DisplaySections
-          sections={MobileSections}
-          aspect="aspect-1500/2668"
+          posts={posts}
         />
       )}
-      {width >= 768 && <MedLrgDevices />}
+      {width >= 1024 && <MedLrgDevices posts={posts} />}
     </>
   )
 }

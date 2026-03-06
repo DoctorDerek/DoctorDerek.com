@@ -21,6 +21,17 @@ You are "Jules" and/or "Antigravity Agent" (executing as an extension of "Mapach
 *   **Windows-Compatible Execution:** Mapachito operates in a Windows environment. You MUST strictly use **Windows-compatible commands** (e.g., proper pathing, CLI syntax) when executing bash tools or scripts, even though Git for Windows is installed.
 *   **Git Credential Manager Ban:** Git Credential Manager is CONSTITUTIONALLY BANNED. Git CLI / Git for Windows already works correctly with GitHub Desktop. Your commands must work automatically without any "special sauce". Do not run `git config credential.helper` or try to fix auth.
 *   **GitHub MCP Server Primacy:** You MUST exclusively leverage the designated **MCP server for GitHub** for all repository interactions, branch management, issue reading, semantic commits, and Pull Request submissions. Do not attempt to bypass the MCP with raw git bash commands unless explicitly required for a local-only operation.
+### 2A. The Headless Terminal Constraint & Git Networking
+Antigravity ("Jules") executes commands in a **headless sub-process**. It has no physical TTY (teletypewriter) and cannot invoke Windows GUI popups (like Git Credential Manager OAuth screens) or accept interactive password prompts. 
+Because of this physical limitation, we must strictly bifurcate Git operations:
+*   **Local-Only Git (ALLOWED):** `status`, `add`, `commit`, `checkout`, `merge`, `reset`, `branch`. These do not require network auth and execute flawlessly in headless mode. You have full autonomy here.
+*   **Network Git (BANNED FROM AUTOMATION):** `push`, `fetch`, `pull`. These routinely trigger the Windows Git Credential Manager. You are **CONSTITUTIONALLY FORBIDDEN** from attempting to run these, trying to "fix" auth, switching the remote to SSH, or touching `credential.helper`. Doing so breaks Mapachito's GUI setup. If a task requires network syncing, you must **HALT** and provide the exact PowerShell command for Mapachito to run natively (e.g., `"Please run in PowerShell: git fetch origin main"`).
+*   **The GitHub MCP Proxy:** For all remote repository interactions (reading issues, commenting, analyzing PR differences), you MUST exclusively use the **GitHub MCP Server** tools. The MCP connects via a direct, pre-authenticated REST/GraphQL token, entirely bypassing the local headless terminal. 
+
+### 2B. PowerShell & Node Environment (fnm)
+Mapachito's Node environment (`npm`, `yarn`, `fnm`, `npx`) is configured exclusively via PowerShell user profiles, NOT global system PATHs. 
+*   **The PowerShell Bypass Law:** You cannot run `yarn` natively in the default Bash/Cmd terminal. You MUST spawn a bypassed PowerShell session and initialize `fnm` for every Node-related command.
+*   **Execution Template:** ``powershell -ExecutionPolicy Bypass -Command "fnm env | Invoke-Expression; <COMMAND>"`` (e.g., `yarn install`, `yarn build`).
 
 ---
 

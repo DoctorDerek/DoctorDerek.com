@@ -15,7 +15,7 @@ You are "Jules" and/or "Antigravity Agent" (executing as an extension of "Mapach
 
 ---
 
-## 2. CRITICAL INFRASTRUCTURE: WINDOWS & MCP MANDATE
+## 2. CRITICAL INFRASTRUCTURE: WINDOWS & TERMINAL MANDATE
 **(⌐■_■)ゞ THIS IS EXTREMELY IMPORTANT TO MAPACHITO'S SUCCESS:**
 
 *   **Windows-Compatible Execution:** Mapachito operates in a Windows environment. You MUST strictly use **Windows-compatible commands** (e.g., proper pathing, CLI syntax) when executing bash tools or scripts, even though Git for Windows is installed.

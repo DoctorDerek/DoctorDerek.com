@@ -6,7 +6,6 @@ import medLrgLogo from "images/medLrgLogo.svg"
 import Link from "next/link"
 import EmailIcon from "./EmailIcon"
 import LinkedinIcon from "./LinkedinIcon"
-import ResumeIcon from "./ResumeIcon"
 import GithubIcon from "./GithubIcon"
 import MediumIcon from "./MediumIcon"
 import BookLinkIcon from "./BookLinkIcon"
@@ -104,9 +103,6 @@ export default function Navbar() {
                   >
                     <LinkedinIcon fill="white" />
                   </a>
-                  <a href="">
-                    <ResumeIcon fill="white" />
-                  </a>
                   <a
                     href="https://github.com/DoctorDerek"
                     target="_blank"
@@ -143,9 +139,6 @@ export default function Navbar() {
                 rel="noopener noreferrer"
               >
                 <LinkedinIcon fill="#F38B57" />
-              </a>
-              <a className="mb-2 block" href="">
-                <ResumeIcon fill="#F38B57" />
               </a>
               <a
                 className="mb-2 block"

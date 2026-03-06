@@ -9,27 +9,19 @@ import TypewriterComponent, {
   type TypewriterClass,
 } from "typewriter-effect"
 
-/** This is the string that will be typed out by the `<TypewriterComponent>`. */
 const INTRO_STRING =
-  "React Software Engineer specializing in optimizing web performance, enhancing accessiblility, and crafting highly readable code."
+  "Indie Game Dev · AI Context Engineer · I teach LLMs to think · Full-Stack SWE since 2005 · BS & MS in Bioinformatics at age 19 · Doctor of Physical Therapy"
 
 const TypewriterOnInit = (typewriter: TypewriterClass) =>
   typewriter.typeString(INTRO_STRING).start().pauseFor(3000)
 
-/**
- * We loop the animation after 3s because this animation starts
- * immediately when the page loads since we're using FullPage.js.
- *
- * When typing, we use a quite-fast-but-not-blinding 25ms delay
- * between each character. When deleting, it's blinding at 1ms.
- * */
 const TypewriterOptions: Options = { delay: 25, loop: true, deleteSpeed: 1 }
 
 const Typewriter = () => (
   <TypewriterComponent onInit={TypewriterOnInit} options={TypewriterOptions} />
 )
 
-const IntroSection = () => {
+export default function IntroSection() {
   return (
     <div className="yw-bg-img flex h-[90vh] flex-col md:h-screen">
       <div className="mx-auto w-4/5 pt-4 md:w-[90%]">
@@ -37,7 +29,7 @@ const IntroSection = () => {
           <Typewriter />
         </div>
       </div>
-      <div className="mx-auto mt-auto w-4/5 pt-4 md:w-[90%] mb-12">
+      <div className="mx-auto mt-auto w-4/5 pt-4 md:w-[90%] lg:mb-8 mb-12">
         <div className="w-3/4 md:w-11/12 lg:w-3/5">
           <div className="flex justify-around py-6 md:mx-auto lg:justify-between">
             <a
@@ -106,8 +98,16 @@ const IntroSection = () => {
           <div className="mt-4 border-t-2 border-[#d6bb61] md:w-5/12 lg:mt-8 lg:w-1/3" />
         </div>
       </div>
+      <div className="mx-auto mb-10  mt-2 w-4/5 md:w-[90%]">
+        <p className="pb-3 pt-3 text-2xl font-extralight text-[#998F8F] lg:mb-8 lg:text-3xl">
+          Clients
+        </p>
+        <div className="flex w-full justify-between">
+          <p className="w-1/4 text-4xl font-medium text-[#998F8F]">Logo</p>
+          <p className="w-1/4 text-4xl font-medium text-[#998F8F]">Logo</p>
+          <p className="w-1/4 text-4xl font-medium text-[#998F8F]">Logo</p>
+        </div>
+      </div>
     </div>
   )
 }
-
-export default IntroSection

@@ -1,10 +1,9 @@
 import Image from "next/image"
-import clock from "@/images/clock.png"
 import { useKeenSlider } from "keen-slider/react"
+import { MediumPost } from "@/utils/medium"
 
-const BlogSection = () => {
-  /* Slider styling and options */
-  const [sliderRef, slider] = useKeenSlider({
+export default function BlogSection({ posts }: { posts: MediumPost[] }) {
+  const [sliderRef] = useKeenSlider({
     loop: true,
     slides: {
       spacing: 0,
@@ -15,37 +14,7 @@ const BlogSection = () => {
       },
     },
   })
-  /* Array of objects, each object is a article */
-  const articlePosts = [
-    {
-      header: "Typescript",
-      title: "How to use Readonly in Typescript",
-      details:
-        "Exploring the power of built-in utility types for safer code — TypeScript has introduced a variety of utility types, designed to help transform and manipulate ty...",
-      time: "6 min read | May 21, 202",
-    },
-    {
-      header: "Typescript",
-      title: "2nd slide",
-      details:
-        "Exploring the power of built-in utility types for safer code — TypeScript has introduced a variety of utility types, designed to help transform and manipulate ty...",
-      time: "6 min read | May 21, 202",
-    },
-    {
-      header: "Typescript",
-      title: "3rd slide",
-      details:
-        "Exploring the power of built-in utility types for safer code — TypeScript has introduced a variety of utility types, designed to help transform and manipulate ty...",
-      time: "6 min read | May 21, 2023",
-    },
-    {
-      header: "Typescript",
-      title: "4th slide",
-      details:
-        "Exploring the power of built-in utility types for safer code — TypeScript has introduced a variety of utility types, designed to help transform and manipulate ty...",
-      time: "6 min read | May 21, 2023",
-    },
-  ]
+
 
   return (
     <div className="org-bg-img h-screen">
@@ -61,9 +30,9 @@ const BlogSection = () => {
           </div>
 
           <div className="mx-auto mt-6 w-4/5 md:w-11/12 lg:mb-auto lg:w-4/5">
-            <div className="w-[40%]">
+            <div className="w-[60%]">
               <a
-                href="#"
+                href="https://doctorderek.medium.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block rounded-tr-2xl bg-[#FFE366] px-1 py-4 text-center text-lg font-medium"
@@ -72,6 +41,24 @@ const BlogSection = () => {
               </a>
             </div>
 
+            <div className="mt-6">
+              <h3 className="text-xl font-bold">
+                Join 749+ email subscribers and 21,936+ followers.
+              </h3>
+              <a
+                href="https://doctorderek.medium.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 block rounded-tr-md bg-[#311B4D] px-4 py-5 text-center font-semibold text-[#FFE366]"
+              >
+                Follow me on Medium to subscribe to my email newsletter
+              </a>
+            </div>
+          </div>
+
+          <div className=" mx-auto mb-8 mt-auto w-4/5 text-white md:hidden">
+            <div className="flex py-2">
+              <p className="text-4xl">&darr;</p>
             <div className="mt-3">
               <p className="text-lg">6k followers on Medium</p>
             </div>
@@ -103,80 +90,52 @@ const BlogSection = () => {
                     </button>
                   </div>
                 </form>
-              </div>
-            </div>
-          </div>
-
-          {/* ========== Read Posts with Arrow =========== */}
-          <div className=" mx-auto mb-8 mt-auto w-4/5 text-white md:hidden">
-            <div className="flex py-2">
-              <p className="text-4xl">&darr;</p>
-              {/* change to hyperlink */}
-              <h4 className="my-auto ml-2 text-lg">Read posts</h4>
             </div>
           </div>
         </div>
 
-        {/* ========== Slider =========== */}
+        {/* ========== Read Posts with Arrow =========== */}
         <div className="hidden h-full md:block md:w-1/2 md:pl-4 lg:flex lg:w-2/3 lg:flex-col">
           <div className="mt-4 w-[95%] lg:mb-auto lg:mt-auto lg:w-4/5">
             <div className="lg:my-auto">
               <div ref={sliderRef} className="keen-slider hover:cursor-grab">
-                {/* ========== Article posts ========== */}
-                {articlePosts.map(
-                  (article: {
-                    /**
-                     * header: string value, subject of the article in yellow
-                     */
-                    header: string
-                    /**
-                     * title: string value name of the article in pink and used to create unique React keys
-                     */
-                    title: string
-                    /**
-                     * details: string value, preview of the article in blue
-                     */
-                    details: string
-                    /**
-                     * time: string value, date of the post & estimated time to read the entire article
-                     */
-                    time: string
-                  }) => {
-                    return (
-                      <div key={article.title} className="keen-slider__slide">
-                        <div className="">
-                          <div className="">
-                            <div
-                              key={article.header}
-                              className="mt-20 h-full w-11/12"
-                            >
-                              <div className="relative w-11/12">
-                                <p className="absolute -top-3 left-4 rounded-tr-xl bg-[#FFE366] py-1 pl-3 pr-3 text-2xl">
-                                  {article.header}
-                                </p>
-                                {/* ====== POST IMAGE ====== */}
-                                <Image
-                                  src={clock}
-                                  alt="How to user Readonly in Typescript"
-                                  className="w-full lg:h-[30vh]"
-                                />
-                                <p className="absolute -bottom-4 w-11/12 rounded-tr-xl bg-[#FB70AA] py-2 pl-3 pr-3 text-lg text-white">
-                                  {article.title}
-                                </p>
-                              </div>
-                              <div className="w-11/12 bg-[#b9e3ff] pb-4 pl-4 pt-8">
-                                <p className="lg:text-xl">{article.details}</p>
-                                <p className="mt-4 text-[#747fa6]">
-                                  {article.time}
-                                </p>
-                              </div>
-                            </div>
+                {posts.map((post) => (
+                  <div key={post.link} className="keen-slider__slide">
+                    <div className="mt-20 h-full w-11/12">
+                      <div className="relative w-11/12">
+                        <p className="absolute -top-3 left-4 rounded-tr-xl bg-[#FFE366] py-1 pl-3 pr-3 text-2xl">
+                          Medium
+                        </p>
+                        {post.thumbnail && (
+                          <div className="relative h-[30vh] w-full">
+                            <Image
+                              src={post.thumbnail}
+                              alt={post.title}
+                              fill
+                              className="object-cover"
+                            />
                           </div>
-                        </div>
+                        )}
+                        <p className="absolute -bottom-4 w-11/12 rounded-tr-xl bg-[#FB70AA] py-2 pl-3 pr-3 text-lg text-white">
+                          {post.title}
+                        </p>
                       </div>
-                    )
-                  },
-                )}
+                      <div className="w-11/12 bg-[#b9e3ff] pb-4 pl-4 pt-8">
+                        <p className="lg:text-xl">{post.description}</p>
+                        <p className="mt-4 text-[#747fa6]">
+                          {new Date(post.pubDate).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+              </div>
+            </div>
               </div>
             </div>
           </div>
@@ -185,5 +144,3 @@ const BlogSection = () => {
     </div>
   )
 }
-
-export default BlogSection

@@ -42,7 +42,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
           ["jiti", "npm:2.6.1"],\
           ["keen-slider", "npm:6.8.6"],\
-          ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26"],\
+          ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.35.0"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["postcss", "npm:8.5.6"],\
           ["prettier", "npm:3.7.4"],\
@@ -2575,7 +2575,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
           ["jiti", "npm:2.6.1"],\
           ["keen-slider", "npm:6.8.6"],\
-          ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26"],\
+          ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.35.0"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["postcss", "npm:8.5.6"],\
           ["prettier", "npm:3.7.4"],\
@@ -3383,23 +3383,23 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["framer-motion", [\
-      ["npm:12.23.26", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/framer-motion-npm-12.23.26-080a2b45e0-10c0.zip/node_modules/framer-motion/",\
+      ["npm:12.35.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/framer-motion-npm-12.35.0-cafde9b967-10c0.zip/node_modules/framer-motion/",\
         "packageDependencies": [\
-          ["framer-motion", "npm:12.23.26"]\
+          ["framer-motion", "npm:12.35.0"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:534d884a42a6781de38c356f11857f8af02fe7563dddbaac802b189281bedca53f7c4f1b7a2dcf6835a5b717fb31b297699b02b2878fd29090dc0b689d21d22f#npm:12.23.26", {\
-        "packageLocation": "./.yarn/__virtual__/framer-motion-virtual-19accf7ea2/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/framer-motion-npm-12.23.26-080a2b45e0-10c0.zip/node_modules/framer-motion/",\
+      ["virtual:a1081e730cfe7f28495aa3a603c7505146b9165200fa8c2ff1f57238ebc6ceb5656c1f1b499412518ecb2ccbf04244b1081f2d1361bedd6f15989c3c9c11849a#npm:12.35.0", {\
+        "packageLocation": "./.yarn/__virtual__/framer-motion-virtual-70ba889880/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/framer-motion-npm-12.35.0-cafde9b967-10c0.zip/node_modules/framer-motion/",\
         "packageDependencies": [\
           ["@emotion/is-prop-valid", null],\
           ["@types/emotion__is-prop-valid", null],\
           ["@types/react", "npm:19.2.7"],\
           ["@types/react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
-          ["framer-motion", "virtual:534d884a42a6781de38c356f11857f8af02fe7563dddbaac802b189281bedca53f7c4f1b7a2dcf6835a5b717fb31b297699b02b2878fd29090dc0b689d21d22f#npm:12.23.26"],\
-          ["motion-dom", "npm:12.23.23"],\
-          ["motion-utils", "npm:12.23.6"],\
+          ["framer-motion", "virtual:a1081e730cfe7f28495aa3a603c7505146b9165200fa8c2ff1f57238ebc6ceb5656c1f1b499412518ecb2ccbf04244b1081f2d1361bedd6f15989c3c9c11849a#npm:12.35.0"],\
+          ["motion-dom", "npm:12.35.0"],\
+          ["motion-utils", "npm:12.29.2"],\
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
           ["tslib", "npm:2.8.1"]\
@@ -4404,22 +4404,22 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["motion", [\
-      ["npm:12.23.26", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/motion-npm-12.23.26-b1949e0204-10c0.zip/node_modules/motion/",\
+      ["npm:12.35.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/motion-npm-12.35.0-2d17fef7d1-10c0.zip/node_modules/motion/",\
         "packageDependencies": [\
-          ["motion", "npm:12.23.26"]\
+          ["motion", "npm:12.35.0"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26", {\
-        "packageLocation": "./.yarn/__virtual__/motion-virtual-534d884a42/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/motion-npm-12.23.26-b1949e0204-10c0.zip/node_modules/motion/",\
+      ["virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.35.0", {\
+        "packageLocation": "./.yarn/__virtual__/motion-virtual-a1081e730c/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/motion-npm-12.35.0-2d17fef7d1-10c0.zip/node_modules/motion/",\
         "packageDependencies": [\
           ["@emotion/is-prop-valid", null],\
           ["@types/emotion__is-prop-valid", null],\
           ["@types/react", "npm:19.2.7"],\
           ["@types/react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
-          ["framer-motion", "virtual:534d884a42a6781de38c356f11857f8af02fe7563dddbaac802b189281bedca53f7c4f1b7a2dcf6835a5b717fb31b297699b02b2878fd29090dc0b689d21d22f#npm:12.23.26"],\
-          ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.23.26"],\
+          ["framer-motion", "virtual:a1081e730cfe7f28495aa3a603c7505146b9165200fa8c2ff1f57238ebc6ceb5656c1f1b499412518ecb2ccbf04244b1081f2d1361bedd6f15989c3c9c11849a#npm:12.35.0"],\
+          ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.35.0"],\
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
           ["tslib", "npm:2.8.1"]\
@@ -4436,20 +4436,20 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["motion-dom", [\
-      ["npm:12.23.23", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/motion-dom-npm-12.23.23-b98d569088-10c0.zip/node_modules/motion-dom/",\
+      ["npm:12.35.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/motion-dom-npm-12.35.0-6024daa1cb-10c0.zip/node_modules/motion-dom/",\
         "packageDependencies": [\
-          ["motion-dom", "npm:12.23.23"],\
-          ["motion-utils", "npm:12.23.6"]\
+          ["motion-dom", "npm:12.35.0"],\
+          ["motion-utils", "npm:12.29.2"]\
         ],\
         "linkType": "HARD"\
       }]\
     ]],\
     ["motion-utils", [\
-      ["npm:12.23.6", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/motion-utils-npm-12.23.6-c060c881d0-10c0.zip/node_modules/motion-utils/",\
+      ["npm:12.29.2", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/motion-utils-npm-12.29.2-868aec7208-10c0.zip/node_modules/motion-utils/",\
         "packageDependencies": [\
-          ["motion-utils", "npm:12.23.6"]\
+          ["motion-utils", "npm:12.29.2"]\
         ],\
         "linkType": "HARD"\
       }]\

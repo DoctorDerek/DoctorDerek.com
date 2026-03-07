@@ -37,7 +37,7 @@ const Testimonials = () => {
   ]
 
   return (
-    <div className="pink-bg-img h-screen">
+    <div className="h-screen">
       <div className="flex h-full flex-col">
         <div className="mx-auto mt-10 w-[95%] pt-2 md:mt-8 md:w-3/5 lg:mt-20 lg:w-[40%]">
           <div ref={sliderRef} className="keen-slider hover:cursor-grab">

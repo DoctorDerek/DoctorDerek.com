@@ -92,29 +92,6 @@ button {
 /* =========================== 
   Media queries
 ============================== */
-@media (min-width: 768px) {
-  .blue-bg-img {
-    background-image: url("../images/blue-bg-img.jpg");
-  }
-  .pink-bg-img {
-    background-image: url("../images/pink-bg-img.jpg");
-  }
-  .org-bg-img {
-    background-image: url("../images/org-bg-img.jpg");
-  }
-  .purple-bg-img {
-    background-image: url("../images/purple-bg-img.png");
-  }
-
-  .blue-bg-img,
-  .pink-bg-img,
-  .org-bg-img,
-  .purple-bg-img {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
   /* contact section image flip effect */
   .perspective {
     perspective: 700px;

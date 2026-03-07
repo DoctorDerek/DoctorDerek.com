@@ -4,7 +4,7 @@ export default function AiConsultancySection() {
   }
 
   return (
-    <div className="blue-bg-img h-screen flex items-center justify-center p-8">
+    <div className="h-screen flex items-center justify-center p-8">
       <div className="max-w-4xl bg-white/10 backdrop-blur-md rounded-2xl p-12 text-white border border-white/20">
         <h2 className="text-6xl font-bold mb-8">AI Evaluation Service</h2>
         <p className="text-2xl leading-relaxed mb-10">

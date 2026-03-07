@@ -93,7 +93,7 @@ const Portfolio = () => {
   }
 
   return (
-    <div className="pink-bg-img h-screen">
+    <div className="h-screen">
       <div className="py-4 md:h-[15vh]">
         <div className="mx-auto w-4/5 text-center">
           <h2 className="text-7xl lg:text-9xl">Portfolio</h2>

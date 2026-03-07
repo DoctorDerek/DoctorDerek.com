@@ -7,8 +7,6 @@ import TypewriterComponent, {
   type Options,
   type TypewriterClass,
 } from "typewriter-effect"
-import Image from "next/image"
-import IntroAnimation from "@/images/Intro-Animation.jpg"
 
 const INTRO_STRING =
   "Indie Game Dev · AI Context Engineer · I teach LLMs to think · Full-Stack SWE since 2005 · BS & MS in Bioinformatics at age 19 · Doctor of Physical Therapy"
@@ -25,7 +23,6 @@ const Typewriter = () => (
 export default function IntroSection() {
   return (
     <div className="relative flex h-[90vh] flex-col md:h-screen">
-      <Image src={IntroAnimation} alt="Intro Background" fill className="-z-10 object-cover" priority />
       <div className="mx-auto w-4/5 pt-4 md:pt-20 lg:pt-32 md:w-[90%]">
         <div className="text-3xl text-[#FB70AA] md:text-5xl lg:text-7xl">
           <Typewriter />

@@ -1,5 +1,4 @@
 import Image from "next/image"
-import IntroAnimation from "@/images/Intro-Animation.jpg"
 import Logo from "@/images/Logo.svg"
 import Navbar from "./Navbar"
 import ReactParallaxTilt from "react-parallax-tilt"
@@ -11,7 +10,6 @@ const classNames = (...args: string[]) => args.filter(Boolean).join(" ")
 export default function TopSection() {
   return (
     <div className="relative h-screen">
-      <Image src={IntroAnimation} alt="Background" fill className="-z-10 object-cover" priority />
       <Navbar />
       <div className="flex h-screen items-center justify-center">
         <ReactParallaxTilt

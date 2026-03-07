@@ -17,7 +17,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
 
 
   return (
-    <div className="org-bg-img h-screen">
+    <div className="h-screen">
       <div className="h-full md:flex md:pt-20 lg:pt-0 ">
         <div className="flex h-full flex-col text-[#311B4D] md:mx-auto md:w-1/2 lg:mx-0 lg:w-1/3">
           <div className="mx-auto w-4/5 pt-2 md:w-11/12 lg:mt-auto lg:w-4/5">

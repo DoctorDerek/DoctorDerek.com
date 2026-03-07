@@ -5,7 +5,7 @@ import Footer from "./Footer"
 
 const ContactSection = () => {
   return (
-    <div className="purple-bg-img bg-[#311B4D]">
+    <div className="bg-[#311B4D]">
       <div className="flex h-screen flex-col md:flex-row">
         <div className="mx-auto h-[45%] w-[85%] md:flex md:h-full md:w-1/2 md:flex-col md:pl-8 lg:w-[45%] lg:justify-start lg:pl-20">
           <div className="py-4 md:mb-2 md:mt-16 lg:mb-0 lg:py-0">

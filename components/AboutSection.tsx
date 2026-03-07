@@ -21,7 +21,7 @@ export default function AboutSection() {
   ]
 
   return (
-    <div className="blue-bg-img h-screen">
+    <div className="h-screen">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-3/4">
         <div className="py-4 md:relative md:py-8 lg:pb-10 lg:pt-14">
           <h2 className="text-7xl md:text-8xl lg:text-9xl lg:font-semibold">

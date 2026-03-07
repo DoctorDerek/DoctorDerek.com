@@ -29,12 +29,12 @@ export default function Navbar() {
               {/* Displays logo on small devices */}
               <Logo
                 variant="alternative"
-                className="md:hidden"
+                className="md:hidden w-32 h-auto ml-2"
               />
               {/* Displays logo on medium and large devices */}
               <Logo
                 variant="medLrg"
-                className="hidden md:mx-auto md:block"
+                className="hidden md:mx-auto md:block w-12 h-auto"
               />
             </Link>
           </div>

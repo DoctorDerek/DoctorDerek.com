@@ -61,7 +61,7 @@ export default function GlobalBackground() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
+          transition={{ duration: 1, ease: "easeInOut" }}
           className="absolute inset-0 h-full w-full"
         >
           <Component className="object-cover h-full w-full" preserveAspectRatio="xMidYMid slice" />

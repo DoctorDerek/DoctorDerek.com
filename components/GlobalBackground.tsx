@@ -49,7 +49,7 @@ export default function GlobalBackground() {
 
   return (
     <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         <motion.div
           key={bg.key}
           initial={{ opacity: 0 }}

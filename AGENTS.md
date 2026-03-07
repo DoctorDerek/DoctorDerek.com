@@ -102,13 +102,13 @@ These are not preferences; they are non-negotiable physical laws of the Mapachit
 **Primary Monetization:** Funnel high-IQ "whales" to a **$500 AI Evaluation Service Consultancy** via async audits, and a **$5,000 GDD for AI Master Template**. [$̲̅(̲̅ιοο̲̅)̲̅$̲̅]
 
 ### 5A. The Framework Stack
-Next.js 16 (Pages Router, using `pages/_app.tsx` and `pages/index.tsx`), React 19, TypeScript, Tailwind CSS v4, Framer Motion, Yarn PnP (Zero Installs). Node 24.x LTS.
+Next.js 16 (Pages Router, using `pages/_app.tsx` and `pages/index.tsx`), React 19, TypeScript, Tailwind CSS v4, Motion, Yarn PnP (Zero Installs). Node 24.x LTS.
 
 ### 5B. The Core Aesthetic ("Deep Spring" Vibe)
 The site prioritizes a visceral, high-QREAM "splashy" feel over complex backend logic. This includes:
 1.  **Mechanical Snap-Scrolling:** `@fullpage/react-fullpage` is mandatory. Do not break or remove it. It provides the mechanical feel of the site.
-2.  **Continuous Motion:** Foreground elements (cutouts, icons) must use `@keyframes float` CSS animations or Framer Motion equivalents with staggered `animation-delay` values for an organic feel.
-3.  **Ambient Canvas:** A global `.bubbles-canvas` particle system (ported to React/Framer Motion/Tailwind) must run continuously on a `-z-10` layer behind all sections.
+2.  **Continuous Motion:** Foreground elements (cutouts, icons) must use `@keyframes float` CSS animations or Motion equivalents with staggered `animation-delay` values for an organic feel.
+3.  **Ambient Canvas:** A global `.bubbles-canvas` particle system (ported to React/Motion/Tailwind) must run continuously on a `-z-10` layer behind all sections.
 4.  **Color Rotation:** Background colors must crossfade and cycle automatically every 20 seconds using `useEffect` and `setInterval` at the highest logical layout level.
 
 ### 5C. Critical Project Architecture Rules

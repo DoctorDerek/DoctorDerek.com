@@ -92,48 +92,20 @@ button {
 /* =========================== 
   Media queries
 ============================== */
-@media (min-width: 768px) {
-  /* background images */
-  .yw-bg-img {
-    background-image: url("../images/Intro-Animation.jpg");
-  }
-  .blue-bg-img {
-    background-image: url("../images/blue-bg-img.jpg");
-  }
-  .pink-bg-img {
-    background-image: url("../images/pink-bg-img.jpg");
-  }
-  .org-bg-img {
-    background-image: url("../images/org-bg-img.jpg");
-  }
-  .purple-bg-img {
-    background-image: url("../images/purple-bg-img.png");
-  }
-
-  .yw-bg-img,
-  .blue-bg-img,
-  .pink-bg-img,
-  .org-bg-img,
-  .purple-bg-img {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
-  /* contact section image flip effect */
-  .perspective {
-    perspective: 700px;
-  }
-  .front,
-  .back {
-    backface-visibility: hidden;
-  }
-  .wrapper {
-    transition: transform 1.4s ease-out;
-    transform-style: preserve-3d;
-  }
-  .wrapper:hover,
-  .back {
-    transform: rotateY(180deg);
-  }
+/* contact section image flip effect */
+.perspective {
+  perspective: 700px;
 }
+.front,
+.back {
+  backface-visibility: hidden;
+}
+.wrapper {
+  transition: transform 1.4s ease-out;
+  transform-style: preserve-3d;
+}
+.wrapper:hover,
+.back {
+  transform: rotateY(180deg);
+}
+

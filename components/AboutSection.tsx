@@ -21,9 +21,9 @@ export default function AboutSection() {
   ]
 
   return (
-    <div className="blue-bg-img h-screen">
+    <div className="h-screen">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-3/4">
-        <div className="py-4 md:relative md:py-8 lg:pb-10 lg:pt-14">
+        <div className="py-4 md:relative md:py-8 lg:pb-10 lg:pt-14 text-white drop-shadow-md">
           <h2 className="text-7xl md:text-8xl lg:text-9xl lg:font-semibold">
             About
           </h2>
@@ -36,7 +36,7 @@ export default function AboutSection() {
               {techStack.map((item, index) => (
                 <p
                   key={`${item}-tech-stack-key${index}`}
-                  className="mb-2 rounded-tr-xl bg-[#FFE366] py-1 pl-2 pr-2 md:text-sm md:font-semibold lg:text-lg"
+                  className="mb-2 rounded-tr-xl bg-white/20 backdrop-blur-md border border-white/30 py-1 pl-2 pr-2 md:text-sm md:font-semibold lg:text-lg text-white"
                 >
                   {item}
                 </p>
@@ -53,7 +53,7 @@ export default function AboutSection() {
               className="w-full object-cover"
             />
           </div>
-          <div className="absolute -bottom-12 left-6 rounded-tl-3xl bg-[#FB70AA] px-6 py-5 md:-bottom-8 md:left-auto md:right-0 md:w-[55%] lg:bottom-12 lg:left-auto lg:right-36 lg:w-1/2 lg:px-10 lg:py-7">
+          <div className="absolute -bottom-12 left-6 rounded-tl-3xl bg-black/40 backdrop-blur-xl border border-white/20 px-6 py-5 md:-bottom-8 md:left-auto md:right-0 md:w-[55%] lg:bottom-12 lg:left-auto lg:right-36 lg:w-1/2 lg:px-10 lg:py-7">
             <div className="max-h-[40vh] overflow-y-auto pr-2 text-lg leading-7 text-white lg:text-xl lg:leading-9">
               {ABOUT_BIO_LONG.map((
                 paragraph,

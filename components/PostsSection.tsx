@@ -17,11 +17,11 @@ export default function PostsSection({ posts }: { posts: MediumPost[] }) {
                 <div className="ml-2">
                   <div className="mt-20 h-full w-11/12">
                     <div className="relative w-11/12">
-                      <p className="absolute -top-3 left-4 rounded-tr-xl bg-[#FFE366] py-1 pl-3 pr-3 text-2xl">
+                      <p className="absolute -top-3 left-4 rounded-tr-xl bg-black/40 backdrop-blur-md border border-white/20 py-1 pl-3 pr-3 text-2xl text-white">
                         Medium
                       </p>
                       {post.thumbnail && (
-                        <div className="relative h-[40vh] w-full">
+                        <div className="relative h-[40vh] w-full rounded-tl-xl overflow-hidden">
                           <Image
                             src={post.thumbnail}
                             alt={post.title}
@@ -30,13 +30,13 @@ export default function PostsSection({ posts }: { posts: MediumPost[] }) {
                           />
                         </div>
                       )}
-                      <p className="absolute -bottom-4 w-11/12 rounded-tr-xl bg-[#FB70AA] py-2 pl-3 pr-3 text-lg text-white">
+                      <p className="absolute -bottom-4 w-11/12 rounded-tr-xl bg-black/50 backdrop-blur-md border border-white/20 py-2 pl-3 pr-3 text-lg text-white">
                         {post.title}
                       </p>
                     </div>
-                    <div className="w-11/12 bg-[#b9e3ff] pb-4 pl-4 pt-8">
+                    <div className="w-11/12 bg-white/10 backdrop-blur-md border-x border-b border-white/20 pb-4 pl-4 pt-8 text-white rounded-br-xl">
                       <p className="text-xl">{post.description}</p>
-                      <p className="mt-4 text-[#747fa6]">
+                      <p className="mt-4 text-white/70">
                         {new Date(post.pubDate).toLocaleDateString("en-US", {
                           month: "short",
                           day: "numeric",

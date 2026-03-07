@@ -7,7 +7,7 @@ export default function SectionContainer({
   children: React.ReactNode
 }) {
   return (
-    <div className="section flex h-screen flex-col bg-[#FFE366] md:flex-row">
+    <div className="section flex h-screen flex-col md:flex-row">
       <Navbar />
       {children}
     </div>

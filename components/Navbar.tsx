@@ -1,8 +1,6 @@
 import { useState } from "react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
-import Image from "next/image"
-import Logo from "images/Logo.png"
-import medLrgLogo from "images/medLrgLogo.svg"
+import Logo from "@/components/ui/Logo"
 import Link from "next/link"
 import EmailIcon from "./EmailIcon"
 import LinkedinIcon from "./LinkedinIcon"
@@ -24,38 +22,35 @@ export default function Navbar() {
   return (
     <div className="h-[7vh] md:h-0">
       {/* ======== NAVBAR ======= */}
-      <div className="sticky top-0 z-40 flex h-full bg-[#FFE366] shadow-xs sm:gap-x-6 sm:px-6 md:h-screen md:w-14 md:px-0">
+      <div className="sticky top-0 z-40 flex h-full bg-white/10 backdrop-blur-md shadow-xs sm:gap-x-6 sm:px-6 md:h-screen md:w-14 md:px-0 md:border-r md:border-white/20">
         <div className="flex w-full md:flex-col">
           <div className="w-1/4 pl-3 pt-3 md:order-2 md:h-[40vh] md:w-full md:pl-0 md:pt-0">
             <Link href="/" className="md:block md:h-1/2 md:w-full md:pt-4">
               {/* Displays logo on small devices */}
-              <Image
-                src={Logo}
-                object-fit="contain"
-                alt="Logo"
-                className="md:hidden"
+              <Logo
+                variant="alternative"
+                className="md:hidden w-32 h-auto ml-2"
               />
               {/* Displays logo on medium and large devices */}
-              <Image
-                src={medLrgLogo}
-                alt="Logo"
-                className="hidden md:mx-auto md:block"
+              <Logo
+                variant="medLrg"
+                className="hidden md:mx-auto md:block w-12 h-auto"
               />
             </Link>
           </div>
           <button
             type="button"
-            className="text-[#FFE366]md:mt-60 ml-auto bg-[#89cffd] px-3.5 pt-1 md:order-1 md:ml-0 md:py-3"
+            className="text-white md:mt-60 ml-auto bg-white/20 backdrop-blur-md px-3.5 pt-1 md:order-1 md:ml-0 md:py-3"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             {sidebarOpen ? (
               <XMarkIcon
-                className="h-6 w-6 text-[#FFE366]"
+                className="h-6 w-6 text-white"
                 aria-hidden="true"
               />
             ) : (
               <Bars3Icon
-                className="h-6 w-6 text-[#FFE366]"
+                className="h-6 w-6 text-white"
                 aria-hidden="true"
               />
             )}
@@ -75,7 +70,7 @@ export default function Navbar() {
               sidebarOpen ? "translate-x-0" : "-translate-x-full"
             } `}
           >
-            <div className="flex h-full w-11/12 flex-col content-between rounded-tr-2xl bg-[#89cffd] pl-5 md:w-3/4">
+            <div className="flex h-full w-11/12 flex-col content-between rounded-tr-2xl bg-black/40 backdrop-blur-xl border border-white/20 pl-5 text-white md:w-3/4">
               <ul role="list" className="pt-8">
                 {navigation.map((item) => (
                   <li className="hover:text-white" key={item.name}>

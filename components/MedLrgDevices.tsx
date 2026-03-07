@@ -18,32 +18,32 @@ export default function MedLrgDevices({ posts }: { posts: MediumPost[] }) {
       render={() => {
         return (
           <ReactFullpage.Wrapper>
-            <div className="section h-screen bg-[#FFE366]">
+            <div className="section h-screen">
               <TopSection />
             </div>
 
-            <div className="section intro flex h-screen flex-col bg-[#FFE366] md:flex-row">
+            <div className="section intro flex h-screen flex-col md:flex-row">
               <IntroSection />
             </div>
 
-            <div className="section flex h-screen flex-col bg-[#b9e3ff] md:flex-row">
+            <div className="section flex h-screen flex-col md:flex-row">
               <AboutSection />
             </div>
 
-            <div className="section bg-[#b9e3ff]">
+            <div className="section">
               <AiConsultancySection />
             </div>
 
-            <div className="section bg-[#FFE366]">
+            <div className="section">
               <WorkExperienceSection />
             </div>
 
             {/*========= TESIMONIALS SECTION ========= */}
-            <div className="section bg-[#FB70AA]">
+            <div className="section">
               <Testimonials />
             </div>
 
-            <div className="section bg-[#F38B57]">
+            <div className="section">
               <BlogSection posts={posts} />
             </div>
 

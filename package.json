@@ -3,8 +3,8 @@
   "version": "0.8.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write ."
@@ -13,7 +13,7 @@
     "@fullpage/react-fullpage": "^0",
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
-    "@rive-app/react-canvas": "^4.27.0",
+    "@rive-app/react-canvas": "^4",
     "keen-slider": "^6",
     "motion": "^12",
     "next": "^16",
@@ -25,6 +25,7 @@
     "typewriter-effect": "^2"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^24",
     "@types/react": "^19",

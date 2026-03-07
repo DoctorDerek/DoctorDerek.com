@@ -19,10 +19,10 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   return (
     <div className="h-screen">
       <div className="h-full md:flex md:pt-20 lg:pt-0 ">
-        <div className="flex h-full flex-col text-[#311B4D] md:mx-auto md:w-1/2 lg:mx-0 lg:w-1/3">
+        <div className="flex h-full flex-col text-white md:mx-auto md:w-1/2 lg:mx-0 lg:w-1/3">
           <div className="mx-auto w-4/5 pt-2 md:w-11/12 lg:mt-auto lg:w-4/5">
-            <h2 className="text-7xl lg:text-9xl">Blog</h2>
-            <p className="font-base pt-6 text-2xl leading-8">
+            <h2 className="text-7xl lg:text-9xl drop-shadow-md">Blog</h2>
+            <p className="font-base pt-6 pb-2 px-4 rounded-xl bg-black/20 backdrop-blur-md text-2xl leading-8">
               In addition to being a knowledgeable and experienced developer,
               Derek is an avid writer who has been contributing his thoughts to
               the industry since 2019.
@@ -35,7 +35,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                 href="https://doctorderek.medium.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-tr-2xl bg-[#FFE366] px-1 py-4 text-center text-lg font-medium"
+                className="block rounded-tr-2xl bg-white/20 backdrop-blur-md border border-white/30 text-white px-1 py-4 text-center text-lg font-medium hover:bg-white/30 transition-colors"
               >
                 View All Posts
               </a>
@@ -49,7 +49,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                 href="https://doctorderek.medium.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 block rounded-tr-md bg-[#311B4D] px-4 py-5 text-center font-semibold text-[#FFE366]"
+                className="mt-4 block rounded-tr-md bg-black/30 backdrop-blur-md border border-white/20 px-4 py-5 text-center font-semibold text-white hover:bg-black/40 transition-colors"
               >
                 Follow me on Medium to subscribe to my email newsletter
               </a>
@@ -84,7 +84,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                   <div className="w-1/4">
                     <button
                       type="submit"
-                      className="text-md flex w-full items-center justify-center rounded-tr-md bg-[#311B4D] py-5 font-semibold text-[#FFE366]"
+                      className="text-md flex w-full items-center justify-center rounded-tr-md bg-black/30 backdrop-blur-md border border-white/20 py-5 font-semibold text-white hover:bg-black/40 transition-colors"
                     >
                       Sign up
                     </button>
@@ -103,11 +103,11 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                   <div key={post.link} className="keen-slider__slide">
                     <div className="mt-20 h-full w-11/12">
                       <div className="relative w-11/12">
-                        <p className="absolute -top-3 left-4 rounded-tr-xl bg-[#FFE366] py-1 pl-3 pr-3 text-2xl">
+                        <p className="absolute -top-3 left-4 rounded-tr-xl bg-black/40 backdrop-blur-md border border-white/20 py-1 pl-3 pr-3 text-2xl text-white">
                           Medium
                         </p>
                         {post.thumbnail && (
-                          <div className="relative h-[30vh] w-full">
+                          <div className="relative h-[30vh] w-full rounded-tl-xl overflow-hidden">
                             <Image
                               src={post.thumbnail}
                               alt={post.title}
@@ -116,13 +116,13 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                             />
                           </div>
                         )}
-                        <p className="absolute -bottom-4 w-11/12 rounded-tr-xl bg-[#FB70AA] py-2 pl-3 pr-3 text-lg text-white">
+                        <p className="absolute -bottom-4 w-11/12 rounded-tr-xl bg-black/50 backdrop-blur-md border border-white/20 py-2 pl-3 pr-3 text-lg text-white">
                           {post.title}
                         </p>
                       </div>
-                      <div className="w-11/12 bg-[#b9e3ff] pb-4 pl-4 pt-8">
+                      <div className="w-11/12 bg-white/10 backdrop-blur-md border-x border-b border-white/20 pb-4 pl-4 pt-8 text-white rounded-br-xl">
                         <p className="lg:text-xl">{post.description}</p>
-                        <p className="mt-4 text-[#747fa6]">
+                        <p className="mt-4 text-white/70">
                           {new Date(post.pubDate).toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",

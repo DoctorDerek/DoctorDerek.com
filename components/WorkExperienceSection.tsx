@@ -13,12 +13,12 @@ export default function WorkExperienceSection() {
   return (
     <div className="relative h-screen flex flex-col items-center justify-center p-8">
       <Image src={IntroAnimation} alt="Work Experience Background" fill className="-z-10 object-cover" priority={false} />
-      <h2 className="text-7xl font-bold mb-12 text-[#311B4D]">The Architect’s Evolution</h2>
+      <h2 className="text-7xl font-bold mb-12 text-white drop-shadow-md">The Architect’s Evolution</h2>
       <div className="space-y-8 max-w-4xl w-full">
         {evolution.map((item, index) => (
-          <div key={index} className="flex flex-col md:flex-row md:items-center gap-4 bg-[#FFE366]/50 p-6 rounded-tr-3xl border-l-4 border-[#FB70AA]">
-            <span className="text-2xl font-bold text-[#311B4D] min-w-[200px]">{item.period}</span>
-            <span className="text-2xl text-[#311B4D]">{item.skills}</span>
+          <div key={index} className="flex flex-col md:flex-row md:items-center gap-4 bg-white/10 backdrop-blur-md p-6 rounded-tr-3xl border-l-4 border-white/50 border-t border-r border-b border-t-white/10 border-r-white/10 border-b-white/10 text-white">
+            <span className="text-2xl font-bold text-white min-w-[200px]">{item.period}</span>
+            <span className="text-2xl text-white/90">{item.skills}</span>
           </div>
         ))}
 

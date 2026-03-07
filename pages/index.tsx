@@ -45,7 +45,7 @@ function DisplaySections({
               <TopSection />
             </div>
 
-            <div className="section intro flex h-screen flex-col md:flex-row">
+            <div className="section flex h-screen flex-col md:flex-row">
               <IntroSection />
             </div>
 

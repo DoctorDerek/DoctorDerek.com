@@ -20,7 +20,7 @@ const techStack = [
 
 const TechStackSection = () => {
   return (
-    <div className="h-screen bg-[#b9e3ff]">
+    <div className="h-screen text-white drop-shadow-md">
       <div className="mx-auto w-4/5">
         <div className="mb-auto py-4">
           <h2 className="text-7xl">About</h2>
@@ -34,31 +34,31 @@ const TechStackSection = () => {
               className="w-full object-cover"
             />
           </div>
-          <div className="h-3/5">
-            <div className="w-4/5">
-              <p className="restorabold pb-3 pt-5 text-2xl">Tech Stack</p>
-            </div>
-            {/* ========= TECH STACK ============ */}
-            <div className="flex w-5/6 flex-wrap content-between gap-x-2">
-              {techStack.map(
-                (
-                  /**
-                   * item: string value of the technologies used and to create unique React keys with index
-                   */
-                  item: string,
-                  /**
-                   * index: number value used with item to create unique React keys
-                   */
-                  index: number,
-                ) => (
-                  <p
-                    key={`techstack${item + index}reactkey`}
-                    className="mb-3 rounded-tr-xl bg-[#FFE366] py-1 pl-2 pr-2 text-xl"
-                  >
-                    {item}
-                  </p>
-                ),
-              )}
+            <div className="h-3/5">
+              <div className="w-4/5">
+                <p className="restorabold pb-3 pt-5 text-2xl text-white">Tech Stack</p>
+              </div>
+              {/* ========= TECH STACK ============ */}
+              <div className="flex w-5/6 flex-wrap content-between gap-x-2">
+                {techStack.map(
+                  (
+                    /**
+                     * item: string value of the technologies used and to create unique React keys with index
+                     */
+                    item: string,
+                    /**
+                     * index: number value used with item to create unique React keys
+                     */
+                    index: number,
+                  ) => (
+                    <p
+                      key={`techstack${item + index}reactkey`}
+                      className="mb-3 rounded-tr-xl bg-white/20 backdrop-blur-md text-white border border-white/30 py-1 pl-2 pr-2 text-xl"
+                    >
+                      {item}
+                    </p>
+                  ),
+                )}
             </div>
           </div>
         </div>

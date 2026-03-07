@@ -95,7 +95,7 @@ const Portfolio = () => {
   return (
     <div className="h-screen">
       <div className="py-4 md:h-[15vh]">
-        <div className="mx-auto w-4/5 text-center">
+        <div className="mx-auto w-4/5 text-center text-white drop-shadow-md">
           <h2 className="text-7xl lg:text-9xl">Portfolio</h2>
         </div>
       </div>
@@ -111,8 +111,8 @@ const Portfolio = () => {
                 <div className="mx-auto">
                   <div>
                     {/* white space used as a placeholder for project image */}
-                    <div className="mx-auto mb-1 h-[30vh] w-11/12 rounded-tr-3xl bg-white"></div>
-                    <div className="mx-auto w-11/12 bg-[#89CFFD] pb-4 pl-3 pr-3 pt-2">
+                    <div className="mx-auto mb-1 h-[30vh] w-11/12 rounded-tr-3xl bg-white/10 backdrop-blur-md border border-white/20"></div>
+                    <div className="mx-auto w-11/12 bg-black/40 backdrop-blur-md border-x border-b border-white/20 text-white rounded-br-3xl pb-4 pl-3 pr-3 pt-2">
                       <h3 className="mb-2 text-3xl">{item.projectTitle}</h3>
                       <p className="text-xl">{item.details}</p>
                       <div className="mt-3 flex gap-x-2">
@@ -125,7 +125,7 @@ const Portfolio = () => {
                           ) => (
                             <p
                               key={`${paragraph}${item.projectTitle}`}
-                              className="mb-2 rounded-tr-xl bg-[#FFE366] py-1 pl-2 pr-2 text-xl"
+                              className="mb-2 rounded-tr-xl bg-white/20 backdrop-blur-md border border-white/30 text-white py-1 pl-2 pr-2 text-xl"
                             >
                               {paragraph}
                             </p>
@@ -148,7 +148,7 @@ const Portfolio = () => {
             <div
               key={`portfolio-work${item.projectTitle}`}
               onClick={() => handleModal(item.projectTitle)}
-              className="h-1/6 items-center justify-around rounded-tr-3xl bg-[#89cffd] px-2 hover:cursor-pointer hover:bg-[#B9E3FF] md:flex md:shrink"
+              className="h-1/6 items-center justify-around rounded-tr-3xl bg-white/10 backdrop-blur-md text-white border border-white/20 px-2 hover:cursor-pointer hover:bg-white/20 transition-colors md:flex md:shrink"
             >
               <div className="md:w-[15%]">
                 <h3 className="restorabold text-lg lg:text-2xl">
@@ -173,7 +173,7 @@ const Portfolio = () => {
                     return (
                       <p
                         key={`${item.projectTitle + str + index}`}
-                        className="mb-2 rounded-tr-xl bg-[#FFE366] py-1 pl-2 pr-2 lg:mb-0 lg:text-lg"
+                        className="mb-2 rounded-tr-xl bg-white/20 backdrop-blur-md text-white border border-white/30 py-1 pl-2 pr-2 lg:mb-0 lg:text-lg"
                       >
                         {str}
                       </p>

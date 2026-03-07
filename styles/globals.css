@@ -92,20 +92,20 @@ button {
 /* =========================== 
   Media queries
 ============================== */
-  /* contact section image flip effect */
-  .perspective {
-    perspective: 700px;
-  }
-  .front,
-  .back {
-    backface-visibility: hidden;
-  }
-  .wrapper {
-    transition: transform 1.4s ease-out;
-    transform-style: preserve-3d;
-  }
-  .wrapper:hover,
-  .back {
-    transform: rotateY(180deg);
-  }
+/* contact section image flip effect */
+.perspective {
+  perspective: 700px;
 }
+.front,
+.back {
+  backface-visibility: hidden;
+}
+.wrapper {
+  transition: transform 1.4s ease-out;
+  transform-style: preserve-3d;
+}
+.wrapper:hover,
+.back {
+  transform: rotateY(180deg);
+}
+

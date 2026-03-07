@@ -66,11 +66,11 @@ const Portfolio = () => {
       /**
        * isClicked: boolean value to display the project that was clicked
        */
-      isClicked: Boolean
+      isClicked: boolean
     }[]
   >(projects)
-  const [showModal, setShowModal] = useState<Boolean>(false)
-  const [sliderRef, slider] = useKeenSlider({
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [sliderRef] = useKeenSlider({
     loop: true,
   })
 

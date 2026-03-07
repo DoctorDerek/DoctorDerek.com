@@ -13,7 +13,6 @@ import TopSection from "@/components/TopSection"
 import Footer from "@/components/Footer"
 import MedLrgDevices from "@/components/MedLrgDevices"
 import getMediumPosts, { MediumPost } from "@/utils/medium"
-import SectionContainer from "@/components/SectionContainer"
 import dynamic from "next/dynamic"
 
 const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
@@ -93,8 +92,8 @@ function useWindowWidth() {
   const [width, setWidth] = useState(0)
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (!width) setWidth(window.innerWidth)
       const handleResize = () => setWidth(window.innerWidth)
+      if (!width) handleResize()
       window.addEventListener("resize", handleResize)
       return () => window.removeEventListener("resize", handleResize)
     }

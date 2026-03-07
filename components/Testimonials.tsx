@@ -1,10 +1,10 @@
-import React, { Fragment } from "react"
+import React from "react"
 import Image from "next/image"
 import JohnDoe from "@/images/johndoe.png"
 import { useKeenSlider } from "keen-slider/react"
 
 const Testimonials = () => {
-  const [sliderRef, slider] = useKeenSlider({
+  const [sliderRef] = useKeenSlider({
     loop: true,
   })
 

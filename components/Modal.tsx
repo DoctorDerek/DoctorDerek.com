@@ -23,16 +23,16 @@ export default function Modal({
     /**
      * isClicked: Boolean value, used to determine which project should be displayed in the modal
      */
-    isClicked: Boolean
+    isClicked: boolean
   }[]
   /**
    * showModal: Hook boolean value displays or hides the modal
    */
-  showModal: Boolean
+  showModal: boolean
   /**
    * setShowModal: function that updates hook boolean value
    */
-  setShowModal: Function
+  setShowModal: (value: boolean) => void
 }) {
   return (
     <Transition.Root show={showModal ? true : false} as={Fragment}>

@@ -1,8 +1,6 @@
 import { useState } from "react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
-import Image from "next/image"
-import Logo from "images/Logo.png"
-import medLrgLogo from "images/medLrgLogo.svg"
+import Logo from "@/components/ui/Logo"
 import Link from "next/link"
 import EmailIcon from "./EmailIcon"
 import LinkedinIcon from "./LinkedinIcon"
@@ -29,16 +27,13 @@ export default function Navbar() {
           <div className="w-1/4 pl-3 pt-3 md:order-2 md:h-[40vh] md:w-full md:pl-0 md:pt-0">
             <Link href="/" className="md:block md:h-1/2 md:w-full md:pt-4">
               {/* Displays logo on small devices */}
-              <Image
-                src={Logo}
-                object-fit="contain"
-                alt="Logo"
+              <Logo
+                variant="alternative"
                 className="md:hidden"
               />
               {/* Displays logo on medium and large devices */}
-              <Image
-                src={medLrgLogo}
-                alt="Logo"
+              <Logo
+                variant="medLrg"
                 className="hidden md:mx-auto md:block"
               />
             </Link>

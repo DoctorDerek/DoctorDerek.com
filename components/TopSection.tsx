@@ -1,5 +1,4 @@
-import Image from "next/image"
-import Logo from "@/images/Logo.svg"
+import Logo from "@/components/ui/Logo"
 import Navbar from "./Navbar"
 import ReactParallaxTilt from "react-parallax-tilt"
 
@@ -20,9 +19,8 @@ export default function TopSection() {
           // These classes are for a larger "hit box" for the parallax effect:
           className="flex h-[60vh] w-[60vw] items-center justify-center"
         >
-          <Image
-            src={Logo}
-            alt={"Derek Develops Logo"}
+          <Logo
+            variant="alternative"
             className={classNames("object-fill")}
           />
         </ReactParallaxTilt>

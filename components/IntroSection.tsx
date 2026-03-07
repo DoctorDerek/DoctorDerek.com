@@ -7,6 +7,8 @@ import TypewriterComponent, {
   type Options,
   type TypewriterClass,
 } from "typewriter-effect"
+import Image from "next/image"
+import IntroAnimation from "@/images/Intro-Animation.jpg"
 
 const INTRO_STRING =
   "Indie Game Dev · AI Context Engineer · I teach LLMs to think · Full-Stack SWE since 2005 · BS & MS in Bioinformatics at age 19 · Doctor of Physical Therapy"
@@ -22,8 +24,9 @@ const Typewriter = () => (
 
 export default function IntroSection() {
   return (
-    <div className="yw-bg-img flex h-[90vh] flex-col md:h-screen">
-      <div className="mx-auto w-4/5 pt-4 md:w-[90%]">
+    <div className="relative flex h-[90vh] flex-col md:h-screen">
+      <Image src={IntroAnimation} alt="Intro Background" fill className="-z-10 object-cover" priority />
+      <div className="mx-auto w-4/5 pt-4 md:pt-20 lg:pt-32 md:w-[90%]">
         <div className="text-3xl text-[#FB70AA] md:text-5xl lg:text-7xl">
           <Typewriter />
         </div>
@@ -32,7 +35,7 @@ export default function IntroSection() {
         <div className="w-3/4 md:w-11/12 lg:w-3/5">
           <div className="flex justify-around py-6 md:mx-auto lg:justify-between">
             <a
-              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl"
+              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl transition-transform duration-200 hover:scale-110 active:scale-95"
               href="mailto:derekraustin@gmail.com"
             >
               <EmailIcon fill="#F38B57" />
@@ -41,7 +44,7 @@ export default function IntroSection() {
               </span>
             </a>
             <a
-              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl"
+              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl transition-transform duration-200 hover:scale-110 active:scale-95"
               href="https://www.linkedin.com/in/derek-austin/"
               target="_blank"
               rel="noopener noreferrer"
@@ -53,7 +56,7 @@ export default function IntroSection() {
             </a>
             <a
               href="https://github.com/DoctorDerek"
-              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl"
+              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl transition-transform duration-200 hover:scale-110 active:scale-95"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -64,7 +67,7 @@ export default function IntroSection() {
             </a>
             <a
               href="https://doctorderek.medium.com/"
-              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl"
+              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl transition-transform duration-200 hover:scale-110 active:scale-95"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -74,7 +77,7 @@ export default function IntroSection() {
               </span>
             </a>
             <a
-              className="lg:xl text-lg text-[#F38B57] md:flex"
+              className="lg:xl text-lg text-[#F38B57] md:flex transition-transform duration-200 hover:scale-110 active:scale-95"
               href="https://www.amazon.com/dp/B0BRJDLJ43"
               target="_blank"
               rel="noopener noreferrer"

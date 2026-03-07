@@ -93,10 +93,6 @@ button {
   Media queries
 ============================== */
 @media (min-width: 768px) {
-  /* background images */
-  .yw-bg-img {
-    background-image: url("../images/Intro-Animation.jpg");
-  }
   .blue-bg-img {
     background-image: url("../images/blue-bg-img.jpg");
   }
@@ -110,7 +106,6 @@ button {
     background-image: url("../images/purple-bg-img.png");
   }
 
-  .yw-bg-img,
   .blue-bg-img,
   .pink-bg-img,
   .org-bg-img,

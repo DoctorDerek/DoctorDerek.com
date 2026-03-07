@@ -1,3 +1,5 @@
+import Image from "next/image"
+import IntroAnimation from "@/images/Intro-Animation.jpg"
 
 export default function WorkExperienceSection() {
   const evolution = [
@@ -9,7 +11,8 @@ export default function WorkExperienceSection() {
   ]
 
   return (
-    <div className="yw-bg-img h-screen flex flex-col items-center justify-center p-8">
+    <div className="relative h-screen flex flex-col items-center justify-center p-8">
+      <Image src={IntroAnimation} alt="Work Experience Background" fill className="-z-10 object-cover" priority={false} />
       <h2 className="text-7xl font-bold mb-12 text-[#311B4D]">The Architect’s Evolution</h2>
       <div className="space-y-8 max-w-4xl w-full">
         {evolution.map((item, index) => (

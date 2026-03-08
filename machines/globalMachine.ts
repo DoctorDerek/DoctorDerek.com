@@ -1,27 +1,27 @@
-import { setup } from 'xstate';
-import { createActorContext } from '@xstate/react';
+import { setup } from "xstate"
+import { createActorContext } from "@xstate/react"
 
 export const globalMachine = setup({
   types: {
     context: {} as Record<string, never>,
-    events: {} as { type: 'TOGGLE_LOGO' },
+    events: {} as { type: "TOGGLE_LOGO" },
   },
 }).createMachine({
-  id: 'global',
-  initial: 'alternative',
+  id: "global",
+  initial: "alternative",
   context: {},
   states: {
     alternative: {
       on: {
-        TOGGLE_LOGO: 'cropped',
+        TOGGLE_LOGO: "cropped",
       },
     },
     cropped: {
       on: {
-        TOGGLE_LOGO: 'alternative',
+        TOGGLE_LOGO: "alternative",
       },
     },
   },
-});
+})
 
-export const GlobalStateContext = createActorContext(globalMachine);
+export const GlobalStateContext = createActorContext(globalMachine)

@@ -1,4 +1,4 @@
-import LogoAlternative from "@/images/Logo Alternative.svg"
+import LogoAlternative from "@/images/Logo Alternative-cropped.svg"
 import MedLrgLogo from "@/images/medLrgLogo.svg"
 
 type LogoProps = {

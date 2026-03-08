@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
-import Background0 from "@/public/images/Background.svg"
-import Background1 from "@/public/images/Background-1.svg"
-import Background2 from "@/public/images/Background-2.svg"
-import Background3 from "@/public/images/Background-3.svg"
-import Background4 from "@/public/images/Background-4.svg"
-import Background5 from "@/public/images/Background-5.svg"
-import Background6 from "@/public/images/Background-6.svg"
+import Background0 from "@/images/Background.svg"
+import Background1 from "@/images/Background-1.svg"
+import Background2 from "@/images/Background-2.svg"
+import Background3 from "@/images/Background-3.svg"
+import Background4 from "@/images/Background-4.svg"
+import Background5 from "@/images/Background-5.svg"
+import Background6 from "@/images/Background-6.svg"
 
 const BACKGROUNDS = [
   { standard: Background0, inverse: Background1 },

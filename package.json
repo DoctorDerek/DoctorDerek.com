@@ -14,6 +14,7 @@
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
     "@rive-app/react-canvas": "^4",
+    "@xstate/react": "^6.1.0",
     "keen-slider": "^6",
     "motion": "^12",
     "next": "^16",
@@ -22,7 +23,8 @@
     "react-parallax-tilt": "^1",
     "rss-parser": "^3.13.0",
     "sharp": "^0",
-    "typewriter-effect": "^2"
+    "typewriter-effect": "^2",
+    "xstate": "^5.28.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
@@ -43,5 +45,10 @@
   "engines": {
     "node": "24.x"
   },
-  "packageManager": "yarn@4.13.0"
+  "packageManager": "yarn@4.13.0",
+  "dependenciesMeta": {
+    "prettier-plugin-tailwindcss@0.7.2": {
+      "unplugged": true
+    }
+  }
 }

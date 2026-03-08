@@ -23,24 +23,24 @@ export default function Navbar() {
     <div className="h-[7vh] md:h-0">
       {/* ======== NAVBAR ======= */}
       <div className="sticky top-0 z-40 flex h-full bg-white/10 backdrop-blur-md shadow-xs sm:gap-x-6 sm:px-6 md:h-screen md:w-14 md:px-0 md:border-r md:border-white/20">
-        <div className="flex w-full md:flex-col">
-          <div className="w-1/4 pl-3 pt-3 md:order-2 md:h-[40vh] md:w-full md:pl-0 md:pt-0">
-            <Link href="/" className="md:block md:h-1/2 md:w-full md:pt-4">
+        <div className="flex h-full w-full items-center md:flex-col md:items-stretch">
+          <div className="flex items-center pl-3 md:order-2 md:h-[40vh] md:w-full md:pl-0 md:justify-center">
+            <Link href="/" className="flex items-center md:h-1/2 md:w-full md:justify-center">
               {/* Displays logo on small devices */}
               <Logo
                 variant="alternative"
-                className="md:hidden w-32 h-auto ml-2"
+                className="ml-2 h-auto w-32 md:hidden md:ml-0"
               />
               {/* Displays logo on medium and large devices */}
               <Logo
                 variant="medLrg"
-                className="hidden md:mx-auto md:block w-12 h-auto"
+                className="hidden h-auto w-12 md:block"
               />
             </Link>
           </div>
           <button
             type="button"
-            className="text-white md:mt-60 ml-auto bg-white/20 backdrop-blur-md px-3.5 pt-1 md:order-1 md:ml-0 md:py-3"
+            className="ml-auto bg-white/20 px-3.5 py-2 text-white backdrop-blur-md md:order-1 md:ml-0 md:mt-60 md:py-3"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             {sidebarOpen ? (

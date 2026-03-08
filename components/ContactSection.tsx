@@ -2,6 +2,7 @@ import Image from "next/image"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 import Footer from "./Footer"
+import ReactParallaxTilt from "react-parallax-tilt"
 
 const ContactSection = () => {
   return (
@@ -14,28 +15,35 @@ const ContactSection = () => {
             </h2>
           </div>
 
-          {/* Flipping images */}
+          {/* Flipping images with Parallax effect */}
           <div className="perspective w-3/5 md:h-1/2 md:w-full">
-            <div className="md:hover:cursor-pointer">
-              <div className="wrapper md:relative lg:inline-flex">
-                {/*==== Front image ======  md:h-3/4 md:w-[85%]*/}
-                <div className="front h-full">
-                  <Image
-                    src={contactimage}
-                    alt="John Doe"
-                    className="object-cover md:relative"
-                  />
-                </div>
-                {/*===== Back image ======= */}
-                <div className="back hidden h-full md:absolute md:bottom-0 md:left-0 md:right-0 md:top-0 md:block">
-                  <Image
-                    src={DerekSpriteImg}
-                    alt="John Doe"
-                    className="object-cover md:relative"
-                  />
+            <ReactParallaxTilt
+              tiltMaxAngleX={15}
+              tiltMaxAngleY={15}
+              perspective={1000}
+              glareMaxOpacity={0}
+            >
+              <div className="md:hover:cursor-pointer">
+                <div className="wrapper md:relative lg:inline-flex">
+                  {/*==== Front image ======  md:h-3/4 md:w-[85%]*/}
+                  <div className="front h-full">
+                    <Image
+                      src={contactimage}
+                      alt="John Doe"
+                      className="object-cover md:relative"
+                    />
+                  </div>
+                  {/*===== Back image ======= */}
+                  <div className="back hidden h-full md:absolute md:bottom-0 md:left-0 md:right-0 md:top-0 md:block">
+                    <Image
+                      src={DerekSpriteImg}
+                      alt="John Doe"
+                      className="object-cover md:relative"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            </ReactParallaxTilt>
           </div>
         </div>
 

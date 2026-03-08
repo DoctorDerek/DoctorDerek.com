@@ -3499,6 +3499,9 @@ __metadata:
     typescript: "npm:^5"
     typewriter-effect: "npm:^2"
     xstate: "npm:^5.28.0"
+  dependenciesMeta:
+    prettier-plugin-tailwindcss@0.7.2:
+      unplugged: true
   languageName: unknown
   linkType: soft
 

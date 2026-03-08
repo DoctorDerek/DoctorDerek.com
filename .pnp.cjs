@@ -37,6 +37,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:24.10.4"],\
           ["@types/react", "npm:19.2.7"],\
           ["@types/react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
+          ["@xstate/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:6.1.0"],\
           ["doctor-derek", "workspace:."],\
           ["eslint", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:9.39.2"],\
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
@@ -55,7 +56,8 @@ const RAW_RUNTIME_STATE =
           ["sharp", "npm:0.34.5"],\
           ["tailwindcss", "npm:4.1.18"],\
           ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
-          ["typewriter-effect", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.22.0"]\
+          ["typewriter-effect", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.22.0"],\
+          ["xstate", "npm:5.28.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -4402,6 +4404,34 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@xstate/react", [\
+      ["npm:6.1.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/@xstate-react-npm-6.1.0-df8b26c8f8-10c0.zip/node_modules/@xstate/react/",\
+        "packageDependencies": [\
+          ["@xstate/react", "npm:6.1.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:6.1.0", {\
+        "packageLocation": "./.yarn/__virtual__/@xstate-react-virtual-81d4d8bad8/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/@xstate-react-npm-6.1.0-df8b26c8f8-10c0.zip/node_modules/@xstate/react/",\
+        "packageDependencies": [\
+          ["@types/react", "npm:19.2.7"],\
+          ["@types/xstate", null],\
+          ["@xstate/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:6.1.0"],\
+          ["react", "npm:19.2.3"],\
+          ["use-isomorphic-layout-effect", "virtual:81d4d8bad8192df6d42eda64afe64b0ce9147c33e194aaf674d2b1c746d579b771bf5f3897e980c8a4e63da72043f6703955a0045f4becc4e16eaac8624cb7bc#npm:1.2.1"],\
+          ["use-sync-external-store", "virtual:7207e8d425aeb0f68f19aa94cd65a9c514bde0fb03e99f124d868a48146ca4a2df7f72bb3104a85038655fac15c672cadfd89c03b74ee6532c79fc0bde6d12f8#npm:1.6.0"],\
+          ["xstate", "npm:5.28.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "@types/xstate",\
+          "react",\
+          "xstate"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["acorn", [\
       ["npm:8.15.0", {\
         "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/acorn-npm-8.15.0-0764cf600e-10c0.zip/node_modules/acorn/",\
@@ -5195,6 +5225,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:24.10.4"],\
           ["@types/react", "npm:19.2.7"],\
           ["@types/react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
+          ["@xstate/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:6.1.0"],\
           ["doctor-derek", "workspace:."],\
           ["eslint", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:9.39.2"],\
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
@@ -5213,7 +5244,8 @@ const RAW_RUNTIME_STATE =
           ["sharp", "npm:0.34.5"],\
           ["tailwindcss", "npm:4.1.18"],\
           ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
-          ["typewriter-effect", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.22.0"]\
+          ["typewriter-effect", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.22.0"],\
+          ["xstate", "npm:5.28.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -8761,6 +8793,28 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["use-isomorphic-layout-effect", [\
+      ["npm:1.2.1", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/use-isomorphic-layout-effect-npm-1.2.1-f995e0e0b5-10c0.zip/node_modules/use-isomorphic-layout-effect/",\
+        "packageDependencies": [\
+          ["use-isomorphic-layout-effect", "npm:1.2.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:81d4d8bad8192df6d42eda64afe64b0ce9147c33e194aaf674d2b1c746d579b771bf5f3897e980c8a4e63da72043f6703955a0045f4becc4e16eaac8624cb7bc#npm:1.2.1", {\
+        "packageLocation": "./.yarn/__virtual__/use-isomorphic-layout-effect-virtual-48c49dbd6a/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/use-isomorphic-layout-effect-npm-1.2.1-f995e0e0b5-10c0.zip/node_modules/use-isomorphic-layout-effect/",\
+        "packageDependencies": [\
+          ["@types/react", "npm:19.2.7"],\
+          ["react", "npm:19.2.3"],\
+          ["use-isomorphic-layout-effect", "virtual:81d4d8bad8192df6d42eda64afe64b0ce9147c33e194aaf674d2b1c746d579b771bf5f3897e980c8a4e63da72043f6703955a0045f4becc4e16eaac8624cb7bc#npm:1.2.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["use-sync-external-store", [\
       ["npm:1.6.0", {\
         "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/use-sync-external-store-npm-1.6.0-2db2af616d-10c0.zip/node_modules/use-sync-external-store/",\
@@ -8883,6 +8937,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/xmlbuilder-npm-11.0.1-b8b04dc929-10c0.zip/node_modules/xmlbuilder/",\
         "packageDependencies": [\
           ["xmlbuilder", "npm:11.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["xstate", [\
+      ["npm:5.28.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/xstate-npm-5.28.0-4a14feca5d-10c0.zip/node_modules/xstate/",\
+        "packageDependencies": [\
+          ["xstate", "npm:5.28.0"]\
         ],\
         "linkType": "HARD"\
       }]\

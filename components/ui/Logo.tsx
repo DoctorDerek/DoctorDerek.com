@@ -1,37 +1,52 @@
-import { useState } from "react"
+import { GlobalStateContext } from "@/machines/globalMachine"
 import LogoAlternative from "@/images/Logo Alternative-cropped.svg"
 import LogoCropped from "@/images/Logo-cropped.svg"
-import MedLrgLogo from "@/images/medLrgLogo.svg"
 
 type LogoProps = {
   className?: string
-  variant?: "alternative" | "medLrg" | "toggleable"
 }
 
-export default function Logo({ className, variant = "alternative" }: LogoProps) {
-  const [useAlternative, setUseAlternative] = useState(true)
+export default function Logo({ className }: LogoProps) {
+  const state = GlobalStateContext.useSelector((state) => state)
+  const send = GlobalStateContext.useActorRef().send
 
-  if (variant === "medLrg") {
-    return <MedLrgLogo className={className} />
-  }
-  
-  if (variant === "toggleable") {
-    return (
-      <div 
+  const isAlternative = state.value === "alternative"
+
+  return (
+    <div className="perspective" style={{ perspective: "1000px" }}>
+      <div
         className="cursor-pointer"
         onClick={(e) => {
           e.preventDefault()
-          setUseAlternative(!useAlternative)
+          send({ type: "TOGGLE_LOGO" })
         }}
       >
-        {useAlternative ? (
-          <LogoAlternative className={className} />
-        ) : (
-          <LogoCropped className={className} />
-        )}
+        <div
+          className="wrapper relative"
+          style={{
+            transform: isAlternative ? "rotateY(0deg)" : "rotateY(180deg)",
+            transition: "transform 0.8s ease-out",
+            transformStyle: "preserve-3d",
+          }}
+        >
+          <div
+            className="front"
+            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+          >
+            <LogoAlternative className={className} />
+          </div>
+          <div
+            className="back absolute left-0 top-0 h-full w-full"
+            style={{
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+            }}
+          >
+            <LogoCropped className={className} />
+          </div>
+        </div>
       </div>
-    )
-  }
-
-  return <LogoAlternative className={className} />
+    </div>
+  )
 }

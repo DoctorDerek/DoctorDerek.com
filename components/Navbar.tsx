@@ -28,12 +28,10 @@ export default function Navbar() {
             <Link href="/" className="flex items-center md:h-1/2 md:w-full md:justify-center">
               {/* Displays logo on small devices */}
               <Logo
-                variant="alternative"
                 className="ml-2 h-auto w-32 md:hidden md:ml-0"
               />
               {/* Displays logo on medium and large devices */}
               <Logo
-                variant="medLrg"
                 className="hidden h-auto w-12 md:block"
               />
             </Link>

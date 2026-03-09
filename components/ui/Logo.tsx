@@ -7,10 +7,10 @@ type LogoProps = {
 }
 
 export default function Logo({ className }: LogoProps) {
-  const state = GlobalStateContext.useSelector((state) => state)
+  const isAlternative = GlobalStateContext.useSelector((state) =>
+    state.matches({ logo: "alternative" }),
+  )
   const send = GlobalStateContext.useActorRef().send
-
-  const isAlternative = state.value === "alternative"
 
   return (
     <div className="perspective" style={{ perspective: "1000px" }}>

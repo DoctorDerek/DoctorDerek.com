@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
+import { GlobalStateContext } from "@/machines/globalMachine"
 import Background0 from "@/images/Background.svg"
 import Background1 from "@/images/Background-1.svg"
 import Background2 from "@/images/Background-2.svg"
@@ -19,39 +19,19 @@ const BACKGROUNDS = [
 ]
 
 export default function GlobalBackground() {
-  const [bg, setBg] = useState({
-    index: 0,
-    key: "bg-0-standard",
-    Component: BACKGROUNDS[0].standard,
-  })
+  const bgIndex = GlobalStateContext.useSelector((state) => state.context.bgIndex)
+  const bgUseInverse = GlobalStateContext.useSelector((state) => state.context.bgUseInverse)
 
-  useEffect(() => {
-    const cycleBackground = () => {
-      setBg((prev) => {
-        const nextIndex = (prev.index + 1) % BACKGROUNDS.length
-        const bgConfig = BACKGROUNDS[nextIndex]
-        const useInverse = bgConfig.inverse && Math.random() > 0.5
-        
-        return {
-          index: nextIndex,
-          key: `bg-${nextIndex}-${useInverse ? "inverse" : "standard"}`,
-          Component: useInverse && bgConfig.inverse ? bgConfig.inverse : bgConfig.standard,
-        }
-      })
-    }
-
-    const interval = setInterval(cycleBackground, 21000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const { Component } = bg
+  const bgConfig = BACKGROUNDS[bgIndex]
+  const useInverse = bgConfig.inverse && bgUseInverse
+  const Component = useInverse && bgConfig.inverse ? bgConfig.inverse : bgConfig.standard
+  const key = `bg-${bgIndex}-${useInverse ? "inverse" : "standard"}`
 
   return (
     <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
       <AnimatePresence initial={false}>
         <motion.div
-          key={bg.key}
+          key={key}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

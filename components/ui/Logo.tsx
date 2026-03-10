@@ -13,9 +13,12 @@ export default function Logo({ className }: LogoProps) {
   const send = GlobalStateContext.useActorRef().send
 
   return (
-    <div className={`perspective ${className}`} style={{ perspective: "1000px" }}>
+    <div
+      className={`perspective ${className}`}
+      style={{ perspective: "1000px" }}
+    >
       <div
-        className="cursor-pointer h-full w-full"
+        className="h-full w-full cursor-pointer"
         onClick={(e) => {
           e.preventDefault()
           send({ type: "TOGGLE_LOGO" })
@@ -31,12 +34,15 @@ export default function Logo({ className }: LogoProps) {
         >
           <div
             className="front h-full w-full"
-            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+            style={{
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+            }}
           >
             <LogoAlternative className="h-full w-full object-contain" />
           </div>
           <div
-            className="back absolute left-0 top-0 h-full w-full"
+            className="back absolute top-0 left-0 h-full w-full"
             style={{
               backfaceVisibility: "hidden",
               WebkitBackfaceVisibility: "hidden",

@@ -30,23 +30,17 @@ export default function WorkExpGrid({ ...clonedList }) {
       /* Ternary operators adds CSS borders */
       return (
         <li
-          className={`pl-4 
-        ${
-          index === getHalfNum - 1 ||
-          index === getHalfNum - 2 ||
-          index === getHalfNum - 3
-            ? "mr-8 border-r-4"
-            : ""
-        }
-        ${index === getHalfNum - 1 && "rounded-b-3xl border-b-4"} 
-        ${
-          index < getHalfNum || index > getHalfNum + 3
-            ? "border-l-4 border-[#F38B57]"
-            : ""
-        }
-        ${index === clonedList.length - 1 && "border-l-0"}
-        ${index === 2 && "relative"}
-        `}
+          className={`pl-4 ${
+            index === getHalfNum - 1 ||
+            index === getHalfNum - 2 ||
+            index === getHalfNum - 3
+              ? "mr-8 border-r-4"
+              : ""
+          } ${index === getHalfNum - 1 && "rounded-b-3xl border-b-4"} ${
+            index < getHalfNum || index > getHalfNum + 3
+              ? "border-l-4 border-[#F38B57]"
+              : ""
+          } ${index === clonedList.length - 1 && "border-l-0"} ${index === 2 && "relative"} `}
           key={`${item.duration} ${index}`}
         >
           <div className="relative flex flex-col">
@@ -54,7 +48,7 @@ export default function WorkExpGrid({ ...clonedList }) {
             {!item.company.includes("placeholder") && (
               <Image
                 src={codeIcon}
-                className="absolute -left-8 top-0 h-6 w-6 bg-[#FFE366]"
+                className="absolute top-0 -left-8 h-6 w-6 bg-[#FFE366]"
                 alt="code icon"
               />
             )}
@@ -70,7 +64,7 @@ export default function WorkExpGrid({ ...clonedList }) {
           </div>
           {/* Horizontal connecting line for the 3rd item in work experience */}
           {index === 2 && (
-            <div className="absolute -right-8 top-0 w-8 border-b-2 border-t-2 border-[#F38B57]"></div>
+            <div className="absolute top-0 -right-8 w-8 border-t-2 border-b-2 border-[#F38B57]"></div>
           )}
         </li>
       )

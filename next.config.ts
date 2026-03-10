@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -12,8 +12,9 @@ const nextConfig: NextConfig = {
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
-    const fileLoaderRule = config.module.rules.find((rule: { test?: { test?: (val: string) => boolean } }) =>
-      rule.test?.test?.('.svg'),
+    const fileLoaderRule = config.module.rules.find(
+      (rule: { test?: { test?: (val: string) => boolean } }) =>
+        rule.test?.test?.(".svg"),
     )
 
     config.module.rules.push(
@@ -27,8 +28,10 @@ const nextConfig: NextConfig = {
       {
         test: /\.svg$/i,
         issuer: fileLoaderRule?.issuer,
-        resourceQuery: { not: [...(fileLoaderRule?.resourceQuery?.not || []), /url/] }, // exclude if *.svg?url
-        use: ['@svgr/webpack'],
+        resourceQuery: {
+          not: [...(fileLoaderRule?.resourceQuery?.not || []), /url/],
+        }, // exclude if *.svg?url
+        use: ["@svgr/webpack"],
       },
     )
 
@@ -37,8 +40,8 @@ const nextConfig: NextConfig = {
       fileLoaderRule.exclude = /\.svg$/i
     }
 
-    return config;
+    return config
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

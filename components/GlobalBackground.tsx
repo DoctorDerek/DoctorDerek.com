@@ -19,16 +19,21 @@ const BACKGROUNDS = [
 ]
 
 export default function GlobalBackground() {
-  const bgIndex = GlobalStateContext.useSelector((state) => state.context.bgIndex)
-  const bgUseInverse = GlobalStateContext.useSelector((state) => state.context.bgUseInverse)
+  const bgIndex = GlobalStateContext.useSelector(
+    (state) => state.context.bgIndex,
+  )
+  const bgUseInverse = GlobalStateContext.useSelector(
+    (state) => state.context.bgUseInverse,
+  )
 
   const bgConfig = BACKGROUNDS[bgIndex]
   const useInverse = bgConfig.inverse && bgUseInverse
-  const Component = useInverse && bgConfig.inverse ? bgConfig.inverse : bgConfig.standard
+  const Component =
+    useInverse && bgConfig.inverse ? bgConfig.inverse : bgConfig.standard
   const key = `bg-${bgIndex}-${useInverse ? "inverse" : "standard"}`
 
   return (
-    <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
+    <div className="pointer-events-none fixed inset-0 -z-10 h-full w-full">
       <AnimatePresence initial={false}>
         <motion.div
           key={key}
@@ -38,7 +43,10 @@ export default function GlobalBackground() {
           transition={{ duration: 20, ease: "linear" }}
           className="absolute inset-0 h-full w-full"
         >
-          <Component className="object-cover h-full w-full" preserveAspectRatio="xMidYMid slice" />
+          <Component
+            className="h-full w-full object-cover"
+            preserveAspectRatio="xMidYMid slice"
+          />
         </motion.div>
       </AnimatePresence>
     </div>

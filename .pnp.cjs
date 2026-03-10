@@ -7652,14 +7652,14 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["prettier-plugin-tailwindcss", [\
       ["npm:0.7.2", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/prettier-plugin-tailwindcss-npm-0.7.2-3745c19ea8-10c0.zip/node_modules/prettier-plugin-tailwindcss/",\
+        "packageLocation": "./.yarn/unplugged/prettier-plugin-tailwindcss-virtual-446e574dfe/node_modules/prettier-plugin-tailwindcss/",\
         "packageDependencies": [\
           ["prettier-plugin-tailwindcss", "npm:0.7.2"]\
         ],\
         "linkType": "SOFT"\
       }],\
       ["virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:0.7.2", {\
-        "packageLocation": "./.yarn/__virtual__/prettier-plugin-tailwindcss-virtual-446e574dfe/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/prettier-plugin-tailwindcss-npm-0.7.2-3745c19ea8-10c0.zip/node_modules/prettier-plugin-tailwindcss/",\
+        "packageLocation": "./.yarn/unplugged/prettier-plugin-tailwindcss-virtual-446e574dfe/node_modules/prettier-plugin-tailwindcss/",\
         "packageDependencies": [\
           ["@ianvs/prettier-plugin-sort-imports", null],\
           ["@prettier/plugin-hermes", null],\

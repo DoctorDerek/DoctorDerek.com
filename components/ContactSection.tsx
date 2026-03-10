@@ -2,7 +2,6 @@ import { useState } from "react"
 import Image from "next/image"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
-import Footer from "./Footer"
 
 const ContactSection = () => {
   const [isFlipped, setIsFlipped] = useState(false)
@@ -58,8 +57,6 @@ const ContactSection = () => {
               to simply chat.
             </p>
           </div>
-          {/* ======Footer ======== */}
-          <Footer />
         </div>
       </div>
     </div>

@@ -39,7 +39,7 @@ export default function Logo({ className }: LogoProps) {
               WebkitBackfaceVisibility: "hidden",
             }}
           >
-            <LogoAlternative className="h-full w-full object-contain" />
+            <LogoAlternative className="h-full w-full object-contain scale-75" />
           </div>
           <div
             className="back absolute top-0 left-0 h-full w-full"

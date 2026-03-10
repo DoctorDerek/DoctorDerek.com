@@ -1,3 +1,5 @@
+import { LEGAL_DISCLAIMER } from "@/constants/SITE_CONTENT"
+
 export default function Footer() {
   return (
     <footer className="bg-[#311B4D] p-12 text-white">
@@ -7,27 +9,9 @@ export default function Footer() {
             AI Disclosure
           </h3>
           <ul className="space-y-2 text-lg opacity-90">
-            <li>
-              • Hello fellow human! I’m Dr. Derek Austin. This website is NOT
-              AI-generated slop.
-            </li>
-            <li>
-              • Voice/Writing: 100% Human (Me!). No AI dubbing or AI-generated
-              text content.
-            </li>
-            <li>
-              • Visuals: Real photos (Unsplash, Unsplash+, and public domain) &
-              LLM-assisted Python data visualizations. No AI images. No AI
-              video.
-            </li>
-            <li>
-              • Script: 100% human-verified & edited. I use LLMs for polyglot
-              research, data visualization, research synthesis, drafting
-              assistance, fact-checking, pronunciation help, and proofreading.
-            </li>
-            <li>
-              • Please support real, human creators by liking & subscribing!
-            </li>
+            {LEGAL_DISCLAIMER.aiDisclosure.map((item, index) => (
+              <li key={index}>• {item}</li>
+            ))}
           </ul>
         </div>
         <div>
@@ -35,41 +19,9 @@ export default function Footer() {
             Website Disclaimer
           </h3>
           <ul className="space-y-2 text-sm opacity-70">
-            <li>
-              • I have taken care when crafting my opinions and compiling data /
-              facts, but errors WILL occur. **Please fact check me!**
-            </li>
-            <li>
-              • This content is for entertainment and educational purposes ONLY.
-              It does NOT constitute career, financial, legal, health,
-              psychological, or any other type of professional advice.
-            </li>
-            <li>
-              • I have included ALL content relating to the conduct, views,
-              activities, and/or aspects of ALL persons or characters for
-              ENTERTAINMENT PURPOSES ONLY.
-            </li>
-            <li>
-              • This website does NOT represent an assertion of fact on those
-              matters or any matters related to ANY persons, living or dead.
-            </li>
-            <li>
-              • ALL included data / facts should be considered illustrative, NOT
-              definitive; thus, the website’s veracity should not be relied on
-              under ANY circumstances beyond ENTERTAINMENT.
-            </li>
-            <li>
-              • THIS WEBSITE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
-              EXPRESS OR IMPLIED!
-            </li>
-            <li>
-              • IN NO EVENT SHALL I BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
-              LIABILITY ARISING FROM THIS WEBSITE.
-            </li>
-            <li>
-              • Side effects may include systems thinking. BROWSE AT YOUR OWN
-              RISK! 😉🫡🦝
-            </li>
+            {LEGAL_DISCLAIMER.websiteDisclaimer.map((item, index) => (
+              <li key={index}>• {item}</li>
+            ))}
           </ul>
         </div>
       </div>

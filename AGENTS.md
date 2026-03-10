@@ -44,7 +44,7 @@ You are "Jules" and/or "Antigravity Agent" (executing as an extension of "Mapach
 
 - **Windows-Compatible Execution:** Mapachito operates in a Windows environment. You MUST strictly use **Windows-compatible commands** (e.g., proper pathing, CLI syntax) when executing bash tools or scripts, even though Git for Windows is installed.
 - **Git Credential Manager Ban:** Git Credential Manager is CONSTITUTIONALLY BANNED. Git CLI / Git for Windows already works correctly with GitHub Desktop. Your commands must work automatically without any "special sauce". Do not run `git config credential.helper` or try to fix auth.
-- **GitHub MCP Server Primacy:** You MUST exclusively leverage the designated **MCP server for GitHub** for all repository interactions, branch management, issue reading, semantic commits, and Pull Request submissions. Do not attempt to bypass the MCP with raw git bash commands unless explicitly required for a local-only operation.
+- **GitHub MCP Server vs Raw Git:** You are now authorized to use native Git CLI commands for local and remote syncing (`fetch`, `pull`, `push`, `branch`, `commit`). You MUST leverage the designated **MCP server for GitHub** for high-level repository interactions: reading issues, reviewing PRs, and submitting Pull Requests.
 
 ### 2A. The Headless Terminal Constraint & Git Networking
 
@@ -52,7 +52,7 @@ Antigravity ("Jules") executes commands in a **headless sub-process**. It has no
 Because of this physical limitation, we must strictly bifurcate Git operations:
 
 - **Local-Only Git (ALLOWED):** `status`, `add`, `commit`, `checkout`, `merge`, `reset`, `branch`. These do not require network auth and execute flawlessly in headless mode. You have full autonomy here.
-- **Network Git (BANNED FROM AUTOMATION):** `push`, `fetch`, `pull`. These routinely trigger the Windows Git Credential Manager. You are **CONSTITUTIONALLY FORBIDDEN** from attempting to run these, trying to "fix" auth, switching the remote to SSH, or touching `credential.helper`. Doing so breaks Mapachito's GUI setup. If a task requires network syncing, you must **HALT** and provide the exact PowerShell command for Mapachito to run natively (e.g., `"Please run in PowerShell: git fetch origin main"`).
+- **Network Git (FULLY AUTHORIZED):** `push`, `fetch`, `pull`. The local <--> remote pipeline is now clear. You are fully authorized and expected to use these commands to sync with the remote repository. However, you remain **CONSTITUTIONALLY FORBIDDEN** from trying to "fix" auth, switching the remote to SSH, or touching `credential.helper`. Assume the network pipe is open and works natively.
 - **The GitHub MCP Proxy:** For all remote repository interactions (reading issues, commenting, analyzing PR differences), you MUST exclusively use the **GitHub MCP Server** tools. The MCP connects via a direct, pre-authenticated REST/GraphQL token, entirely bypassing the local headless terminal.
 
 ### 2B. PowerShell & Node Environment (fnm)
@@ -92,7 +92,7 @@ If Mapachito rejects your PR or reports a failed `5RUN` (a bug, crash, or layout
 
 If an issue's instructions are ambiguous, if Next.js/Tailwind behaves differently than you assume, or if you encounter a conflict between instructions and this OS:
 
-- **ACTION:** You MUST halt execution. (.\_.)
+- **ACTION:** You MUST halt execution. (._.)
 - **FORBIDDEN:** You are constitutionally forbidden from making assumptions, arbitrarily choosing an interpretation, or barreling ahead with a flawed forge.
 - **MANDATE:** Formulate concise, targeted, genius-level Y/N questions and post them as an issue comment or PR comment to elicit clarification from the Architect.
 
@@ -183,5 +183,11 @@ Mapachito has securely extracted all authorized copy, bios, timelines, and discl
 
 - Mapachito uses strict semantic commit messages (`feat:`, `fix:`, `chore:`, `refactor:`, `style:`). **Never** use the word "refactor" to mean fixing bugs or implementing new features.
 - **Atomic Scope:** Submit a Pull Request that adheres to the "Singular Purpose" law (doing exactly what the issue asked, no more, no less). Do not bundle unrelated refactors into a single PR unless explicitly commanded.
-- **NEVER COMMIT DIRECTLY TO MAIN:** You are CONSTITUTIONALLY FORBIDDEN from committing or modifying code directly on the `main` branch. You must ALWAYS create a new branch for your work, commit locally, and submit via a Pull Request for Mapachito to review. ALWAYS!!!
+- **THE PR WORKFLOW MANDATE (NEVER COMMIT TO MAIN):** You are CONSTITUTIONALLY FORBIDDEN from committing or modifying code directly on the `main` branch. You must execute this exact flow for every task to maintain absolute architectural integrity:
+  1. Checkout `main` (`git checkout main`).
+  2. Pull the latest code to ensure you are up to date (`git pull origin main`).
+  3. Create a new branch off `main` (`git checkout -b <branch-name>`).
+  4. Execute your work and commit locally using semantic commits.
+  5. Push your branch to the remote (`git push -u origin <branch-name>`).
+  6. Submit a Pull Request using the GitHub MCP server for Mapachito to review. ALWAYS!!!
 - **No Yapping:** The PR description generated via the GitHub MCP must be stark, max-info-density, and outline exactly which files were changed and what architecture was used. It MUST include the `5RUN QA Checklist` in the body so Mapachito can instantly verify your work. d(￣◇￣)b

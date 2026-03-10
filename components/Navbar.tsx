@@ -22,35 +22,28 @@ export default function Navbar() {
   return (
     <div className="h-[7vh] md:h-0">
       {/* ======== NAVBAR ======= */}
-      <div className="sticky top-0 z-40 flex h-full bg-white/10 backdrop-blur-md shadow-xs sm:gap-x-6 sm:px-6 md:h-screen md:w-14 md:px-0 md:border-r md:border-white/20">
+      <div className="sticky top-0 z-40 flex h-full bg-white/10 shadow-xs backdrop-blur-md sm:gap-x-6 sm:px-6 md:h-screen md:w-14 md:border-r md:border-white/20 md:px-0">
         <div className="flex h-full w-full items-center md:flex-col md:items-stretch">
-          <div className="flex items-center pl-3 md:order-2 md:h-[40vh] md:w-full md:pl-0 md:justify-center">
-            <Link href="/" className="flex items-center md:h-1/2 md:w-full md:justify-center">
+          <div className="flex items-center pl-3 md:order-2 md:h-[40vh] md:w-full md:justify-center md:pl-0">
+            <Link
+              href="/"
+              className="flex items-center md:h-1/2 md:w-full md:justify-center"
+            >
               {/* Displays logo on small devices */}
-              <Logo
-                className="ml-2 w-32 h-8 md:hidden md:ml-0"
-              />
+              <Logo className="ml-2 h-8 w-32 md:ml-0 md:hidden" />
               {/* Displays logo on medium and large devices */}
-              <Logo
-                className="hidden w-12 h-6 md:block"
-              />
+              <Logo className="hidden h-6 w-12 md:block" />
             </Link>
           </div>
           <button
             type="button"
-            className="ml-auto bg-white/20 px-3.5 py-2 text-white backdrop-blur-md md:order-1 md:ml-0 md:mt-60 md:py-3"
+            className="ml-auto bg-white/20 px-3.5 py-2 text-white backdrop-blur-md md:order-1 md:mt-60 md:ml-0 md:py-3"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             {sidebarOpen ? (
-              <XMarkIcon
-                className="h-6 w-6 text-white"
-                aria-hidden="true"
-              />
+              <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
             ) : (
-              <Bars3Icon
-                className="h-6 w-6 text-white"
-                aria-hidden="true"
-              />
+              <Bars3Icon className="h-6 w-6 text-white" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -64,11 +57,11 @@ export default function Navbar() {
           <div className="h-14 md:hidden" />
           {/* =========== NAVIGATION LINKS ========== */}
           <nav
-            className={`md:h-11/12 flex h-full flex-col rounded-tr-3xl duration-500 md:mt-auto md:flex-row ${
+            className={`flex h-full flex-col rounded-tr-3xl duration-500 md:mt-auto md:h-11/12 md:flex-row ${
               sidebarOpen ? "translate-x-0" : "-translate-x-full"
             } `}
           >
-            <div className="flex h-full w-11/12 flex-col content-between rounded-tr-2xl bg-black/40 backdrop-blur-xl border border-white/20 pl-5 text-white md:w-3/4">
+            <div className="flex h-full w-11/12 flex-col content-between rounded-tr-2xl border border-white/20 bg-black/40 pl-5 text-white backdrop-blur-xl md:w-3/4">
               <ul role="list" className="pt-8">
                 {navigation.map((item) => (
                   <li className="hover:text-white" key={item.name}>

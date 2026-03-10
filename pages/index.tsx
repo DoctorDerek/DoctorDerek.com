@@ -29,11 +29,7 @@ export async function getStaticProps() {
   }
 }
 
-function DisplaySections({
-  posts,
-}: {
-  posts: MediumPost[]
-}) {
+function DisplaySections({ posts }: { posts: MediumPost[] }) {
   return (
     <ReactFullpage
       credits={{ enabled: false }}
@@ -114,11 +110,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       </Head>
       <RiveAnimation />
 
-      {width > 0 && width < 1024 && (
-        <DisplaySections
-          posts={posts}
-        />
-      )}
+      {width > 0 && width < 1024 && <DisplaySections posts={posts} />}
       {width >= 1024 && <MedLrgDevices posts={posts} />}
     </>
   )

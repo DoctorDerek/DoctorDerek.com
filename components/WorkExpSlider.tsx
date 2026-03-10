@@ -41,7 +41,7 @@ export default function WorkExpSlider({
           {/* Code icon */}
           <Image
             src={codeIcon}
-            className="absolute -left-4 top-0 h-6 w-6 bg-[#FFE366]"
+            className="absolute top-0 -left-4 h-6 w-6 bg-[#FFE366]"
             alt="code icon"
           />
           <div className="">

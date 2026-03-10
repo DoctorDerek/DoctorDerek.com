@@ -23,16 +23,16 @@ const Typewriter = () => (
 export default function IntroSection() {
   return (
     <div className="relative flex h-[90vh] flex-col md:h-screen">
-      <div className="mx-auto w-4/5 pt-4 md:pt-20 lg:pt-32 md:w-[90%]">
+      <div className="mx-auto w-4/5 pt-4 md:w-[90%] md:pt-20 lg:pt-32">
         <div className="text-3xl text-[#FB70AA] md:text-5xl lg:text-7xl">
           <Typewriter />
         </div>
       </div>
-      <div className="mx-auto mt-auto w-4/5 pt-4 md:w-[90%] lg:mb-8 mb-12">
+      <div className="mx-auto mt-auto mb-12 w-4/5 pt-4 md:w-[90%] lg:mb-8">
         <div className="w-3/4 md:w-11/12 lg:w-3/5">
           <div className="flex justify-around py-6 md:mx-auto lg:justify-between">
             <a
-              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl transition-transform duration-200 hover:scale-110 active:scale-95"
+              className="text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:mr-4 md:flex lg:text-xl"
               href="mailto:derekraustin@gmail.com"
             >
               <EmailIcon fill="#F38B57" />
@@ -41,7 +41,7 @@ export default function IntroSection() {
               </span>
             </a>
             <a
-              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl transition-transform duration-200 hover:scale-110 active:scale-95"
+              className="text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:mr-4 md:flex lg:text-xl"
               href="https://www.linkedin.com/in/derek-austin/"
               target="_blank"
               rel="noopener noreferrer"
@@ -53,7 +53,7 @@ export default function IntroSection() {
             </a>
             <a
               href="https://github.com/DoctorDerek"
-              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl transition-transform duration-200 hover:scale-110 active:scale-95"
+              className="text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:mr-4 md:flex lg:text-xl"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -64,7 +64,7 @@ export default function IntroSection() {
             </a>
             <a
               href="https://doctorderek.medium.com/"
-              className="text-lg text-[#F38B57] md:mr-4 md:flex lg:text-xl transition-transform duration-200 hover:scale-110 active:scale-95"
+              className="text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:mr-4 md:flex lg:text-xl"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -74,7 +74,7 @@ export default function IntroSection() {
               </span>
             </a>
             <a
-              className="lg:xl text-lg text-[#F38B57] md:flex transition-transform duration-200 hover:scale-110 active:scale-95"
+              className="lg:xl text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:flex"
               href="https://www.amazon.com/dp/B0BRJDLJ43"
               target="_blank"
               rel="noopener noreferrer"

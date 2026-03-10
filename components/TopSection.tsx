@@ -12,7 +12,7 @@ export default function TopSection() {
       {/* 93vh offsets the 7vh Navbar on mobile to prevent double scrolling */}
       <div className="flex h-[93vh] md:h-screen items-center justify-center">
         <Logo
-          className={classNames("object-fill")}
+          className="w-48 h-16 md:w-96 md:h-32"
         />
       </div>
     </div>

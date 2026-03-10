@@ -1,6 +1,6 @@
 import { GlobalStateContext } from "@/machines/globalMachine"
-import LogoAlternative from "@/images/Logo Alternative-cropped.svg"
-import LogoCropped from "@/images/Logo-cropped.svg"
+import LogoDefault from "@/images/Logo-Default-Landscape.svg"
+import LogoSecondary from "@/images/Logo-Secondary-Portrait.svg"
 
 type LogoProps = {
   className?: string
@@ -39,7 +39,7 @@ export default function Logo({ className }: LogoProps) {
               WebkitBackfaceVisibility: "hidden",
             }}
           >
-            <LogoAlternative className="h-full w-full object-contain" />
+            <LogoDefault className="h-full w-full object-contain" />
           </div>
           <div
             className="back absolute top-0 left-0 h-full w-full"
@@ -49,7 +49,7 @@ export default function Logo({ className }: LogoProps) {
               transform: "rotateY(180deg)",
             }}
           >
-            <LogoCropped className="h-full w-full object-contain" />
+            <LogoSecondary className="h-full w-full object-contain" />
           </div>
         </div>
       </div>

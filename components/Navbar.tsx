@@ -3,7 +3,6 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Logo from "@/components/ui/Logo"
 import Link from "next/link"
 import EmailIcon from "./EmailIcon"
-import LinkedinIcon from "./LinkedinIcon"
 import GithubIcon from "./GithubIcon"
 import MediumIcon from "./MediumIcon"
 import BookLinkIcon from "./BookLinkIcon"
@@ -77,13 +76,6 @@ export default function Navbar() {
                     <EmailIcon fill="white" />
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/derek-austin/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <LinkedinIcon fill="white" />
-                  </a>
-                  <a
                     href="https://github.com/DoctorDerek"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -111,14 +103,6 @@ export default function Navbar() {
             <div className="mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex">
               <a className="mb-2 block" href="mailto:derekraustin@gmail.com">
                 <EmailIcon fill="#F38B57" />
-              </a>
-              <a
-                className="mb-2 block"
-                href="https://www.linkedin.com/in/derek-austin/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <LinkedinIcon fill="#F38B57" />
               </a>
               <a
                 className="mb-2 block"

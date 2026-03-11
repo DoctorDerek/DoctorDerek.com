@@ -1,6 +1,7 @@
 import React from "react"
 import Image from "next/image"
 import JohnDoe from "@/images/johndoe.png"
+import { TESTIMONIALS, type Testimonial } from "@/constants/SITE_CONTENT"
 import { useKeenSlider } from "keen-slider/react"
 
 const Testimonials = () => {
@@ -8,56 +9,14 @@ const Testimonials = () => {
     loop: true,
   })
 
-  /** ITEM IN THE ARRAY IS EACH SLIDE IN THE SLIDER */
-  const reviews = [
-    {
-      name: "John Doe",
-      position: "Sr. Systems Design Manager at Lorem Ipsum",
-      comment:
-        "Consequat interdum varius sit amet mattis vulputate. Laoreet non curabitur gravida arcu ac tortor. Id semper risus in hendrerit gravida rutrum quisque non. Consectetur a erat nam at lectus. Venenatis tellus in metus vulputate eu. Pharetra massa massa ultricies mi quis hendrerit. Non sodales neque sodales ut etiam sit amet nisl. Cursus  mattis molestie a iaculis at erat. Erat pellentesque adipiscing commodo elit at imperdiet dui accumsan. Nibh praesent tristique magna sit. Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant.",
-      image: "",
-      alt: "",
-    },
-    {
-      name: "2nd reviewer",
-      position: "Sr. Systems Design Manager at Lorem Ipsum",
-      comment:
-        "Consequat interdum varius sit amet mattis vulputate. Laoreet non curabitur gravida arcu ac tortor. Id semper risus in hendrerit gravida rutrum quisque non. Consectetur a erat nam at lectus. Venenatis tellus in metus vulputate eu. Pharetra massa massa ultricies mi quis hendrerit. Non sodales neque sodales ut etiam sit amet nisl. Cursus  mattis molestie a iaculis at erat. Erat pellentesque adipiscing commodo elit at imperdiet dui accumsan. Nibh praesent tristique magna sit. Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant.",
-      image: "",
-      alt: "",
-    },
-    {
-      name: "3rd reviewer",
-      position: "Sr. Systems Design Manager at Lorem Ipsum",
-      comment:
-        "Consequat interdum varius sit amet mattis vulputate. Laoreet non curabitur gravida arcu ac tortor. Id semper risus in hendrerit gravida rutrum quisque non. Consectetur a erat nam at lectus. Venenatis tellus in metus vulputate eu. Pharetra massa massa ultricies mi quis hendrerit. Non sodales neque sodales ut etiam sit amet nisl. Cursus  mattis molestie a iaculis at erat. Erat pellentesque adipiscing commodo elit at imperdiet dui accumsan. Nibh praesent tristique magna sit. Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant.",
-      image: "",
-      alt: "",
-    },
-  ]
-
   return (
     <div className="h-screen">
       <div className="flex h-full flex-col">
         <div className="mx-auto mt-10 w-[95%] pt-2 md:mt-8 md:w-3/5 lg:mt-20 lg:w-[40%]">
           <div ref={sliderRef} className="keen-slider hover:cursor-grab">
             {/* ======= PROJECT SLIDE ======= */}
-            {reviews.map(
-              (item: {
-                name: string
-                /**
-                 * name: string value of the name of the person providing the review
-                 */
-                position: string
-                /**
-                 * position: string value of the company name of where the person's job
-                 */
-                comment: string
-                /**
-                 * comment: string value of the person's review of past work experience
-                 */
-              }) => {
-                return (
+            {TESTIMONIALS.map((item: Testimonial) => {
+              return (
                   <div
                     key={item.name}
                     className="keen-slider__slide grid transform-gpu grid-cols-1 px-4 md:space-x-0.5 xl:space-x-1"

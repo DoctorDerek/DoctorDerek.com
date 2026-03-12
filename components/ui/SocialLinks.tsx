@@ -1,3 +1,5 @@
+"use client"
+
 import { SOCIAL_LINKS, type SocialLink } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
 import EmailIcon from "../EmailIcon"

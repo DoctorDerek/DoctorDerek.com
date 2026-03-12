@@ -14,7 +14,7 @@ export default function RiveAnimation() {
     onLoadError: () => setHasError(true),
   })
 
-  if (hasError) {
+  if (hasError)
     return (
       <iframe
         allowFullScreen
@@ -22,7 +22,6 @@ export default function RiveAnimation() {
         className="pointer-events-none absolute inset-0 z-10 h-full w-full"
       />
     )
-  }
 
   return (
     <div className="pointer-events-none absolute inset-0 z-10 h-full w-full">

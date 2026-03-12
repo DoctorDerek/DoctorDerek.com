@@ -84,9 +84,7 @@ const Portfolio = () => {
     setShowModal(true)
     /* Updates the hook and displays the object that is set truthy */
     const selectProject = portfolioWork.map((item) => {
-      if (item.projectTitle === projectName) {
-        return { ...item, isClicked: true }
-      }
+      if (item.projectTitle === projectName) return { ...item, isClicked: true }
       return { ...item, isClicked: false }
     })
     setPortfolioWork(selectProject)

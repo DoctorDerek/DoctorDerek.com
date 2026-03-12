@@ -175,7 +175,7 @@ Mapachito has securely extracted all authorized copy, bios, timelines, and discl
   - Import `ARCHITECT_EVOLUTION` (for the Timeline of Skills/Work Experience).
   - Import `SOCIAL_PROOF_CTA` (for the Medium Follow buttons).
   - Import `LEGAL_DISCLAIMER` (for the Footer AI and Website disclaimers).
-  - Import `TESTIMONIALS` (Array of `LinkedInRecommendationTestimonial` objects; `.map()` over this array to render the `<Testimonials />` slider). Ensure the container handles the height gracefully (`overflow-y-auto` or fixed height) to prevent layout breaks.
+  - Import `TESTIMONIALS` (Array of `Testimonial` objects; `.map()` over this array to render the `<Testimonials />` slider). Ensure the container handles the height gracefully (`overflow-y-auto` or fixed height) to prevent layout breaks.
 
 ---
 

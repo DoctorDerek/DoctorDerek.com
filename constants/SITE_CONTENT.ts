@@ -107,14 +107,14 @@ export const LEGAL_DISCLAIMER: LegalDisclaimer = {
   ],
 } as const
 
-export type LinkedInRecommendationTestimonial = {
+export type Testimonial = {
   id: number
   name: string
   position: string
   comment: string
 }
 
-export const TESTIMONIALS: LinkedInRecommendationTestimonial[] = [
+export const TESTIMONIALS: Testimonial[] = [
   {
     id: 1,
     name: "John Syme",

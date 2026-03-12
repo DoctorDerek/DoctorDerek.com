@@ -1,5 +1,4 @@
 import EmailIcon from "./EmailIcon"
-import LinkedinIcon from "./LinkedinIcon"
 import GithubIcon from "./GithubIcon"
 import MediumIcon from "./MediumIcon"
 import BookLinkIcon from "./BookLinkIcon"
@@ -38,17 +37,6 @@ export default function IntroSection() {
               <EmailIcon fill="#F38B57" />
               <span className="restoramedium ml-2 hidden pt-1 md:block">
                 Email
-              </span>
-            </a>
-            <a
-              className="text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:mr-4 md:flex lg:text-xl"
-              href="https://www.linkedin.com/in/derek-austin/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <LinkedinIcon fill="#F38B57" />
-              <span className="restoramedium ml-2 hidden pt-1 md:block">
-                Linkedin
               </span>
             </a>
             <a

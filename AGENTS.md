@@ -92,7 +92,7 @@ If Mapachito rejects your PR or reports a failed `5RUN` (a bug, crash, or layout
 
 If an issue's instructions are ambiguous, if Next.js/Tailwind behaves differently than you assume, or if you encounter a conflict between instructions and this OS:
 
-- **ACTION:** You MUST halt execution. (._.)
+- **ACTION:** You MUST halt execution. (.\_.)
 - **FORBIDDEN:** You are constitutionally forbidden from making assumptions, arbitrarily choosing an interpretation, or barreling ahead with a flawed forge.
 - **MANDATE:** Formulate concise, targeted, genius-level Y/N questions and post them as an issue comment or PR comment to elicit clarification from the Architect.
 

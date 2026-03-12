@@ -17,34 +17,33 @@ const Testimonials = () => {
             {/* ======= PROJECT SLIDE ======= */}
             {TESTIMONIALS.map((item: Testimonial) => {
               return (
-                  <div
-                    key={item.name}
-                    className="keen-slider__slide grid transform-gpu grid-cols-1 px-4 md:space-x-0.5 xl:space-x-1"
-                  >
-                    <div className="text-white">
-                      <p className="leading-7 md:text-lg md:leading-8 lg:text-xl">
-                        {item.comment}
-                      </p>
-                      <div className="mt-8 lg:mt-12">
-                        <div className="flex">
-                          <div className="mr-4">
-                            <Image
-                              src={JohnDoe}
-                              alt="John Doe"
-                              className="object-fit h-20 w-20 lg:h-24 lg:w-24"
-                            />
-                          </div>
-                          <div className="flex w-3/4 flex-col">
-                            <h4 className="md:mt-auto md:pb-2">-{item.name}</h4>
-                            <h4 className="md:mb-auto">{item.position}</h4>
-                          </div>
+                <div
+                  key={item.name}
+                  className="keen-slider__slide grid transform-gpu grid-cols-1 px-4 md:space-x-0.5 xl:space-x-1"
+                >
+                  <div className="text-white">
+                    <p className="leading-7 md:text-lg md:leading-8 lg:text-xl">
+                      {item.comment}
+                    </p>
+                    <div className="mt-8 lg:mt-12">
+                      <div className="flex">
+                        <div className="mr-4">
+                          <Image
+                            src={JohnDoe}
+                            alt="John Doe"
+                            className="object-fit h-20 w-20 lg:h-24 lg:w-24"
+                          />
+                        </div>
+                        <div className="flex w-3/4 flex-col">
+                          <h4 className="md:mt-auto md:pb-2">-{item.name}</h4>
+                          <h4 className="md:mb-auto">{item.position}</h4>
                         </div>
                       </div>
                     </div>
                   </div>
-                )
-              },
-            )}
+                </div>
+              )
+            })}
           </div>
         </div>
 

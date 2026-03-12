@@ -51,7 +51,9 @@ export default function SocialLinks({
           <a
             key={link.id}
             href={isEmail ? undefined : link.url}
-            onClick={isEmail ? (e) => handleEmailClick(e, link.emailParts!) : undefined}
+            onClick={
+              isEmail ? (e) => handleEmailClick(e, link.emailParts!) : undefined
+            }
             style={isEmail ? { cursor: "pointer" } : {}}
             target={isEmail ? undefined : "_blank"}
             rel={isEmail ? undefined : "noopener noreferrer"}

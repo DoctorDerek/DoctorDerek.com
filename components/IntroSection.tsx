@@ -1,11 +1,8 @@
-import EmailIcon from "./EmailIcon"
-import GithubIcon from "./GithubIcon"
-import MediumIcon from "./MediumIcon"
-import BookLinkIcon from "./BookLinkIcon"
 import TypewriterComponent, {
   type Options,
   type TypewriterClass,
 } from "typewriter-effect"
+import SocialLinks from "./ui/SocialLinks"
 
 const INTRO_STRING =
   "Indie Game Dev · AI Context Engineer · I teach LLMs to think · Full-Stack SWE since 2005 · BS & MS in Bioinformatics at age 19 · Doctor of Physical Therapy"
@@ -29,50 +26,12 @@ export default function IntroSection() {
       </div>
       <div className="mx-auto mt-auto mb-12 w-4/5 pt-4 md:w-[90%] lg:mb-8">
         <div className="w-3/4 md:w-11/12 lg:w-3/5">
-          <div className="flex justify-around py-6 md:mx-auto lg:justify-between">
-            <a
-              className="text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:mr-4 md:flex lg:text-xl"
-              href="mailto:derekraustin@gmail.com"
-            >
-              <EmailIcon fill="#F38B57" />
-              <span className="restoramedium ml-2 hidden pt-1 md:block">
-                Email
-              </span>
-            </a>
-            <a
-              href="https://github.com/DoctorDerek"
-              className="text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:mr-4 md:flex lg:text-xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <GithubIcon fill="#F38B57" />
-              <span className="restoramedium ml-2 hidden pt-1 md:block">
-                Github
-              </span>
-            </a>
-            <a
-              href="https://doctorderek.medium.com/"
-              className="text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:mr-4 md:flex lg:text-xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <MediumIcon fill="#F38B57" />
-              <span className="restoramedium ml-2 hidden pt-1 md:block">
-                Medium
-              </span>
-            </a>
-            <a
-              className="lg:xl text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:flex"
-              href="https://www.amazon.com/dp/B0BRJDLJ43"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <BookLinkIcon fill="#F38B57" />
-              <span className="restoramedium ml-2 hidden pt-1 md:block">
-                Book
-              </span>
-            </a>
-          </div>
+          <SocialLinks
+            containerClasses="flex justify-around py-6 md:mx-auto lg:justify-between"
+            linkClasses="text-lg text-[#F38B57] transition-transform duration-200 hover:scale-110 active:scale-95 md:mr-4 md:flex lg:text-xl"
+            labelClasses="restoramedium ml-2 hidden pt-1 md:block"
+            showLabels={true}
+          />
           <div className="mt-4 border-t-2 border-[#d6bb61] md:w-5/12 lg:mt-8 lg:w-1/3" />
         </div>
       </div>

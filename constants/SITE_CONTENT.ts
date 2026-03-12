@@ -114,6 +114,36 @@ export type Testimonial = {
   comment: string
 }
 
+export type SocialLink = {
+  id: string
+  label: string
+  url?: string
+  emailParts?: string[]
+}
+
+export const SOCIAL_LINKS: SocialLink[] = [
+  {
+    id: "email",
+    label: "Email",
+    emailParts: ["mailto:", "derekraustin", "@", "gmail.com"],
+  },
+  {
+    id: "github",
+    label: "Github",
+    url: "https://github.com/DoctorDerek",
+  },
+  {
+    id: "medium",
+    label: "Medium",
+    url: "https://doctorderek.medium.com/",
+  },
+  {
+    id: "book",
+    label: "Book",
+    url: "https://www.amazon.com/dp/B0BRJDLJ43",
+  },
+] as const
+
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: 1,

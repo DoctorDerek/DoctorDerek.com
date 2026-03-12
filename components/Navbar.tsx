@@ -2,10 +2,7 @@ import { useState } from "react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Logo from "@/components/ui/Logo"
 import Link from "next/link"
-import EmailIcon from "./EmailIcon"
-import GithubIcon from "./GithubIcon"
-import MediumIcon from "./MediumIcon"
-import BookLinkIcon from "./BookLinkIcon"
+import SocialLinks from "./ui/SocialLinks"
 
 const navigation = [
   { name: "About", href: "#", current: true },
@@ -71,63 +68,20 @@ export default function Navbar() {
               </ul>
               {/* Sidebar, displays icon links on small devices */}
               <div className="mt-auto w-10/12 pb-6 md:hidden">
-                <div className="flex justify-between">
-                  <a href="mailto:derekraustin@gmail.com">
-                    <EmailIcon fill="white" />
-                  </a>
-                  <a
-                    href="https://github.com/DoctorDerek"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <GithubIcon fill="white" />
-                  </a>
-                  <a
-                    href="https://doctorderek.medium.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <MediumIcon fill="white" />
-                  </a>
-                  <a
-                    href="https://www.amazon.com/dp/B0BRJDLJ43"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <BookLinkIcon fill="white" />
-                  </a>
-                </div>
+                <SocialLinks
+                  fill="white"
+                  containerClasses="flex justify-between"
+                  linkClasses=""
+                />
               </div>
             </div>
             {/* Displays icons in sidebar on medium and large devices */}
             <div className="mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex">
-              <a className="mb-2 block" href="mailto:derekraustin@gmail.com">
-                <EmailIcon fill="#F38B57" />
-              </a>
-              <a
-                className="mb-2 block"
-                href="https://github.com/DoctorDerek"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <GithubIcon fill="#F38B57" />
-              </a>
-              <a
-                className="mb-2 block"
-                href="https://doctorderek.medium.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <MediumIcon fill="#F38B57" />
-              </a>
-              <a
-                className="mb-2 block"
-                href="https://www.amazon.com/dp/B0BRJDLJ43"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <BookLinkIcon fill="#F38B57" />
-              </a>
+              <SocialLinks
+                fill="#F38B57"
+                containerClasses="flex flex-col gap-y-4"
+                linkClasses="mb-2 block"
+              />
             </div>
           </nav>
         </div>

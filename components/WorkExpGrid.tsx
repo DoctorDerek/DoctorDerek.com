@@ -1,5 +1,6 @@
 import React from "react"
 import Image from "next/image"
+import classNames from "@/utils/classNames"
 import codeIcon from "images/codeIcon.svg"
 
 export default function WorkExpGrid({ ...clonedList }) {
@@ -27,20 +28,20 @@ export default function WorkExpGrid({ ...clonedList }) {
       },
       index: number,
     ) => {
-      /* Ternary operators adds CSS borders */
       return (
         <li
-          className={`pl-4 ${
-            index === getHalfNum - 1 ||
-            index === getHalfNum - 2 ||
-            index === getHalfNum - 3
-              ? "mr-8 border-r-4"
-              : ""
-          } ${index === getHalfNum - 1 && "rounded-b-3xl border-b-4"} ${
-            index < getHalfNum || index > getHalfNum + 3
-              ? "border-l-4 border-[#F38B57]"
-              : ""
-          } ${index === clonedList.length - 1 && "border-l-0"} ${index === 2 && "relative"} `}
+          className={classNames(
+            "pl-4",
+            (index === getHalfNum - 1 ||
+              index === getHalfNum - 2 ||
+              index === getHalfNum - 3) &&
+              "mr-8 border-r-4",
+            index === getHalfNum - 1 && "rounded-b-3xl border-b-4",
+            (index < getHalfNum || index > getHalfNum + 3) &&
+              "border-l-4 border-[#F38B57]",
+            index === clonedList.length - 1 && "border-l-0",
+            index === 2 && "relative",
+          )}
           key={`${item.duration} ${index}`}
         >
           <div className="relative flex flex-col">
@@ -55,9 +56,10 @@ export default function WorkExpGrid({ ...clonedList }) {
             <p className="restorabold text-xl">{item.duration}</p>
             <p className="restorabold py-2 text-xl">{item.position}</p>
             <p
-              className={`${
-                item.company.includes("placeholder") ? "invisible" : ""
-              } restorabold pb-2 text-lg`}
+              className={classNames(
+                item.company.includes("placeholder") ? "invisible" : "",
+                "restorabold pb-2 text-lg",
+              )}
             >
               {item.company}
             </p>

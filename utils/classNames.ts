@@ -1,2 +1,3 @@
-const classNames = (...rest: string[]) => rest.join(" ")
-export default classNames
+export default function classNames(...args: (string | boolean | undefined | null)[]) {
+  return args.filter(Boolean).join(" ")
+}

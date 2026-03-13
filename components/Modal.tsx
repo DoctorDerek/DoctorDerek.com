@@ -1,6 +1,7 @@
 import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
+import classNames from "@/utils/classNames"
 
 export default function Modal({
   portfolioWork,
@@ -81,7 +82,7 @@ export default function Modal({
                   {portfolioWork.map((item) => {
                     return (
                       <div
-                        className={item.isClicked ? "" : "hidden"}
+                        className={classNames(!item.isClicked && "hidden")}
                         key={"modal-key"}
                       >
                         <h3 className="restorabold my-4 text-4xl">

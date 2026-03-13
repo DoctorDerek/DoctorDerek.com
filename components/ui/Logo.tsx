@@ -1,6 +1,7 @@
 import { GlobalStateContext } from "@/machines/globalMachine"
 import LogoDefault from "@/images/Logo-Default-Landscape.svg"
 import LogoSecondary from "@/images/Logo-Secondary-Portrait.svg"
+import classNames from "@/utils/classNames"
 
 type LogoProps = {
   className?: string
@@ -14,7 +15,7 @@ export default function Logo({ className }: LogoProps) {
 
   return (
     <div
-      className={`perspective ${className}`}
+      className={classNames("perspective", className)}
       style={{ perspective: "1000px" }}
     >
       <div

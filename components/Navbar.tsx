@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Logo from "@/components/ui/Logo"
+import classNames from "@/utils/classNames"
 import Link from "next/link"
 import SocialLinks from "./ui/SocialLinks"
 
@@ -47,9 +48,10 @@ export default function Navbar() {
           <div className="h-14 md:hidden" />
           {/* =========== NAVIGATION LINKS ========== */}
           <nav
-            className={`flex h-full flex-col rounded-tr-3xl duration-500 md:mt-auto md:h-11/12 md:flex-row ${
-              sidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } `}
+            className={classNames(
+              "flex h-full flex-col rounded-tr-3xl duration-500 md:mt-auto md:h-11/12 md:flex-row",
+              sidebarOpen ? "translate-x-0" : "-translate-x-full",
+            )}
           >
             <div className="flex h-full w-11/12 flex-col content-between rounded-tr-2xl border border-white/20 bg-black/40 pl-5 text-white backdrop-blur-xl md:w-3/4">
               <ul role="list" className="pt-8">

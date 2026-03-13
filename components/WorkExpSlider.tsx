@@ -1,5 +1,6 @@
 import React from "react"
 import Image from "next/image"
+import classNames from "@/utils/classNames"
 import codeIcon from "images/codeIcon.svg"
 
 export default function WorkExpSlider({
@@ -34,9 +35,10 @@ export default function WorkExpSlider({
       return (
         <li
           key={item.position}
-          className={`relative border-l-4 border-[#F38B57] pb-4 pl-4 ${
-            index === arry.length - 1 ? "rounded-bl-xl border-b-4" : ""
-          }`}
+          className={classNames(
+            "relative border-l-4 border-[#F38B57] pb-4 pl-4",
+            index === arry.length - 1 && "rounded-bl-xl border-b-4",
+          )}
         >
           {/* Code icon */}
           <Image

@@ -45,19 +45,19 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         render={() => {
           return (
             <ReactFullpage.Wrapper>
-              <div className="section h-screen">
+              <div className="section h-dvh">
                 <TopSection />
               </div>
 
-              <div className="section flex h-screen flex-col md:flex-row">
+              <div className="section flex h-dvh flex-col md:flex-row">
                 <IntroSection />
               </div>
 
-              <div className="section flex h-screen flex-col md:flex-row">
+              <div className="section flex h-dvh flex-col md:flex-row">
                 <AboutSection />
               </div>
 
-              <div className="section max-lg:flex max-lg:h-screen max-lg:flex-col">
+              <div className="section max-lg:flex max-lg:h-dvh max-lg:flex-col">
                 <AiConsultancySection />
               </div>
 

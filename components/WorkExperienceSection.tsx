@@ -1,6 +1,6 @@
 import React from "react"
 import Image from "next/image"
-import codeIcon from "@/images/codeIcon.svg"
+import CodeIcon from "@/images/codeIcon.svg"
 import IntroAnimation from "@/images/Intro-Animation.jpg"
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
@@ -123,11 +123,7 @@ export default function WorkExperienceSection() {
                   <div className="relative flex flex-col text-white">
                     {/* Hides code icon if item.company string contains placeholder */}
                     {!item.company.includes("placeholder") && (
-                      <Image
-                        src={codeIcon}
-                        className="absolute -left-8 top-0 h-6 w-6 bg-[#FFE366] rounded-sm"
-                        alt="code icon"
-                      />
+                      <CodeIcon className="absolute -left-9 top-0 h-8 w-8" />
                     )}
                     <p className="restorabold text-2xl font-bold">{item.duration}</p>
                     <p

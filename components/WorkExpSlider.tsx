@@ -1,6 +1,5 @@
 import React from "react"
-import Image from "next/image"
-import codeIcon from "images/codeIcon.svg"
+import CodeIcon from "@/images/codeIcon.svg"
 
 export default function WorkExpSlider({
   arry,
@@ -35,11 +34,7 @@ export default function WorkExpSlider({
           }`}
         >
           {/* Code icon */}
-          <Image
-            src={codeIcon}
-            className="absolute top-0 -left-4 h-6 w-6 bg-[#FFE366]"
-            alt="code icon"
-          />
+          <CodeIcon className="absolute top-0 -left-[14px] h-7 w-7" />
           <div className="">
             <p className="text-white/80 font-bold">{item.duration}</p>
           </div>

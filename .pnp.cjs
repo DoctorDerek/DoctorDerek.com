@@ -46,6 +46,7 @@ const RAW_RUNTIME_STATE =
           ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.35.0"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
+          ["postcss", "npm:8.5.6"],\
           ["prettier", "npm:3.7.4"],\
           ["prettier-plugin-tailwindcss", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:0.7.2"],\
           ["react", "npm:19.2.3"],\
@@ -5233,6 +5234,7 @@ const RAW_RUNTIME_STATE =
           ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.35.0"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
+          ["postcss", "npm:8.5.6"],\
           ["prettier", "npm:3.7.4"],\
           ["prettier-plugin-tailwindcss", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:0.7.2"],\
           ["react", "npm:19.2.3"],\

@@ -44,29 +44,24 @@ export type WorkExperience = {
 
 export const ARCHITECT_EVOLUTION: WorkExperience[] = [
   {
-    duration: "2025–2026 (Today)",
-    position: "Godot C# & GDScript",
-    company: "AI Context Engineer (15-20+ Million Tokens Exchanged)",
+    duration: "2025–Present",
+    position: "AI Context Engineer & Indie Game Dev",
+    company: "Godot C#, GDScript, 20M+ Tokens",
   },
   {
     duration: "2020–2026",
-    position: "React / Next.js + TypeScript + Tailwind CSS",
-    company: "Lead Frontend SWE",
-  },
-  {
-    duration: "2019–2020",
-    position: "React, JavaScript, CSS",
-    company: "React SWE",
+    position: "Lead Frontend SWE",
+    company: "React, Next.js, TypeScript, Tailwind CSS",
   },
   {
     duration: "2009–2019",
-    position: "HTML, CSS, JS",
-    company: "Web Developer",
+    position: "Full-Stack Web Developer",
+    company: "HTML, CSS, JavaScript",
   },
   {
     duration: "2005–2009",
-    position: "C++, PHP, HTML, CSS, Ruby on Rails",
-    company: "Full-Stack SWE",
+    position: "Software Engineer",
+    company: "C++, PHP, Ruby on Rails",
   },
 ] as const
 

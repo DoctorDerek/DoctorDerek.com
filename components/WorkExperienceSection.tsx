@@ -16,8 +16,9 @@ export default function WorkExperienceSection() {
 
   // Slice the evolution array into slides for mobile
   // Mobile slide 1 gets exactly 3 items, slide 2 gets the remaining 2 items.
-  const firstSlide = ARCHITECT_EVOLUTION.slice(0, 3)
-  const secondSlide = ARCHITECT_EVOLUTION.slice(3, 5)
+  const firstSlide = ARCHITECT_EVOLUTION.slice(0, 1)
+  const secondSlide = ARCHITECT_EVOLUTION.slice(1, 3)
+  const thirdSlide = ARCHITECT_EVOLUTION.slice(3, 5)
 
   /** Arrays combined for desktop grid mapping */
   const combinedLists = [...ARCHITECT_EVOLUTION]
@@ -58,11 +59,11 @@ export default function WorkExperienceSection() {
       />
       
       {/* HEADER */}
-      <div className="rounded-bl-[3rem] bg-black/60 backdrop-blur-md px-2 py-6 lg:ml-auto lg:h-[30%] lg:w-[45%]">
+      <div className="rounded-bl-[3rem] bg-black/60 backdrop-blur-md px-2 py-6 lg:ml-auto lg:h-[30%] lg:w-[50%]">
         <div className="mx-auto w-[90%]">
-          <h2 className="text-right text-7xl font-bold text-white drop-shadow-md md:text-8xl lg:text-9xl">Work</h2>
+          <h2 className="text-right text-6xl font-bold text-white drop-shadow-md md:text-8xl lg:text-8xl">Timeline of</h2>
           <h2 className="text-right text-7xl font-bold text-white drop-shadow-md md:text-8xl lg:text-9xl">
-            Experience
+            Mastery
           </h2>
         </div>
       </div>
@@ -86,6 +87,16 @@ export default function WorkExperienceSection() {
               <div className="pl-4">
                 <ul className="mt-7 pl-1">
                   <WorkExpSlider arry={secondSlide} />
+                </ul>
+              </div>
+            </div>
+          </div>
+          {/* ========= Third Slide ============ */}
+          <div className="keen-slider__slide">
+            <div>
+              <div className="pl-4">
+                <ul className="mt-7 pl-1">
+                  <WorkExpSlider arry={thirdSlide} />
                 </ul>
               </div>
             </div>

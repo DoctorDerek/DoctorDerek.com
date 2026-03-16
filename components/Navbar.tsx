@@ -17,7 +17,7 @@ export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className="h-[7vh]">
+    <div className="h-[7dvh]">
       {/* ======== NAVBAR ======= */}
       <div className="sticky top-0 z-40 flex h-full bg-white/10 shadow-xs backdrop-blur-md sm:gap-x-6 sm:px-6">
         <div className="flex h-full w-full items-center justify-between">

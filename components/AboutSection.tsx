@@ -13,7 +13,10 @@ export default function AboutSection() {
         </div>
         <div className="relative h-[80vh] overflow-y-auto md:h-[70vh]">
           {/* ======= DR DEREK AUSTIN IMAGE ========= */}
-          <div className="w-[65%] overflow-hidden rounded-tr-[6rem] md:w-1/2 md:rounded-tr-[4.5rem] lg:w-[45%]">
+          <div
+            className="w-[65%] animate-float overflow-hidden rounded-tr-[6rem] md:w-1/2 md:rounded-tr-[4.5rem] lg:w-[45%]"
+            style={{ animationDelay: "0s" }}
+          >
             <Image
               src={DerekAustin}
               alt="Dr Derek Austin"

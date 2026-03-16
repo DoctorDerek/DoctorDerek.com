@@ -16,7 +16,10 @@ const ContactSection = () => {
           </div>
 
           {/* Flipping images with state */}
-          <div className="perspective w-3/5 md:h-1/2 md:w-full">
+          <div
+            className="perspective w-3/5 animate-float md:h-1/2 md:w-full"
+            style={{ animationDelay: "1s" }}
+          >
             <div
               className="cursor-pointer"
               onClick={() => setIsFlipped(!isFlipped)}

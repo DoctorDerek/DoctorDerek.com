@@ -9,6 +9,7 @@ import Background3 from "@/images/Background-3.svg"
 import Background4 from "@/images/Background-4.svg"
 import Background5 from "@/images/Background-5.svg"
 import Background6 from "@/images/Background-6.svg"
+import ParticleCanvas from "./ParticleCanvas"
 
 const BACKGROUNDS = [
   { standard: Background0, inverse: Background1 },
@@ -33,15 +34,16 @@ export default function GlobalBackground() {
   const key = `bg-${bgIndex}-${useInverse ? "inverse" : "standard"}`
 
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10 h-full w-full">
+    <div className="pointer-events-none fixed inset-0 -z-20 h-full w-full animate-rainbow-vivid">
+      <ParticleCanvas />
       <AnimatePresence initial={false}>
         <motion.div
           key={key}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: 0.6 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 20, ease: "linear" }}
-          className="absolute inset-0 h-full w-full"
+          className="absolute inset-0 h-full w-full mix-blend-overlay"
         >
           <Component
             className="h-full w-full object-cover"

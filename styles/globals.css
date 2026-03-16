@@ -6,6 +6,41 @@
   --spacing-192: 50rem;
   --spacing-208: 54rem;
   --spacing-224: 58rem;
+
+  --animate-rainbow-vivid: rainbow-vivid 30s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes rainbow-vivid {
+    0%,
+    100% {
+      background-color: #008b8b;
+    }
+    16% {
+      background-color: #9c0052;
+    }
+    33% {
+      background-color: #008ec1;
+    }
+    50% {
+      background-color: #ff4500;
+    }
+    66% {
+      background-color: #790fc5;
+    }
+    83% {
+      background-color: #009c4a;
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
 }
 
 /*

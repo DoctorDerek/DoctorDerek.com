@@ -38,35 +38,29 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
 
 export type WorkExperience = {
   duration: string
-  position: string
   company: string
 }
 
 export const ARCHITECT_EVOLUTION: WorkExperience[] = [
   {
-    duration: "2025–2026 (Today)",
-    position: "Godot C# & GDScript",
-    company: "AI Context Engineer (15-20+ Million Tokens Exchanged)",
+    duration: "2025–Present",
+    company: "AI Context Engineer & Indie Game Dev | Godot C#, GDScript, 20M+ Tokens",
   },
   {
     duration: "2020–2026",
-    position: "React / Next.js + TypeScript + Tailwind CSS",
-    company: "Lead Frontend SWE",
+    company: "Lead Frontend SWE | React, Next.js, TypeScript, Tailwind CSS",
   },
   {
     duration: "2019–2020",
-    position: "React, JavaScript, CSS",
-    company: "React SWE",
+    company: "React SWE | React, JavaScript, CSS",
   },
   {
     duration: "2009–2019",
-    position: "HTML, CSS, JS",
-    company: "Web Developer",
+    company: "Full-Stack Web Developer | HTML, CSS, JavaScript",
   },
   {
     duration: "2005–2009",
-    position: "C++, PHP, HTML, CSS, Ruby on Rails",
-    company: "Full-Stack SWE",
+    company: "Software Engineer | C++, PHP, HTML, CSS, Ruby on Rails, SQL",
   },
 ] as const
 

@@ -3,22 +3,6 @@ import DerekAustin from "@/images/DerekAustin.png"
 import Image from "next/image"
 
 export default function AboutSection() {
-  /* TECHNOLOGIES USED, IN YELLOW BACKGROUND */
-  const techStack = [
-    "Node.js",
-    "TypeScript",
-    "React",
-    "Next.js",
-    "Tailwind CSS",
-    "Vercel",
-    "GitHub Actions",
-    "React Query",
-    "Redux / Redux Toolkit",
-    "Jest",
-    "Cypress",
-    "React Testing Library",
-    "Playwright",
-  ]
 
   return (
     <div className="h-screen">
@@ -27,22 +11,7 @@ export default function AboutSection() {
           <h2 className="text-7xl md:text-8xl lg:text-9xl lg:font-semibold">
             About
           </h2>
-          {/* ======== TECH STACK ========= */}
-          <div className="absolute inset-y-1/2 right-0 hidden h-9 w-[45%] md:block lg:inset-y-2/3">
-            <div>
-              <p className="pb-3 text-xl">Tech Stack</p>
-            </div>
-            <div className="flex flex-wrap content-between gap-x-4">
-              {techStack.map((item, index) => (
-                <p
-                  key={`${item}-tech-stack-key${index}`}
-                  className="mb-2 rounded-tr-xl border border-white/30 bg-white/20 py-1 pr-2 pl-2 text-white backdrop-blur-md md:text-sm md:font-semibold lg:text-lg"
-                >
-                  {item}
-                </p>
-              ))}
-            </div>
-          </div>
+
         </div>
         <div className="relative h-[80vh] overflow-y-auto md:h-[70vh]">
           {/* ======= DR DEREK AUSTIN IMAGE ========= */}

@@ -54,7 +54,7 @@ export default function WorkExperienceSection() {
         src={IntroAnimation}
         alt="Work Experience Background"
         fill
-        className="-z-10 object-cover"
+        className="-z-10 object-cover opacity-30 mix-blend-overlay"
         priority={false}
       />
 

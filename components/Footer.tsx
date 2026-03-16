@@ -2,7 +2,7 @@ import { LEGAL_DISCLAIMER } from "@/constants/SITE_CONTENT"
 
 export default function Footer() {
   return (
-    <footer className="bg-[#311B4D] p-12 text-white">
+    <footer className="bg-[#311B4D]/60 p-12 text-white backdrop-blur-md">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 md:grid-cols-2">
         <div>
           <h3 className="mb-4 text-2xl font-bold tracking-wider text-[#FB70AA] uppercase">

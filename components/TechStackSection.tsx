@@ -27,7 +27,10 @@ const TechStackSection = () => {
         </div>
         {/*========= DR DEREK AUSTIN IMAGE ========= */}
         <div className="relative h-[75vh]">
-          <div className="w-[65%] overflow-hidden rounded-tr-[6rem]">
+          <div
+            className="w-[65%] animate-float overflow-hidden rounded-tr-[6rem]"
+            style={{ animationDelay: "0.5s" }}
+          >
             <Image
               src={DerekAustin}
               alt="Dr Derek Austin"

@@ -46,11 +46,12 @@ const Testimonials = () => {
             })}
           </div>
         </div>
-
         {/* ========= WHAT PEOPLE SAY ============ */}
-        <div className="mt-auto rounded-tl-[5rem] bg-[#89CFFD]">
+        <div className="mt-auto rounded-tl-[5rem] bg-[#89CFFD]/30 backdrop-blur-md">
           <div className="mx-auto w-5/6 px-2 py-5 md:px-0 md:py-12 lg:py-16">
-            <h3 className="text-right text-7xl lg:text-9xl">What People Say</h3>
+            <h3 className="text-right text-7xl text-white drop-shadow-md lg:text-9xl">
+              What People Say
+            </h3>
           </div>
         </div>
       </div>

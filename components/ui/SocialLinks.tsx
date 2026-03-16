@@ -41,7 +41,7 @@ export default function SocialLinks({
 
   return (
     <div className={classNames(containerClasses)}>
-      {SOCIAL_LINKS.map((link: SocialLink) => {
+      {SOCIAL_LINKS.map((link: SocialLink, index: number) => {
         const IconComponent = ICONS[link.id]
         if (!IconComponent) return null
 
@@ -59,7 +59,10 @@ export default function SocialLinks({
             rel={isEmail ? undefined : "noopener noreferrer"}
             className={classNames(linkClasses)}
           >
-            <div className={classNames(iconClasses)}>
+            <div
+              className={classNames(iconClasses, "animate-float")}
+              style={{ animationDelay: `${index * 0.4}s` }}
+            >
               <IconComponent fill={fill} />
             </div>
             {showLabels && (

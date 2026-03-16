@@ -3,7 +3,6 @@ import DerekAustin from "@/images/DerekAustin.png"
 import Image from "next/image"
 
 export default function AboutSection() {
-
   return (
     <div className="h-screen">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-3/4">
@@ -11,7 +10,6 @@ export default function AboutSection() {
           <h2 className="text-7xl md:text-8xl lg:text-9xl lg:font-semibold">
             About
           </h2>
-
         </div>
         <div className="relative h-[80vh] overflow-y-auto md:h-[70vh]">
           {/* ======= DR DEREK AUSTIN IMAGE ========= */}

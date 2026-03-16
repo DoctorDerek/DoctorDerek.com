@@ -36,10 +36,12 @@ export default function WorkExpSlider({
           {/* Code icon */}
           <CodeIcon className="absolute top-0 -left-[14px] h-7 w-7" />
           <div className="">
-            <p className="text-white/80 font-bold">{item.duration}</p>
+            <p className="font-bold text-white/80">{item.duration}</p>
           </div>
           <div className="py-1">
-            <p className="restorabold text-lg text-white font-bold">{item.company}</p>
+            <p className="restorabold text-lg font-bold text-white">
+              {item.company}
+            </p>
           </div>
         </li>
       )

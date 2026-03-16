@@ -45,6 +45,9 @@ public
 yarn-error.log
 npm-debug.log
 
+# Next.js env types
+next-env.d.ts
+
 # typescript
 *.tsbuildinfo
 

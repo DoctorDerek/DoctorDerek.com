@@ -1,13 +1,34 @@
 import Logo from "@/components/ui/Logo"
 import Navbar from "./Navbar"
+import TypewriterComponent, {
+  type Options,
+  type TypewriterClass,
+} from "typewriter-effect"
+import { INTRO_BIO_SHORT } from "@/constants/SITE_CONTENT"
+
+const TypewriterOptions: Options = { delay: 25, loop: true, deleteSpeed: 10 }
+
+const TypewriterOnInit = (typewriter: TypewriterClass) => {
+  const segments = INTRO_BIO_SHORT.split(" · ")
+  for (let i = 0; i < segments.length; i++) {
+    typewriter.typeString(segments[i]).pauseFor(2000).deleteAll()
+  }
+  typewriter.start()
+}
 
 export default function TopSection() {
   return (
     <div className="relative h-dvh">
       <Navbar />
       {/* 93dvh offsets the 7dvh Navbar on mobile to prevent double scrolling */}
-      <div className="flex h-[93dvh] items-center justify-center opacity-0 translate-y-12 scale-95 transition-all duration-700 ease-spring-bouncy [.active_&]:opacity-100 [.active_&]:translate-y-0 [.active_&]:scale-100 md:h-dvh">
+      <div className="flex h-[93dvh] translate-y-12 scale-95 flex-col items-center justify-center opacity-0 transition-all duration-700 ease-spring-bouncy md:h-dvh [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
         <Logo className="h-16 w-48 md:h-32 md:w-96" />
+        <div className="restorabold mt-8 min-h-[4rem] text-center text-xl font-bold text-[#FB70AA] drop-shadow-md md:mt-12 md:min-h-[5rem] md:text-3xl lg:text-4xl">
+          <TypewriterComponent
+            onInit={TypewriterOnInit}
+            options={TypewriterOptions}
+          />
+        </div>
       </div>
     </div>
   )

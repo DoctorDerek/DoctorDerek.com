@@ -1,30 +1,15 @@
-import TypewriterComponent, {
-  type Options,
-  type TypewriterClass,
-} from "typewriter-effect"
 import SocialLinks from "./ui/SocialLinks"
-
-const INTRO_STRING =
-  "Indie Game Dev · AI Context Engineer · I teach LLMs to think · Full-Stack SWE since 2005 · BS & MS in Bioinformatics at age 19 · Doctor of Physical Therapy"
-
-const TypewriterOnInit = (typewriter: TypewriterClass) =>
-  typewriter.typeString(INTRO_STRING).start().pauseFor(3000)
-
-const TypewriterOptions: Options = { delay: 25, loop: true, deleteSpeed: 1 }
-
-const Typewriter = () => (
-  <TypewriterComponent onInit={TypewriterOnInit} options={TypewriterOptions} />
-)
+import { INTRO_BIO_SHORT } from "@/constants/SITE_CONTENT"
 
 export default function IntroSection() {
   return (
     <div className="relative flex h-[90vh] flex-col md:h-screen">
-      <div className="mx-auto w-4/5 pt-4 opacity-0 translate-y-12 transition-all duration-700 ease-spring-soft [.active_&]:opacity-100 [.active_&]:translate-y-0 md:w-[90%] md:pt-20 lg:pt-32">
-        <div className="text-3xl text-[#FB70AA] md:text-5xl lg:text-7xl">
-          <Typewriter />
+      <div className="mx-auto w-4/5 translate-y-12 pt-4 opacity-0 transition-all duration-700 ease-spring-soft md:w-[90%] md:pt-20 lg:pt-32 [.active_&]:translate-y-0 [.active_&]:opacity-100">
+        <div className="text-3xl leading-snug font-medium text-[#FB70AA] drop-shadow-md md:text-5xl md:leading-tight lg:text-6xl">
+          {INTRO_BIO_SHORT}
         </div>
       </div>
-      <div className="mx-auto mt-auto mb-12 w-4/5 pt-4 opacity-0 translate-y-12 transition-all duration-700 delay-200 ease-spring-soft [.active_&]:opacity-100 [.active_&]:translate-y-0 md:w-[90%] lg:mb-8">
+      <div className="mx-auto mt-auto mb-12 w-4/5 translate-y-12 pt-4 opacity-0 transition-all delay-200 duration-700 ease-spring-soft md:w-[90%] lg:mb-8 [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <div className="w-3/4 md:w-11/12 lg:w-3/5">
           <SocialLinks
             containerClasses="flex justify-around py-6 md:mx-auto lg:justify-between"

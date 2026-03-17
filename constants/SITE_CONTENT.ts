@@ -124,7 +124,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     id: "github",
-    label: "Github",
+    label: "GitHub",
     url: "https://github.com/DoctorDerek",
   },
   {

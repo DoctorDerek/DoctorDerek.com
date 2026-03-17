@@ -1,10 +1,7 @@
 import Image from "next/image"
 import CodeIcon from "@/images/codeIcon.svg"
 import IntroAnimation from "@/images/Intro-Animation.jpg"
-import EmailIcon from "./EmailIcon"
-import GithubIcon from "./GithubIcon"
-import MediumIcon from "./MediumIcon"
-import BookLinkIcon from "./BookLinkIcon"
+import SocialLinks from "./ui/SocialLinks"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
 
@@ -143,42 +140,12 @@ export default function WorkExperienceSection() {
           </ul>
 
           {/* Icons with links */}
-          <div className="mt-auto mb-2 ml-6 flex w-[65%] translate-y-12 justify-between gap-y-4 opacity-0 transition-all delay-[600ms] duration-700 ease-spring-soft md:ml-12 md:w-[50%] lg:mb-28 lg:ml-32 lg:grid lg:w-1/5 lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-6 [.active_&]:translate-y-0 [.active_&]:opacity-100">
-            <a
-              className="flex font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
-              href="mailto:derekraustin@gmail.com"
-            >
-              <EmailIcon fill="#F38B57" />
-              <span className="ml-2 hidden pt-1 lg:block">Email</span>
-            </a>
-            <a
-              href="https://github.com/DoctorDerek"
-              className="flex text-lg font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <GithubIcon fill="#F38B57" />
-              <span className="ml-1 hidden pt-1 lg:block">Github</span>
-            </a>
-            <a
-              href="https://doctorderek.medium.com/"
-              className="flex text-lg font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <MediumIcon fill="#F38B57" />
-              <span className="ml-1 hidden pt-1 lg:block">Medium</span>
-            </a>
-            <a
-              className="flex font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
-              href="https://www.amazon.com/dp/B0BRJDLJ43"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <BookLinkIcon fill="#F38B57" />
-              <span className="ml-1 hidden pt-1 lg:block">Book</span>
-            </a>
-          </div>
+          <SocialLinks
+            containerClasses="mt-auto mb-2 ml-6 flex w-[65%] translate-y-12 justify-between gap-y-4 opacity-0 transition-all delay-[600ms] duration-700 ease-spring-soft md:ml-12 md:w-[50%] lg:mb-28 lg:ml-32 lg:grid lg:w-1/5 lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-6 [.active_&]:translate-y-0 [.active_&]:opacity-100"
+            linkClasses="flex font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
+            labelClasses="ml-1 hidden pt-1 lg:block"
+            showLabels={true}
+          />
         </div>
       </div>
     </div>

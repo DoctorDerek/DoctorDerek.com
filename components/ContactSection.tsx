@@ -3,8 +3,21 @@ import Image from "next/image"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 
-const ContactSection = () => {
+export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)
+
+  const handleEmailClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    window.location.href = [
+      "mailto:",
+      "derekraustin",
+      "+doctorderek",
+      "@",
+      "gmail.com",
+      "?subject=AI%20Evaluation%20Consultancy",
+    ].join("")
+  }
+
   return (
     <div className="h-full w-full">
       <div className="flex h-screen flex-col md:flex-row">
@@ -30,22 +43,27 @@ const ContactSection = () => {
                   style={{
                     transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
                     transition: "transform 0.8s ease-out",
+                    transformStyle: "preserve-3d",
                   }}
                 >
                   {/*==== Front image ======  md:h-3/4 md:w-[85%]*/}
                   <div className="front h-full">
                     <Image
                       src={contactimage}
-                      alt="John Doe"
+                      alt="Derek Austin"
                       className="object-cover md:relative"
+                      quality={100}
+                      priority
                     />
                   </div>
                   {/*===== Back image ======= */}
                   <div className="back hidden h-full md:absolute md:top-0 md:right-0 md:bottom-0 md:left-0 md:block">
                     <Image
                       src={DerekSpriteImg}
-                      alt="John Doe"
+                      alt="Derek Austin Sprite"
                       className="object-cover md:relative"
+                      quality={100}
+                      priority
                     />
                   </div>
                 </div>
@@ -61,11 +79,15 @@ const ContactSection = () => {
               Austin. Get in touch to discuss your next development project, or
               to simply chat.
             </p>
+            <button
+              onClick={handleEmailClick}
+              className="mt-8 rounded-tr-3xl bg-[#F38B57] px-12 py-6 text-2xl font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-105 active:scale-95"
+            >
+              Email Me for Consultancy
+            </button>
           </div>
         </div>
       </div>
     </div>
   )
 }
-
-export default ContactSection

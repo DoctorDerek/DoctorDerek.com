@@ -1,54 +1,29 @@
 import Image from "next/image"
 import CodeIcon from "@/images/codeIcon.svg"
 import IntroAnimation from "@/images/Intro-Animation.jpg"
-import { useKeenSlider } from "keen-slider/react"
-import "keen-slider/keen-slider.min.css"
 import EmailIcon from "./EmailIcon"
 import GithubIcon from "./GithubIcon"
 import MediumIcon from "./MediumIcon"
 import BookLinkIcon from "./BookLinkIcon"
-import WorkExpSlider from "./WorkExpSlider"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
+import classNames from "@/utils/classNames"
 
 export default function WorkExperienceSection() {
-  const [sliderRef] = useKeenSlider({ loop: true })
-
-  // Slice the evolution array into slides for mobile
-  // Mobile slide 1 gets exactly 3 items, slide 2 gets the remaining 2 items.
-  const firstSlide = ARCHITECT_EVOLUTION.slice(0, 1)
-  const secondSlide = ARCHITECT_EVOLUTION.slice(1, 3)
-  const thirdSlide = ARCHITECT_EVOLUTION.slice(3, 5)
-
   /** Arrays combined for desktop grid mapping */
   const combinedLists = [...ARCHITECT_EVOLUTION]
 
   /** Hardcode 3 to ensure exactly 3 items are on the left side of the grid bend */
   const getHalfNum = 3
 
-  // Inject 4 placeholders into the grid array logic so the CSS maps flawlessly across columns
+  // Inject 7 placeholders into the grid array logic so the CSS maps flawlessly across columns
   combinedLists.splice(
     getHalfNum,
     0,
-    {
-      duration: " ",
-      company: "placeholder 1",
-    },
-    {
-      duration: " ",
-      company: "placeholder 2",
-    },
-    {
-      duration: " ",
-      company: "placeholder 3",
-    },
-    {
-      duration: " ",
-      company: "placeholder 4",
-    },
+    ...Array(7).fill({ duration: " ", company: "placeholder" }),
   )
 
   return (
-    <div className="relative flex h-screen flex-col items-center justify-center pt-16">
+    <div className="relative flex h-screen w-full flex-col items-center justify-center pt-16">
       <Image
         src={IntroAnimation}
         alt="Work Experience Background"
@@ -69,40 +44,39 @@ export default function WorkExperienceSection() {
         </div>
       </div>
 
-      {/* ========= Slider (Mobile & Tablet) ======= */}
-      <div className="mt-6 ml-auto h-[42vh] w-[95%] translate-y-12 opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
-        <div ref={sliderRef} className="keen-slider hover:cursor-grab">
-          {/* ========= First Slide ============ */}
-          <div className="keen-slider__slide">
-            <div>
-              <div className="pl-3">
-                <ul className="mt-2 pl-1">
-                  <WorkExpSlider arry={firstSlide} startIndex={0} />
-                </ul>
+      {/* ========= Mobile List ======= */}
+      <div className="mx-auto mt-6 h-[42vh] w-[95%] translate-y-12 overflow-y-auto opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
+        <ul className="mt-2 flex flex-col gap-y-6 pr-2 pl-4">
+          {ARCHITECT_EVOLUTION.map((item, index) => (
+            <li
+              key={item.company}
+              className={classNames(
+                "relative translate-x-8 border-l-4 border-[#F38B57] pb-8 pl-6 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-x-0 [.active_&]:opacity-100",
+                index === ARCHITECT_EVOLUTION.length - 1
+                  ? "rounded-bl-xl border-b-4 pb-4"
+                  : "",
+              )}
+              style={{ transitionDelay: `${index * 150}ms` }}
+            >
+              <div
+                className="absolute top-0 -left-[18px] h-8 w-8 animate-float"
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
+                <CodeIcon className="h-full w-full" />
               </div>
-            </div>
-          </div>
-          {/* ========= Second Slide ============ */}
-          <div className="keen-slider__slide">
-            <div>
-              <div className="pl-4">
-                <ul className="mt-7 pl-1">
-                  <WorkExpSlider arry={secondSlide} startIndex={1} />
-                </ul>
+              <div className="">
+                <p className="text-xl font-bold text-white/80">
+                  {item.duration}
+                </p>
               </div>
-            </div>
-          </div>
-          {/* ========= Third Slide ============ */}
-          <div className="keen-slider__slide">
-            <div>
-              <div className="pl-4">
-                <ul className="mt-7 pl-1">
-                  <WorkExpSlider arry={thirdSlide} startIndex={3} />
-                </ul>
+              <div className="py-1">
+                <p className="restorabold text-xl font-bold text-white">
+                  {item.company}
+                </p>
               </div>
-            </div>
-          </div>
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* ========= Displays work experince grid on large devices ======= */}
@@ -110,44 +84,55 @@ export default function WorkExperienceSection() {
         <div className="flex h-[30vh] w-full flex-col md:h-[30vh] lg:relative lg:h-full">
           <ul className="work-exp-grid hidden h-full w-1/2 lg:absolute lg:-top-[30%] lg:left-1/4 lg:grid">
             {combinedLists.map((item, index) => {
+              const isPlaceholder = item.company.includes("placeholder")
+              const isLeftReal = index < getHalfNum
+              const isRightPipe = index >= getHalfNum + 6
+
+              if (isPlaceholder && !isRightPipe) {
+                return (
+                  <li
+                    key={`placeholder-${index}`}
+                    className="invisible h-full"
+                  />
+                )
+              }
+
               /* Ternary operators adds CSS borders for dynamic connector pipe */
               return (
                 <li
-                  className={`translate-y-12 pl-4 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-y-0 [.active_&]:opacity-100 ${
-                    index === getHalfNum - 1 ||
-                    index === getHalfNum - 2 ||
-                    index === getHalfNum - 3
-                      ? "mr-8 border-r-4 border-white/40"
-                      : ""
-                  } ${index === getHalfNum - 1 && "rounded-b-3xl border-b-4 border-white/40"} ${
-                    index < getHalfNum || index > getHalfNum + 3
-                      ? "border-l-4 border-[#F38B57]"
-                      : ""
-                  } ${index === combinedLists.length - 1 && "border-l-0"} ${index === 2 && "relative"} `}
+                  className={classNames(
+                    "translate-y-12 pl-4 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-y-0 [.active_&]:opacity-100",
+                    isLeftReal && "mr-8 border-r-4 border-white/40",
+                    index === getHalfNum - 1 &&
+                      "rounded-br-3xl border-b-4 border-white/40",
+                    (isLeftReal || isRightPipe) &&
+                      "border-l-4 border-[#F38B57]",
+                    index === combinedLists.length - 1 &&
+                      "rounded-bl-3xl border-b-4 border-l-0 pb-4",
+                    index === 2 && "relative",
+                    isPlaceholder &&
+                      isRightPipe &&
+                      "invisible mr-8 border-l-4 border-[#F38B57]",
+                  )}
                   style={{ transitionDelay: `${index * 100 + 200}ms` }}
                   key={`${item.duration} ${index}`}
                 >
-                  <div className="relative flex flex-col text-white">
-                    {/* Hides code icon if item.company string contains placeholder */}
-                    {!item.company.includes("placeholder") && (
+                  {!isPlaceholder && (
+                    <div className="relative flex flex-col text-white">
                       <div
                         className="absolute top-0 -left-9 h-8 w-8 animate-float"
                         style={{ animationDelay: `${index * 0.2}s` }}
                       >
                         <CodeIcon className="h-full w-full" />
                       </div>
-                    )}
-                    <p className="restorabold text-2xl font-bold">
-                      {item.duration}
-                    </p>
-                    <p
-                      className={`${
-                        item.company.includes("placeholder") ? "invisible" : ""
-                      } restorabold max-w-sm py-2 text-xl font-medium`}
-                    >
-                      {item.company}
-                    </p>
-                  </div>
+                      <p className="restorabold text-2xl font-bold">
+                        {item.duration}
+                      </p>
+                      <p className="restorabold max-w-sm py-2 text-xl font-medium">
+                        {item.company}
+                      </p>
+                    </div>
+                  )}
                   {/* Horizontal connecting line for the 3rd item in work experience */}
                   {index === 2 && (
                     <div className="absolute top-0 -right-8 w-8 border-t-2 border-b-2 border-[#F38B57]"></div>
@@ -160,7 +145,7 @@ export default function WorkExperienceSection() {
           {/* Icons with links */}
           <div className="mt-auto mb-2 ml-6 flex w-[65%] translate-y-12 justify-between gap-y-4 opacity-0 transition-all delay-[600ms] duration-700 ease-spring-soft md:ml-12 md:w-[50%] lg:mb-28 lg:ml-32 lg:grid lg:w-1/5 lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-6 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <a
-              className="font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 md:flex lg:text-xl"
+              className="flex font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
               href="mailto:derekraustin@gmail.com"
             >
               <EmailIcon fill="#F38B57" />
@@ -168,24 +153,27 @@ export default function WorkExperienceSection() {
             </a>
             <a
               href="https://github.com/DoctorDerek"
-              className="text-lg font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 md:flex lg:text-xl"
+              className="flex text-lg font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <GithubIcon fill="#F38B57" />
               <span className="ml-1 hidden pt-1 lg:block">Github</span>
             </a>
             <a
               href="https://doctorderek.medium.com/"
-              className="text-lg font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 md:flex lg:text-xl"
+              className="flex text-lg font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <MediumIcon fill="#F38B57" />
               <span className="ml-1 hidden pt-1 lg:block">Medium</span>
             </a>
             <a
-              className="font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 md:flex lg:text-xl"
+              className="flex font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
               href="https://www.amazon.com/dp/B0BRJDLJ43"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <BookLinkIcon fill="#F38B57" />
               <span className="ml-1 hidden pt-1 lg:block">Book</span>

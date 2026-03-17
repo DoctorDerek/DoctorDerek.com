@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react"
 import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
 import DerekAustin from "@/images/DerekAustin.png"
 import DrDerekAustin from "@/images/DrDerekAustin.png"
-import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 import Image from "next/image"
 
 export default function AboutSection() {
@@ -27,10 +26,10 @@ export default function AboutSection() {
     }
   }, [])
 
-  const photos = [DerekAustin, DrDerekAustin, DerekSpriteImg]
+  const photos = [DerekAustin, DrDerekAustin]
 
-  const currentPhoto = photos[flipCount % 3]
-  const nextPhoto = photos[(flipCount + 1) % 3]
+  const currentPhoto = photos[flipCount % 2]
+  const nextPhoto = photos[(flipCount + 1) % 2]
 
   const frontSrc = flipCount % 2 === 0 ? currentPhoto : nextPhoto
   const backSrc = flipCount % 2 === 1 ? currentPhoto : nextPhoto

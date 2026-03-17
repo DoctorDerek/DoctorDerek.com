@@ -61,11 +61,11 @@ export default function WorkExperienceSection() {
       {/* HEADER */}
       <div className="rounded-bl-[3rem] bg-black/60 px-2 py-6 backdrop-blur-md lg:ml-auto lg:h-[30%] lg:w-[50%]">
         <div className="mx-auto w-[90%]">
-          <h2 className="text-right text-6xl font-bold text-white drop-shadow-md md:text-8xl lg:text-8xl">
-            Timeline of
+          <h2 className="text-right text-3xl font-bold tracking-tight text-white drop-shadow-md min-[375px]:text-4xl sm:text-5xl md:text-8xl lg:text-8xl">
+            20+ Years of
           </h2>
-          <h2 className="text-right text-7xl font-bold text-white drop-shadow-md md:text-8xl lg:text-9xl">
-            Mastery
+          <h2 className="whitespace-nowrap text-right text-3xl font-bold tracking-tight text-white drop-shadow-md min-[375px]:text-4xl sm:text-5xl md:text-8xl lg:text-9xl">
+            Full-Stack SWE
           </h2>
         </div>
       </div>

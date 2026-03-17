@@ -33,8 +33,8 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
     <>
       <Head>
         <title>
-          Dr. Derek Austin - Senior Frontend Developer & React Software Engineer
-          - @DoctorDerek
+          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-STack
+          SWE, & Content Creator
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>

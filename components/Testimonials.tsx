@@ -12,7 +12,7 @@ const Testimonials = () => {
   return (
     <div className="h-screen">
       <div className="flex h-full flex-col">
-        <div className="mx-auto mt-10 w-[95%] pt-2 md:mt-8 md:w-3/5 lg:mt-20 lg:w-[40%]">
+        <div className="mx-auto mt-10 w-[95%] translate-y-12 pt-2 opacity-0 transition-all delay-100 duration-700 ease-spring-soft md:mt-8 md:w-3/5 lg:mt-20 lg:w-[40%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
           <div ref={sliderRef} className="keen-slider hover:cursor-grab">
             {/* ======= PROJECT SLIDE ======= */}
             {TESTIMONIALS.map((item: Testimonial) => {
@@ -47,7 +47,7 @@ const Testimonials = () => {
           </div>
         </div>
         {/* ========= WHAT PEOPLE SAY ============ */}
-        <div className="mt-auto rounded-tl-[5rem] bg-[#89CFFD]/30 backdrop-blur-md">
+        <div className="mt-auto translate-x-12 rounded-tl-[5rem] bg-[#89CFFD]/30 opacity-0 backdrop-blur-md transition-all delay-300 duration-700 ease-spring-soft [.active_&]:translate-x-0 [.active_&]:opacity-100">
           <div className="mx-auto w-5/6 px-2 py-5 md:px-0 md:py-12 lg:py-16">
             <h3 className="text-right text-7xl text-white drop-shadow-md lg:text-9xl">
               What People Say

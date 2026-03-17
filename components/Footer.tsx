@@ -3,7 +3,7 @@ import { LEGAL_DISCLAIMER } from "@/constants/SITE_CONTENT"
 export default function Footer() {
   return (
     <footer className="bg-[#311B4D]/60 p-12 text-white backdrop-blur-md">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 md:grid-cols-2">
+      <div className="mx-auto grid max-w-6xl translate-y-8 grid-cols-1 gap-12 opacity-0 transition-all duration-700 ease-spring-soft md:grid-cols-2 [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <div>
           <h3 className="mb-4 text-2xl font-bold tracking-wider text-[#FB70AA] uppercase">
             AI Disclosure

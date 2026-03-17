@@ -76,7 +76,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
                 <Testimonials />
               </div>
 
-              <div className="section">
+              <div className="section max-lg:hidden">
                 <BlogSection posts={posts} />
               </div>
 

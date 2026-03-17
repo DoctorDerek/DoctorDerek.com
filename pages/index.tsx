@@ -2,6 +2,7 @@ import Head from "next/head"
 import ReactFullpage from "@fullpage/react-fullpage"
 import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/AboutSection"
+import DrMapacheSection from "@/components/DrMapacheSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import WorkExperienceSection from "@/components/WorkExperienceSection"
 import Testimonials from "@/components/Testimonials"
@@ -42,6 +43,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       <ReactFullpage
         credits={{ enabled: false }}
         navigation
+        normalScrollElements=".fp-noscroll"
         render={() => {
           return (
             <ReactFullpage.Wrapper>
@@ -57,12 +59,16 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
                 <AboutSection />
               </div>
 
-              <div className="section max-lg:flex max-lg:h-dvh max-lg:flex-col">
-                <AiConsultancySection />
+              <div className="section">
+                <DrMapacheSection />
               </div>
 
               <div className="section">
                 <WorkExperienceSection />
+              </div>
+
+              <div className="section max-lg:flex max-lg:h-dvh max-lg:flex-col">
+                <AiConsultancySection />
               </div>
 
               {/*========= TESIMONIALS SECTION ========= */}

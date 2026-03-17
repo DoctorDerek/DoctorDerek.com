@@ -108,16 +108,20 @@ export default function AboutSection() {
             </div>
           </div>
           <div className="absolute -bottom-12 left-6 translate-y-12 rounded-tl-3xl border border-white/20 bg-black/40 px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 ease-spring-soft md:right-0 md:-bottom-8 md:left-auto md:w-[55%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-1/2 lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
-            <div className="fp-noscroll max-h-[40vh] overflow-y-auto pr-2 text-lg leading-7 text-white lg:text-xl lg:leading-9">
-              {ABOUT_BIO_LONG.map((paragraph, index) => (
-                <p key={index} className="mb-4">
-                  {paragraph}
+            <div className="flex flex-col gap-4 lg:gap-6">
+              <div className="fp-noscroll max-h-[30vh] overflow-y-auto pr-2 text-lg leading-7 text-white md:max-h-[35vh] lg:max-h-[40vh] lg:text-xl lg:leading-9">
+                {ABOUT_BIO_LONG.map((paragraph, index) => (
+                  <p key={index} className="mb-4">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+              <div className="rounded-2xl border border-[#F38B57]/20 bg-black/50 p-4 shadow-xl backdrop-blur-md">
+                <p className="animate-pulse text-lg font-bold leading-tight text-[#F38B57] drop-shadow-md lg:text-xl">
+                  But enough talk. Scroll down to play the WebGL game I built to
+                  prove my stack. 👇🎮🦝
                 </p>
-              ))}
-              <p className="mt-8 animate-pulse text-xl font-bold text-[#F38B57]">
-                But enough talk. Scroll down to play the WebGL game I built to
-                prove my stack. 👇🎮🦝
-              </p>
+              </div>
             </div>
           </div>
         </div>

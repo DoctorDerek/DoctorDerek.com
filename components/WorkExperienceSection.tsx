@@ -141,7 +141,7 @@ export default function WorkExperienceSection() {
 
           {/* Icons with links */}
           <SocialLinks
-            containerClasses="mt-auto mb-2 ml-6 flex w-[65%] translate-y-12 justify-between gap-y-4 opacity-0 transition-all delay-[600ms] duration-700 ease-spring-soft md:ml-12 md:w-[50%] lg:mb-28 lg:ml-32 lg:grid lg:w-1/5 lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-6 [.active_&]:translate-y-0 [.active_&]:opacity-100"
+            containerClasses="mt-auto mb-2 ml-6 flex w-[65%] translate-y-12 justify-between gap-y-4 opacity-0 transition-all delay-[600ms] duration-700 ease-spring-soft md:ml-12 md:w-[50%] lg:mb-28 lg:ml-32 lg:grid lg:w-1/5 lg:grid-cols-2 lg:grid-rows-2 lg:gap-x-6 [.active_&]:translate-y-0 [.active_&]:opacity-100"
             linkClasses="flex font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 lg:text-xl"
             labelClasses="ml-1 hidden pt-1 lg:block"
             showLabels={true}

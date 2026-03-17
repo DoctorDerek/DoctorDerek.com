@@ -4,26 +4,13 @@ import classNames from "@/utils/classNames"
 import codeIcon from "images/codeIcon.svg"
 
 export default function WorkExpGrid({ ...clonedList }) {
-  /** Number of items in combinedLists divided by 2 for placeholder space */
   const getHalfNum = Math.floor(clonedList.length / 2)
 
   return clonedList.map(
     (
-      /**
-       * item: object of string key value pairs
-       */
       item: {
-        /**
-         * duration: string value of the timespan in a position and used as React keys
-         */
         duration: string
-        /**
-         * position: string value of the role worked in a company
-         */
         position: string
-        /**
-         * company: string value of name of the company
-         */
         company: string
       },
       index: number,
@@ -31,7 +18,7 @@ export default function WorkExpGrid({ ...clonedList }) {
       return (
         <li
           className={classNames(
-            "pl-4",
+            "translate-y-12 pl-4 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-y-0 [.active_&]:opacity-100",
             (index === getHalfNum - 1 ||
               index === getHalfNum - 2 ||
               index === getHalfNum - 3) &&
@@ -42,10 +29,10 @@ export default function WorkExpGrid({ ...clonedList }) {
             index === clonedList.length - 1 && "border-l-0",
             index === 2 && "relative",
           )}
+          style={{ transitionDelay: `${index * 100 + 200}ms` }}
           key={`${item.duration} ${index}`}
         >
           <div className="relative flex flex-col">
-            {/* Hides code icon if item.company string contains placeholder */}
             {!item.company.includes("placeholder") && (
               <Image
                 src={codeIcon}
@@ -64,7 +51,6 @@ export default function WorkExpGrid({ ...clonedList }) {
               {item.company}
             </p>
           </div>
-          {/* Horizontal connecting line for the 3rd item in work experience */}
           {index === 2 && (
             <div className="absolute top-0 -right-8 w-8 border-t-2 border-b-2 border-[#F38B57]"></div>
           )}

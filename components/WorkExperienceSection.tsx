@@ -1,4 +1,3 @@
-import React from "react"
 import Image from "next/image"
 import CodeIcon from "@/images/codeIcon.svg"
 import IntroAnimation from "@/images/Intro-Animation.jpg"
@@ -59,26 +58,26 @@ export default function WorkExperienceSection() {
       />
 
       {/* HEADER */}
-      <div className="rounded-bl-[3rem] bg-black/60 px-2 py-6 backdrop-blur-md lg:ml-auto lg:h-[30%] lg:w-[50%]">
+      <div className="translate-x-12 rounded-bl-[3rem] bg-black/60 px-2 py-6 opacity-0 backdrop-blur-md transition-all duration-700 ease-spring-soft lg:ml-auto lg:h-[30%] lg:w-[50%] [.active_&]:translate-x-0 [.active_&]:opacity-100">
         <div className="mx-auto w-[90%]">
           <h2 className="text-right text-3xl font-bold tracking-tight text-white drop-shadow-md min-[375px]:text-4xl sm:text-5xl md:text-8xl lg:text-8xl">
             20+ Years of
           </h2>
-          <h2 className="whitespace-nowrap text-right text-3xl font-bold tracking-tight text-white drop-shadow-md min-[375px]:text-4xl sm:text-5xl md:text-8xl lg:text-9xl">
+          <h2 className="text-right text-3xl font-bold tracking-tight whitespace-nowrap text-white drop-shadow-md min-[375px]:text-4xl sm:text-5xl md:text-8xl lg:text-9xl">
             Full-Stack SWE
           </h2>
         </div>
       </div>
 
       {/* ========= Slider (Mobile & Tablet) ======= */}
-      <div className="mt-6 ml-auto h-[42vh] w-[95%] lg:hidden">
+      <div className="mt-6 ml-auto h-[42vh] w-[95%] translate-y-12 opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <div ref={sliderRef} className="keen-slider hover:cursor-grab">
           {/* ========= First Slide ============ */}
           <div className="keen-slider__slide">
             <div>
               <div className="pl-3">
                 <ul className="mt-2 pl-1">
-                  <WorkExpSlider arry={firstSlide} />
+                  <WorkExpSlider arry={firstSlide} startIndex={0} />
                 </ul>
               </div>
             </div>
@@ -88,7 +87,7 @@ export default function WorkExperienceSection() {
             <div>
               <div className="pl-4">
                 <ul className="mt-7 pl-1">
-                  <WorkExpSlider arry={secondSlide} />
+                  <WorkExpSlider arry={secondSlide} startIndex={1} />
                 </ul>
               </div>
             </div>
@@ -98,7 +97,7 @@ export default function WorkExperienceSection() {
             <div>
               <div className="pl-4">
                 <ul className="mt-7 pl-1">
-                  <WorkExpSlider arry={thirdSlide} />
+                  <WorkExpSlider arry={thirdSlide} startIndex={3} />
                 </ul>
               </div>
             </div>
@@ -107,14 +106,14 @@ export default function WorkExperienceSection() {
       </div>
 
       {/* ========= Displays work experince grid on large devices ======= */}
-      <div className="mx-auto mt-12 hidden lg:block lg:h-[65%] lg:w-11/12">
+      <div className="mx-auto mt-12 hidden translate-y-12 opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:block lg:h-[65%] lg:w-11/12 [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <div className="flex h-[30vh] w-full flex-col md:h-[30vh] lg:relative lg:h-full">
           <ul className="work-exp-grid hidden h-full w-1/2 lg:absolute lg:-top-[30%] lg:left-1/4 lg:grid">
             {combinedLists.map((item, index) => {
               /* Ternary operators adds CSS borders for dynamic connector pipe */
               return (
                 <li
-                  className={`pl-4 ${
+                  className={`translate-y-12 pl-4 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-y-0 [.active_&]:opacity-100 ${
                     index === getHalfNum - 1 ||
                     index === getHalfNum - 2 ||
                     index === getHalfNum - 3
@@ -125,12 +124,18 @@ export default function WorkExperienceSection() {
                       ? "border-l-4 border-[#F38B57]"
                       : ""
                   } ${index === combinedLists.length - 1 && "border-l-0"} ${index === 2 && "relative"} `}
+                  style={{ transitionDelay: `${index * 100 + 200}ms` }}
                   key={`${item.duration} ${index}`}
                 >
                   <div className="relative flex flex-col text-white">
                     {/* Hides code icon if item.company string contains placeholder */}
                     {!item.company.includes("placeholder") && (
-                      <CodeIcon className="absolute top-0 -left-9 h-8 w-8" />
+                      <div
+                        className="absolute top-0 -left-9 h-8 w-8 animate-float"
+                        style={{ animationDelay: `${index * 0.2}s` }}
+                      >
+                        <CodeIcon className="h-full w-full" />
+                      </div>
                     )}
                     <p className="restorabold text-2xl font-bold">
                       {item.duration}
@@ -153,9 +158,9 @@ export default function WorkExperienceSection() {
           </ul>
 
           {/* Icons with links */}
-          <div className="mt-auto mb-2 ml-6 flex w-[65%] justify-between gap-y-4 md:ml-12 md:w-[50%] lg:mb-28 lg:ml-32 lg:grid lg:w-1/5 lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-6">
+          <div className="mt-auto mb-2 ml-6 flex w-[65%] translate-y-12 justify-between gap-y-4 opacity-0 transition-all delay-[600ms] duration-700 ease-spring-soft md:ml-12 md:w-[50%] lg:mb-28 lg:ml-32 lg:grid lg:w-1/5 lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-6 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <a
-              className="font-bold text-white md:flex lg:text-xl"
+              className="font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 md:flex lg:text-xl"
               href="mailto:derekraustin@gmail.com"
             >
               <EmailIcon fill="#F38B57" />
@@ -163,7 +168,7 @@ export default function WorkExperienceSection() {
             </a>
             <a
               href="https://github.com/DoctorDerek"
-              className="text-lg font-bold text-white md:flex lg:text-xl"
+              className="text-lg font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 md:flex lg:text-xl"
               target="_blank"
             >
               <GithubIcon fill="#F38B57" />
@@ -171,14 +176,14 @@ export default function WorkExperienceSection() {
             </a>
             <a
               href="https://doctorderek.medium.com/"
-              className="text-lg font-bold text-white md:flex lg:text-xl"
+              className="text-lg font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 md:flex lg:text-xl"
               target="_blank"
             >
               <MediumIcon fill="#F38B57" />
               <span className="ml-1 hidden pt-1 lg:block">Medium</span>
             </a>
             <a
-              className="font-bold text-white md:flex lg:text-xl"
+              className="font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-110 active:scale-95 md:flex lg:text-xl"
               href="https://www.amazon.com/dp/B0BRJDLJ43"
               target="_blank"
             >

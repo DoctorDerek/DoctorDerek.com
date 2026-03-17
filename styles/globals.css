@@ -7,6 +7,9 @@
   --spacing-208: 54rem;
   --spacing-224: 58rem;
 
+  --ease-spring-soft: cubic-bezier(0.22, 0.48, 0, 1.2);
+  --ease-spring-bouncy: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+
   --animate-rainbow-vivid: rainbow-vivid 30s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
 

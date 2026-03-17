@@ -5,12 +5,19 @@ import classNames from "@/utils/classNames"
 import Link from "next/link"
 import SocialLinks from "./ui/SocialLinks"
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    fullpage_api: any
+  }
+}
+
 const navigation = [
-  { name: "About", href: "#", current: true },
-  { name: "Experience", href: "#", current: false },
-  { name: "Testimonials", href: "#", current: false },
-  { name: "Blog", href: "#", current: false },
-  { name: "Contact", href: "#", current: false },
+  { name: "About", anchor: "about", current: true },
+  { name: "Experience", anchor: "experience", current: false },
+  { name: "Testimonials", anchor: "testimonials", current: false },
+  { name: "Blog", anchor: "blog", current: false },
+  { name: "Contact", anchor: "contact", current: false },
 ]
 
 export default function Navbar() {
@@ -58,10 +65,19 @@ export default function Navbar() {
                 {navigation.map((item) => (
                   <li className="hover:text-white" key={item.name}>
                     <a
-                      href={item.href}
-                      className={
-                        "md:restora-bold block py-2 text-5xl font-semibold md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
-                      }
+                      href={`#${item.anchor}`}
+                      className="md:restora-bold block py-2 text-5xl font-semibold transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:text-[#F38B57] active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        if (window.fullpage_api) {
+                          let targetAnchor = item.anchor
+                          if (targetAnchor === "blog" && window.innerWidth < 1024) {
+                            targetAnchor = "blog-mobile"
+                          }
+                          window.fullpage_api.moveTo(targetAnchor)
+                        }
+                        setSidebarOpen(false)
+                      }}
                     >
                       {item.name}
                     </a>

@@ -43,6 +43,19 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       <ReactFullpage
         credits={{ enabled: false }}
         navigation
+        anchors={[
+          "home",
+          "intro",
+          "about",
+          "mapache",
+          "experience",
+          "consultancy",
+          "testimonials",
+          "blog",
+          "blog-mobile",
+          "contact",
+          "footer",
+        ]}
         normalScrollElements=".fp-noscroll"
         render={() => {
           return (

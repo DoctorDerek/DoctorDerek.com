@@ -2,20 +2,7 @@
 
 import { SOCIAL_LINKS, type SocialLink } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
-import EmailIcon from "../EmailIcon"
-import GithubIcon from "../GithubIcon"
-import MediumIcon from "../MediumIcon"
-import BookLinkIcon from "../BookLinkIcon"
-
-const ICONS: Record<
-  string,
-  (props: { fill: "#F38B57" | "white" }) => React.ReactNode
-> = {
-  email: EmailIcon,
-  github: GithubIcon,
-  medium: MediumIcon,
-  book: BookLinkIcon,
-}
+import Icon, { type IconName } from "./Icon"
 
 export default function SocialLinks({
   fill = "#F38B57",
@@ -42,9 +29,6 @@ export default function SocialLinks({
   return (
     <div className={classNames(containerClasses)}>
       {SOCIAL_LINKS.map((link: SocialLink, index: number) => {
-        const IconComponent = ICONS[link.id]
-        if (!IconComponent) return null
-
         const isEmail = link.id === "email" && link.emailParts
 
         return (
@@ -63,7 +47,7 @@ export default function SocialLinks({
               className={classNames(iconClasses, "animate-float")}
               style={{ animationDelay: `${index * 0.4}s` }}
             >
-              <IconComponent fill={fill} />
+              <Icon name={link.id as IconName} fill={fill} />
             </div>
             {showLabels && (
               <span className={classNames(labelClasses)}>{link.label}</span>

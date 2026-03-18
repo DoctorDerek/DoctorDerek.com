@@ -10,7 +10,6 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@fullpage/react-fullpage": "^0",
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
     "@rive-app/react-canvas": "^4",
@@ -20,6 +19,7 @@
     "next": "^16",
     "react": "^19",
     "react-dom": "^19",
+    "react-obfuscate": "^3",
     "react-parallax-tilt": "^1",
     "rss-parser": "^3",
     "sharp": "^0",

@@ -2,150 +2,155 @@ import Image from "next/image"
 import { useKeenSlider } from "keen-slider/react"
 import { MediumPost } from "@/utils/medium"
 import SectionHeading from "@/components/ui/SectionHeading"
+import CountUp from "@/components/ui/CountUp"
 
 export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   const [sliderRef] = useKeenSlider({
     loop: true,
     slides: {
-      spacing: 0,
+      perView: 1.2,
+      spacing: 16,
     },
     breakpoints: {
-      "(min-width: 1040px)": {
-        slides: { perView: 3 },
+      "(min-width: 768px)": {
+        slides: { perView: 2.2, spacing: 16 },
+      },
+      "(min-width: 1024px)": {
+        slides: { perView: 2, spacing: 24 },
+      },
+      "(min-width: 1280px)": {
+        slides: { perView: 3, spacing: 24 },
       },
     },
   })
 
   return (
-    <div className="h-screen">
-      <div className="h-full md:flex md:pt-20 lg:pt-0">
-        <div className="flex h-full flex-col text-white md:mx-auto md:w-1/2 lg:mx-0 lg:w-1/3">
-          <div className="mx-auto w-4/5 -translate-x-12 pt-2 opacity-0 transition-all duration-700 ease-spring-soft md:w-11/12 lg:mt-auto lg:w-4/5 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+    <div className="fp-noscroll h-screen w-full overflow-y-auto lg:overflow-hidden">
+      <div className="flex h-full min-h-max w-full flex-col items-center justify-center px-4 pt-24 pb-12 lg:flex-row lg:px-0 lg:pt-0 lg:pb-0">
+        {/* Left Column: CTA & Metrics */}
+        <div className="flex w-[95%] shrink-0 flex-col justify-center text-white md:w-4/5 lg:w-1/3 lg:pl-12 xl:pl-24">
+          <div className="-translate-x-12 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-x-0 [.active_&]:opacity-100">
             <SectionHeading>
-              <h2 className="text-7xl drop-shadow-md lg:text-9xl">Blog</h2>
+              <h2 className="text-6xl drop-shadow-md md:text-8xl lg:text-9xl">
+                Blog
+              </h2>
             </SectionHeading>
-            <p className="font-base mt-4 rounded-xl bg-black/20 px-4 pt-6 pb-2 text-2xl leading-8 backdrop-blur-md">
-              In addition to being a knowledgeable and experienced developer,
-              Derek is an avid writer who has been contributing his thoughts to
-              the industry since 2019.
-            </p>
-          </div>
 
-          <div className="mx-auto mt-6 w-4/5 -translate-x-12 opacity-0 transition-all delay-200 duration-700 ease-spring-soft md:w-11/12 lg:mb-auto lg:w-4/5 [.active_&]:translate-x-0 [.active_&]:opacity-100">
-            <div className="w-[60%]">
-              <a
-                href="https://doctorderek.medium.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-tr-2xl border border-white/30 bg-white/20 px-1 py-4 text-center text-lg font-medium text-white backdrop-blur-md transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:bg-white/30 active:scale-95"
-              >
-                View All Posts
-              </a>
+            <div className="mt-6 grid grid-cols-3 gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 shadow-xl backdrop-blur-md md:p-6 lg:mt-8 lg:gap-4">
+              <div className="flex flex-col items-center justify-center text-center">
+                <p className="text-2xl font-bold text-[#F38B57] md:text-3xl lg:text-4xl">
+                  <CountUp to={503} />+
+                </p>
+                <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">
+                  Posts
+                </p>
+              </div>
+              <div className="flex flex-col items-center justify-center border-x border-white/10 px-2 text-center">
+                <p className="text-2xl font-bold text-[#F38B57] md:text-3xl lg:text-4xl">
+                  <CountUp to={500000} duration={2.5} />+
+                </p>
+                <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">
+                  Words
+                </p>
+              </div>
+              <div className="flex flex-col items-center justify-center text-center">
+                <p className="text-2xl font-bold text-[#89CFFD] md:text-3xl lg:text-4xl">
+                  <CountUp
+                    from={2000}
+                    to={2019}
+                    useGrouping={false}
+                    duration={1.5}
+                  />
+                </p>
+                <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">
+                  Since
+                </p>
+              </div>
             </div>
 
-            <div className="mt-6">
-              <h3 className="text-xl font-bold">
-                Join 749+ email subscribers and 21,936+ followers.
+            <div className="mt-8 lg:mt-10">
+              <h3 className="text-xl leading-snug font-bold md:text-2xl">
+                Join{" "}
+                <span className="text-[#F38B57]">
+                  <CountUp to={749} />+
+                </span>{" "}
+                email subscribers and{" "}
+                <span className="text-[#F38B57]">
+                  <CountUp to={21936} duration={2.5} />+
+                </span>{" "}
+                followers.
               </h3>
               <a
                 href="https://doctorderek.medium.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 block rounded-tr-md border border-white/20 bg-black/30 px-4 py-5 text-center font-semibold text-white backdrop-blur-md transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:bg-black/40 active:scale-95"
+                className="mt-6 block w-full rounded-xl bg-black/40 px-6 py-4 text-center text-base font-bold text-white shadow-lg backdrop-blur-md transition-all duration-300 ease-spring-bouncy hover:scale-[1.02] hover:bg-black/60 active:scale-95 md:text-lg"
               >
-                Follow me on Medium to subscribe to my email newsletter
+                Subscribe to my email newsletter by following me on Medium.
               </a>
-            </div>
-          </div>
-
-          <div className="mx-auto mt-auto mb-8 w-4/5 translate-y-12 text-white opacity-0 transition-all delay-300 duration-700 ease-spring-soft md:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
-            <div className="flex py-2">
-              <p className="text-4xl">&darr;</p>
-              <div className="mt-3">
-                <p className="text-lg">6k followers on Medium</p>
-              </div>
-
-              {/* ========== Sign Up =========== */}
-              <div className="rounded-tl-2xl py-6">
-                <div className="">
-                  {/* Line divider */}
-                  <div className="mt-2 mb-7 w-4/5 border-t-2 border-[#cd7656]"></div>
-                  <h3 className="pb-3 text-xl">
-                    Join over 160 email subscribers
-                  </h3>
-                  <form className="flex">
-                    <input
-                      type="email"
-                      name="email-address"
-                      id="email-address"
-                      autoComplete="email"
-                      required
-                      className="w-9/12 min-w-0 appearance-none border-0 bg-white px-3 py-5 text-base placeholder:text-lg placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:w-64 sm:text-sm sm:leading-6 xl:w-full"
-                      placeholder="Your email address"
-                    />
-                    <div className="w-1/4">
-                      <button
-                        type="submit"
-                        className="text-md flex w-full items-center justify-center rounded-tr-md border border-white/20 bg-black/30 py-5 font-semibold text-white backdrop-blur-md transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:bg-black/40 active:scale-95"
-                      >
-                        Sign up
-                      </button>
-                    </div>
-                  </form>
-                </div>
+              <div className="mt-4 w-2/3 md:w-1/2">
+                <a
+                  href="https://doctorderek.medium.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-tr-2xl border border-white/30 bg-white/20 px-1 py-4 text-center text-base font-medium text-white backdrop-blur-md transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:bg-white/30 active:scale-95 md:text-lg"
+                >
+                  View All Posts
+                </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ========== Read Posts with Arrow =========== */}
-        <div className="hidden h-full md:block md:w-1/2 md:pl-4 lg:flex lg:w-2/3 lg:flex-col">
-          <div className="mt-4 w-[95%] lg:mt-auto lg:mb-auto lg:w-4/5">
-            <div className="lg:my-auto">
-              <div ref={sliderRef} className="keen-slider hover:cursor-grab">
-                {posts.map((post, index) => (
-                  <div key={post.link} className="keen-slider__slide">
-                    <div
-                      className="mt-20 h-full w-11/12 translate-y-12 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-y-0 [.active_&]:opacity-100"
-                      style={{ transitionDelay: `${index * 100 + 200}ms` }}
+        {/* Right Column: Slider */}
+        <div className="mt-12 flex w-[95%] shrink-0 flex-col justify-center lg:mt-0 lg:w-[60%] lg:px-8 xl:w-2/3">
+          <div className="w-full">
+            <div ref={sliderRef} className="keen-slider py-4 hover:cursor-grab">
+              {posts.map((post, index) => (
+                <div key={post.link} className="keen-slider__slide">
+                  <div
+                    className="h-full w-full translate-y-12 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-y-0 [.active_&]:opacity-100"
+                    style={{ transitionDelay: `${index * 100 + 200}ms` }}
+                  >
+                    <a
+                      href={post.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group mx-auto flex h-[45vh] w-full flex-col overflow-hidden rounded-2xl border border-white/20 bg-black/40 shadow-xl backdrop-blur-md transition-transform duration-300 ease-spring-bouncy hover:-translate-y-2 hover:scale-[1.02] md:h-[40vh] lg:h-[55vh]"
                     >
-                      <div className="h-full w-full transition-transform duration-300 ease-spring-bouncy hover:-translate-y-2 hover:scale-[1.02] hover:cursor-pointer">
-                        <div className="relative w-11/12">
-                          <p className="absolute -top-3 left-4 rounded-tr-xl border border-white/20 bg-black/40 py-1 pr-3 pl-3 text-2xl text-white backdrop-blur-md">
-                            Medium
-                          </p>
-                          {post.thumbnail && (
-                            <div className="relative h-[30vh] w-full overflow-hidden rounded-tl-xl">
-                              <Image
-                                src={post.thumbnail}
-                                alt={post.title}
-                                fill
-                                className="object-cover"
-                              />
-                            </div>
-                          )}
-                          <p className="absolute -bottom-4 w-11/12 rounded-tr-xl border border-white/20 bg-black/50 py-2 pr-3 pl-3 text-lg text-white backdrop-blur-md">
-                            {post.title}
-                          </p>
-                        </div>
-                        <div className="w-11/12 rounded-br-xl border-x border-b border-white/20 bg-white/10 pt-8 pb-4 pl-4 text-white backdrop-blur-md">
-                          <p className="lg:text-xl">{post.description}</p>
-                          <p className="mt-4 text-white/70">
-                            {new Date(post.pubDate).toLocaleDateString(
-                              "en-US",
-                              {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              },
-                            )}
-                          </p>
-                        </div>
+                      <div className="relative h-[45%] w-full shrink-0 border-b border-white/20 bg-[#1E1E1E]">
+                        <p className="absolute top-3 left-4 z-10 rounded-tr-xl border border-white/20 bg-black/40 px-3 py-1 text-sm text-white backdrop-blur-md">
+                          Medium
+                        </p>
+                        {post.thumbnail && (
+                          <Image
+                            src={post.thumbnail}
+                            alt={post.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover opacity-90 transition-opacity duration-500 group-hover:scale-105 group-hover:opacity-100"
+                          />
+                        )}
                       </div>
-                    </div>
+                      <div className="flex flex-1 flex-col p-4 lg:p-6">
+                        <h4 className="mb-2 line-clamp-2 text-lg leading-tight font-bold text-white lg:mb-3 lg:text-xl">
+                          {post.title}
+                        </h4>
+                        <p className="mb-auto line-clamp-3 text-sm text-white/70 lg:text-base">
+                          {post.description}
+                        </p>
+                        <p className="mt-4 text-xs font-bold tracking-wider text-[#F38B57] uppercase lg:text-sm">
+                          {new Date(post.pubDate).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
+                        </p>
+                      </div>
+                    </a>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

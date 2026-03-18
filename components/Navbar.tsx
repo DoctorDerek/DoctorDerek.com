@@ -70,11 +70,7 @@ export default function Navbar() {
                       onClick={(e) => {
                         e.preventDefault()
                         if (window.fullpage_api) {
-                          let targetAnchor = item.anchor
-                          if (targetAnchor === "blog" && window.innerWidth < 1024) {
-                            targetAnchor = "blog-mobile"
-                          }
-                          window.fullpage_api.moveTo(targetAnchor)
+                          window.fullpage_api.moveTo(item.anchor)
                         }
                         setSidebarOpen(false)
                       }}

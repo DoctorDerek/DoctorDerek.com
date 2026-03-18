@@ -8,7 +8,6 @@ import WorkExperienceSection from "@/components/WorkExperienceSection"
 import Testimonials from "@/components/Testimonials"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
-import PostsSection from "@/components/PostsSection"
 import TopSection from "@/components/TopSection"
 import Footer from "@/components/Footer"
 import getMediumPosts, { MediumPost } from "@/utils/medium"
@@ -52,7 +51,6 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
           "consultancy",
           "testimonials",
           "blog",
-          "blog-mobile",
           "contact",
           "footer",
         ]}
@@ -84,17 +82,13 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
                 <AiConsultancySection />
               </div>
 
-              {/*========= TESIMONIALS SECTION ========= */}
               <div className="section">
                 <Testimonials />
               </div>
 
-              <div className="section max-lg:hidden">
+              {/* UNIFIED BLOG SECTION */}
+              <div className="section">
                 <BlogSection posts={posts} />
-              </div>
-
-              <div className="section lg:hidden">
-                <PostsSection posts={posts} />
               </div>
 
               <div className="section">

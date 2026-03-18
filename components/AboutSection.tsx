@@ -3,7 +3,7 @@ import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
 import DerekAustin from "@/images/DerekAustin.png"
 import DrDerekAustin from "@/images/DrDerekAustin.png"
 import Image from "next/image"
-import Tilt from "react-parallax-tilt"
+import SectionHeading from "@/components/ui/SectionHeading"
 
 export default function AboutSection() {
   const [flipCount, setFlipCount] = useState(0)
@@ -39,18 +39,11 @@ export default function AboutSection() {
     <div className="h-screen w-full">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-3/4">
         <div className="-translate-x-12 py-4 text-white opacity-0 drop-shadow-md transition-all duration-700 ease-spring-soft md:relative md:py-8 lg:pt-14 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
-          <Tilt
-            className="w-max cursor-pointer"
-            tiltMaxAngleX={10}
-            tiltMaxAngleY={10}
-            perspective={1000}
-            scale={1.02}
-            transitionSpeed={1000}
-          >
+          <SectionHeading>
             <h2 className="text-7xl font-semibold md:text-8xl lg:text-9xl">
               About
             </h2>
-          </Tilt>
+          </SectionHeading>
         </div>
         <div className="relative h-[80vh] md:h-[70vh]">
           <div className="w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 ease-spring-bouncy md:w-1/2 lg:w-[45%] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">

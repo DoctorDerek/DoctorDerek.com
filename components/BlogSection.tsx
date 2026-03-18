@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { useKeenSlider } from "keen-slider/react"
 import { MediumPost } from "@/utils/medium"
-import Tilt from "react-parallax-tilt"
+import SectionHeading from "@/components/ui/SectionHeading"
 
 export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   const [sliderRef] = useKeenSlider({
@@ -21,16 +21,9 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
       <div className="h-full md:flex md:pt-20 lg:pt-0">
         <div className="flex h-full flex-col text-white md:mx-auto md:w-1/2 lg:mx-0 lg:w-1/3">
           <div className="mx-auto w-4/5 -translate-x-12 pt-2 opacity-0 transition-all duration-700 ease-spring-soft md:w-11/12 lg:mt-auto lg:w-4/5 [.active_&]:translate-x-0 [.active_&]:opacity-100">
-            <Tilt
-              className="w-max cursor-pointer"
-              tiltMaxAngleX={10}
-              tiltMaxAngleY={10}
-              perspective={1000}
-              scale={1.02}
-              transitionSpeed={1000}
-            >
+            <SectionHeading>
               <h2 className="text-7xl drop-shadow-md lg:text-9xl">Blog</h2>
-            </Tilt>
+            </SectionHeading>
             <p className="font-base mt-4 rounded-xl bg-black/20 px-4 pt-6 pb-2 text-2xl leading-8 backdrop-blur-md">
               In addition to being a knowledgeable and experienced developer,
               Derek is an avid writer who has been contributing his thoughts to

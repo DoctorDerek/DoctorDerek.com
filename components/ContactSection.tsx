@@ -2,6 +2,7 @@ import { useState } from "react"
 import Image from "next/image"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
+import Tilt from "react-parallax-tilt"
 
 export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)
@@ -23,9 +24,18 @@ export default function ContactSection() {
       <div className="flex h-screen flex-col md:flex-row">
         <div className="mx-auto h-[45%] w-[85%] md:flex md:h-full md:w-1/2 md:flex-col md:pl-8 lg:w-[45%] lg:justify-start lg:pl-20">
           <div className="-translate-x-12 py-4 opacity-0 transition-all duration-700 ease-spring-soft md:mt-16 md:mb-2 lg:mb-0 lg:py-0 [.active_&]:translate-x-0 [.active_&]:opacity-100">
-            <h2 className="text-7xl text-white drop-shadow-lg md:text-8xl lg:pt-8 lg:pb-14 lg:text-9xl">
-              Contact
-            </h2>
+            <Tilt
+              className="w-max cursor-pointer"
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              perspective={1000}
+              scale={1.02}
+              transitionSpeed={1000}
+            >
+              <h2 className="text-7xl text-white drop-shadow-lg md:text-8xl lg:pt-8 lg:pb-14 lg:text-9xl">
+                Contact
+              </h2>
+            </Tilt>
           </div>
 
           {/* Wrapper to isolate Tailwind entrance from JS-driven inline flip transform */}

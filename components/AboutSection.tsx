@@ -3,6 +3,7 @@ import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
 import DerekAustin from "@/images/DerekAustin.png"
 import DrDerekAustin from "@/images/DrDerekAustin.png"
 import Image from "next/image"
+import Tilt from "react-parallax-tilt"
 
 export default function AboutSection() {
   const [flipCount, setFlipCount] = useState(0)
@@ -38,9 +39,18 @@ export default function AboutSection() {
     <div className="h-screen w-full">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-3/4">
         <div className="-translate-x-12 py-4 text-white opacity-0 drop-shadow-md transition-all duration-700 ease-spring-soft md:relative md:py-8 lg:pt-14 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
-          <h2 className="text-7xl md:text-8xl lg:text-9xl lg:font-semibold">
-            About
-          </h2>
+          <Tilt
+            className="w-max cursor-pointer"
+            tiltMaxAngleX={10}
+            tiltMaxAngleY={10}
+            perspective={1000}
+            scale={1.02}
+            transitionSpeed={1000}
+          >
+            <h2 className="text-7xl font-semibold md:text-8xl lg:text-9xl">
+              About
+            </h2>
+          </Tilt>
         </div>
         <div className="relative h-[80vh] md:h-[70vh]">
           <div className="w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 ease-spring-bouncy md:w-1/2 lg:w-[45%] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
@@ -116,7 +126,7 @@ export default function AboutSection() {
                 ))}
               </div>
               <div className="rounded-2xl border border-[#F38B57]/20 bg-black/50 p-4 shadow-xl backdrop-blur-md">
-                <p className="animate-pulse text-lg font-bold leading-tight text-[#F38B57] drop-shadow-md lg:text-xl">
+                <p className="animate-pulse text-lg leading-tight font-bold text-[#F38B57] drop-shadow-md lg:text-xl">
                   But enough talk. Scroll down to play the WebGL game I built to
                   prove my stack. 👇🎮🦝
                 </p>

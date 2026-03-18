@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useKeenSlider } from "keen-slider/react"
 import Modal from "./Modal"
+import Tilt from "react-parallax-tilt"
 
 const projects = [
   {
@@ -73,8 +74,17 @@ export default function Portfolio() {
   return (
     <div className="h-screen">
       <div className="-translate-y-12 py-4 opacity-0 transition-all duration-700 ease-spring-soft md:h-[15vh] [.active_&]:translate-y-0 [.active_&]:opacity-100">
-        <div className="mx-auto w-4/5 text-center text-white drop-shadow-md">
-          <h2 className="text-7xl lg:text-9xl">Portfolio</h2>
+        <div className="mx-auto flex w-4/5 justify-center text-center text-white drop-shadow-md">
+          <Tilt
+            className="w-max cursor-pointer"
+            tiltMaxAngleX={10}
+            tiltMaxAngleY={10}
+            perspective={1000}
+            scale={1.02}
+            transitionSpeed={1000}
+          >
+            <h2 className="text-7xl lg:text-9xl">Portfolio</h2>
+          </Tilt>
         </div>
       </div>
       {/* ========= Slider, displays only on small devices ======= */}

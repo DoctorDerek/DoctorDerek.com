@@ -17,7 +17,7 @@ export default async function getMediumPosts(): Promise<MediumPost[]> {
       item["content:encoded"] || item.content || item.description || ""
 
     // Find all images, select the first that isn't a tracking pixel
-    const imgMatches = Array.from(content.matchAll(/<img[^>]+src="([^">]+)"/g))
+    const imgMatches = Array.from(content.matchAll(/<img[^>]+src="([^">]+)"/g)) as RegExpMatchArray[]
     const validImage = imgMatches.find(
       (m) => !m[1].includes("stat?event") && !m[1].includes("stat.medium.com"),
     )

@@ -3,7 +3,7 @@ import Image from "next/image"
 import JohnDoe from "@/images/johndoe.png"
 import { TESTIMONIALS, type Testimonial } from "@/constants/SITE_CONTENT"
 import { useKeenSlider } from "keen-slider/react"
-import Tilt from "react-parallax-tilt"
+import SectionHeading from "@/components/ui/SectionHeading"
 
 const Testimonials = () => {
   const [sliderRef] = useKeenSlider({
@@ -83,18 +83,11 @@ const Testimonials = () => {
         {/* ========= WHAT PEOPLE SAY ============ */}
         <div className="mt-auto translate-x-12 rounded-tl-[5rem] bg-[#89CFFD]/30 opacity-0 backdrop-blur-md transition-all delay-300 duration-700 ease-spring-soft [.active_&]:translate-x-0 [.active_&]:opacity-100">
           <div className="mx-auto flex w-5/6 justify-end px-2 py-5 md:px-0 md:py-12 lg:py-16">
-            <Tilt
-              className="w-max cursor-pointer"
-              tiltMaxAngleX={10}
-              tiltMaxAngleY={10}
-              perspective={1000}
-              scale={1.02}
-              transitionSpeed={1000}
-            >
+            <SectionHeading>
               <h3 className="text-right text-7xl text-white drop-shadow-md lg:text-9xl">
                 What People Say
               </h3>
-            </Tilt>
+            </SectionHeading>
           </div>
         </div>
       </div>

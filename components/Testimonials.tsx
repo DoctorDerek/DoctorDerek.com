@@ -3,6 +3,7 @@ import Image from "next/image"
 import JohnDoe from "@/images/johndoe.png"
 import { TESTIMONIALS, type Testimonial } from "@/constants/SITE_CONTENT"
 import { useKeenSlider } from "keen-slider/react"
+import Tilt from "react-parallax-tilt"
 
 const Testimonials = () => {
   const [sliderRef] = useKeenSlider({
@@ -12,7 +13,8 @@ const Testimonials = () => {
   return (
     <div className="h-screen">
       <div className="flex h-full flex-col">
-        <div className="mx-auto mt-10 w-[95%] translate-y-12 pt-2 opacity-0 transition-all delay-100 duration-700 ease-spring-soft md:mt-8 md:w-3/5 lg:mt-20 lg:w-[40%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
+        {/* ========= MOBILE/TABLET SLIDER ======= */}
+        <div className="mx-auto mt-10 w-[95%] translate-y-12 pt-2 opacity-0 transition-all delay-100 duration-700 ease-spring-soft md:mt-8 md:w-3/5 lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
           <div ref={sliderRef} className="keen-slider hover:cursor-grab">
             {/* ======= PROJECT SLIDE ======= */}
             {TESTIMONIALS.map((item: Testimonial) => {
@@ -31,11 +33,13 @@ const Testimonials = () => {
                           <Image
                             src={JohnDoe}
                             alt="John Doe"
-                            className="object-fit h-20 w-20 lg:h-24 lg:w-24"
+                            className="h-20 w-20 rounded-full object-cover lg:h-24 lg:w-24"
                           />
                         </div>
                         <div className="flex w-3/4 flex-col">
-                          <h4 className="md:mt-auto md:pb-2">-{item.name}</h4>
+                          <h4 className="font-bold md:mt-auto md:pb-2">
+                            -{item.name}
+                          </h4>
                           <h4 className="md:mb-auto">{item.position}</h4>
                         </div>
                       </div>
@@ -46,12 +50,51 @@ const Testimonials = () => {
             })}
           </div>
         </div>
+
+        {/* ========= DESKTOP MASONRY GRID ======= */}
+        <div className="mx-auto mt-10 hidden w-[95%] translate-y-12 pt-2 opacity-0 transition-all delay-100 duration-700 ease-spring-soft lg:block lg:w-[90%] xl:w-[80%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
+          <div className="fp-noscroll h-[65vh] w-full overflow-y-auto pr-4 pb-16">
+            <div className="columns-1 gap-6 md:columns-2 lg:columns-3">
+              {TESTIMONIALS.map((item: Testimonial) => (
+                <div
+                  key={item.name}
+                  className="mb-6 break-inside-avoid rounded-2xl border border-white/10 bg-black/20 p-6 text-white backdrop-blur-md"
+                >
+                  <p className="leading-7 lg:text-lg">{item.comment}</p>
+                  <div className="mt-8 flex items-center">
+                    <div className="mr-4 shrink-0">
+                      <Image
+                        src={JohnDoe}
+                        alt="John Doe"
+                        className="h-16 w-16 rounded-full object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <h4 className="font-bold">-{item.name}</h4>
+                      <h4 className="text-sm opacity-80">{item.position}</h4>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* ========= WHAT PEOPLE SAY ============ */}
         <div className="mt-auto translate-x-12 rounded-tl-[5rem] bg-[#89CFFD]/30 opacity-0 backdrop-blur-md transition-all delay-300 duration-700 ease-spring-soft [.active_&]:translate-x-0 [.active_&]:opacity-100">
-          <div className="mx-auto w-5/6 px-2 py-5 md:px-0 md:py-12 lg:py-16">
-            <h3 className="text-right text-7xl text-white drop-shadow-md lg:text-9xl">
-              What People Say
-            </h3>
+          <div className="mx-auto flex w-5/6 justify-end px-2 py-5 md:px-0 md:py-12 lg:py-16">
+            <Tilt
+              className="w-max cursor-pointer"
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              perspective={1000}
+              scale={1.02}
+              transitionSpeed={1000}
+            >
+              <h3 className="text-right text-7xl text-white drop-shadow-md lg:text-9xl">
+                What People Say
+              </h3>
+            </Tilt>
           </div>
         </div>
       </div>

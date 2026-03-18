@@ -4,6 +4,7 @@ import IntroAnimation from "@/images/Intro-Animation.jpg"
 import SocialLinks from "./ui/SocialLinks"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
+import Tilt from "react-parallax-tilt"
 
 export default function WorkExperienceSection() {
   /** Arrays combined for desktop grid mapping */
@@ -31,13 +32,22 @@ export default function WorkExperienceSection() {
 
       {/* HEADER */}
       <div className="translate-x-12 rounded-bl-[3rem] bg-black/60 px-2 py-6 opacity-0 backdrop-blur-md transition-all duration-700 ease-spring-soft lg:ml-auto lg:h-[30%] lg:w-[50%] [.active_&]:translate-x-0 [.active_&]:opacity-100">
-        <div className="mx-auto w-[90%]">
-          <h2 className="whitespace-nowrap text-right text-3xl font-bold tracking-tight text-white drop-shadow-md min-[375px]:text-4xl sm:text-5xl md:text-8xl lg:text-8xl">
-            20+ Years of
-          </h2>
-          <h2 className="text-right text-3xl font-bold tracking-tight whitespace-nowrap text-white drop-shadow-md min-[375px]:text-4xl sm:text-5xl md:text-8xl lg:text-9xl">
-            Full-Stack SWE
-          </h2>
+        <div className="mx-auto flex w-[90%] flex-col items-end">
+          <Tilt
+            className="w-max cursor-pointer"
+            tiltMaxAngleX={10}
+            tiltMaxAngleY={10}
+            perspective={1000}
+            scale={1.02}
+            transitionSpeed={1000}
+          >
+            <h2 className="text-right text-3xl font-bold tracking-tight whitespace-nowrap text-white drop-shadow-md min-[375px]:text-4xl sm:text-5xl md:text-8xl lg:text-8xl">
+              20+ Years of
+            </h2>
+            <h2 className="text-right text-3xl font-bold tracking-tight whitespace-nowrap text-white drop-shadow-md min-[375px]:text-4xl sm:text-5xl md:text-8xl lg:text-9xl">
+              Full-Stack SWE
+            </h2>
+          </Tilt>
         </div>
       </div>
 

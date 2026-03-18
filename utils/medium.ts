@@ -13,9 +13,15 @@ export default async function getMediumPosts(): Promise<MediumPost[]> {
   const feed = await parser.parseURL("https://medium.com/feed/@doctorderek")
 
   return feed.items.map((item) => {
-    const content = item["content:encoded"] || ""
-    const thumbnailMatch = content.match(/<img[^>]+src="([^">]+)"/)
-    const thumbnail = thumbnailMatch ? thumbnailMatch[1] : ""
+    const content =
+      item["content:encoded"] || item.content || item.description || ""
+
+    // Find all images, select the first that isn't a tracking pixel
+    const imgMatches = Array.from(content.matchAll(/<img[^>]+src="([^">]+)"/g)) as RegExpMatchArray[]
+    const validImage = imgMatches.find(
+      (m) => !m[1].includes("stat?event") && !m[1].includes("stat.medium.com"),
+    )
+    const thumbnail = validImage ? validImage[1] : ""
 
     const description =
       content

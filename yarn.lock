@@ -3464,7 +3464,7 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:^0"
     react: "npm:^19"
     react-dom: "npm:^19"
-    react-obfuscate-email: "npm:2.0.5"
+    react-obfuscate-email: "npm:^2"
     react-parallax-tilt: "npm:^1"
     rss-parser: "npm:^3"
     sharp: "npm:^0"
@@ -5615,7 +5615,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-obfuscate-email@npm:2.0.5":
+"react-obfuscate-email@npm:^2":
   version: 2.0.5
   resolution: "react-obfuscate-email@npm:2.0.5"
   peerDependencies:

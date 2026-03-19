@@ -50,7 +50,7 @@ const RAW_RUNTIME_STATE =
           ["prettier-plugin-tailwindcss", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:0.7.2"],\
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
-          ["react-obfuscate", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:3.7.0"],\
+          ["react-obfuscate-email", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.0.5"],\
           ["react-parallax-tilt", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:1.7.315"],\
           ["rss-parser", "npm:3.13.0"],\
           ["sharp", "npm:0.34.5"],\
@@ -5207,7 +5207,7 @@ const RAW_RUNTIME_STATE =
           ["prettier-plugin-tailwindcss", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:0.7.2"],\
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
-          ["react-obfuscate", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:3.7.0"],\
+          ["react-obfuscate-email", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.0.5"],\
           ["react-parallax-tilt", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:1.7.315"],\
           ["rss-parser", "npm:3.13.0"],\
           ["sharp", "npm:0.34.5"],\
@@ -7777,31 +7777,23 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["react-obfuscate", [\
-      ["npm:3.7.0", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/react-obfuscate-npm-3.7.0-a3dbdd2988-10c0.zip/node_modules/react-obfuscate/",\
+    ["react-obfuscate-email", [\
+      ["npm:2.0.5", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/react-obfuscate-email-npm-2.0.5-366237f9eb-10c0.zip/node_modules/react-obfuscate-email/",\
         "packageDependencies": [\
-          ["react-obfuscate", "npm:3.7.0"]\
+          ["react-obfuscate-email", "npm:2.0.5"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:3.7.0", {\
-        "packageLocation": "./.yarn/__virtual__/react-obfuscate-virtual-f226ca4235/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/react-obfuscate-npm-3.7.0-a3dbdd2988-10c0.zip/node_modules/react-obfuscate/",\
+      ["virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.0.5", {\
+        "packageLocation": "./.yarn/__virtual__/react-obfuscate-email-virtual-240fdd1a57/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/react-obfuscate-email-npm-2.0.5-366237f9eb-10c0.zip/node_modules/react-obfuscate-email/",\
         "packageDependencies": [\
-          ["@types/prop-types", null],\
           ["@types/react", "npm:19.2.7"],\
-          ["@types/react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
-          ["prop-types", null],\
           ["react", "npm:19.2.3"],\
-          ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
-          ["react-obfuscate", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:3.7.0"]\
+          ["react-obfuscate-email", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.0.5"]\
         ],\
         "packagePeers": [\
-          "@types/prop-types",\
-          "@types/react-dom",\
           "@types/react",\
-          "prop-types",\
-          "react-dom",\
           "react"\
         ],\
         "linkType": "HARD"\

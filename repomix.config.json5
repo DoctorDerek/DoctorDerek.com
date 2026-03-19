@@ -41,7 +41,7 @@
   ignore: {
     useGitignore: true,
     useDefaultPatterns: true,
-    customPatterns: ["public/**/*", "reference/**/*"],
+    customPatterns: ["public/**/*", "reference/**/*", "utils/fullpage*"],
   },
   security: {
     enableSecurityCheck: true,

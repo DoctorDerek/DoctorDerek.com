@@ -41,7 +41,16 @@
   ignore: {
     useGitignore: true,
     useDefaultPatterns: true,
-    customPatterns: ["public/**/*", "reference/**/*", "utils/fullpage*"],
+    customPatterns: [
+      "public/**/*",
+      "reference/DeepSpring/**/*",
+      "reference/Figma/**/*",
+      "reference/fullPage_js/**/*.css",
+      "reference/fullPage_js/**/*.html",
+      "reference/fullPage_js/**/*.js",
+      "reference/StevenTerner/**/*",
+      "utils/fullpage*",
+    ],
   },
   security: {
     enableSecurityCheck: true,

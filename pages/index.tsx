@@ -8,6 +8,45 @@ import {
 const pluginWrapper = () => {
   require("@/utils/fullpage.cinematic.min.js")
 }
+
+type MapacheFullPageProps = {
+  children?: React.ReactNode
+  pluginWrapper?: () => void
+  render?: (comp: { state: any; fullpageApi: any }) => React.ReactElement
+  anchors?: string[]
+
+  // Extension Keys
+  licenseKey?: string
+  cinematicKey?: string
+  
+  // Extension toggles
+  cinematic?: boolean
+  effects?: boolean
+  parallax?: boolean
+  dropEffect?: boolean
+  waterEffect?: boolean
+  cards?: boolean
+  responsiveSlides?: boolean
+  continuousHorizontal?: boolean
+  scrollHorizontally?: boolean
+  interlockedSlides?: boolean | number[]
+  dragAndMove?: boolean | "vertical" | "horizontal" | "fingersonly" | "mouseonly"
+  offsetSections?: boolean
+  resetSliders?: boolean
+  fadingEffect?: boolean | "sections" | "slides"
+  scrollOverflowReset?: boolean | "sections" | "slides"
+
+  // Extension options
+  cinematicOptions?: any
+  effectsOptions?: any
+  parallaxOptions?: { type?: string; percentage?: number; property?: string }
+  dropEffectOptions?: { speed?: number; color?: string; zIndex?: number }
+  waterEffectOptions?: { animateContent?: boolean; animateOnMouseMove?: boolean }
+  cardsOptions?: { perspective?: number; fadeContent?: boolean; fadeBackground?: boolean }
+}
+
+const MapacheFullPage = ReactFullpage as unknown as React.FC<MapacheFullPageProps>
+
 import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/AboutSection"
 import DrMapacheSection from "@/components/DrMapacheSection"
@@ -36,6 +75,19 @@ export async function getStaticProps() {
 }
 
 export default function Home({ posts }: { posts: MediumPost[] }) {
+  const sections = [
+    <TopSection key="top" />,
+    <IntroSection key="intro" />,
+    <AboutSection key="about" />,
+    <DrMapacheSection key="mapache" />,
+    <WorkExperienceSection key="experience" />,
+    <AiConsultancySection key="consultancy" />,
+    <Testimonials key="testimonials" />,
+    <BlogSection key="blog" posts={posts} />,
+    <ContactSection key="contact" />,
+    <Footer key="footer" />,
+  ]
+
   return (
     <>
       <Head>
@@ -47,13 +99,11 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       </Head>
       <RiveAnimation />
 
-      <ReactFullpage
+      <MapacheFullPage
         pluginWrapper={pluginWrapper}
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
-        {...({
-          cinematic: true,
-          cinematicKey: FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS,
-        } as any)}
+        cinematic={true}
+        cinematicKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
         anchors={[
           "home",
           "intro",
@@ -68,36 +118,11 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         ]}
         render={() => (
           <ReactFullpage.Wrapper>
-            <div className="section">
-              <TopSection />
-            </div>
-            <div className="section">
-              <IntroSection />
-            </div>
-            <div className="section">
-              <AboutSection />
-            </div>
-            <div className="section">
-              <DrMapacheSection />
-            </div>
-            <div className="section">
-              <WorkExperienceSection />
-            </div>
-            <div className="section">
-              <AiConsultancySection />
-            </div>
-            <div className="section">
-              <Testimonials />
-            </div>
-            <div className="section">
-              <BlogSection posts={posts} />
-            </div>
-            <div className="section">
-              <ContactSection />
-            </div>
-            <div className="section">
-              <Footer />
-            </div>
+            {sections.map((section) => (
+              <div key={section.key} className="section">
+                {section}
+              </div>
+            ))}
           </ReactFullpage.Wrapper>
         )}
       />

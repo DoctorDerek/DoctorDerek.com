@@ -66,16 +66,17 @@ export default function ContactSection() {
 
         <div className="mx-auto mt-8 flex w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 ease-spring-soft md:mt-0 md:w-1/2 md:pl-8 lg:w-[55%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
           <div className="mx-auto mt-8 w-4/5 md:mt-32 md:ml-0 md:h-1/6 md:w-11/12 lg:my-auto lg:mr-0 lg:ml-auto lg:w-11/12 lg:pt-16 lg:pl-14">
-            <p className="rounded-xl bg-black/20 py-4 pr-2 pl-2 text-xl leading-8 text-white backdrop-blur-md md:pl-4 md:text-xl lg:pr-20 lg:text-2xl lg:leading-9">
-              Discover the power of versatile frontend developing with Derek
-              Austin. Get in touch to discuss your next development project, or
-              to simply chat.
+            <p className="rounded-xl border border-white/10 bg-black/40 px-5 py-6 text-xl leading-8 text-white shadow-xl backdrop-blur-md md:px-8 md:text-xl lg:pr-12 lg:text-2xl lg:leading-9">
+              I architect robust, high-QREAM software systems and engineer elite
+              Human-AI cognitive frameworks. I operate on a strict, low-demand
+              philosophy to protect my engineering focus. I do not do
+              &quot;quick chats,&quot; &quot;brainstorming calls,&quot; or
+              traditional employment. If you have a high-leverage technical
+              challenge—like a $500 Async AI Audit or a $5,000 Master GDD
+              Template—reach out asynchronously.
             </p>
-            <GlobalEmailCTA
-              subject="Consultancy Inquiry"
-              className="mt-8 inline-block w-max text-center rounded-tr-3xl bg-[#F38B57] px-12 py-6 text-2xl font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-105 active:scale-95"
-            >
-              Email Me for Consultancy
+            <GlobalEmailCTA className="mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 ease-spring-bouncy hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
+              Request Asynchronous Consult
             </GlobalEmailCTA>
           </div>
         </div>

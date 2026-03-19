@@ -1,24 +1,21 @@
+import { AI_CONSULTANCY_PITCH } from "@/constants/SITE_CONTENT"
 import React from "react"
 import { Email } from "react-obfuscate-email"
-import classNames from "@/utils/classNames"
 
 type GlobalEmailCTAProps = {
-  subject?: string
   className?: string
   children?: React.ReactNode
 }
 
 export default function GlobalEmailCTA({
-  subject,
   className,
   children,
 }: GlobalEmailCTAProps) {
   return (
     <Email
       email="derekraustin+doctorderek@gmail.com"
-      subject={subject}
+      subject={AI_CONSULTANCY_PITCH.emailSubject}
       className={className}
-      style={{ direction: "ltr" }}
     >
       {children || "derekraustin+doctorderek@gmail.com"}
     </Email>

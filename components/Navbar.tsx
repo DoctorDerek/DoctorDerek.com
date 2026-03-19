@@ -5,13 +5,16 @@ import classNames from "@/utils/classNames"
 import Link from "next/link"
 import SocialLinks from "./ui/SocialLinks"
 
+import { SHOW_DR_MAPACHE } from "@/constants/SITE_CONTENT"
+
 const navigation = [
   { name: "About", anchor: "about", current: true },
   { name: "Experience", anchor: "experience", current: false },
+  SHOW_DR_MAPACHE && { name: "Dr. Mapache", anchor: "mapache", current: false },
   { name: "Testimonials", anchor: "testimonials", current: false },
   { name: "Blog", anchor: "blog", current: false },
   { name: "Contact", anchor: "contact", current: false },
-]
+].filter(Boolean) as { name: string; anchor: string; current: boolean }[]
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -70,8 +73,9 @@ export default function Navbar() {
               <div className="mt-auto w-10/12 pb-6 md:hidden">
                 <SocialLinks
                   fill="white"
-                  containerClasses="flex justify-between"
-                  linkClasses=""
+                  containerClasses="flex flex-col gap-y-4"
+                  linkClasses="mb-2 flex items-center gap-x-2 text-xl"
+                  showLabels={true}
                 />
               </div>
             </div>

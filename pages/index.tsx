@@ -1,8 +1,10 @@
 import Head from "next/head"
+import React from "react"
 import ReactFullpage from "@fullpage/react-fullpage"
 import {
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
   FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS,
+  SHOW_DR_MAPACHE,
 } from "@/constants/SITE_CONTENT"
 import { MapacheFullPageProps } from "@/types/MapacheFullPageProps"
 
@@ -41,18 +43,18 @@ export async function getStaticProps() {
 }
 
 export default function Home({ posts }: { posts: MediumPost[] }) {
-  const sections = [
-    <TopSection key="top" />,
-    <IntroSection key="intro" />,
-    <AboutSection key="about" />,
-    <DrMapacheSection key="mapache" />,
-    <WorkExperienceSection key="experience" />,
-    <AiConsultancySection key="consultancy" />,
-    <Testimonials key="testimonials" />,
-    <BlogSection key="blog" posts={posts} />,
-    <ContactSection key="contact" />,
-    <Footer key="footer" />,
-  ]
+  const sectionsContent = [
+    { component: <TopSection key="top" />, anchor: "home" },
+    { component: <IntroSection key="intro" />, anchor: "intro" },
+    { component: <AboutSection key="about" />, anchor: "about" },
+    SHOW_DR_MAPACHE && { component: <DrMapacheSection key="mapache" />, anchor: "mapache" },
+    { component: <WorkExperienceSection key="experience" />, anchor: "experience" },
+    { component: <AiConsultancySection key="consultancy" />, anchor: "consultancy" },
+    { component: <Testimonials key="testimonials" />, anchor: "testimonials" },
+    { component: <BlogSection key="blog" posts={posts} />, anchor: "blog" },
+    { component: <ContactSection key="contact" />, anchor: "contact" },
+    { component: <Footer key="footer" />, anchor: "footer" },
+  ].filter(Boolean) as { component: React.ReactNode; anchor: string }[]
 
   return (
     <>
@@ -71,23 +73,12 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         cinematic={true}
         cinematicKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
         credits={{ enabled: false }}
-        anchors={[
-          "home",
-          "intro",
-          "about",
-          "mapache",
-          "experience",
-          "consultancy",
-          "testimonials",
-          "blog",
-          "contact",
-          "footer",
-        ]}
+        anchors={sectionsContent.map((s) => s.anchor)}
         render={() => (
           <ReactFullpage.Wrapper>
-            {sections.map((section) => (
-              <div key={section.key} className="section">
-                {section}
+            {sectionsContent.map((section) => (
+              <div key={section.anchor} className="section">
+                {section.component}
               </div>
             ))}
           </ReactFullpage.Wrapper>

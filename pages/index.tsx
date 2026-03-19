@@ -73,6 +73,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         cinematic={true}
         cinematicKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
         credits={{ enabled: false }}
+        scrollOverflow={true}
         anchors={sectionsContent.map((s) => s.anchor)}
         render={() => (
           <ReactFullpage.Wrapper>

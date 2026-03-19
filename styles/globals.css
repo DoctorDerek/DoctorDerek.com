@@ -13,6 +13,8 @@
   --animate-rainbow-vivid: rainbow-vivid 30s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
 
+  --color-brand-pink: #fb70aa;
+
   @keyframes rainbow-vivid {
     0%,
     100% {
@@ -82,6 +84,7 @@ html,
 body {
   scroll-behavior: smooth;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color: white;
 }
 
 /* =================== 

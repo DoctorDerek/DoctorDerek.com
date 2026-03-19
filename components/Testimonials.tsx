@@ -24,9 +24,11 @@ const Testimonials = () => {
                   className="keen-slider__slide grid transform-gpu grid-cols-1 px-4 md:space-x-0.5 xl:space-x-1"
                 >
                   <div className="text-white">
-                    <p className="leading-7 md:text-lg md:leading-8 lg:text-xl">
-                      {item.comment}
-                    </p>
+                    <div className="space-y-4 leading-7 md:text-lg md:leading-8 lg:text-xl">
+                      {item.comment.split('\n\n').map((paragraph, i) => (
+                        <p key={i}>{paragraph}</p>
+                      ))}
+                    </div>
                     <div className="mt-8 lg:mt-12">
                       <div className="flex">
                         <div className="mr-4">
@@ -60,7 +62,11 @@ const Testimonials = () => {
                   key={item.name}
                   className="mb-6 break-inside-avoid rounded-2xl border border-white/10 bg-black/20 p-6 text-white backdrop-blur-md"
                 >
-                  <p className="leading-7 lg:text-lg">{item.comment}</p>
+                  <div className="space-y-4 leading-7 lg:text-lg">
+                    {item.comment.split('\n\n').map((paragraph, i) => (
+                      <p key={i}>{paragraph}</p>
+                    ))}
+                  </div>
                   <div className="mt-8 flex items-center">
                     <div className="mr-4 shrink-0">
                       <Image

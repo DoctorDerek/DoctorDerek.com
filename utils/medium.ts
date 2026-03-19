@@ -8,6 +8,15 @@ export interface MediumPost {
   description: string
 }
 
+const decodeEntities = (str: string) => {
+  return str
+    .replace(/&#39;/g, "’")
+    .replace(/&quot;/g, "”")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+}
+
 export default async function getMediumPosts(): Promise<MediumPost[]> {
   const parser = new Parser()
   const feed = await parser.parseURL("https://medium.com/feed/@doctorderek")
@@ -23,15 +32,15 @@ export default async function getMediumPosts(): Promise<MediumPost[]> {
     )
     const thumbnail = validImage ? validImage[1] : ""
 
-    const description =
+    const description = decodeEntities(
       content
         .replace(/<[^>]*>?/gm, "")
         .replace(/&nbsp;/g, " ")
         .trim()
-        .substring(0, 180) + "..."
+    ).substring(0, 180) + "..."
 
     return {
-      title: item.title || "",
+      title: decodeEntities(item.title || ""),
       link: item.link || "",
       pubDate: item.pubDate || "",
       thumbnail,

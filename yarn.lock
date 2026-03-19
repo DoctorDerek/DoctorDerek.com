@@ -1189,6 +1189,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/polyfill@npm:^7.2.5":
+  version: 7.12.1
+  resolution: "@babel/polyfill@npm:7.12.1"
+  dependencies:
+    core-js: "npm:^2.6.5"
+    regenerator-runtime: "npm:^0.13.4"
+  checksum: 10c0/f5d233d2958582e8678838c32c42ba780965119ebb3771d9b9735f85efabc7b8b49161e7d908477486e0aaf8508410e957be764c27a6a828714fb9d1b7f80bc3
+  languageName: node
+  linkType: hard
+
 "@babel/preset-env@npm:^7.20.2":
   version: 7.29.0
   resolution: "@babel/preset-env@npm:7.29.0"
@@ -1550,6 +1560,16 @@ __metadata:
   version: 0.2.10
   resolution: "@floating-ui/utils@npm:0.2.10"
   checksum: 10c0/e9bc2a1730ede1ee25843937e911ab6e846a733a4488623cd353f94721b05ec2c9ec6437613a2ac9379a94c2fd40c797a2ba6fa1df2716f5ce4aa6ddb1cf9ea4
+  languageName: node
+  linkType: hard
+
+"@fullpage/react-fullpage@npm:^0.1.49":
+  version: 0.1.49
+  resolution: "@fullpage/react-fullpage@npm:0.1.49"
+  dependencies:
+    "@babel/polyfill": "npm:^7.2.5"
+    fullpage.js: "npm:^4.0.33"
+  checksum: 10c0/4980d30344e162cceb5bf1515fa0a4ebf9ca1c4b41511f3a5db1619c15c121749c4869ca8e30214b3172d91bf25e379bbd42026982d2d3070cc6c9e36503c0dd
   languageName: node
   linkType: hard
 
@@ -3251,6 +3271,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^2.6.5":
+  version: 2.6.12
+  resolution: "core-js@npm:2.6.12"
+  checksum: 10c0/00128efe427789120a06b819adc94cc72b96955acb331cb71d09287baf9bd37bebd191d91f1ee4939c893a050307ead4faea08876f09115112612b6a05684b63
+  languageName: node
+  linkType: hard
+
 "cosmiconfig@npm:^8.1.3":
   version: 8.3.6
   resolution: "cosmiconfig@npm:8.3.6"
@@ -3443,6 +3470,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "doctor-derek@workspace:."
   dependencies:
+    "@fullpage/react-fullpage": "npm:^0.1.49"
     "@headlessui/react": "npm:^2"
     "@heroicons/react": "npm:^2"
     "@rive-app/react-canvas": "npm:^4"
@@ -4170,6 +4198,13 @@ __metadata:
     react-dom:
       optional: true
   checksum: 10c0/f79e2877d28f8f467bd7e936f2d67a53398c13adce5ac110bd4364da25b8e11b6c3daee7ea533df5d9624bef881ae2b7dd11a8805960bcdffaaee9d2438426f5
+  languageName: node
+  linkType: hard
+
+"fullpage.js@npm:^4.0.33":
+  version: 4.0.41
+  resolution: "fullpage.js@npm:4.0.41"
+  checksum: 10c0/dcb86eb7dc6f6e9ce3580bb7253701ea6508b0f8c584499b3aca34e42c112a2911ea3cd649bb1ff0444679c8658634553f83098367ffbb580cfe9e837f66f9ff
   languageName: node
   linkType: hard
 
@@ -5670,6 +5705,13 @@ __metadata:
   version: 1.4.2
   resolution: "regenerate@npm:1.4.2"
   checksum: 10c0/f73c9eba5d398c818edc71d1c6979eaa05af7a808682749dd079f8df2a6d91a9b913db216c2c9b03e0a8ba2bba8701244a93f45211afbff691c32c7b275db1b8
+  languageName: node
+  linkType: hard
+
+"regenerator-runtime@npm:^0.13.4":
+  version: 0.13.11
+  resolution: "regenerator-runtime@npm:0.13.11"
+  checksum: 10c0/12b069dc774001fbb0014f6a28f11c09ebfe3c0d984d88c9bced77fdb6fedbacbca434d24da9ae9371bfbf23f754869307fb51a4c98a8b8b18e5ef748677ca24
   languageName: node
   linkType: hard
 

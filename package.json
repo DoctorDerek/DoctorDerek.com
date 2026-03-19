@@ -10,6 +10,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@fullpage/react-fullpage": "^0.1.49",
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
     "@rive-app/react-canvas": "^4",

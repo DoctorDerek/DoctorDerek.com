@@ -111,7 +111,7 @@ export default function AboutSection() {
           </div>
           <div className="relative mt-8 translate-y-12 rounded-tl-3xl border border-white/20 bg-black/40 px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 ease-spring-soft md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[55%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-1/2 lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <div className="flex flex-col gap-4 lg:gap-6">
-              <div className="pr-2 text-lg leading-7 text-white md:max-h-[35vh] md:overflow-y-auto lg:max-h-[40vh] lg:text-xl lg:leading-9">
+              <div className="pr-2 text-lg leading-7 text-white max-h-[45vh] overflow-y-auto overscroll-contain md:max-h-[35vh] lg:max-h-[40vh] lg:text-xl lg:leading-9">
                 {ABOUT_BIO_LONG.map((paragraph, index) => (
                   <p key={index} className="mb-4">
                     {paragraph}

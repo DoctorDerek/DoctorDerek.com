@@ -41,7 +41,10 @@ export default function SocialLinks({
 
         if (isEmail) {
           return (
-            <GlobalEmailCTA key={link.id} className={classNames(linkClasses)}>
+            <GlobalEmailCTA 
+              key={link.id} 
+              className={classNames(linkClasses, "[&_a]:flex [&_a]:items-center")}
+            >
               {content}
             </GlobalEmailCTA>
           )

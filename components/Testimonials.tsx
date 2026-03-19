@@ -40,7 +40,7 @@ const Testimonials = () => {
                           <h4 className="font-bold md:mt-auto md:pb-2">
                             -{item.name}
                           </h4>
-                          <h4 className="md:mb-auto">{item.position}</h4>
+                          <h4 className="md:mb-auto">{item.title}</h4>
                         </div>
                       </div>
                     </div>
@@ -71,7 +71,7 @@ const Testimonials = () => {
                     </div>
                     <div className="flex flex-col">
                       <h4 className="font-bold">-{item.name}</h4>
-                      <h4 className="text-sm opacity-80">{item.position}</h4>
+                      <h4 className="text-sm opacity-80">{item.title}</h4>
                     </div>
                   </div>
                 </div>

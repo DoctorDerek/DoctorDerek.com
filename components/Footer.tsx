@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="mx-auto grid max-w-6xl translate-y-8 grid-cols-1 gap-12 opacity-0 transition-all duration-700 ease-spring-soft md:grid-cols-2 [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <div>
           <SectionHeading>
-            <h3 className="mb-4 text-2xl font-bold tracking-wider text-[#FB70AA] uppercase">
+            <h3 className="mb-4 text-2xl font-bold tracking-wider text-white uppercase">
               AI Disclosure
             </h3>
           </SectionHeading>
@@ -19,7 +19,7 @@ export default function Footer() {
         </div>
         <div>
           <SectionHeading>
-            <h3 className="mb-4 text-2xl font-bold tracking-wider text-[#B9E3FF] uppercase">
+            <h3 className="mb-4 text-2xl font-bold tracking-wider text-white uppercase">
               Website Disclaimer
             </h3>
           </SectionHeading>

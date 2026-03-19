@@ -61,7 +61,7 @@ export default function Navbar() {
                   <li className="hover:text-white" key={item.name}>
                     <a
                       href={`#${item.anchor}`}
-                      className="md:restora-bold block py-2 text-5xl font-semibold transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:text-[#F38B57] active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
+                      className="md:restora-bold block py-2 text-5xl font-semibold transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:text-white active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
                       onClick={() => setSidebarOpen(false)}
                     >
                       {item.name}

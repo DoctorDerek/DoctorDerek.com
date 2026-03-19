@@ -120,7 +120,7 @@ export default function AboutSection() {
               </div>
               {SHOW_DR_MAPACHE && (
                 <div className="rounded-2xl border border-[#F38B57]/20 bg-black/50 p-4 shadow-xl backdrop-blur-md">
-                  <p className="animate-pulse text-lg leading-tight font-bold text-[#F38B57] drop-shadow-md lg:text-xl">
+                  <p className="animate-pulse text-lg leading-tight font-bold text-white drop-shadow-md lg:text-xl">
                     But enough talk. Scroll down to play the WebGL game I built to
                     prove my stack. 👇🎮🦝
                   </p>

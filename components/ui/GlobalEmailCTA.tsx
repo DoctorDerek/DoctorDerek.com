@@ -14,13 +14,14 @@ export default function GlobalEmailCTA({
   children,
 }: GlobalEmailCTAProps) {
   return (
-    <div className={classNames("cursor-pointer", className)}>
-      <Obfuscate
-        email="derekraustin+doctorderek@gmail.com"
-        headers={subject ? { subject } : undefined}
-      >
-        {children || "derekraustin+doctorderek@gmail.com"}
-      </Obfuscate>
-    </div>
+    <Obfuscate
+      email="derekraustin+doctorderek@gmail.com"
+      headers={subject ? { subject } : undefined}
+      // @ts-expect-error: react-obfuscate types missing className but passes it natively
+      className={className}
+      style={{ direction: "ltr" }}
+    >
+      {children || "derekraustin+doctorderek@gmail.com"}
+    </Obfuscate>
   )
 }

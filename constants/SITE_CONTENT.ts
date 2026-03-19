@@ -1,3 +1,8 @@
+export const FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS =
+  "***REDACTED***"
+export const FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS =
+  "***REDACTED***"
+
 export const INTRO_BIO_SHORT =
   "Indie Game Dev · AI Context Engineer · I teach LLMs to think · Full-Stack SWE since 2005 · BS & MS in Bioinformatics at age 19 · Doctor of Physical Therapy" as const
 

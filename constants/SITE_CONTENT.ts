@@ -113,14 +113,12 @@ export type SocialLink = {
   id: string
   label: string
   url?: string
-  emailParts?: string[]
 }
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     id: "email",
     label: "Email",
-    emailParts: ["mailto:", "derekraustin", "@", "gmail.com"],
   },
   {
     id: "github",

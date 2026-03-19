@@ -2,15 +2,9 @@ import { useState } from "react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Logo from "@/components/ui/Logo"
 import classNames from "@/utils/classNames"
+import scrollToSection from "@/utils/scrollToSection"
 import Link from "next/link"
 import SocialLinks from "./ui/SocialLinks"
-
-declare global {
-  interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    fullpage_api: any
-  }
-}
 
 const navigation = [
   { name: "About", anchor: "about", current: true },
@@ -45,12 +39,11 @@ export default function Navbar() {
             )}
           </button>
         </div>
-        {/* ======== SCROLL INDICATOR ======= */}
       </div>
 
-      <div className="fixed inset-0 mt-auto flex h-[90%]">
+      <div className="pointer-events-none fixed inset-0 mt-auto flex h-[90%]">
         {/* =========== SIDEBAR MOBILE MENU =========== */}
-        <div className="flex grow flex-col overflow-y-auto">
+        <div className="pointer-events-auto flex grow flex-col overflow-y-auto">
           {/* ========= div creates spacing between links and navbar */}
           <div className="h-14 md:hidden" />
           {/* =========== NAVIGATION LINKS ========== */}
@@ -69,9 +62,7 @@ export default function Navbar() {
                       className="md:restora-bold block py-2 text-5xl font-semibold transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:text-[#F38B57] active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
                       onClick={(e) => {
                         e.preventDefault()
-                        if (window.fullpage_api) {
-                          window.fullpage_api.moveTo(item.anchor)
-                        }
+                        scrollToSection(item.anchor)
                         setSidebarOpen(false)
                       }}
                     >

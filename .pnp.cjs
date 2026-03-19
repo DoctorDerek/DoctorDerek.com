@@ -28,7 +28,6 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
-          ["@fullpage/react-fullpage", "npm:0.1.49"],\
           ["@headlessui/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.9"],\
           ["@heroicons/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.0"],\
           ["@rive-app/react-canvas", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0"],\
@@ -51,6 +50,7 @@ const RAW_RUNTIME_STATE =
           ["prettier-plugin-tailwindcss", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:0.7.2"],\
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
+          ["react-obfuscate", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:3.7.0"],\
           ["react-parallax-tilt", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:1.7.315"],\
           ["rss-parser", "npm:3.13.0"],\
           ["sharp", "npm:0.34.5"],\
@@ -2160,17 +2160,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["@babel/polyfill", [\
-      ["npm:7.12.1", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/@babel-polyfill-npm-7.12.1-a393b8d870-10c0.zip/node_modules/@babel/polyfill/",\
-        "packageDependencies": [\
-          ["@babel/polyfill", "npm:7.12.1"],\
-          ["core-js", "npm:2.6.12"],\
-          ["regenerator-runtime", "npm:0.13.11"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["@babel/preset-env", [\
       ["npm:7.29.0", {\
         "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/@babel-preset-env-npm-7.29.0-69769754f0-10c0.zip/node_modules/@babel/preset-env/",\
@@ -2639,17 +2628,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/@floating-ui-utils-npm-0.2.10-5e22e99242-10c0.zip/node_modules/@floating-ui/utils/",\
         "packageDependencies": [\
           ["@floating-ui/utils", "npm:0.2.10"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["@fullpage/react-fullpage", [\
-      ["npm:0.1.49", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/@fullpage-react-fullpage-npm-0.1.49-7c26e072ba-10c0.zip/node_modules/@fullpage/react-fullpage/",\
-        "packageDependencies": [\
-          ["@babel/polyfill", "npm:7.12.1"],\
-          ["@fullpage/react-fullpage", "npm:0.1.49"],\
-          ["fullpage.js", "npm:4.0.40"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4953,15 +4931,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["core-js", [\
-      ["npm:2.6.12", {\
-        "packageLocation": "./.yarn/unplugged/core-js-npm-2.6.12-0b93d77d31/node_modules/core-js/",\
-        "packageDependencies": [\
-          ["core-js", "npm:2.6.12"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["core-js-compat", [\
       ["npm:3.48.0", {\
         "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/core-js-compat-npm-3.48.0-8341f6f99c-10c0.zip/node_modules/core-js-compat/",\
@@ -5216,7 +5185,6 @@ const RAW_RUNTIME_STATE =
       ["workspace:.", {\
         "packageLocation": "./",\
         "packageDependencies": [\
-          ["@fullpage/react-fullpage", "npm:0.1.49"],\
           ["@headlessui/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.9"],\
           ["@heroicons/react", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:2.2.0"],\
           ["@rive-app/react-canvas", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:4.27.0"],\
@@ -5239,6 +5207,7 @@ const RAW_RUNTIME_STATE =
           ["prettier-plugin-tailwindcss", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:0.7.2"],\
           ["react", "npm:19.2.3"],\
           ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
+          ["react-obfuscate", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:3.7.0"],\
           ["react-parallax-tilt", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:1.7.315"],\
           ["rss-parser", "npm:3.13.0"],\
           ["sharp", "npm:0.34.5"],\
@@ -6140,15 +6109,6 @@ const RAW_RUNTIME_STATE =
           "@types/react",\
           "react-dom",\
           "react"\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["fullpage.js", [\
-      ["npm:4.0.40", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/fullpage.js-npm-4.0.40-c35adb5efa-10c0.zip/node_modules/fullpage.js/",\
-        "packageDependencies": [\
-          ["fullpage.js", "npm:4.0.40"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7817,6 +7777,36 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-obfuscate", [\
+      ["npm:3.7.0", {\
+        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/react-obfuscate-npm-3.7.0-a3dbdd2988-10c0.zip/node_modules/react-obfuscate/",\
+        "packageDependencies": [\
+          ["react-obfuscate", "npm:3.7.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:3.7.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-obfuscate-virtual-f226ca4235/4/C:/Users/derek/AppData/Local/Yarn/Berry/cache/react-obfuscate-npm-3.7.0-a3dbdd2988-10c0.zip/node_modules/react-obfuscate/",\
+        "packageDependencies": [\
+          ["@types/prop-types", null],\
+          ["@types/react", "npm:19.2.7"],\
+          ["@types/react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
+          ["prop-types", null],\
+          ["react", "npm:19.2.3"],\
+          ["react-dom", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:19.2.3"],\
+          ["react-obfuscate", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:3.7.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/prop-types",\
+          "@types/react-dom",\
+          "@types/react",\
+          "prop-types",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-parallax-tilt", [\
       ["npm:1.7.315", {\
         "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/react-parallax-tilt-npm-1.7.315-c4e54c9bb8-10c0.zip/node_modules/react-parallax-tilt/",\
@@ -7875,15 +7865,6 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["regenerate", "npm:1.4.2"],\
           ["regenerate-unicode-properties", "npm:10.2.2"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["regenerator-runtime", [\
-      ["npm:0.13.11", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/regenerator-runtime-npm-0.13.11-90bf536060-10c0.zip/node_modules/regenerator-runtime/",\
-        "packageDependencies": [\
-          ["regenerator-runtime", "npm:0.13.11"]\
         ],\
         "linkType": "HARD"\
       }]\

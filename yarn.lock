@@ -1189,16 +1189,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/polyfill@npm:^7.2.5":
-  version: 7.12.1
-  resolution: "@babel/polyfill@npm:7.12.1"
-  dependencies:
-    core-js: "npm:^2.6.5"
-    regenerator-runtime: "npm:^0.13.4"
-  checksum: 10c0/f5d233d2958582e8678838c32c42ba780965119ebb3771d9b9735f85efabc7b8b49161e7d908477486e0aaf8508410e957be764c27a6a828714fb9d1b7f80bc3
-  languageName: node
-  linkType: hard
-
 "@babel/preset-env@npm:^7.20.2":
   version: 7.29.0
   resolution: "@babel/preset-env@npm:7.29.0"
@@ -1560,16 +1550,6 @@ __metadata:
   version: 0.2.10
   resolution: "@floating-ui/utils@npm:0.2.10"
   checksum: 10c0/e9bc2a1730ede1ee25843937e911ab6e846a733a4488623cd353f94721b05ec2c9ec6437613a2ac9379a94c2fd40c797a2ba6fa1df2716f5ce4aa6ddb1cf9ea4
-  languageName: node
-  linkType: hard
-
-"@fullpage/react-fullpage@npm:^0":
-  version: 0.1.49
-  resolution: "@fullpage/react-fullpage@npm:0.1.49"
-  dependencies:
-    "@babel/polyfill": "npm:^7.2.5"
-    fullpage.js: "npm:^4.0.33"
-  checksum: 10c0/4980d30344e162cceb5bf1515fa0a4ebf9ca1c4b41511f3a5db1619c15c121749c4869ca8e30214b3172d91bf25e379bbd42026982d2d3070cc6c9e36503c0dd
   languageName: node
   linkType: hard
 
@@ -2826,7 +2806,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xstate/react@npm:^6.1.0":
+"@xstate/react@npm:^6":
   version: 6.1.0
   resolution: "@xstate/react@npm:6.1.0"
   dependencies:
@@ -3271,13 +3251,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^2.6.5":
-  version: 2.6.12
-  resolution: "core-js@npm:2.6.12"
-  checksum: 10c0/00128efe427789120a06b819adc94cc72b96955acb331cb71d09287baf9bd37bebd191d91f1ee4939c893a050307ead4faea08876f09115112612b6a05684b63
-  languageName: node
-  linkType: hard
-
 "cosmiconfig@npm:^8.1.3":
   version: 8.3.6
   resolution: "cosmiconfig@npm:8.3.6"
@@ -3470,7 +3443,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "doctor-derek@workspace:."
   dependencies:
-    "@fullpage/react-fullpage": "npm:^0"
     "@headlessui/react": "npm:^2"
     "@heroicons/react": "npm:^2"
     "@rive-app/react-canvas": "npm:^4"
@@ -3479,11 +3451,11 @@ __metadata:
     "@types/node": "npm:^24"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
-    "@xstate/react": "npm:^6.1.0"
+    "@xstate/react": "npm:^6"
     eslint: "npm:^9"
     eslint-config-next: "npm:^16"
     eslint-config-prettier: "npm:^10"
-    jiti: "npm:^2.6.1"
+    jiti: "npm:^2"
     keen-slider: "npm:^6"
     motion: "npm:^12"
     next: "npm:^16"
@@ -3492,13 +3464,14 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:^0"
     react: "npm:^19"
     react-dom: "npm:^19"
+    react-obfuscate: "npm:^3"
     react-parallax-tilt: "npm:^1"
-    rss-parser: "npm:^3.13.0"
+    rss-parser: "npm:^3"
     sharp: "npm:^0"
     tailwindcss: "npm:^4"
     typescript: "npm:^5"
     typewriter-effect: "npm:^2"
-    xstate: "npm:^5.28.0"
+    xstate: "npm:^5"
   dependenciesMeta:
     prettier-plugin-tailwindcss@0.7.2:
       unplugged: true
@@ -4200,13 +4173,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fullpage.js@npm:^4.0.33":
-  version: 4.0.40
-  resolution: "fullpage.js@npm:4.0.40"
-  checksum: 10c0/f4f3c583e9ecf48c8303bdb208d64f4798ba522e358889096975600ee86ba389f74b5d06d39adb9124dd77d5835592b324c1aeddf41e8e312ad1d6d38739b39e
-  languageName: node
-  linkType: hard
-
 "function-bind@npm:^1.1.2":
   version: 1.1.2
   resolution: "function-bind@npm:1.1.2"
@@ -4748,7 +4714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^2.6.1":
+"jiti@npm:^2, jiti@npm:^2.6.1":
   version: 2.6.1
   resolution: "jiti@npm:2.6.1"
   bin:
@@ -5649,6 +5615,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-obfuscate@npm:^3":
+  version: 3.7.0
+  resolution: "react-obfuscate@npm:3.7.0"
+  peerDependencies:
+    prop-types: ">= 15"
+    react: ">= 16.8"
+    react-dom: ">= 16.8"
+  checksum: 10c0/37be35de0f086bbdf0b743e24db7d1de6f99a3b4f448ff1c31bc7cd119566b13e016c7c6cc92d1ae584a6f178bb6cdc8b3807f1ed44ab30d9de6970b5cd970cc
+  languageName: node
+  linkType: hard
+
 "react-parallax-tilt@npm:^1":
   version: 1.7.315
   resolution: "react-parallax-tilt@npm:1.7.315"
@@ -5695,13 +5672,6 @@ __metadata:
   version: 1.4.2
   resolution: "regenerate@npm:1.4.2"
   checksum: 10c0/f73c9eba5d398c818edc71d1c6979eaa05af7a808682749dd079f8df2a6d91a9b913db216c2c9b03e0a8ba2bba8701244a93f45211afbff691c32c7b275db1b8
-  languageName: node
-  linkType: hard
-
-"regenerator-runtime@npm:^0.13.4":
-  version: 0.13.11
-  resolution: "regenerator-runtime@npm:0.13.11"
-  checksum: 10c0/12b069dc774001fbb0014f6a28f11c09ebfe3c0d984d88c9bced77fdb6fedbacbca434d24da9ae9371bfbf23f754869307fb51a4c98a8b8b18e5ef748677ca24
   languageName: node
   linkType: hard
 
@@ -5824,7 +5794,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rss-parser@npm:^3.13.0":
+"rss-parser@npm:^3":
   version: 3.13.0
   resolution: "rss-parser@npm:3.13.0"
   dependencies:
@@ -6713,7 +6683,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xstate@npm:^5.28.0":
+"xstate@npm:^5":
   version: 5.28.0
   resolution: "xstate@npm:5.28.0"
   checksum: 10c0/a648ca36fd5de9d9d7c3f1c928f7fe51ff49b967ee716455818531d5645166eaf4f9ae2dae11a24b29cba08c3a44af01ce8fd0b2dc598503bd5b601ea11813c1

@@ -67,6 +67,22 @@ export const SOCIAL_PROOF_CTA: SocialProofCta = {
   targetUrl: "https://doctorderek.medium.com/",
 } as const
 
+export type BlogMetrics = {
+  totalPosts: number
+  totalWordsK: number
+  yearStarted: number
+  emailSubscribers: number
+  mediumFollowers: number
+}
+
+export const BLOG_METRICS: BlogMetrics = {
+  totalPosts: 503,
+  totalWordsK: 500,
+  yearStarted: 2019,
+  emailSubscribers: 749,
+  mediumFollowers: 21936,
+} as const
+
 export type LegalDisclaimer = {
   aiDisclosure: string[]
   websiteDisclaimer: string[]

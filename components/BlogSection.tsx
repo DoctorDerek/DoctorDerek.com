@@ -3,6 +3,7 @@ import { useKeenSlider } from "keen-slider/react"
 import { MediumPost } from "@/utils/medium"
 import SectionHeading from "@/components/ui/SectionHeading"
 import CountUp from "@/components/ui/CountUp"
+import { BLOG_METRICS } from "@/constants/SITE_CONTENT"
 
 export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   const [sliderRef] = useKeenSlider({
@@ -38,7 +39,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
             <div className="mt-6 grid grid-cols-3 gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 shadow-xl backdrop-blur-md md:p-6 lg:mt-8 lg:gap-4">
               <div className="flex flex-col items-center justify-center text-center">
                 <p className="text-2xl font-bold text-[#F38B57] md:text-3xl lg:text-4xl">
-                  <CountUp to={503} />
+                  <CountUp to={BLOG_METRICS.totalPosts} />
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">
                   Posts
@@ -46,7 +47,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               </div>
               <div className="flex flex-col items-center justify-center border-x border-white/10 px-2 text-center">
                 <p className="text-2xl font-bold whitespace-nowrap text-[#F38B57] md:text-3xl lg:text-4xl">
-                  <CountUp to={500} duration={2.5} />
+                  <CountUp to={BLOG_METRICS.totalWordsK} duration={2.5} />
                   k+
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">
@@ -55,7 +56,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               </div>
               <div className="flex flex-col items-center justify-center text-center">
                 <p className="text-2xl font-bold text-[#89CFFD] md:text-3xl lg:text-4xl">
-                  2019
+                  {BLOG_METRICS.yearStarted}
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">
                   Since
@@ -67,11 +68,11 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               <h3 className="text-xl leading-snug font-bold text-white/90 md:text-2xl">
                 Tired of generic tech industry noise? Join{" "}
                 <span className="text-[#F38B57]">
-                  <CountUp to={749} />
+                  <CountUp to={BLOG_METRICS.emailSubscribers} />
                 </span>{" "}
                 insider subscribers and{" "}
                 <span className="text-[#F38B57]">
-                  <CountUp to={21936} duration={2.5} />
+                  <CountUp to={BLOG_METRICS.mediumFollowers} duration={2.5} />
                 </span>{" "}
                 followers reading my battle-tested systems analyses and brutal
                 survival manuals.

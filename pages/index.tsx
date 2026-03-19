@@ -4,60 +4,10 @@ import {
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
   FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS,
 } from "@/constants/SITE_CONTENT"
+import { MapacheFullPageProps } from "@/types/MapacheFullPageProps"
 
 const pluginWrapper = () => {
   require("@/utils/fullpage.cinematic.min.js")
-}
-
-type MapacheFullPageProps = {
-  children?: React.ReactNode
-  pluginWrapper?: () => void
-  render?: (comp: { state: any; fullpageApi: any }) => React.ReactElement
-  anchors?: string[]
-
-  // Extension Keys
-  licenseKey?: string
-  cinematicKey?: string
-
-  // Credits option
-  credits?: { enabled?: boolean; label?: string; position?: string }
-
-  // Extension toggles
-  cinematic?: boolean
-  effects?: boolean
-  parallax?: boolean
-  dropEffect?: boolean
-  waterEffect?: boolean
-  cards?: boolean
-  responsiveSlides?: boolean
-  continuousHorizontal?: boolean
-  scrollHorizontally?: boolean
-  interlockedSlides?: boolean | number[]
-  dragAndMove?:
-    | boolean
-    | "vertical"
-    | "horizontal"
-    | "fingersonly"
-    | "mouseonly"
-  offsetSections?: boolean
-  resetSliders?: boolean
-  fadingEffect?: boolean | "sections" | "slides"
-  scrollOverflowReset?: boolean | "sections" | "slides"
-
-  // Extension options
-  cinematicOptions?: any
-  effectsOptions?: any
-  parallaxOptions?: { type?: string; percentage?: number; property?: string }
-  dropEffectOptions?: { speed?: number; color?: string; zIndex?: number }
-  waterEffectOptions?: {
-    animateContent?: boolean
-    animateOnMouseMove?: boolean
-  }
-  cardsOptions?: {
-    perspective?: number
-    fadeContent?: boolean
-    fadeBackground?: boolean
-  }
 }
 
 const MapacheFullPage =

@@ -1,17 +1,7 @@
 import SectionHeading from "@/components/ui/SectionHeading"
+import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 
 export default function AiConsultancySection() {
-  const handleBookClick = () => {
-    window.location.href = [
-      "mailto:",
-      "derekraustin",
-      "+doctorderek",
-      "@",
-      "gmail.com",
-      "?subject=AI%20Evaluation%20Consultancy",
-    ].join("")
-  }
-
   return (
     <div className="flex h-screen w-full items-center justify-center p-8">
       <div className="flex max-w-4xl translate-y-12 scale-95 flex-col rounded-2xl border border-white/20 bg-white/10 p-12 text-white opacity-0 backdrop-blur-md transition-all duration-700 ease-spring-bouncy [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
@@ -25,12 +15,12 @@ export default function AiConsultancySection() {
           Documents (GDD). I provide elite prompt, context, persona, and
           cognitive engineering of LLMs for your specific tasks.
         </p>
-        <button
-          onClick={handleBookClick}
-          className="rounded-tr-3xl bg-[#FFE366] px-12 py-6 text-2xl font-bold text-[#311B4D] transition-transform duration-300 ease-spring-bouncy hover:scale-105 active:scale-95"
+        <GlobalEmailCTA
+          subject="AI Evaluation Consultancy"
+          className="inline-block w-max text-center rounded-tr-3xl bg-[#FFE366] px-12 py-6 text-2xl font-bold text-[#311B4D] transition-transform duration-300 ease-spring-bouncy hover:scale-105 active:scale-95"
         >
           Book a 20-Minute Async AI Audit - $500 USD
-        </button>
+        </GlobalEmailCTA>
         <p className="mt-6 text-xl opacity-80">
           Also available: $5,000 USD anchor point for a custom GDD for AI Master
           Template.

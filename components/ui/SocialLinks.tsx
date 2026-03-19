@@ -3,6 +3,7 @@
 import { SOCIAL_LINKS, type SocialLink } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
 import Icon, { type IconName } from "./Icon"
+import GlobalEmailCTA from "./GlobalEmailCTA"
 
 export default function SocialLinks({
   fill = "#F38B57",
@@ -19,30 +20,13 @@ export default function SocialLinks({
   labelClasses?: string
   showLabels?: boolean
 }) {
-  const handleEmailClick = (e: React.MouseEvent, emailParts: string[]) => {
-    e.preventDefault()
-    const mailto = emailParts.join("")
-    const w = window
-    w.location.assign(mailto)
-  }
-
   return (
     <div className={classNames(containerClasses)}>
       {SOCIAL_LINKS.map((link: SocialLink, index: number) => {
-        const isEmail = link.id === "email" && link.emailParts
+        const isEmail = link.id === "email"
 
-        return (
-          <a
-            key={link.id}
-            href={isEmail ? undefined : link.url}
-            onClick={
-              isEmail ? (e) => handleEmailClick(e, link.emailParts!) : undefined
-            }
-            style={isEmail ? { cursor: "pointer" } : {}}
-            target={isEmail ? undefined : "_blank"}
-            rel={isEmail ? undefined : "noopener noreferrer"}
-            className={classNames(linkClasses)}
-          >
+        const content = (
+          <>
             <div
               className={classNames(iconClasses, "animate-float")}
               style={{ animationDelay: `${index * 0.4}s` }}
@@ -52,6 +36,26 @@ export default function SocialLinks({
             {showLabels && (
               <span className={classNames(labelClasses)}>{link.label}</span>
             )}
+          </>
+        )
+
+        if (isEmail) {
+          return (
+            <GlobalEmailCTA key={link.id} className={classNames(linkClasses)}>
+              {content}
+            </GlobalEmailCTA>
+          )
+        }
+
+        return (
+          <a
+            key={link.id}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classNames(linkClasses)}
+          >
+            {content}
           </a>
         )
       })}

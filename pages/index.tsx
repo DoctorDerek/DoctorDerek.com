@@ -1,5 +1,5 @@
 import Head from "next/head"
-import ReactFullpage from "@fullpage/react-fullpage"
+import FullPageScroller from "@/components/ui/FullPageScroller"
 import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/AboutSection"
 import DrMapacheSection from "@/components/DrMapacheSection"
@@ -39,9 +39,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       </Head>
       <RiveAnimation />
 
-      <ReactFullpage
-        credits={{ enabled: false }}
-        navigation
+      <FullPageScroller
         anchors={[
           "home",
           "intro",
@@ -54,54 +52,47 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
           "contact",
           "footer",
         ]}
-        normalScrollElements=".fp-noscroll"
-        render={() => {
-          return (
-            <ReactFullpage.Wrapper>
-              <div className="section h-dvh">
-                <TopSection />
-              </div>
+      >
+        <div className="h-dvh">
+          <TopSection />
+        </div>
 
-              <div className="section flex h-dvh flex-col md:flex-row">
-                <IntroSection />
-              </div>
+        <div className="flex h-dvh flex-col md:flex-row">
+          <IntroSection />
+        </div>
 
-              <div className="section flex h-dvh flex-col md:flex-row">
-                <AboutSection />
-              </div>
+        <div className="flex h-dvh flex-col md:flex-row">
+          <AboutSection />
+        </div>
 
-              <div className="section">
-                <DrMapacheSection />
-              </div>
+        <div className="h-dvh">
+          <DrMapacheSection />
+        </div>
 
-              <div className="section">
-                <WorkExperienceSection />
-              </div>
+        <div className="h-dvh">
+          <WorkExperienceSection />
+        </div>
 
-              <div className="section max-lg:flex max-lg:h-dvh max-lg:flex-col">
-                <AiConsultancySection />
-              </div>
+        <div className="h-dvh max-lg:flex max-lg:flex-col">
+          <AiConsultancySection />
+        </div>
 
-              <div className="section">
-                <Testimonials />
-              </div>
+        <div className="h-dvh">
+          <Testimonials />
+        </div>
 
-              {/* UNIFIED BLOG SECTION */}
-              <div className="section">
-                <BlogSection posts={posts} />
-              </div>
+        <div className="h-dvh">
+          <BlogSection posts={posts} />
+        </div>
 
-              <div className="section">
-                <ContactSection />
-              </div>
+        <div className="h-dvh">
+          <ContactSection />
+        </div>
 
-              <div className="section fp-auto-height">
-                <Footer />
-              </div>
-            </ReactFullpage.Wrapper>
-          )
-        }}
-      />
+        <div className="min-h-max">
+          <Footer />
+        </div>
+      </FullPageScroller>
     </>
   )
 }

@@ -3,21 +3,10 @@ import Image from "next/image"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 import SectionHeading from "@/components/ui/SectionHeading"
+import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 
 export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)
-
-  const handleEmailClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    window.location.href = [
-      "mailto:",
-      "derekraustin",
-      "+doctorderek",
-      "@",
-      "gmail.com",
-      "?subject=AI%20Evaluation%20Consultancy",
-    ].join("")
-  }
 
   return (
     <div className="h-full w-full">
@@ -82,12 +71,12 @@ export default function ContactSection() {
               Austin. Get in touch to discuss your next development project, or
               to simply chat.
             </p>
-            <button
-              onClick={handleEmailClick}
-              className="mt-8 rounded-tr-3xl bg-[#F38B57] px-12 py-6 text-2xl font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-105 active:scale-95"
+            <GlobalEmailCTA
+              subject="Consultancy Inquiry"
+              className="mt-8 inline-block w-max text-center rounded-tr-3xl bg-[#F38B57] px-12 py-6 text-2xl font-bold text-white transition-transform duration-300 ease-spring-bouncy hover:scale-105 active:scale-95"
             >
               Email Me for Consultancy
-            </button>
+            </GlobalEmailCTA>
           </div>
         </div>
       </div>

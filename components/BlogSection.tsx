@@ -38,7 +38,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
 
             <div className="mt-6 grid grid-cols-3 gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 shadow-xl backdrop-blur-md md:p-6 lg:mt-8 lg:gap-4">
               <div className="flex flex-col items-center justify-center text-center">
-                <p className="text-2xl font-bold text-[#F38B57] md:text-3xl lg:text-4xl">
+                <p className="text-2xl font-bold text-white md:text-3xl lg:text-4xl">
                   <CountUp to={BLOG_METRICS.totalPosts} />
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">
@@ -46,7 +46,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                 </p>
               </div>
               <div className="flex flex-col items-center justify-center border-x border-white/10 px-2 text-center">
-                <p className="text-2xl font-bold whitespace-nowrap text-[#F38B57] md:text-3xl lg:text-4xl">
+                <p className="text-2xl font-bold whitespace-nowrap text-white md:text-3xl lg:text-4xl">
                   <CountUp to={BLOG_METRICS.totalWordsK} duration={2.5} />
                   k+
                 </p>
@@ -55,7 +55,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                 </p>
               </div>
               <div className="flex flex-col items-center justify-center text-center">
-                <p className="text-2xl font-bold text-[#89CFFD] md:text-3xl lg:text-4xl">
+                <p className="text-2xl font-bold text-white md:text-3xl lg:text-4xl">
                   {BLOG_METRICS.yearStarted}
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">
@@ -67,11 +67,11 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
             <div className="mt-8 lg:mt-10">
               <h3 className="text-xl leading-snug font-bold text-white/90 md:text-2xl">
                 Tired of generic tech industry noise? Join{" "}
-                <span className="text-[#F38B57]">
+                <span className="text-white">
                   <CountUp to={BLOG_METRICS.emailSubscribers} />
                 </span>{" "}
                 insider subscribers and{" "}
-                <span className="text-[#F38B57]">
+                <span className="text-white">
                   <CountUp to={BLOG_METRICS.mediumFollowers} duration={2.5} />
                 </span>{" "}
                 followers reading my battle-tested systems analyses and brutal
@@ -101,7 +101,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
 
         <div className="mt-12 flex w-[95%] shrink-0 flex-col justify-center lg:mt-0 lg:w-[60%] lg:px-8 xl:w-2/3">
           <div className="w-full">
-            <div ref={sliderRef} className="keen-slider py-4 hover:cursor-grab">
+            <div ref={sliderRef} className="keen-slider normal-scroll-content py-4 hover:cursor-grab">
               {posts.map((post, index) => (
                 <div key={post.link} className="keen-slider__slide">
                   <div
@@ -135,7 +135,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                         <p className="mb-auto line-clamp-3 text-sm text-white/70 lg:text-base">
                           {post.description}
                         </p>
-                        <p className="mt-4 text-xs font-bold tracking-wider text-[#F38B57] uppercase lg:text-sm">
+                        <p className="mt-4 text-xs font-bold tracking-wider text-white uppercase lg:text-sm">
                           {new Date(post.pubDate).toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",

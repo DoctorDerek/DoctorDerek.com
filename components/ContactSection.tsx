@@ -70,7 +70,7 @@ export default function ContactSection() {
               I architect robust, high-QREAM software systems and engineer elite
               Human-AI cognitive frameworks. I operate on a strict, low-demand
               philosophy to protect my engineering focus. I do not do
-              &quot;quick chats,&quot; &quot;brainstorming calls,&quot; or
+              &ldquo;quick chats,&rdquo; &ldquo;brainstorming calls,&rdquo; or
               traditional employment. If you have a high-leverage technical
               challenge—like a $500 Async AI Audit or a $5,000 Master GDD
               Template—reach out asynchronously.

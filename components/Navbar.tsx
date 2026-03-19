@@ -45,7 +45,7 @@ export default function Navbar() {
 
       <div className="pointer-events-none fixed inset-0 mt-auto flex h-[90%]">
         {/* =========== SIDEBAR MOBILE MENU =========== */}
-        <div className="pointer-events-auto flex grow flex-col overflow-y-auto">
+        <div className="pointer-events-auto flex grow flex-col normal-scroll-content overflow-y-auto overscroll-contain">
           {/* ========= div creates spacing between links and navbar */}
           <div className="h-14 md:hidden" />
           {/* =========== NAVIGATION LINKS ========== */}
@@ -61,7 +61,7 @@ export default function Navbar() {
                   <li className="hover:text-white" key={item.name}>
                     <a
                       href={`#${item.anchor}`}
-                      className="md:restora-bold block py-2 text-5xl font-semibold transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:text-[#F38B57] active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
+                      className="md:restora-bold block py-2 text-5xl font-semibold transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:text-white active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
                       onClick={() => setSidebarOpen(false)}
                     >
                       {item.name}

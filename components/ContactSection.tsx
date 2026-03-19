@@ -75,10 +75,7 @@ export default function ContactSection() {
               challenge—like a $500 Async AI Audit or a $5,000 Master GDD
               Template—reach out asynchronously.
             </p>
-            <GlobalEmailCTA
-              subject="Consultancy & Audit Inquiry"
-              className="mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 ease-spring-bouncy hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl"
-            >
+            <GlobalEmailCTA className="mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 ease-spring-bouncy hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
               Request Asynchronous Consult
             </GlobalEmailCTA>
           </div>

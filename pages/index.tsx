@@ -105,7 +105,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
     <>
       <Head>
         <title>
-          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-STack
+          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-Stack
           SWE, & Content Creator
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />

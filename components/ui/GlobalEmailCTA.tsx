@@ -1,6 +1,5 @@
 import React from "react"
 import { Email } from "react-obfuscate-email"
-import classNames from "@/utils/classNames"
 
 type GlobalEmailCTAProps = {
   subject?: string
@@ -18,7 +17,6 @@ export default function GlobalEmailCTA({
       email="derekraustin+doctorderek@gmail.com"
       subject={subject}
       className={className}
-      style={{ direction: "ltr" }}
     >
       {children || "derekraustin+doctorderek@gmail.com"}
     </Email>

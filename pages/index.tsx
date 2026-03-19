@@ -1,5 +1,5 @@
 import Head from "next/head"
-import FullPageScroller from "@/components/ui/FullPageScroller"
+import ScrollObserver from "@/components/ui/ScrollObserver"
 import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/AboutSection"
 import DrMapacheSection from "@/components/DrMapacheSection"
@@ -39,7 +39,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       </Head>
       <RiveAnimation />
 
-      <FullPageScroller
+      <ScrollObserver
         anchors={[
           "home",
           "intro",
@@ -63,7 +63,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         <BlogSection posts={posts} />
         <ContactSection />
         <Footer />
-      </FullPageScroller>
+      </ScrollObserver>
     </>
   )
 }

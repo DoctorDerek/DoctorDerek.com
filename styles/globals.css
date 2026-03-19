@@ -114,6 +114,9 @@ button {
   font-family: "Restorabold";
 }
 
+/* Remove the fullPage.js watermark from the last slide */
+.fp-watermark {
+  display: none;
 }
 /* =========================== 
   WORK EXPERIENCE SECTION 

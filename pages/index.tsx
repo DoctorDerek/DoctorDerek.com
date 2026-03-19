@@ -1,5 +1,5 @@
 import Head from "next/head"
-import ReactFullpage, { FullPageProps } from "@fullpage/react-fullpage"
+import ReactFullpage from "@fullpage/react-fullpage"
 import {
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
   FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS,
@@ -9,10 +9,8 @@ const pluginWrapper = () => {
   require("@/utils/fullpage.cinematic.min.js")
 }
 
-// -----------------------------------------------------------------------------
-// Type Augmentation for Fullpage.js Extensions
-// -----------------------------------------------------------------------------
-type MapacheFullpageProps = FullPageProps & {
+type MapacheFullPageProps = {
+  children?: React.ReactNode
   pluginWrapper?: () => void
   render?: (comp: { state: any; fullpageApi: any }) => React.ReactElement
   anchors?: string[]
@@ -47,7 +45,7 @@ type MapacheFullpageProps = FullPageProps & {
   cardsOptions?: { perspective?: number; fadeContent?: boolean; fadeBackground?: boolean }
 }
 
-const MapacheFullpage = ReactFullpage as unknown as React.FC<MapacheFullpageProps>
+const MapacheFullPage = ReactFullpage as unknown as React.FC<MapacheFullPageProps>
 
 import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/AboutSection"
@@ -101,7 +99,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       </Head>
       <RiveAnimation />
 
-      <MapacheFullpage
+      <MapacheFullPage
         pluginWrapper={pluginWrapper}
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
         cinematic={true}

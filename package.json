@@ -19,7 +19,7 @@
     "next": "^16",
     "react": "^19",
     "react-dom": "^19",
-    "react-obfuscate": "^3",
+    "react-obfuscate-email": "2.0.5",
     "react-parallax-tilt": "^1",
     "rss-parser": "^3",
     "sharp": "^0",

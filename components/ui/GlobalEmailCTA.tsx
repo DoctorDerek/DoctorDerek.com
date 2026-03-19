@@ -1,5 +1,5 @@
 import React from "react"
-import Obfuscate from "react-obfuscate"
+import { Email } from "react-obfuscate-email"
 import classNames from "@/utils/classNames"
 
 type GlobalEmailCTAProps = {
@@ -14,14 +14,13 @@ export default function GlobalEmailCTA({
   children,
 }: GlobalEmailCTAProps) {
   return (
-    <Obfuscate
+    <Email
       email="derekraustin+doctorderek@gmail.com"
-      headers={subject ? { subject } : undefined}
-      // @ts-expect-error: react-obfuscate types missing className but passes it natively
+      subject={subject}
       className={className}
       style={{ direction: "ltr" }}
     >
       {children || "derekraustin+doctorderek@gmail.com"}
-    </Obfuscate>
+    </Email>
   )
 }

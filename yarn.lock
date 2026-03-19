@@ -3464,7 +3464,7 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:^0"
     react: "npm:^19"
     react-dom: "npm:^19"
-    react-obfuscate: "npm:^3"
+    react-obfuscate-email: "npm:^2"
     react-parallax-tilt: "npm:^1"
     rss-parser: "npm:^3"
     sharp: "npm:^0"
@@ -5615,14 +5615,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-obfuscate@npm:^3":
-  version: 3.7.0
-  resolution: "react-obfuscate@npm:3.7.0"
+"react-obfuscate-email@npm:^2":
+  version: 2.0.5
+  resolution: "react-obfuscate-email@npm:2.0.5"
   peerDependencies:
-    prop-types: ">= 15"
-    react: ">= 16.8"
-    react-dom: ">= 16.8"
-  checksum: 10c0/37be35de0f086bbdf0b743e24db7d1de6f99a3b4f448ff1c31bc7cd119566b13e016c7c6cc92d1ae584a6f178bb6cdc8b3807f1ed44ab30d9de6970b5cd970cc
+    react: ">=16"
+  checksum: 10c0/08fb165899c92c2c229e16d5bbcbfa153352954f3ffee3410fab3d592cb8be6fa9c38b1eddafdb8b778698c967ed234f1e0accc8da0c885adb56790ebe21bed8
   languageName: node
   linkType: hard
 

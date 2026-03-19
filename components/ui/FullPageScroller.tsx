@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react"
 import classNames from "@/utils/classNames"
+import scrollToSection from "@/utils/scrollToSection"
 
 export default function FullPageScroller({
   children,
@@ -14,8 +15,9 @@ export default function FullPageScroller({
   const scrollerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const win = window as Window & { scrollToSection?: (anchor: string) => void }
     // Expose global scroll utility for the Navbar
-    ;(window as any).scrollToSection = (anchor: string) => {
+    win.scrollToSection = (anchor: string) => {
       const el = document.getElementById(anchor)
       if (el && scrollerRef.current) {
         scrollerRef.current.scrollTo({
@@ -52,7 +54,7 @@ export default function FullPageScroller({
 
     return () => {
       observer.disconnect()
-      delete (window as any).scrollToSection
+      delete (window as Window & { scrollToSection?: (anchor: string) => void }).scrollToSection
     }
   }, [anchors])
 
@@ -84,7 +86,7 @@ export default function FullPageScroller({
         {anchors.map((anchor, i) => (
           <button
             key={anchor}
-            onClick={() => (window as any).scrollToSection?.(anchor)}
+            onClick={() => scrollToSection(anchor)}
             className="group relative flex h-4 w-4 items-center justify-center"
             aria-label={`Scroll to ${anchor}`}
           >

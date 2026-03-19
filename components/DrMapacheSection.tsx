@@ -14,9 +14,7 @@ export default function DrMapacheSection() {
           <p className="animate-pulse text-2xl font-bold text-[#F38B57]">
             [ WebGL Game Canvas Placeholder ]
           </p>
-          <p className="mt-8 text-xl text-white/60">
-            (Inputs isolated via .fp-noscroll)
-          </p>
+          <p className="mt-8 text-xl text-white/60">Placeholder</p>
         </div>
       </div>
     </div>

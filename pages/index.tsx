@@ -18,7 +18,7 @@ type MapacheFullPageProps = {
   // Extension Keys
   licenseKey?: string
   cinematicKey?: string
-  
+
   // Extension toggles
   cinematic?: boolean
   effects?: boolean
@@ -30,7 +30,12 @@ type MapacheFullPageProps = {
   continuousHorizontal?: boolean
   scrollHorizontally?: boolean
   interlockedSlides?: boolean | number[]
-  dragAndMove?: boolean | "vertical" | "horizontal" | "fingersonly" | "mouseonly"
+  dragAndMove?:
+    | boolean
+    | "vertical"
+    | "horizontal"
+    | "fingersonly"
+    | "mouseonly"
   offsetSections?: boolean
   resetSliders?: boolean
   fadingEffect?: boolean | "sections" | "slides"
@@ -41,11 +46,19 @@ type MapacheFullPageProps = {
   effectsOptions?: any
   parallaxOptions?: { type?: string; percentage?: number; property?: string }
   dropEffectOptions?: { speed?: number; color?: string; zIndex?: number }
-  waterEffectOptions?: { animateContent?: boolean; animateOnMouseMove?: boolean }
-  cardsOptions?: { perspective?: number; fadeContent?: boolean; fadeBackground?: boolean }
+  waterEffectOptions?: {
+    animateContent?: boolean
+    animateOnMouseMove?: boolean
+  }
+  cardsOptions?: {
+    perspective?: number
+    fadeContent?: boolean
+    fadeBackground?: boolean
+  }
 }
 
-const MapacheFullPage = ReactFullpage as unknown as React.FC<MapacheFullPageProps>
+const MapacheFullPage =
+  ReactFullpage as unknown as React.FC<MapacheFullPageProps>
 
 import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/AboutSection"
@@ -92,7 +105,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
     <>
       <Head>
         <title>
-          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-STack
+          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-Stack
           SWE, & Content Creator
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />

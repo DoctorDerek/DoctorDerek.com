@@ -47,7 +47,7 @@ export default function FullPageScroller({
           }
         })
       },
-      { threshold: 0.3 }, // Low threshold triggers .active animation perfectly on entry
+      { threshold: 0.15 }, // Low threshold triggers .active animation perfectly on entry
     )
 
     sections.forEach((sec) => observer.observe(sec))
@@ -62,22 +62,20 @@ export default function FullPageScroller({
     <div className="fixed inset-0 z-0">
       <div
         ref={scrollerRef}
-        className="h-dvh w-full snap-y snap-mandatory overflow-x-hidden overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="h-dvh w-full snap-y snap-proximity overflow-x-hidden overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         style={{ scrollBehavior: "smooth" }}
       >
         {React.Children.map(children, (child, index) => {
-          const element = child as React.ReactElement<{
-            className?: string
-            id?: string
-          }>
-          if (!React.isValidElement(element)) return null
-          return React.cloneElement(element, {
-            id: anchors[index] || `section-${index}`,
-            className: classNames(
-              "snap-section relative w-full snap-start snap-always",
-              element.props.className,
-            ),
-          })
+          if (!React.isValidElement(child)) return null
+          return (
+            <section
+              id={anchors[index] || `section-${index}`}
+              key={index}
+              className="snap-section relative w-full snap-start snap-always"
+            >
+              {child}
+            </section>
+          )
         })}
       </div>
 

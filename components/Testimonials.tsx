@@ -11,7 +11,7 @@ const Testimonials = () => {
   })
 
   return (
-    <div className="h-screen">
+    <div className="min-h-dvh py-20">
       <div className="flex h-full flex-col">
         {/* ========= MOBILE/TABLET SLIDER ======= */}
         <div className="mx-auto mt-10 w-[95%] translate-y-12 pt-2 opacity-0 transition-all delay-100 duration-700 ease-spring-soft md:mt-8 md:w-3/5 lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">

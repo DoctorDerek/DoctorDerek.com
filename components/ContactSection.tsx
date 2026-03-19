@@ -9,9 +9,9 @@ export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)
 
   return (
-    <div className="h-full w-full">
-      <div className="flex h-screen flex-col md:flex-row">
-        <div className="mx-auto h-[45%] w-[85%] md:flex md:h-full md:w-1/2 md:flex-col md:pl-8 lg:w-[45%] lg:justify-start lg:pl-20">
+    <div className="min-h-dvh w-full py-20">
+      <div className="flex flex-col md:flex-row md:items-stretch">
+        <div className="mx-auto w-[85%] md:flex md:w-1/2 md:flex-col md:pl-8 lg:w-[45%] lg:justify-start lg:pl-20">
           <div className="-translate-x-12 py-4 opacity-0 transition-all duration-700 ease-spring-soft md:mt-16 md:mb-2 lg:mb-0 lg:py-0 [.active_&]:translate-x-0 [.active_&]:opacity-100">
             <SectionHeading>
               <h2 className="text-7xl text-white drop-shadow-lg md:text-8xl lg:pt-8 lg:pb-14 lg:text-9xl">
@@ -64,7 +64,7 @@ export default function ContactSection() {
           </div>
         </div>
 
-        <div className="mx-auto flex h-[55%] w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 ease-spring-soft md:mt-0 md:h-full md:w-1/2 md:pl-8 lg:w-[55%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
+        <div className="mx-auto mt-8 flex w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 ease-spring-soft md:mt-0 md:w-1/2 md:pl-8 lg:w-[55%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
           <div className="mx-auto mt-8 w-4/5 md:mt-32 md:ml-0 md:h-1/6 md:w-11/12 lg:my-auto lg:mr-0 lg:ml-auto lg:w-11/12 lg:pt-16 lg:pl-14">
             <p className="rounded-xl bg-black/20 py-4 pr-2 pl-2 text-xl leading-8 text-white backdrop-blur-md md:pl-4 md:text-xl lg:pr-20 lg:text-2xl lg:leading-9">
               Discover the power of versatile frontend developing with Derek

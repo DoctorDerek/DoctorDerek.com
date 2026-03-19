@@ -36,7 +36,7 @@ export default function AboutSection() {
   const backSrc = flipCount % 2 === 1 ? currentPhoto : nextPhoto
 
   return (
-    <div className="h-screen w-full">
+    <div className="min-h-dvh w-full py-20">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-3/4">
         <div className="-translate-x-12 py-4 text-white opacity-0 drop-shadow-md transition-all duration-700 ease-spring-soft md:relative md:py-8 lg:pt-14 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
           <SectionHeading>
@@ -45,7 +45,7 @@ export default function AboutSection() {
             </h2>
           </SectionHeading>
         </div>
-        <div className="relative h-[80vh] md:h-[70vh]">
+        <div className="relative pb-10 md:h-[70vh]">
           <div className="w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 ease-spring-bouncy md:w-1/2 lg:w-[45%] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <div
               className="perspective animate-float"
@@ -109,9 +109,9 @@ export default function AboutSection() {
               </div>
             </div>
           </div>
-          <div className="absolute -bottom-12 left-6 translate-y-12 rounded-tl-3xl border border-white/20 bg-black/40 px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 ease-spring-soft md:right-0 md:-bottom-8 md:left-auto md:w-[55%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-1/2 lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
+          <div className="relative mt-8 translate-y-12 rounded-tl-3xl border border-white/20 bg-black/40 px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 ease-spring-soft md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[55%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-1/2 lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <div className="flex flex-col gap-4 lg:gap-6">
-              <div className="max-h-[30vh] overflow-y-auto pr-2 text-lg leading-7 text-white md:max-h-[35vh] lg:max-h-[40vh] lg:text-xl lg:leading-9">
+              <div className="pr-2 text-lg leading-7 text-white md:max-h-[35vh] md:overflow-y-auto lg:max-h-[40vh] lg:text-xl lg:leading-9">
                 {ABOUT_BIO_LONG.map((paragraph, index) => (
                   <p key={index} className="mb-4">
                     {paragraph}

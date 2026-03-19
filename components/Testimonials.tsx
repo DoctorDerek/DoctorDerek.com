@@ -53,7 +53,7 @@ const Testimonials = () => {
 
         {/* ========= DESKTOP MASONRY GRID ======= */}
         <div className="mx-auto mt-10 hidden w-[95%] translate-y-12 pt-2 opacity-0 transition-all delay-100 duration-700 ease-spring-soft lg:block lg:w-[90%] xl:w-[80%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
-          <div className="fp-noscroll h-[65vh] w-full overflow-y-auto pr-4 pb-16">
+          <div className="h-[65vh] w-full overflow-y-auto pr-4 pb-16">
             <div className="columns-1 gap-6 md:columns-2 lg:columns-3">
               {TESTIMONIALS.map((item: Testimonial) => (
                 <div

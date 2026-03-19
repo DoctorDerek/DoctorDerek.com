@@ -25,7 +25,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   })
 
   return (
-    <div className="fp-noscroll h-screen w-full overflow-y-auto lg:overflow-hidden">
+    <div className="h-screen w-full overflow-y-auto lg:overflow-hidden">
       <div className="flex h-full min-h-max w-full flex-col items-center justify-center px-4 pt-24 pb-12 lg:flex-row lg:px-0 lg:pt-0 lg:pb-0">
         {/* Left Column: CTA & Metrics */}
         <div className="flex w-[95%] shrink-0 flex-col justify-center text-white md:w-4/5 lg:w-1/3 lg:pl-12 xl:pl-24">

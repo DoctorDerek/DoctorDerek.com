@@ -15,9 +15,7 @@ export default function FullPageScroller({
   const scrollerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const win = window as Window & {
-      scrollToSection?: (anchor: string) => void
-    }
+    const win = window as Window & { scrollToSection?: (anchor: string) => void }
     // Expose global scroll utility for the Navbar
     win.scrollToSection = (anchor: string) => {
       const el = document.getElementById(anchor)
@@ -29,7 +27,7 @@ export default function FullPageScroller({
       }
     }
 
-    const sections = document.querySelectorAll(".page-section")
+    const sections = document.querySelectorAll(".snap-section")
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -56,8 +54,7 @@ export default function FullPageScroller({
 
     return () => {
       observer.disconnect()
-      delete (window as Window & { scrollToSection?: (anchor: string) => void })
-        .scrollToSection
+      delete (window as Window & { scrollToSection?: (anchor: string) => void }).scrollToSection
     }
   }, [anchors])
 
@@ -77,7 +74,7 @@ export default function FullPageScroller({
           return React.cloneElement(element, {
             id: anchors[index] || `section-${index}`,
             className: classNames(
-              "page-section relative w-full snap-start snap-always",
+              "snap-section relative w-full snap-start snap-always",
               element.props.className,
             ),
           })

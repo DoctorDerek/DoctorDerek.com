@@ -21,7 +21,7 @@ export default function WorkExperienceSection() {
   )
 
   return (
-    <div className="relative flex h-screen w-full flex-col items-center justify-center pt-16">
+    <div className="relative flex min-h-dvh w-full flex-col items-center justify-center py-20 pb-24">
       <Image
         src={IntroAnimation}
         alt="Work Experience Background"
@@ -45,7 +45,7 @@ export default function WorkExperienceSection() {
       </div>
 
       {/* ========= Mobile List ======= */}
-      <div className="mx-auto mt-6 h-[42vh] w-[95%] translate-y-12 overflow-y-auto opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
+      <div className="mx-auto mt-6 w-[95%] translate-y-12 opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <ul className="mt-2 flex flex-col gap-y-6 pr-2 pl-4">
           {ARCHITECT_EVOLUTION.map((item, index) => (
             <li

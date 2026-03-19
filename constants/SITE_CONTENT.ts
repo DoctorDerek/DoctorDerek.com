@@ -108,7 +108,7 @@ export type SocialLink = {
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     id: "email",
-    label: "Email",
+    label: "Async AI Audit",
   },
   {
     id: "github",

@@ -45,7 +45,7 @@ export default function Navbar() {
 
       <div className="pointer-events-none fixed inset-0 mt-auto flex h-[90%]">
         {/* =========== SIDEBAR MOBILE MENU =========== */}
-        <div className="pointer-events-auto flex grow flex-col overflow-y-auto">
+        <div className="pointer-events-auto flex grow flex-col normal-scroll-content overflow-y-auto overscroll-contain">
           {/* ========= div creates spacing between links and navbar */}
           <div className="h-14 md:hidden" />
           {/* =========== NAVIGATION LINKS ========== */}

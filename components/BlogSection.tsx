@@ -101,7 +101,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
 
         <div className="mt-12 flex w-[95%] shrink-0 flex-col justify-center lg:mt-0 lg:w-[60%] lg:px-8 xl:w-2/3">
           <div className="w-full">
-            <div ref={sliderRef} className="keen-slider py-4 hover:cursor-grab">
+            <div ref={sliderRef} className="keen-slider normal-scroll-content py-4 hover:cursor-grab">
               {posts.map((post, index) => (
                 <div key={post.link} className="keen-slider__slide">
                   <div

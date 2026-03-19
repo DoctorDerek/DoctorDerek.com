@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react"
-import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
+import { ABOUT_BIO_LONG, SHOW_DR_MAPACHE } from "@/constants/SITE_CONTENT"
 import DerekAustin from "@/images/DerekAustin.png"
 import DrDerekAustin from "@/images/DrDerekAustin.png"
 import Image from "next/image"
@@ -118,12 +118,14 @@ export default function AboutSection() {
                   </p>
                 ))}
               </div>
-              <div className="rounded-2xl border border-[#F38B57]/20 bg-black/50 p-4 shadow-xl backdrop-blur-md">
-                <p className="animate-pulse text-lg leading-tight font-bold text-[#F38B57] drop-shadow-md lg:text-xl">
-                  But enough talk. Scroll down to play the WebGL game I built to
-                  prove my stack. 👇🎮🦝
-                </p>
-              </div>
+              {SHOW_DR_MAPACHE && (
+                <div className="rounded-2xl border border-[#F38B57]/20 bg-black/50 p-4 shadow-xl backdrop-blur-md">
+                  <p className="animate-pulse text-lg leading-tight font-bold text-[#F38B57] drop-shadow-md lg:text-xl">
+                    But enough talk. Scroll down to play the WebGL game I built to
+                    prove my stack. 👇🎮🦝
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

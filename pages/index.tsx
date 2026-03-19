@@ -19,6 +19,9 @@ type MapacheFullPageProps = {
   licenseKey?: string
   cinematicKey?: string
 
+  // Credits option
+  credits?: { enabled?: boolean; label?: string; position?: string }
+
   // Extension toggles
   cinematic?: boolean
   effects?: boolean
@@ -117,6 +120,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
         cinematic={true}
         cinematicKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
+        credits={{ enabled: false }}
         anchors={[
           "home",
           "intro",

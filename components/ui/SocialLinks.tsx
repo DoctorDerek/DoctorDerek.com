@@ -8,9 +8,9 @@ import GlobalEmailCTA from "./GlobalEmailCTA"
 export default function SocialLinks({
   fill = "#F38B57",
   containerClasses = "flex",
-  linkClasses = "flex items-center",
+  linkClasses = "flex items-center whitespace-nowrap",
   iconClasses = "",
-  labelClasses = "hidden md:ml-2 md:block",
+  labelClasses = "ml-2 block whitespace-nowrap",
   showLabels = false,
 }: {
   fill?: "#F38B57" | "white"

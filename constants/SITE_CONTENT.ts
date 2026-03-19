@@ -3,6 +3,9 @@ export const FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS =
 export const FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS =
   "***REDACTED***"
 
+export const SHOW_DR_MAPACHE = false
+
+
 export const INTRO_BIO_SHORT =
   "Indie Game Dev · AI Context Engineer · I teach LLMs to think · Full-Stack SWE since 2005 · BS & MS in Bioinformatics at age 19 · Doctor of Physical Therapy" as const
 
@@ -27,7 +30,7 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   body: "Standard LLMs generate slop because their context is rotten. I engineer Human-AI Cognitive Systems that force frontier models to reason, not just predict text. Whether you need a brutal teardown of your current architecture or a bespoke constitutional operating system (GDD) for your autonomous agents, I provide the elite context, persona, and systems engineering to fix it.",
   ctaButtonText: "Book a 20-Min Async AI Audit — $500 USD",
   subtext:
-    "For serious infrastructure: $5,000 USD anchor point for a Custom AI Constitution / Master GDD Template.",
+    "For a serious head start to your startup or indie game using LLMs: $5,000 USD anchor point for a Custom AI Constitution / Master GDD Template.",
   emailSubject: "AI Cognitive Architecture Inquiry",
 } as const
 
@@ -128,15 +131,6 @@ export type SocialLink = {
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
-    id: "email",
-    label: "Async AI Audit",
-  },
-  {
-    id: "github",
-    label: "GitHub",
-    url: "https://github.com/DoctorDerek",
-  },
-  {
     id: "medium",
     label: "Medium",
     url: "https://doctorderek.medium.com/",
@@ -145,6 +139,15 @@ export const SOCIAL_LINKS: SocialLink[] = [
     id: "book",
     label: "Book",
     url: "https://www.amazon.com/dp/B0BRJDLJ43",
+  },
+  {
+    id: "email",
+    label: "Async AI Audit",
+  },
+  {
+    id: "github",
+    label: "GitHub",
+    url: "https://github.com/DoctorDerek",
   },
 ] as const
 

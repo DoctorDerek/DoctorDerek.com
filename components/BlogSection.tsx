@@ -37,7 +37,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
 
             <div className="mt-6 grid grid-cols-3 gap-2 rounded-2xl border border-white/10 bg-black/20 p-4 shadow-xl backdrop-blur-md md:p-6 lg:mt-8 lg:gap-4">
               <div className="flex flex-col items-center justify-center text-center">
-                <p className="font-boldtext-[#F38B57] text-2xl md:text-3xl lg:text-4xl">
+                <p className="text-2xl font-bold text-[#F38B57] md:text-3xl lg:text-4xl">
                   <CountUp to={503} />
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">

@@ -27,7 +27,6 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   return (
     <div className="min-h-dvh w-full py-20 lg:overflow-hidden">
       <div className="flex min-h-dvh w-full flex-col items-center justify-center px-4 pb-12 lg:flex-row lg:px-0 lg:pt-0 lg:pb-0">
-        {/* Left Column: CTA & Metrics */}
         <div className="flex w-[95%] shrink-0 flex-col justify-center text-white md:w-4/5 lg:w-1/3 lg:pl-12 xl:pl-24">
           <div className="-translate-x-12 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-x-0 [.active_&]:opacity-100">
             <SectionHeading>
@@ -55,12 +54,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               </div>
               <div className="flex flex-col items-center justify-center text-center">
                 <p className="text-2xl font-bold text-[#89CFFD] md:text-3xl lg:text-4xl">
-                  <CountUp
-                    from={2000}
-                    to={2019}
-                    useGrouping={false}
-                    duration={1.5}
-                  />
+                  2019
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider uppercase opacity-80 md:text-xs">
                   Since
@@ -102,7 +96,6 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
           </div>
         </div>
 
-        {/* Right Column: Slider */}
         <div className="mt-12 flex w-[95%] shrink-0 flex-col justify-center lg:mt-0 lg:w-[60%] lg:px-8 xl:w-2/3">
           <div className="w-full">
             <div ref={sliderRef} className="keen-slider py-4 hover:cursor-grab">

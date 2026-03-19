@@ -1,5 +1,13 @@
 import Head from "next/head"
-import ScrollObserver from "@/components/ui/ScrollObserver"
+import ReactFullpage from "@fullpage/react-fullpage"
+import {
+  FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
+  FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS,
+} from "@/constants/SITE_CONTENT"
+
+const pluginWrapper = () => {
+  require("@/utils/fullpage.cinematic.min.js")
+}
 import IntroSection from "@/components/IntroSection"
 import AboutSection from "@/components/AboutSection"
 import DrMapacheSection from "@/components/DrMapacheSection"
@@ -39,7 +47,13 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       </Head>
       <RiveAnimation />
 
-      <ScrollObserver
+      <ReactFullpage
+        pluginWrapper={pluginWrapper}
+        licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
+        {...({
+          cinematic: true,
+          cinematicKey: FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS,
+        } as any)}
         anchors={[
           "home",
           "intro",
@@ -52,18 +66,41 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
           "contact",
           "footer",
         ]}
-      >
-        <TopSection />
-        <IntroSection />
-        <AboutSection />
-        <DrMapacheSection />
-        <WorkExperienceSection />
-        <AiConsultancySection />
-        <Testimonials />
-        <BlogSection posts={posts} />
-        <ContactSection />
-        <Footer />
-      </ScrollObserver>
+        render={() => (
+          <ReactFullpage.Wrapper>
+            <div className="section">
+              <TopSection />
+            </div>
+            <div className="section">
+              <IntroSection />
+            </div>
+            <div className="section">
+              <AboutSection />
+            </div>
+            <div className="section">
+              <DrMapacheSection />
+            </div>
+            <div className="section">
+              <WorkExperienceSection />
+            </div>
+            <div className="section">
+              <AiConsultancySection />
+            </div>
+            <div className="section">
+              <Testimonials />
+            </div>
+            <div className="section">
+              <BlogSection posts={posts} />
+            </div>
+            <div className="section">
+              <ContactSection />
+            </div>
+            <div className="section">
+              <Footer />
+            </div>
+          </ReactFullpage.Wrapper>
+        )}
+      />
     </>
   )
 }

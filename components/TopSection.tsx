@@ -18,10 +18,10 @@ const TypewriterOnInit = (typewriter: TypewriterClass) => {
 
 export default function TopSection() {
   return (
-    <div className="relative min-h-dvh flex flex-col">
+    <div className="relative h-full flex flex-col">
       <Navbar />
-      {/* 93dvh offsets the 7dvh Navbar to prevent double scrolling */}
-      <div className="flex flex-1 min-h-[93dvh] translate-y-12 scale-95 flex-col items-center justify-center opacity-0 transition-all duration-700 ease-spring-bouncy [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
+      {/* flex-1 offsets the Navbar to prevent double scrolling */}
+      <div className="flex flex-1 translate-y-12 scale-95 flex-col items-center justify-center opacity-0 transition-all duration-700 ease-spring-bouncy [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
         <Logo className="h-16 w-48 md:h-32 md:w-96" />
         <div className="restorabold mt-8 min-h-[4rem] text-center text-xl font-bold text-white drop-shadow-md md:mt-12 md:min-h-[5rem] md:text-3xl lg:text-4xl">
           <TypewriterComponent

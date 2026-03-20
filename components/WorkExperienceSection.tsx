@@ -18,7 +18,7 @@ export default function WorkExperienceSection() {
   )
 
   return (
-    <div className="relative flex min-h-dvh w-full flex-col items-center justify-center py-20 pb-24">
+    <div className="relative flex h-full w-full flex-col items-center justify-center py-20 pb-24">
       <Image
         src={IntroAnimation}
         alt="Work Experience Background"

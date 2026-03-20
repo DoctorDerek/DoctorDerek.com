@@ -72,7 +72,7 @@ export default function Portfolio() {
   }
 
   return (
-    <div className="h-screen">
+    <div className="h-full">
       <div className="-translate-y-12 py-4 opacity-0 transition-all duration-700 ease-spring-soft md:h-[15vh] [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <div className="mx-auto flex w-4/5 justify-center text-center text-white drop-shadow-md">
           <SectionHeading>

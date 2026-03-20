@@ -11,17 +11,17 @@ const Testimonials = () => {
   })
 
   return (
-    <div className="min-h-dvh py-20">
+    <div className="h-full py-20">
       <div className="flex h-full flex-col">
         {/* ========= MOBILE/TABLET SLIDER ======= */}
         <div className="mx-auto mt-10 w-[95%] translate-y-12 pt-2 opacity-0 transition-all delay-100 duration-700 ease-spring-soft md:mt-8 md:w-3/5 lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
-          <div ref={sliderRef} className="keen-slider normal-scroll-content hover:cursor-grab">
+          <div ref={sliderRef} className="keen-slider hover:cursor-grab">
             {/* ======= PROJECT SLIDE ======= */}
             {TESTIMONIALS.map((item: Testimonial) => {
               return (
                 <div
                   key={item.name}
-                  className="keen-slider__slide grid transform-gpu grid-cols-1 px-4 md:space-x-0.5 xl:space-x-1"
+                  className="keen-slider__slide grid max-h-[65vh] normal-scroll-content overflow-y-auto overscroll-contain transform-gpu grid-cols-1 px-4 md:space-x-0.5 xl:space-x-1"
                 >
                   <div className="text-white">
                     <div className="space-y-4 leading-7 md:text-lg md:leading-8 lg:text-xl">

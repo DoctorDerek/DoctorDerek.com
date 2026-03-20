@@ -8,7 +8,7 @@ export default function PostsSection({ posts }: { posts: MediumPost[] }) {
   })
 
   return (
-    <div className="h-screen">
+    <div className="h-full">
       <div className="flex h-full flex-col">
         <div className="mx-auto h-4/5 w-[95%]">
           <div ref={sliderRef} className="keen-slider hover:cursor-grab">

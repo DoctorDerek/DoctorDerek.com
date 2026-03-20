@@ -3,7 +3,7 @@ import { INTRO_BIO_SHORT } from "@/constants/SITE_CONTENT"
 
 export default function IntroSection() {
   return (
-    <div className="relative flex min-h-dvh flex-col py-20 pb-24 md:pb-20">
+    <div className="relative flex h-full flex-col py-20 pb-24 md:pb-20">
       <div className="mx-auto w-4/5 translate-y-12 pt-4 opacity-0 transition-all duration-700 ease-spring-soft md:w-[90%] md:pt-20 lg:pt-32 [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <div className="text-3xl leading-snug font-medium text-white drop-shadow-md md:text-5xl md:leading-tight lg:text-6xl">
           {INTRO_BIO_SHORT}

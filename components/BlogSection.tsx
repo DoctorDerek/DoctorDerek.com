@@ -26,8 +26,8 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   })
 
   return (
-    <div className="min-h-dvh w-full py-20 lg:overflow-hidden">
-      <div className="flex min-h-dvh w-full flex-col items-center justify-center px-4 pb-12 lg:flex-row lg:px-0 lg:pt-0 lg:pb-0">
+    <div className="h-full w-full py-20 lg:overflow-hidden">
+      <div className="flex h-full w-full flex-col items-center justify-center px-4 pb-12 lg:flex-row lg:px-0 lg:pt-0 lg:pb-0">
         <div className="flex w-[95%] shrink-0 flex-col justify-center text-white md:w-4/5 lg:w-1/3 lg:pl-12 xl:pl-24">
           <div className="-translate-x-12 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-x-0 [.active_&]:opacity-100">
             <SectionHeading>

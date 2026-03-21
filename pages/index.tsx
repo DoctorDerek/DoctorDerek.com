@@ -10,7 +10,7 @@ import { MapacheFullPageProps } from "@/types/MapacheFullPageProps"
 import classNames from "@/utils/classNames"
 
 const pluginWrapper = () => {
-  require("@/utils/fullpage.cinematic.min.js")
+  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
   require("@/reference/fullPage_js/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
   require("@/reference/fullPage_js/fullPage_js_extensions_bundle/continuousHorizontal/fullpage.continuousHorizontal.min.js")
   require("@/reference/fullPage_js/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")

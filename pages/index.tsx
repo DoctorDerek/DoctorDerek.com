@@ -1,5 +1,5 @@
 import Head from "next/head"
-import React from "react"
+import React, { useState } from "react"
 import ReactFullpage from "@fullpage/react-fullpage"
 import {
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
@@ -7,9 +7,18 @@ import {
   SHOW_DR_MAPACHE,
 } from "@/constants/SITE_CONTENT"
 import { MapacheFullPageProps } from "@/types/MapacheFullPageProps"
+import classNames from "@/utils/classNames"
 
 const pluginWrapper = () => {
   require("@/utils/fullpage.cinematic.min.js")
+  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
+  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/continuousHorizontal/fullpage.continuousHorizontal.min.js")
+  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")
+  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/offsetSections/fullpage.offsetSections.min.js")
+  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/resetSliders/fullpage.resetSliders.min.js")
+  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/responsiveSlides/fullpage.responsiveSlides.min.js")
+  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/scrollHorizontally/fullpage.scrollHorizontally.min.js")
+  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/scrollOverflowReset/fullpage.scrollOverflowReset.min.js")
 }
 
 const MapacheFullPage =
@@ -43,6 +52,8 @@ export async function getStaticProps() {
 }
 
 export default function Home({ posts }: { posts: MediumPost[] }) {
+  const [cinematicEffect, setCinematicEffect] = useState("zoom")
+
   const sectionsContent = [
     { component: <TopSection key="top" />, anchor: "home" },
     { component: <IntroSection key="intro" />, anchor: "intro" },
@@ -56,12 +67,30 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
     { component: <Footer key="footer" />, anchor: "footer" },
   ].filter(Boolean) as { component: React.ReactNode; anchor: string }[]
 
+  const handleLeave = (origin: any, destination: any, direction: string) => {
+    // 1. The Mapachito Level Design (Section-by-Section Shader Mapping)
+    const transitionMatrix: Record<string, string> = {
+      "home": "zoom",
+      "intro": "zoom",
+      "about": "chromatic",
+      "mapache": "pixelate",
+      "experience": SHOW_DR_MAPACHE ? "shatter" : "pixelate", // Pixelate if jumping from About straight to Experience
+      "consultancy": "shockwave",
+      "testimonials": "doorway",
+      "blog": "pageCurlLeft",
+      "contact": "burn",
+      "footer": "fade",
+    }
+    
+    const nextEffect = transitionMatrix[destination.anchor] || "fade"
+    setCinematicEffect(nextEffect)
+  }
+
   return (
     <>
       <Head>
         <title>
-          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-Stack
-          SWE, & Content Creator
+          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-Stack SWE, & Content Creator
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
@@ -70,16 +99,45 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       <MapacheFullPage
         pluginWrapper={pluginWrapper}
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
-        cinematic={true}
+        
+        // Key Injections
+        cardsKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
         cinematicKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
-        credits={{ enabled: false }}
-        scrollOverflow={false}
+        continuousHorizontalKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
+        dragAndMoveKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
+        offsetSectionsKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
+        resetSlidersKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
+        responsiveSlidesKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
+        scrollHorizontallyKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
+        scrollOverflowResetKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
+
+        // Extension Toggles (Deploy Globally)
+        dragAndMove={true}
+        scrollHorizontally={true}
+        offsetSections={true}
+        scrollOverflow={true}
+        scrollOverflowReset={true}
+        responsiveSlides={true}
+        continuousHorizontal={true}
+        resetSliders={true}
+        cards="slides"
+        cinematic={true}
+
+        // Extension Config
+        responsiveWidth={768}
+        cinematicOptions={{ effect: cinematicEffect }}
         normalScrollElements=".normal-scroll-content"
+        credits={{ enabled: false }}
         anchors={sectionsContent.map((s) => s.anchor)}
+        onLeave={handleLeave}
+        
         render={() => (
           <ReactFullpage.Wrapper>
             {sectionsContent.map((section) => (
-              <div key={section.anchor} className="section">
+              <div 
+                key={section.anchor} 
+                className={classNames("section", section.anchor === "footer" ? "fp-auto-height" : "")}
+              >
                 {section.component}
               </div>
             ))}

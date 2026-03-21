@@ -68,7 +68,7 @@ export type MapacheFullPageProps = {
   waterEffectKey?: string
 
   // Extension toggles
-  cards?: boolean
+  cards?: boolean | "slides" | "sections"
   cinematic?: boolean
   continuousHorizontal?: boolean
   dragAndMove?:
@@ -96,6 +96,7 @@ export type MapacheFullPageProps = {
     fadeBackground?: boolean
   }
   cinematicOptions?: {
+    effect?: string
     animateContent?: boolean
     contentDistance?: number
     contentEasing?: string

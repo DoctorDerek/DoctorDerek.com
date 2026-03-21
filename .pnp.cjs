@@ -43,7 +43,6 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
           ["jiti", "npm:2.6.1"],\
-          ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.35.0"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["postcss", "npm:8.5.6"],\
@@ -5232,7 +5231,6 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["eslint-config-prettier", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:10.1.8"],\
           ["jiti", "npm:2.6.1"],\
-          ["keen-slider", "npm:6.8.6"],\
           ["motion", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:12.35.0"],\
           ["next", "virtual:42ca9688e68c8761ad6f4ce01530066f5c32480e4cc3172f6c8b7d67915cf32c30b55cdee8d2bae9e449c9fbdd41e33bf6d94fd300762ccbb9e4c778c1b706ea#npm:16.1.1"],\
           ["postcss", "npm:8.5.6"],\
@@ -6874,15 +6872,6 @@ const RAW_RUNTIME_STATE =
           ["jsx-ast-utils", "npm:3.3.5"],\
           ["object.assign", "npm:4.1.7"],\
           ["object.values", "npm:1.2.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["keen-slider", [\
-      ["npm:6.8.6", {\
-        "packageLocation": "../../../C:/Users/derek/AppData/Local/Yarn/Berry/cache/keen-slider-npm-6.8.6-37c2f3dde1-10c0.zip/node_modules/keen-slider/",\
-        "packageDependencies": [\
-          ["keen-slider", "npm:6.8.6"]\
         ],\
         "linkType": "HARD"\
       }]\

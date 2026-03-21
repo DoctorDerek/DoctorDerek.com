@@ -1,61 +1,52 @@
+import React from "react"
 import Image from "next/image"
-import { useKeenSlider } from "keen-slider/react"
 import { MediumPost } from "@/utils/medium"
 
 export default function PostsSection({ posts }: { posts: MediumPost[] }) {
-  const [sliderRef] = useKeenSlider({
-    loop: true,
-  })
-
   return (
-    <div className="h-full">
-      <div className="flex h-full flex-col">
-        <div className="mx-auto h-4/5 w-[95%]">
-          <div ref={sliderRef} className="keen-slider hover:cursor-grab">
-            {posts.map((post, index) => (
-              <div key={post.link} className="keen-slider__slide">
-                <div className="ml-2">
-                  <div
-                    className="mt-20 h-full w-11/12 translate-y-12 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:translate-y-0 [.active_&]:opacity-100"
-                    style={{ transitionDelay: `${index * 100 + 100}ms` }}
-                  >
-                    <div className="h-full w-full transition-transform duration-300 ease-spring-bouncy hover:-translate-y-2 hover:scale-[1.02] hover:cursor-pointer">
-                      <div className="relative w-11/12">
-                        <p className="absolute -top-3 left-4 rounded-tr-xl border border-white/20 bg-black/40 py-1 pr-3 pl-3 text-2xl text-white backdrop-blur-md">
-                          Medium
-                        </p>
-                        {post.thumbnail && (
-                          <div className="relative h-[40vh] w-full overflow-hidden rounded-tl-xl">
-                            <Image
-                              src={post.thumbnail}
-                              alt={post.title}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                        )}
-                        <p className="absolute -bottom-4 w-11/12 rounded-tr-xl border border-white/20 bg-black/50 py-2 pr-3 pl-3 text-lg text-white backdrop-blur-md">
-                          {post.title}
-                        </p>
-                      </div>
-                      <div className="w-11/12 rounded-br-xl border-x border-b border-white/20 bg-white/10 pt-8 pb-4 pl-4 text-white backdrop-blur-md">
-                        <p className="text-xl">{post.description}</p>
-                        <p className="mt-4 text-white/70">
-                          {new Date(post.pubDate).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+    <>
+      {posts.map((post) => (
+        <div key={post.link} className="slide">
+          <div className="flex h-full w-full items-center justify-center p-4">
+            <a
+              href={post.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mx-auto flex h-[65vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/20 bg-black/40 shadow-2xl backdrop-blur-md transition-transform duration-300 ease-spring-bouncy hover:-translate-y-2 hover:scale-[1.02] opacity-0 [.active_&]:opacity-100 scale-95 [.active_&]:scale-100"
+            >
+              <div className="relative h-1/2 w-full shrink-0 border-b border-white/20 bg-[#1E1E1E]">
+                <p className="absolute top-3 left-4 z-10 rounded-tr-xl border border-white/20 bg-black/60 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">
+                  Medium
+                </p>
+                {post.thumbnail && (
+                  <Image
+                    src={post.thumbnail}
+                    alt={post.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover opacity-90 transition-opacity duration-500 group-hover:scale-105 group-hover:opacity-100"
+                  />
+                )}
               </div>
-            ))}
+              <div className="flex flex-1 flex-col p-6 lg:p-8">
+                <h4 className="mb-3 line-clamp-3 text-xl leading-tight font-bold text-white md:text-2xl lg:text-3xl">
+                  {post.title}
+                </h4>
+                <p className="mb-auto line-clamp-4 text-sm text-white/80 md:text-base lg:text-lg">
+                  {post.description}
+                </p>
+                <p className="mt-4 text-xs font-bold tracking-wider text-white uppercase opacity-70 lg:text-sm">
+                  {new Date(post.pubDate).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </p>
+              </div>
+            </a>
           </div>
         </div>
-      </div>
-    </div>
+      ))}
+    </>
   )
 }

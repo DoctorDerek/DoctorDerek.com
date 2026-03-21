@@ -15,7 +15,6 @@
     "@heroicons/react": "^2",
     "@rive-app/react-canvas": "^4",
     "@xstate/react": "^6",
-    "keen-slider": "^6",
     "motion": "^12",
     "next": "^16",
     "react": "^19",

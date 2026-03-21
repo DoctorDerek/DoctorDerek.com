@@ -3484,7 +3484,6 @@ __metadata:
     eslint-config-next: "npm:^16"
     eslint-config-prettier: "npm:^10"
     jiti: "npm:^2"
-    keen-slider: "npm:^6"
     motion: "npm:^12"
     next: "npm:^16"
     postcss: "npm:^8"
@@ -4842,13 +4841,6 @@ __metadata:
     object.assign: "npm:^4.1.4"
     object.values: "npm:^1.1.6"
   checksum: 10c0/a32679e9cb55469cb6d8bbc863f7d631b2c98b7fc7bf172629261751a6e7bc8da6ae374ddb74d5fbd8b06cf0eb4572287b259813d92b36e384024ed35e4c13e1
-  languageName: node
-  linkType: hard
-
-"keen-slider@npm:^6":
-  version: 6.8.6
-  resolution: "keen-slider@npm:6.8.6"
-  checksum: 10c0/612553f15c5af61bf23f5defe414e7d314406a109e2d944c4253f7862e3666f2ab9bae0e43bf84f41678878ca1d90d38831845bb496dfd747ed84efc7d34efdd
   languageName: node
   linkType: hard
 

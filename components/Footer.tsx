@@ -3,7 +3,7 @@ import SectionHeading from "@/components/ui/SectionHeading"
 
 export default function Footer() {
   return (
-    <footer className="h-full flex flex-col justify-center bg-[#311B4D]/60 p-12 text-white backdrop-blur-md">
+    <footer className="flex flex-col justify-center bg-[#311B4D]/60 p-12 text-white backdrop-blur-md">
       <div className="mx-auto grid max-w-6xl translate-y-8 grid-cols-1 gap-12 opacity-0 transition-all duration-700 ease-spring-soft md:grid-cols-2 [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <div>
           <SectionHeading>

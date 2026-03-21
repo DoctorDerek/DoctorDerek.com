@@ -20,7 +20,7 @@ const Testimonials = () => {
       {TESTIMONIALS.map((item: Testimonial) => (
         <div key={item.name} className="slide">
           <div className="flex h-full w-full items-center justify-center p-4 py-20 md:p-8">
-            <div className="mx-auto max-h-[85vh] w-full max-w-4xl normal-scroll-content overflow-y-auto overscroll-contain rounded-2xl border border-white/10 bg-black/40 p-6 text-white shadow-2xl backdrop-blur-md transition-all duration-700 ease-spring-soft scale-95 opacity-0 [.active_&]:scale-100 [.active_&]:opacity-100 md:p-12">
+            <div className="mx-auto max-h-[85vh] w-full max-w-4xl overflow-y-auto overscroll-contain rounded-2xl border border-white/10 bg-black/40 p-6 text-white shadow-2xl backdrop-blur-md transition-all duration-700 ease-spring-soft scale-95 opacity-0 [.active_&]:scale-100 [.active_&]:opacity-100 md:p-12">
               <div className="space-y-4 text-sm leading-relaxed md:text-lg md:leading-8 lg:text-xl lg:leading-9">
                 {item.comment.split("\n\n").map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>

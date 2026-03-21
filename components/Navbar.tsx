@@ -21,7 +21,6 @@ export default function Navbar() {
 
   return (
     <div className="h-[7dvh]">
-      {/* ======== NAVBAR ======= */}
       <div className="sticky top-0 z-40 flex h-full bg-white/10 shadow-xs backdrop-blur-md sm:gap-x-6 sm:px-6">
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex items-center pl-3">
@@ -44,11 +43,8 @@ export default function Navbar() {
       </div>
 
       <div className="pointer-events-none fixed inset-0 mt-auto flex h-[90%]">
-        {/* =========== SIDEBAR MOBILE MENU =========== */}
-        <div className="pointer-events-auto flex grow flex-col normal-scroll-content overflow-y-auto overscroll-contain">
-          {/* ========= div creates spacing between links and navbar */}
+        <div className="pointer-events-auto flex grow flex-col overflow-y-auto overscroll-contain">
           <div className="h-14 md:hidden" />
-          {/* =========== NAVIGATION LINKS ========== */}
           <nav
             className={classNames(
               "flex h-full flex-col rounded-tr-3xl duration-500 md:mt-auto md:h-11/12 md:flex-row",
@@ -69,7 +65,6 @@ export default function Navbar() {
                   </li>
                 ))}
               </ul>
-              {/* Sidebar, displays icon links on small devices */}
               <div className="mt-auto w-10/12 pb-6 md:hidden">
                 <SocialLinks
                   fill="white"
@@ -79,7 +74,6 @@ export default function Navbar() {
                 />
               </div>
             </div>
-            {/* Displays icons in sidebar on medium and large devices */}
             <div className="mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex">
               <SocialLinks
                 fill="#F38B57"

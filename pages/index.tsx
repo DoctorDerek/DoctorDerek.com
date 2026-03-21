@@ -68,13 +68,12 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
   ].filter(Boolean) as { component: React.ReactNode; anchor: string }[]
 
   const handleLeave = (origin: any, destination: any, direction: string) => {
-    // 1. The Mapachito Level Design (Section-by-Section Shader Mapping)
     const transitionMatrix: Record<string, string> = {
       "home": "zoom",
       "intro": "zoom",
       "about": "chromatic",
       "mapache": "pixelate",
-      "experience": SHOW_DR_MAPACHE ? "shatter" : "pixelate", // Pixelate if jumping from About straight to Experience
+      "experience": SHOW_DR_MAPACHE ? "shatter" : "pixelate",
       "consultancy": "shockwave",
       "testimonials": "doorway",
       "blog": "pageCurlLeft",
@@ -100,7 +99,6 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         pluginWrapper={pluginWrapper}
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
         
-        // Key Injections
         cardsKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
         cinematicKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
         continuousHorizontalKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
@@ -111,7 +109,6 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         scrollHorizontallyKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
         scrollOverflowResetKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
 
-        // Extension Toggles (Deploy Globally)
         dragAndMove={true}
         scrollHorizontally={true}
         offsetSections={true}
@@ -123,10 +120,8 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         cards="slides"
         cinematic={true}
 
-        // Extension Config
         responsiveWidth={768}
         cinematicOptions={{ effect: cinematicEffect }}
-        normalScrollElements=".normal-scroll-content"
         credits={{ enabled: false }}
         anchors={sectionsContent.map((s) => s.anchor)}
         onLeave={handleLeave}

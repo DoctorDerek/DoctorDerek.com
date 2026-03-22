@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import ReactFullpage from "@fullpage/react-fullpage"
 import {
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
-  FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS,
+  FULLPAGE_ACTIVATION_KEYS,
   SHOW_DR_MAPACHE,
 } from "@/constants/SITE_CONTENT"
 import { MapacheFullPageProps } from "@/types/MapacheFullPageProps"
@@ -99,15 +99,15 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         pluginWrapper={pluginWrapper}
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
         
-        cardsKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
-        cinematicKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
-        continuousHorizontalKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
-        dragAndMoveKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
-        offsetSectionsKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
-        resetSlidersKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
-        responsiveSlidesKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
-        scrollHorizontallyKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
-        scrollOverflowResetKey={FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS}
+        cardsKey={FULLPAGE_ACTIVATION_KEYS.cards}
+        cinematicKey={FULLPAGE_ACTIVATION_KEYS.cinematic}
+        continuousHorizontalKey={FULLPAGE_ACTIVATION_KEYS.continuousHorizontal}
+        dragAndMoveKey={FULLPAGE_ACTIVATION_KEYS.dragAndMove}
+        offsetSectionsKey={FULLPAGE_ACTIVATION_KEYS.offsetSections}
+        resetSlidersKey={FULLPAGE_ACTIVATION_KEYS.resetSliders}
+        responsiveSlidesKey={FULLPAGE_ACTIVATION_KEYS.responsiveSlides}
+        scrollHorizontallyKey={FULLPAGE_ACTIVATION_KEYS.scrollHorizontally}
+        scrollOverflowResetKey={FULLPAGE_ACTIVATION_KEYS.scrollOverflowReset}
 
         dragAndMove={true}
         scrollHorizontally={true}

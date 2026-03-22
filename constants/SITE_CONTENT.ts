@@ -3,6 +3,18 @@ export const FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS =
 export const FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS =
   "***REDACTED***"
 
+export const FULLPAGE_ACTIVATION_KEYS = {
+  cards: "***REDACTED***",
+  cinematic: "***REDACTED***",
+  continuousHorizontal: "***REDACTED***",
+  dragAndMove: "***REDACTED***",
+  offsetSections: "***REDACTED***",
+  resetSliders: "***REDACTED***",
+  responsiveSlides: "***REDACTED***",
+  scrollHorizontally: "***REDACTED***",
+  scrollOverflowReset: "***REDACTED***",
+} as const
+
 export const SHOW_DR_MAPACHE = false
 
 

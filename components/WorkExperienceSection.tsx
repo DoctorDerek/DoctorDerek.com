@@ -18,11 +18,12 @@ export default function WorkExperienceSection() {
 
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center py-20 pb-24">
-      <div className="translate-x-12 rounded-bl-[3rem] bg-black/60 px-2 py-6 opacity-0 backdrop-blur-md transition-all duration-700 ease-spring-soft lg:ml-auto lg:pb-8 lg:w-[50%] [.active_&]:translate-x-0 [.active_&]:opacity-100">
-        <div className="mx-auto flex w-[90%] flex-col items-end">
+      <div className="translate-x-12 rounded-bl-[3rem] bg-black/60 px-6 py-6 opacity-0 backdrop-blur-md transition-all duration-700 ease-spring-soft lg:ml-auto lg:w-fit lg:pb-8 lg:pl-16 lg:pr-8 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+        <div className="flex flex-col items-end">
           <SectionHeading>
             <h2 className="min-[375px]:text-3xl text-right text-3xl font-bold tracking-tight text-white drop-shadow-md whitespace-nowrap sm:text-4xl md:text-5xl lg:text-7xl">
-              Full-Stack SWE
+              Full-Stack SWE<br />
+              since 2005
             </h2>
           </SectionHeading>
         </div>

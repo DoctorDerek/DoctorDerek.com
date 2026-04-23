@@ -64,7 +64,7 @@ export const ARCHITECT_EVOLUTION: WorkExperience[] = [
   {
     duration: "2024–Present",
     company:
-      "AI Context Engineer & Full-Stack SWE | Godot C#, GDScript, 20M+ Tokens",
+      "AI Context Engineer & Indie Game Dev | Godot C#, GDScript, 20M+ Tokens",
   },
   {
     duration: "2020–2024",

@@ -32,6 +32,8 @@ const Testimonials = () => {
                     src={item.image || JohnDoe}
                     alt={item.name}
                     placeholder="blur"
+                    width={96}
+                    height={96}
                     className="h-16 w-16 rounded-full object-cover shadow-lg md:h-24 md:w-24"
                   />
                 </div>

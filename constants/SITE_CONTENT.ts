@@ -47,8 +47,8 @@ export type AiConsultancyPitch = {
 }
 
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
-  header: "Cognitive Architecture & AI Audits",
-  body: "Standard LLMs generate slop because their context is rotten. I engineer Human-AI Cognitive Systems that force frontier models to reason, not just predict text. Whether you need a brutal teardown of your current architecture or a bespoke constitutional operating system (GDD) for your autonomous agents, I provide the elite context, persona, and systems engineering to fix it.",
+  header: "Async AI Audit",
+  body: "Standard LLMs generate slop because their context is rotten. I engineer Human-AI Cognitive Systems that force frontier models to reason, not just predict text. Whether you need a brutal teardown of your current architecture or bespoke context engineering (a “constitution” for your LLM) for your autonomous agents, I provide the elite context, persona, and systems engineering to fix it.",
   ctaButtonText: "Book a 20-Min Async AI Audit — $500 USD",
   subtext:
     "For a serious head start to your startup or indie game using LLMs: $5,000 USD anchor point for a Custom AI Constitution / Master GDD Template.",
@@ -119,11 +119,9 @@ export type LegalDisclaimer = {
 
 export const LEGAL_DISCLAIMER: LegalDisclaimer = {
   aiDisclosure: [
-    "Hello fellow human! I’m Dr. Derek Austin. This website is NOT AI-generated slop.",
-    "Voice/Writing: 100% Human (Me!). No AI dubbing or AI-generated text content.",
-    "Visuals: Real photos (Unsplash, Unsplash+, and public domain) & LLM-assisted Python data visualizations. No AI images. No AI video.",
-    "Script: 100% human-verified & edited. I use LLMs for polyglot research, data visualization, research synthesis, drafting assistance, fact-checking, pronunciation help, and proofreading.",
-    "Please support real, human creators by liking & subscribing!",
+    "I use LLMs for data visualization and proofreading ONLY.",
+    "No AI-generated images, AI-generated video, or AI-generated text.",
+    "Please support a real, human creator by liking & subscribing!",
   ],
   websiteDisclaimer: [
     "I have taken care when crafting my opinions and compiling data / facts, but errors WILL occur. **Please fact check me!**",

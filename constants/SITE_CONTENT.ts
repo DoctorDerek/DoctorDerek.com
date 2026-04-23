@@ -68,11 +68,11 @@ export const ARCHITECT_EVOLUTION: WorkExperience[] = [
   },
   {
     duration: "2020–2024",
-    company: "Lead Frontend SWE | React, Next.js, TypeScript, Tailwind CSS",
+    company: "Senior Full-Stack SWE | React, Next.js, TypeScript, Tailwind CSS",
   },
   {
     duration: "2019–2020",
-    company: "React SWE | React, JavaScript, CSS",
+    company: "Senior React SWE | React, JavaScript, CSS",
   },
   {
     duration: "2009–2019",

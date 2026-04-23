@@ -110,7 +110,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         scrollOverflowResetKey={FULLPAGE_ACTIVATION_KEYS.scrollOverflowReset}
 
         dragAndMove={true}
-        scrollHorizontally={true}
+        scrollHorizontally={false}
         offsetSections={true}
         scrollOverflow={true}
         scrollOverflowReset={true}

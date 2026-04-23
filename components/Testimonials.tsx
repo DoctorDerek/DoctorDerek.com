@@ -29,8 +29,10 @@ const Testimonials = () => {
               <div className="mt-8 flex items-center md:mt-12">
                 <div className="mr-6 shrink-0">
                   <Image
-                    src={JohnDoe}
+                    src={item.image || JohnDoe}
                     alt={item.name}
+                    width={96}
+                    height={96}
                     className="h-16 w-16 rounded-full object-cover shadow-lg md:h-24 md:w-24"
                   />
                 </div>

@@ -41,7 +41,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               </div>
             </div>
             <h3 className="mb-8 text-center text-lg leading-snug font-bold text-white/90 md:text-2xl">
-              Tired of generic tech industry noise? Join <span className="text-[#F38B57]"><CountUp to={BLOG_METRICS.emailSubscribers} /></span> insider subscribers and <span className="text-[#008EC1]"><CountUp to={BLOG_METRICS.mediumFollowers} duration={2.5} /></span> followers reading my battle-tested systems analyses and brutal survival manuals.
+              Tired of generic tech industry noise? Join <span className="text-[#F38B57]"><CountUp to={BLOG_METRICS.emailSubscribers} /></span> insider subscribers and <span className="text-[#008EC1]"><CountUp to={BLOG_METRICS.mediumFollowers} duration={2.5} /></span> followers reading my battle-tested systems analyses and survival manuals for your SWE career.
             </h3>
             <div className="flex flex-col justify-center gap-4 md:flex-row">
               <a href="https://doctorderek.medium.com/about" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center rounded-xl bg-black/60 p-4 text-center text-sm font-bold text-white shadow-lg backdrop-blur-md transition-transform hover:scale-[1.02] active:scale-95 md:text-lg">

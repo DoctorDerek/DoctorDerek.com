@@ -31,11 +31,11 @@ export const INTRO_BIO_SHORT =
   "Indie Game Dev · AI Context Engineer · I teach LLMs to think · Full-Stack SWE since 2005 · BS & MS in Bioinformatics at age 19 · Doctor of Physical Therapy" as const
 
 export const ABOUT_BIO_LONG: string[] = [
-  "I’m Dr. Derek Austin, an Indie Game Dev, AI Context Engineer, and senior full-stack SWE. I don’t just use AI; I teach LLMs how to think.",
-  "My foundation is built on deconstructing complex systems. Earning a BS and MS in Bioinformatics by age 19 taught me to find clear signals in massive datasets. A decade in sports medicine as a Doctor of Physical Therapy trained me to diagnose and optimize complex biological systems.",
-  "Today, I apply that rigorous, first-principles logic to LLMs. Frustrated by the constraints of standard “gaslighting” AI, I spent over 2,000 hours and 20+ million tokens engineering a solution. I architect the deep context, agentic workflows, and cognitive frameworks that force frontier models beyond simple pattern-matching into genuine, high-level code understanding and reasoning.",
-  "I leverage these bespoke cognitive architectures to achieve 10× development velocity. For full-stack apps, I specialize in building with Next.js, TypeScript, Postgres, and cloud-native solutions. For my indie game dev, I use Godot 4, C#, and GDScript.",
-  "I operate with total creative sovereignty from Puebla, Mexico, alongside my amazing wife, Abby, and our two cats, Louie and Yuma. I write about my exact systems, failures, and victories on Medium. Thank you for reading!",
+  "I’m Dr. Derek Austin: an Indie Game Dev, AI Context Engineer, and senior full-stack SWE. I don’t just use AI; I teach LLMs how to think.",
+  "Earning a BS and MS in Bioinformatics by age 19 taught me to isolate clear signals in massive datasets. Today, I apply that rigorous, first-principles logic to deconstructing complex codebases.",
+  "Frustrated by standard “gaslighting” AI, I spent 2,000+ hours and 20M+ tokens architecting a solution. I engineer the deep context, agentic workflows, and cognitive frameworks that force frontier models into genuine, high-level code understanding.",
+  "This cognitive architecture drives 10× development velocity natively across disparate tech stacks: Next.js, TypeScript, and Postgres for cloud-native SaaS, and Godot 4 / C# for indie games.",
+  "I operate from Puebla, Mexico, alongside my amazing wife, Abby, and our two cats, Louie and Yuma. I write about my exact systems, failures, and victories on Medium. Thanks for reading!",
 ] as const
 
 export type AiConsultancyPitch = {

@@ -46,6 +46,7 @@ export default function Navbar() {
         <div className="pointer-events-auto flex grow flex-col overflow-y-auto overscroll-contain">
           <div className="h-14 md:hidden" />
           <nav
+            inert={!sidebarOpen ? true : undefined}
             className={classNames(
               "flex h-full flex-col rounded-tr-3xl duration-500 md:mt-auto md:h-11/12 md:flex-row",
               sidebarOpen ? "translate-x-0" : "-translate-x-full",

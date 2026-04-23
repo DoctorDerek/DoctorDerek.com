@@ -51,7 +51,7 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   body: "Standard LLMs generate slop because their context is rotten. I engineer Human-AI Cognitive Systems that force frontier models to reason, not just predict text. Whether you need a brutal teardown of your current architecture or bespoke context engineering (a “constitution”) for your LLM or autonomous agents, I provide the elite context, persona, and systems engineering to fix it.",
   ctaButtonText: "Book a 20-Min Async AI Audit — $500 USD",
   subtext:
-    "For a serious head start to your startup or indie game using LLMs: $5,000 USD anchor point for a Custom AI Constitution / Master GDD Template.",
+    "For a serious head start to your startup or indie game development: $5,000 USD anchor point for a Custom AI Constitution / Master GDD Template.",
   emailSubject: "AI Cognitive Architecture Inquiry",
 } as const
 

@@ -128,7 +128,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         
         render={() => (
           <ReactFullpage.Wrapper>
-            {sectionsContent.map((section) => (
+            {sectionsContent.map((section, index) => (
               <div 
                 key={section.anchor} 
                 className={classNames(
@@ -138,6 +138,14 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
                 )}
               >
                 {section.component}
+                {index < sectionsContent.length - 1 && (
+                  <a
+                    href={`#${sectionsContent[index + 1].anchor}`}
+                    className="sr-only focus:not-sr-only focus:absolute focus:bottom-8 focus:right-8 focus:z-[9999] rounded-lg bg-black/60 px-6 py-3 font-semibold text-white outline-none ring-2 ring-yellow-400 backdrop-blur-md transition-all ease-spring-bouncy hover:scale-105"
+                  >
+                    Skip to next section ↓
+                  </a>
+                )}
               </div>
             ))}
           </ReactFullpage.Wrapper>

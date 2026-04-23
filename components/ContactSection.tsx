@@ -4,6 +4,7 @@ import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 import SectionHeading from "@/components/ui/SectionHeading"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
+import { CONTACT_PITCH, CONTACT_CTA } from "@/constants/SITE_CONTENT"
 
 export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)
@@ -64,16 +65,10 @@ export default function ContactSection() {
         <div className="mx-auto mt-8 flex w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 ease-spring-soft md:mt-0 md:w-1/2 md:pl-8 lg:w-[55%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
           <div className="mx-auto mt-8 w-4/5 md:mt-32 md:ml-0 md:h-1/6 md:w-11/12 lg:my-auto lg:mr-0 lg:ml-auto lg:w-11/12 lg:pt-16 lg:pl-14">
             <p className="rounded-xl border border-white/10 bg-black/40 px-5 py-6 text-xl leading-8 text-white shadow-xl backdrop-blur-md md:px-8 md:text-xl lg:pr-12 lg:text-2xl lg:leading-9 max-h-[50vh] overflow-y-auto overscroll-contain">
-              I architect robust, high-QREAM software systems and engineer elite
-              Human-AI cognitive frameworks. I operate on a strict, low-demand
-              philosophy to protect my engineering focus. I do not do
-              &ldquo;quick chats,&rdquo; &ldquo;brainstorming calls,&rdquo; or
-              traditional employment. If you have a high-leverage technical
-              challenge—like a $500 Async AI Audit or a $5,000 Master GDD
-              Template—reach out asynchronously.
+              {CONTACT_PITCH}
             </p>
             <GlobalEmailCTA className="mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 ease-spring-bouncy hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
-              Request Asynchronous Consult
+              {CONTACT_CTA}
             </GlobalEmailCTA>
           </div>
         </div>

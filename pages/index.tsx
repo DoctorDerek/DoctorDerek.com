@@ -115,7 +115,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         scrollOverflow={true}
         scrollOverflowReset={true}
         responsiveSlides={true}
-        continuousHorizontal={true}
+        loopHorizontal={false}
         resetSliders={true}
         cards="slides"
         cinematic={true}

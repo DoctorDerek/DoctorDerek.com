@@ -30,11 +30,8 @@ export default function WorkExperienceSection() {
       <div className="translate-x-12 rounded-bl-[3rem] bg-black/60 px-2 py-6 opacity-0 backdrop-blur-md transition-all duration-700 ease-spring-soft lg:ml-auto lg:h-[30%] lg:w-[50%] [.active_&]:translate-x-0 [.active_&]:opacity-100">
         <div className="mx-auto flex w-[90%] flex-col items-end">
           <SectionHeading>
-            <h2 className="min-[375px]:text-4xl text-right text-3xl font-bold tracking-tight text-white drop-shadow-md whitespace-nowrap sm:text-5xl md:text-7xl lg:text-7xl">
-              <CountUp to={20} />+ Years of
-            </h2>
-            <h2 className="min-[375px]:text-4xl text-right text-3xl font-bold tracking-tight text-white drop-shadow-md whitespace-nowrap sm:text-5xl md:text-7xl lg:text-8xl">
-              Full-Stack SWE
+            <h2 className="min-[375px]:text-3xl text-right text-3xl font-bold tracking-tight text-white drop-shadow-md whitespace-nowrap sm:text-4xl md:text-5xl lg:text-7xl">
+              Full-Stack SWE since 2005
             </h2>
           </SectionHeading>
         </div>
@@ -83,7 +80,7 @@ export default function WorkExperienceSection() {
       </div>
 
       <div className="mx-auto mt-12 hidden translate-y-12 opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:block lg:h-[65%] lg:w-11/12 [.active_&]:translate-y-0 [.active_&]:opacity-100">
-        <div className="flex h-[30vh] w-full flex-col md:h-[30vh] lg:relative lg:h-full">
+        <div className="flex min-h-[40vh] w-full flex-col lg:relative lg:h-full">
           <ul className="work-exp-grid hidden h-full w-1/2 lg:absolute lg:-top-[30%] lg:left-1/4 lg:grid">
             {combinedLists.map((item, index) => {
               const isPlaceholder = item.company.includes("placeholder")

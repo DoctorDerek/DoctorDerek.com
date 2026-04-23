@@ -55,6 +55,9 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   emailSubject: "AI Cognitive Architecture Inquiry",
 } as const
 
+export const CONTACT_PITCH = "I build, architect, and scale robust software systems and engineer elite Human-AI cognitive frameworks. If you have a high-leverage technical challenge, reach out for $500 Async AI Audit or a $5,000 Master GDD Template." as const
+export const CONTACT_CTA = "Request Async Audit" as const
+
 export type WorkExperience = {
   duration: string
   company: string

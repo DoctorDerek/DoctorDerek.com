@@ -131,7 +131,11 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
             {sectionsContent.map((section) => (
               <div 
                 key={section.anchor} 
-                className={classNames("section", section.anchor === "footer" ? "fp-auto-height" : "")}
+                className={classNames(
+                  "section",
+                  section.anchor === "footer" ? "fp-auto-height" : "",
+                  section.anchor === "home" ? "fp-noscroll" : ""
+                )}
               >
                 {section.component}
               </div>

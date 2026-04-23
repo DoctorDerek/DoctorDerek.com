@@ -119,9 +119,10 @@ export type LegalDisclaimer = {
 
 export const LEGAL_DISCLAIMER: LegalDisclaimer = {
   aiDisclosure: [
-    "I use LLMs for data visualization and proofreading ONLY.",
-    "No AI-generated images, AI-generated video, or AI-generated text.",
-    "Please support a real, human creator by liking & subscribing!",
+    "Hello, fellow human! I'm Dr. Derek Austin. Thanks for visiting! 👋",
+    "I use LLMs to augment 100% of my software engineering, code architecture, data visualization, and proofreading.",
+    "On my Medium blog (Career Programming and According to Context), I use LLMs for data visualization and proofreading ONLY.",
+    "I do not use AI-generated images, video, nor text on Career Programming or According to Context.",
   ],
   websiteDisclaimer: [
     "I have taken care when crafting my opinions and compiling data / facts, but errors WILL occur. **Please fact check me!**",

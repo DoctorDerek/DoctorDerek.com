@@ -31,10 +31,10 @@ export const INTRO_BIO_SHORT =
   "Indie Game Dev · AI Context Engineer · I teach LLMs to think · Full-Stack SWE since 2005 · BS & MS in Bioinformatics at age 19 · Doctor of Physical Therapy" as const
 
 export const ABOUT_BIO_LONG: string[] = [
-  "I’m Dr. Derek Austin, an Indie Game Dev, Full-Stack SWE since 2005, and AI Context Engineer. I don't just use AI; I teach it how to think.",
-  "My foundation is built on deconstructing complex systems. Earning a BS and MS in Bioinformatics by age 19 taught me to find clear signals in massive datasets. A decade in sports medicine as a Doctor of Physical Therapy trained me to diagnose and optimize complex biological systems. Over two decades of software engineering gave me the tools to build my own.",
-  "Today, I apply that rigorous, first-principles logic to large language models. Frustrated by the constraints of standard 'gaslighting' AI, I spent over 2,000 hours and 20+ million tokens engineering a solution. I architect the deep context, personas, and cognitive frameworks that force frontier models beyond simple pattern-matching into genuine, high-level reasoning.",
-  "I leverage these bespoke cognitive architectures to achieve 100x development velocity. This allows me to single-handedly engineer and ship tactical, high-QREAM indie video games using Next.js, TypeScript, Godot 4, and C#.",
+  "I’m Dr. Derek Austin, an Indie Game Dev, AI Context Engineer, and senior full-stack SWE. I don’t just use AI; I teach LLMs how to think.",
+  "My foundation is built on deconstructing complex systems. Earning a BS and MS in Bioinformatics by age 19 taught me to find clear signals in massive datasets. A decade in sports medicine as a Doctor of Physical Therapy trained me to diagnose and optimize complex biological systems.",
+  "Today, I apply that rigorous, first-principles logic to LLMs. Frustrated by the constraints of standard “gaslighting” AI, I spent over 2,000 hours and 20+ million tokens engineering a solution. I architect the deep context, agentic workflows, and cognitive frameworks that force frontier models beyond simple pattern-matching into genuine, high-level code understanding and reasoning.",
+  "I leverage these bespoke cognitive architectures to achieve 10× development velocity. For full-stack apps, I specialize in building with Next.js, TypeScript, Postgres, and cloud-native solutions. For my indie game dev, I use Godot 4, C#, and GDScript.",
   "I operate with total creative sovereignty from Puebla, Mexico, alongside my amazing wife, Abby, and our two cats, Louie and Yuma. I write about my exact systems, failures, and victories on Medium. Thank you for reading!",
 ] as const
 
@@ -55,7 +55,7 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   emailSubject: "AI Cognitive Architecture Inquiry",
 } as const
 
-export const CONTACT_PITCH = "I build, architect, and scale robust software systems and engineer elite Human-AI cognitive frameworks. If you have a high-leverage technical challenge, reach out for $500 Async AI Audit or a $5,000 Master GDD Template." as const
+export const CONTACT_PITCH = "I build, architect, and scale robust software systems and engineer elite Human-AI cognitive frameworks. While I am highly selective about full-time roles—prioritizing elite, AI-first engineering teams—I also consult on high-leverage technical challenges. Reach out for a $500 Async AI Audit or a $5,000 Master GDD Template." as const
 export const CONTACT_CTA = "Request Async Audit" as const
 
 export type WorkExperience = {

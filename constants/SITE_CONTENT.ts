@@ -55,7 +55,11 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   emailSubject: "AI Cognitive Architecture Inquiry",
 } as const
 
-export const CONTACT_PITCH = "I build, architect, and scale robust software systems and engineer elite Human-AI cognitive frameworks. While I am highly selective about full-time roles—prioritizing elite, AI-first engineering teams—I also consult on high-leverage technical challenges. Reach out for a $500 Async AI Audit or a $5,000 Master GDD Template." as const
+export const CONTACT_BULLETS: string[] = [
+  "I build, architect, and scale robust software systems and engineer elite Human-AI cognitive frameworks.",
+  "While I am highly selective about full-time roles—prioritizing elite, AI-first engineering teams—I also consult on high-leverage technical challenges.",
+  "Reach out for a $500 Async AI Audit or a $5,000 Master GDD Template.",
+] as const
 export const CONTACT_CTA = "Request Async Audit" as const
 
 export type WorkExperience = {

@@ -114,13 +114,12 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         offsetSections={true}
         scrollOverflow={true}
         scrollOverflowReset={true}
-        responsiveSlides={true}
+        responsiveSlides={false}
         loopHorizontal={false}
         resetSliders={true}
         cards="slides"
         cinematic={true}
 
-        responsiveWidth={768}
         cinematicOptions={{ effect: cinematicEffect }}
         credits={{ enabled: false }}
         anchors={sectionsContent.map((s) => s.anchor)}

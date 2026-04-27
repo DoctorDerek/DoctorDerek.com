@@ -22,13 +22,13 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
           <div className="mx-auto mt-16 w-full max-w-4xl rounded-2xl border border-white/10 bg-black/40 p-6 text-white shadow-2xl backdrop-blur-md md:mt-24 md:p-12 opacity-0 transition-all duration-700 ease-spring-soft [.active_&]:opacity-100 translate-y-12 [.active_&]:translate-y-0">
             <div className="mb-8 grid grid-cols-3 gap-2 md:gap-4">
               <div className="flex flex-col items-center justify-center text-center">
-                <p className="text-3xl font-bold md:text-5xl">
+                <p className="text-3xl font-bold md:text-5xl tabular-nums">
                   <CountUp to={BLOG_METRICS.totalPosts} />
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider text-white/80 uppercase md:text-sm">Posts</p>
               </div>
               <div className="flex flex-col items-center justify-center border-x border-white/10 px-2 text-center">
-                <p className="text-3xl font-bold whitespace-nowrap md:text-5xl">
+                <p className="text-3xl font-bold whitespace-nowrap md:text-5xl tabular-nums">
                   <CountUp to={BLOG_METRICS.totalWordsK} duration={2.5} />k+
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider text-white/80 uppercase md:text-sm">Words</p>
@@ -41,7 +41,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               </div>
             </div>
             <h3 className="mb-8 text-center text-lg leading-snug font-bold text-white/90 md:text-2xl">
-              Tired of generic tech industry noise? Join <span className="text-[#F38B57]"><CountUp to={BLOG_METRICS.emailSubscribers} /></span> insider subscribers and <span className="text-[#008EC1]"><CountUp to={BLOG_METRICS.mediumFollowers} duration={2.5} /></span> followers reading my battle-tested systems analyses and survival manuals for your SWE career.
+              Tired of generic tech industry noise? Join <span className="text-[#F38B57] tabular-nums"><CountUp to={BLOG_METRICS.emailSubscribers} /></span> insider subscribers and <span className="text-[#008EC1] tabular-nums"><CountUp to={BLOG_METRICS.mediumFollowers} duration={2.5} /></span> followers reading my battle-tested systems analyses and survival manuals for your SWE career.
             </h3>
             <div className="flex flex-col justify-center gap-4 md:flex-row">
               <a href="https://doctorderek.medium.com/about" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center rounded-xl bg-black/60 p-4 text-center text-sm font-bold text-white shadow-lg backdrop-blur-md transition-transform hover:scale-[1.02] active:scale-95 md:text-lg">

@@ -38,9 +38,9 @@ export default function AboutSection() {
   return (
     <div className="h-full w-full py-10 md:py-16">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-3/4">
-        <div className="-translate-x-12 py-4 text-white opacity-0 drop-shadow-md transition-all duration-700 ease-spring-soft md:relative md:py-8 lg:pt-14 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+        <div className="-translate-x-12 py-2 text-white opacity-0 drop-shadow-md transition-all duration-700 ease-spring-soft md:relative md:py-8 lg:pt-14 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
           <SectionHeading>
-            <h2 className="text-7xl font-semibold md:text-8xl lg:text-9xl">
+            <h2 className="text-5xl min-[375px]:text-6xl font-semibold md:text-8xl lg:text-9xl">
               About
             </h2>
           </SectionHeading>
@@ -65,7 +65,7 @@ export default function AboutSection() {
                 <Image
                   src={photos[0]}
                   alt=""
-                  className="pointer-events-none max-h-[60vh] w-full object-cover object-top opacity-0 md:max-h-[70vh]"
+                  className="pointer-events-none max-h-[40vh] w-full object-cover object-top opacity-0 md:max-h-[70vh]"
                   priority
                   aria-hidden="true"
                 />
@@ -111,7 +111,7 @@ export default function AboutSection() {
           </div>
           <div className="relative mt-8 translate-y-12 rounded-tl-3xl border border-white/20 bg-black/40 px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 ease-spring-soft md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[55%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-1/2 lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <div className="flex flex-col gap-4 lg:gap-6">
-              <div className="pr-2 text-lg leading-7 text-white max-h-[35vh] overflow-y-auto overscroll-contain md:max-h-[35vh] lg:max-h-[30vh] lg:text-xl lg:leading-9">
+              <div className="pr-2 text-lg leading-7 text-white max-h-[25vh] overflow-y-auto overscroll-contain md:max-h-[35vh] lg:max-h-[30vh] lg:text-xl lg:leading-9">
                 {ABOUT_BIO_LONG.map((paragraph, index) => (
                   <p key={index} className="mb-4">
                     {paragraph}

@@ -115,6 +115,7 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         scrollOverflow={true}
         scrollOverflowReset={true}
         responsiveSlides={false}
+        normalScrollElements=".scrollable-content"
         loopHorizontal={false}
         resetSliders={true}
         cards="slides"

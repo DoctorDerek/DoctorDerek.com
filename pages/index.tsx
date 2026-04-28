@@ -112,8 +112,8 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         dragAndMove={true}
         scrollHorizontally={false}
         offsetSections={true}
-        scrollOverflow={true}
-        scrollOverflowReset={true}
+        scrollOverflow={false}
+        scrollOverflowReset={false}
         responsiveSlides={false}
         normalScrollElements=".scrollable-content"
         loopHorizontal={false}

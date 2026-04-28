@@ -10,15 +10,15 @@ import { MapacheFullPageProps } from "@/types/MapacheFullPageProps"
 import classNames from "@/utils/classNames"
 
 const pluginWrapper = () => {
-  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
-  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
-  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/continuousHorizontal/fullpage.continuousHorizontal.min.js")
-  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")
-  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/offsetSections/fullpage.offsetSections.min.js")
-  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/resetSliders/fullpage.resetSliders.min.js")
-  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/responsiveSlides/fullpage.responsiveSlides.min.js")
-  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/scrollHorizontally/fullpage.scrollHorizontally.min.js")
-  require("@/reference/fullPage_js/fullPage_js_extensions_bundle/scrollOverflowReset/fullpage.scrollOverflowReset.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/continuousHorizontal/fullpage.continuousHorizontal.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/offsetSections/fullpage.offsetSections.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/resetSliders/fullpage.resetSliders.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/responsiveSlides/fullpage.responsiveSlides.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/scrollHorizontally/fullpage.scrollHorizontally.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/scrollOverflowReset/fullpage.scrollOverflowReset.min.js")
 }
 
 const MapacheFullPage =

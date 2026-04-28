@@ -1,18 +1,18 @@
 export const FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS =
-  "***REDACTED***"
+  process.env.NEXT_PUBLIC_FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS || ""
 export const FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS =
-  "***REDACTED***"
+  process.env.NEXT_PUBLIC_FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS || ""
 
 export const FULLPAGE_ACTIVATION_KEYS = {
-  cards: "***REDACTED***",
-  cinematic: "***REDACTED***",
-  continuousHorizontal: "***REDACTED***",
-  dragAndMove: "***REDACTED***",
-  offsetSections: "***REDACTED***",
-  resetSliders: "***REDACTED***",
-  responsiveSlides: "***REDACTED***",
-  scrollHorizontally: "***REDACTED***",
-  scrollOverflowReset: "***REDACTED***",
+  cards: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CARDS || "",
+  cinematic: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CINEMATIC || "",
+  continuousHorizontal: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CONTINUOUS_HORIZONTAL || "",
+  dragAndMove: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_DRAG_AND_MOVE || "",
+  offsetSections: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_OFFSET_SECTIONS || "",
+  resetSliders: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_RESET_SLIDERS || "",
+  responsiveSlides: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_RESPONSIVE_SLIDES || "",
+  scrollHorizontally: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_SCROLL_HORIZONTALLY || "",
+  scrollOverflowReset: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_SCROLL_OVERFLOW_RESET || "",
 } as const
 
 import type { StaticImageData } from "next/image"

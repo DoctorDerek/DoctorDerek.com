@@ -29,7 +29,7 @@ export default function WorkExperienceSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-6 w-[95%] max-h-[55vh] overflow-y-auto overscroll-contain translate-y-12 opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
+      <div className="scrollable-content mx-auto mt-6 w-[95%] max-h-[55vh] overflow-y-auto overscroll-contain translate-y-12 opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
         <ul className="mt-2 flex flex-col gap-y-6 pr-2 pl-4 pb-8">
           {ARCHITECT_EVOLUTION.map((item, index) => (
             <li

@@ -64,7 +64,7 @@ export default function ContactSection() {
 
         <div className="mx-auto mt-4 flex w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 ease-spring-soft md:mt-0 md:w-1/2 md:pl-8 lg:w-[55%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
           <div className="mx-auto mt-4 w-[90%] md:mt-32 md:ml-0 md:h-1/6 md:w-11/12 lg:my-auto lg:mr-0 lg:ml-auto lg:w-11/12 lg:pt-16 lg:pl-14">
-            <div className="space-y-4 rounded-xl border border-white/10 bg-black/40 px-5 py-6 text-lg leading-7 text-white shadow-xl backdrop-blur-md md:px-8 md:text-xl lg:pr-12 lg:text-2xl lg:leading-9 max-h-[30vh] overflow-y-auto overscroll-contain md:max-h-[50vh]">
+            <div className="scrollable-content space-y-4 rounded-xl border border-white/10 bg-black/40 px-5 py-6 text-lg leading-7 text-white shadow-xl backdrop-blur-md md:px-8 md:text-xl lg:pr-12 lg:text-2xl lg:leading-9 max-h-[30vh] overflow-y-auto overscroll-contain md:max-h-[50vh]">
               {CONTACT_BULLETS.map((bullet) => (
                 <p key={bullet} className="flex">
                   <span className="mr-3 text-[#F38B57]">★</span>

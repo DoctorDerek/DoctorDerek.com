@@ -12,11 +12,13 @@ const ARCHIVES = [
     name: "FullPage Extensions",
     zipPath: path.join(__dirname, "../ghost_assets/fullPage_js_extensions_bundle.zip"),
     targetDir: path.join(__dirname, "../vendor"),
+    junkPaths: false // Keeps internal folder structure (e.g., /cinematic/)
   },
   {
     name: "Restora Fonts",
     zipPath: path.join(__dirname, "../ghost_assets/fonts.zip"),
     targetDir: path.join(__dirname, "../vendor/fonts"),
+    junkPaths: true // Flattens directory structure so .otf files land directly in vendor/fonts/
   },
 ]
 
@@ -42,7 +44,9 @@ try {
       }
       
       console.log(`📦 Unzipping payload: ${archive.name}`)
-      execSync(`unzip -o -q -P "${ASSET_KEY}" "${archive.zipPath}" -d "${archive.targetDir}"`, {
+      // -j flag ignores zip folder structure and puts files directly in targetDir
+      const junkFlag = archive.junkPaths ? "-j " : ""
+      execSync(`unzip -o -q ${junkFlag}-P "${ASSET_KEY}" "${archive.zipPath}" -d "${archive.targetDir}"`, {
         stdio: "inherit",
       })
     } else {

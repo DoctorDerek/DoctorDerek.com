@@ -1,9 +1,25 @@
 # DoctorDerek.com
 
-## Yarn PnP and VS Code
+The personal portfolio and technical blog of [Dr. Derek Austin](https://doctorderek.com).
 
-If VS Code fails to find TypeScript definitions, ESLint, or Prettier plugins (like `prettier-plugin-tailwindcss`), run the following command to refresh the local Yarn SDK bindings:
+## Tech Stack
 
-```bash
-yarn dlx @yarnpkg/sdks vscode
-```
+This repository contains the frontend source code for my website.
+
+- **Framework:** Next.js 16, React 19
+- **Language:** TypeScript 5 (Strict Mode)
+- **Styling:** Tailwind CSS v4
+- **State Management:** XState v5
+- **Animations:** Tailwind CSS, Framer Motion, and Rive
+
+## Architectural Highlights
+
+- **Deterministic Global State:** Complex UI timing logic—such as the 21-second infinite background cross-fade and 3D logo perspective toggling—is orchestrated outside of React using a parallel state machine (`machines/globalMachine.ts` and XState v5). This safely decouples state from the render cycle, eliminating race conditions.
+- **AI-Assisted Architecture:** Built utilizing LLM-assisted workflows to accelerate development, with strict architectural constraints—such as composition-over-inheritance, static typing, and single-responsibility components—to prevent AI-generated technical debt.
+- **Main-Thread Optimization:** Heavy visual assets are offloaded to maintain a 60fps scrolling experience. The background particle engine runs in raw HTML5 Canvas (`components/ParticleCanvas.tsx`), while interactive vector graphics utilize the Rive runtime (`@rive-app/react-canvas`), minimizing DOM repaints.
+
+## Links
+
+- [Live Website](https://doctorderek.com)
+- [Medium Blog (@DoctorDerek)](https://doctorderek.medium.com/)
+- [GitHub (@DoctorDerek)](https://github.com/DoctorDerek)

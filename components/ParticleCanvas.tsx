@@ -1,6 +1,44 @@
 "use client"
 import { useEffect, useRef } from "react"
 
+class Particle {
+  x: number
+  y: number
+  radius: number
+  speedY: number
+  speedX: number
+  opacity: number
+  wobble: number
+
+  constructor(canvasWidth: number, canvasHeight: number) {
+    this.x = Math.random() * canvasWidth
+    this.y = Math.random() * canvasHeight
+    this.radius = Math.random() * 4 + 1
+    this.speedY = Math.random() * -1 - 0.5
+    this.speedX = Math.random() * 1 - 0.5
+    this.opacity = Math.random() * 0.5 + 0.1
+    this.wobble = Math.random() * Math.PI * 2
+  }
+
+  update(canvasWidth: number, canvasHeight: number) {
+    this.y += this.speedY
+    this.wobble += 0.02
+    this.x += Math.sin(this.wobble) * this.speedX
+
+    if (this.y + this.radius < 0) {
+      this.y = canvasHeight + this.radius
+      this.x = Math.random() * canvasWidth
+    }
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    ctx.beginPath()
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`
+    ctx.fill()
+    ctx.closePath()
+  }
+}
 export default function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -12,45 +50,6 @@ export default function ParticleCanvas() {
 
     let animationFrameId: number
     let particles: Particle[] = []
-
-    class Particle {
-      x: number
-      y: number
-      radius: number
-      speedY: number
-      speedX: number
-      opacity: number
-      wobble: number
-
-      constructor(canvasWidth: number, canvasHeight: number) {
-        this.x = Math.random() * canvasWidth
-        this.y = Math.random() * canvasHeight
-        this.radius = Math.random() * 4 + 1
-        this.speedY = Math.random() * -1 - 0.5
-        this.speedX = Math.random() * 1 - 0.5
-        this.opacity = Math.random() * 0.5 + 0.1
-        this.wobble = Math.random() * Math.PI * 2
-      }
-
-      update(canvasWidth: number, canvasHeight: number) {
-        this.y += this.speedY
-        this.wobble += 0.02
-        this.x += Math.sin(this.wobble) * this.speedX
-
-        if (this.y + this.radius < 0) {
-          this.y = canvasHeight + this.radius
-          this.x = Math.random() * canvasWidth
-        }
-      }
-
-      draw(ctx: CanvasRenderingContext2D) {
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`
-        ctx.fill()
-        ctx.closePath()
-      }
-    }
 
     const initParticles = () => {
       particles = []

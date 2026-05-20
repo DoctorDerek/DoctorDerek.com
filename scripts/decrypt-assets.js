@@ -5,19 +5,27 @@ const fs = require("fs")
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require("path")
 
-const ASSET_KEY = process.env.FULLPAGE_ASSET_KEY
-const TARGET_DIR = path.join(__dirname, "../vendor")
-const ZIP_PATH = path.join(
-  __dirname,
-  "../ghost_assets/fullPage_js_extensions_bundle.zip"
-)
+const ASSET_KEY = process.env.GHOST_ASSET_KEY_DOCTORDEREK_COM
+
+const ARCHIVES = [
+  {
+    name: "FullPage Extensions",
+    zipPath: path.join(__dirname, "../ghost_assets/fullPage_js_extensions_bundle.zip"),
+    targetDir: path.join(__dirname, "../vendor"),
+  },
+  {
+    name: "Restora Fonts",
+    zipPath: path.join(__dirname, "../ghost_assets/fonts.zip"),
+    targetDir: path.join(__dirname, "../vendor/fonts"),
+  },
+]
 
 console.log("=========================================")
 console.log("🦝 MAPACHITO GHOST PIPELINE INITIATED 🦝")
 console.log("=========================================")
 
 if (!ASSET_KEY) {
-  console.log("⚠️  FULLPAGE_ASSET_KEY not found in environment.")
+  console.log("⚠️  GHOST_ASSET_KEY_DOCTORDEREK_COM not found in environment.")
   console.log("⏩ Bypassing decryption (Open-source fallback mode active).")
   console.log("=========================================")
   process.exit(0)
@@ -26,28 +34,29 @@ if (!ASSET_KEY) {
 console.log("🔑 Asset Key detected. Commencing decryption...")
 
 try {
-  if (!fs.existsSync(TARGET_DIR)) {
-    console.log(`📁 Creating target directory: ${TARGET_DIR}`)
-    fs.mkdirSync(TARGET_DIR, { recursive: true })
+  for (const archive of ARCHIVES) {
+    if (fs.existsSync(archive.zipPath)) {
+      if (!fs.existsSync(archive.targetDir)) {
+        console.log(`📁 Creating directory: ${archive.targetDir}`)
+        fs.mkdirSync(archive.targetDir, { recursive: true })
+      }
+      
+      console.log(`📦 Unzipping payload: ${archive.name}`)
+      execSync(`unzip -o -q -P "${ASSET_KEY}" "${archive.zipPath}" -d "${archive.targetDir}"`, {
+        stdio: "inherit",
+      })
+    } else {
+      console.warn(`⚠️ Warning: Archive not found at ${archive.zipPath}`)
+    }
   }
 
-  if (fs.existsSync(ZIP_PATH)) {
-    console.log(`📦 Found encrypted archive: ${ZIP_PATH}`)
-    console.log("🔓 Unzipping payload...")
-    execSync(`unzip -o -q -P "${ASSET_KEY}" "${ZIP_PATH}" -d "${TARGET_DIR}"`, {
-      stdio: "inherit",
-    })
-    console.log("✅ GHOST PIPELINE SUCCESS: Commercial assets injected.")
-    console.log("[$̲̅(̲̅ιοο̲̅)̲̅$̲̅] Proceeding with Vercel build...")
-  } else {
-    console.error(`❌ ERROR: Archive not found at ${ZIP_PATH}`)
-    process.exit(1)
-  }
+  console.log("✅ GHOST PIPELINE SUCCESS: Commercial assets injected.")
+  console.log("[$̲̅(̲̅ιοο̲̅)̲̅$̲̅] Proceeding with Vercel build...")
   console.log("=========================================")
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 } catch (error) {
   console.error("❌ FATAL ERROR: Decryption failed.")
-  console.error("Possible causes: Wrong FULLPAGE_ASSET_KEY or missing unzip utility.")
+  console.error("Possible causes: Wrong GHOST_ASSET_KEY_DOCTORDEREK_COM or missing unzip utility.")
   console.log("=========================================")
   process.exit(1)
 }

@@ -1,6 +1,6 @@
 # DoctorDerek.com
 
-The personal portfolio and technical blog of [Dr. Derek Austin](https://doctorderek.com).
+The personal website of [Dr. Derek Austin](https://doctorderek.com).
 
 ## Tech Stack
 

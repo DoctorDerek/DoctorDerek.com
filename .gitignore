@@ -66,6 +66,7 @@ repomix-temp.*
 
 # IP sovereignty & private files
 constitution.txt
+gdd.txt
 reference/
 git_files_list.txt
 vendor

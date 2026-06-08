@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react"
 import { ABOUT_BIO_LONG, SHOW_DR_MAPACHE } from "@/constants/SITE_CONTENT"
 import DerekAustin from "@/images/DerekAustin.png"
-import DrDerekAustin from "@/images/DrDerekAustin.png"
+import DerekAustin2 from "@/images/DerekAustin2.jpg"
+import DerekAustin3 from "@/images/DerekAustin3.jpg"
 import Image from "next/image"
 import SectionHeading from "@/components/ui/SectionHeading"
 
@@ -27,10 +28,10 @@ export default function AboutSection() {
     }
   }, [])
 
-  const photos = [DerekAustin, DrDerekAustin]
+  const photos = [DerekAustin, DerekAustin2, DerekAustin3]
 
-  const currentPhoto = photos[flipCount % 2]
-  const nextPhoto = photos[(flipCount + 1) % 2]
+  const currentPhoto = photos[flipCount % 3]
+  const nextPhoto = photos[(flipCount + 1) % 3]
 
   const frontSrc = flipCount % 2 === 0 ? currentPhoto : nextPhoto
   const backSrc = flipCount % 2 === 1 ? currentPhoto : nextPhoto
@@ -122,7 +123,7 @@ export default function AboutSection() {
                 <div className="rounded-2xl border border-[#F38B57]/20 bg-black/50 p-4 shadow-xl backdrop-blur-md">
                   <p className="animate-pulse text-lg leading-tight font-bold text-white drop-shadow-md lg:text-xl">
                     But enough talk. Scroll down to play the WebGL game I built to
-                    prove my stack. 👇🎮🦝
+                    prove my stack. \ud83d\udc47\ud83c\udfae\ud83e\udd9d
                   </p>
                 </div>
               )}

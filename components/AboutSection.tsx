@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react"
 import { ABOUT_BIO_LONG, SHOW_DR_MAPACHE } from "@/constants/SITE_CONTENT"
 import DerekAustin from "@/images/DerekAustin.png"
 import DerekAustin2 from "@/images/DerekAustin2.jpg"
+import DerekAustin3 from "@/images/DerekAustin3.jpg"
 import Image from "next/image"
 import SectionHeading from "@/components/ui/SectionHeading"
 
@@ -27,10 +28,10 @@ export default function AboutSection() {
     }
   }, [])
 
-  const photos = [DerekAustin, DerekAustin2]
+  const photos = [DerekAustin, DerekAustin2, DerekAustin3]
 
-  const currentPhoto = photos[flipCount % 2]
-  const nextPhoto = photos[(flipCount + 1) % 2]
+  const currentPhoto = photos[flipCount % 3]
+  const nextPhoto = photos[(flipCount + 1) % 3]
 
   const frontSrc = flipCount % 2 === 0 ? currentPhoto : nextPhoto
   const backSrc = flipCount % 2 === 1 ? currentPhoto : nextPhoto

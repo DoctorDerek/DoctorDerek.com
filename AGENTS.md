@@ -139,7 +139,7 @@ These are not preferences; they are non-negotiable physical laws of the Mapachit
 ## 5. TERTIARY: DOCTOR DEREK SOVEREIGN HUB (PROJECT GOALS)
 
 **Overall Goal:** Finish `DoctorDerek.com` ASAP with minimal effort. It is a Tier 4 Strategic Hub & Authority Engine designed to project immense QREAM and technical authority, functioning as an Anti-Normie Filter.
-**Primary Monetization:** Funnel high-IQ "whales" to a **$500 AI Evaluation Service Consultancy** via async audits, and a **$5,000 GDD for AI Master Template**. [$̲̅(̲̅ιοο̲̅)̲̅$̲̅]
+**Primary Monetization:** Funnel high-IQ "whales" to **Fractional Architecture & Contract Engineering engagements** (10–20 hr/week retainers or full-time design engineering contracts). [$̲̅(̲̅ιοο̲̅)̲̅$̲̅]
 
 ### 5A. The Framework Stack
 
@@ -158,7 +158,7 @@ The site prioritizes a visceral, high-QREAM "splashy" feel over complex backend 
 
 - **The Rive Animation:** A $3,000 custom `.riv` asset exists in the intro. It MUST be maintained natively via `@rive-app/react-canvas` as a passive overlay (`pointer-events-none absolute inset-0 z-10 h-full w-full`). Do not delete or obscure it.
 - **Consolidated UI Tree (The `lg:` Law):** We do NOT maintain separate Desktop and Mobile React component trees. **Using `useWindowWidth` to render entirely different component sets (e.g., `<DisplaySections>` vs `<MedLrgDevices>` inside `pages/index.tsx`) is a Critical Failure of the Anti-Spaghetti law.** You must use a single unified component tree in `pages/index.tsx`, utilizing Tailwind's `sm:`, `md:`, and `lg:` breakpoints to handle layout differences natively.
-- **Ephemeralization of Backends:** Remove complex form handlers. Contact sections should use dynamic, obfuscated `mailto:` links (e.g., `window.location.href = ['mailto:', 'derekraustin', '+doctorderek', '@', 'gmail.com', '?subject=AI%20Evaluation%20Consultancy'].join('')`). Newsletter signups should be simple CTA buttons linking to the Medium profile.
+- **Ephemeralization of Backends:** Remove complex form handlers. Contact sections should use dynamic, obfuscated `mailto:` links (e.g., `window.location.href = ['mailto:', 'derekraustin', '+doctorderek', '@', 'gmail.com', '?subject=Fractional%20Architect%20/%20Contract%20Engineering%20Inquiry'].join('')`). Newsletter signups should be simple CTA buttons linking to the Medium profile.
 
 ---
 
@@ -171,7 +171,7 @@ Mapachito has securely extracted all authorized copy, bios, timelines, and discl
 - **File:** `constants/SITE_CONTENT.ts`
   - Import `INTRO_BIO_SHORT` (for the typewriter effect).
   - Import `ABOUT_BIO_LONG` (Array of strings; `.map()` over this to render `<p>` tags in the About section).
-  - Import `AI_CONSULTANCY_PITCH` (for the $500 async audit / $5,000 GDD Template section).
+  - Import `AI_CONSULTANCY_PITCH` (for the Fractional Architecture & Engineering section).
   - Import `ARCHITECT_EVOLUTION` (for the Timeline of Skills/Work Experience).
   - Import `SOCIAL_PROOF_CTA` (for the Medium Follow buttons).
   - Import `LEGAL_DISCLAIMER` (for the Footer AI and Website disclaimers).

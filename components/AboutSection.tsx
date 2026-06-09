@@ -37,9 +37,9 @@ export default function AboutSection() {
   const backSrc = flipCount % 2 === 1 ? currentPhoto : nextPhoto
 
   return (
-    <div className="h-full w-full py-10 md:py-16">
+    <div className="h-full w-full pt-2 pb-10 md:pt-3 md:pb-16">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-[90%]">
-        <div className="-translate-x-12 py-2 text-white opacity-0 drop-shadow-md transition-all duration-700 ease-spring-soft md:relative md:py-8 lg:pt-14 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+        <div className="-translate-x-12 py-2 text-white opacity-0 drop-shadow-md transition-all duration-700 ease-spring-soft md:relative md:pt-2 md:pb-8 lg:pt-3 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
           <SectionHeading>
             <h2 className="text-5xl min-[375px]:text-6xl font-semibold md:text-8xl lg:text-9xl">
               About

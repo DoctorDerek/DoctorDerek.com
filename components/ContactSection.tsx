@@ -10,7 +10,7 @@ export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)
 
   return (
-    <div className="h-full w-full py-10 md:py-20">
+    <div className="flex h-full w-full items-center py-10 md:py-20">
       <div className="flex flex-col md:flex-row md:items-stretch">
         <div className="mx-auto w-[85%] md:flex md:w-1/2 md:flex-col md:pl-8 lg:w-[45%] lg:justify-start lg:pl-20">
           <div className="-translate-x-12 py-2 opacity-0 transition-all duration-700 ease-spring-soft md:mt-16 md:mb-2 lg:mb-0 lg:py-0 [.active_&]:translate-x-0 [.active_&]:opacity-100">
@@ -63,7 +63,7 @@ export default function ContactSection() {
         </div>
 
         <div className="mx-auto mt-4 flex w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 ease-spring-soft md:mt-0 md:w-1/2 md:pl-8 lg:w-[55%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
-          <div className="mx-auto mt-4 w-[90%] md:mt-32 md:ml-0 md:h-1/6 md:w-11/12 lg:my-auto lg:mr-0 lg:ml-auto lg:w-11/12 lg:pt-16 lg:pl-14">
+          <div className="mx-auto mt-4 w-[90%] md:ml-0 md:w-11/12 lg:mr-0 lg:ml-auto lg:w-11/12 lg:pl-14">
             <div className="space-y-4 rounded-xl border border-white/10 bg-black/40 px-5 py-6 text-lg leading-7 text-white shadow-xl backdrop-blur-md md:px-8 md:text-xl lg:pr-12 lg:text-2xl lg:leading-9">
               {CONTACT_BULLETS.map((bullet) => (
                 <p key={bullet} className="flex">

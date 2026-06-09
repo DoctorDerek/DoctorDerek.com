@@ -32,10 +32,12 @@ export const INTRO_BIO_SHORT =
 
 export const ABOUT_BIO_LONG: string[] = [
   "I’m Dr. Derek Austin: an AI-Native Senior Full-Stack SWE, Fractional Architect, and Design Engineer. I specialize in architecting and building full-stack TypeScript apps that scale and world-class UI/UX that “feels” right.",
-  "I leverage frontier LLMs like Gemini Deep Think and Claude Opus every day, but I explicitly reject the technical debt of “vibe coding.” When using agentic and other AI-assisted SWE tools, I still take full ownership of the codebase and accountability for results.",
+  "I leverage frontier LLMs like Gemini Deep Think and Claude Opus every day, but I explicitly reject the technical debt of “vibe coding.”",
+  "When using agentic and other AI-assisted SWE tools, I still take full ownership of the codebase and accountability for results.",
   "Using my strict 5-Step Forge (Plan, Build, Test, Reflect) and 35 “Anti-Slop” pillars, I build with deterministic state machines (XState) and scrub AI slop from my codebases.",
   "This methodology drives my 10× development velocity across disparate stacks: Next.js, TypeScript, Node.js, and Postgres for cloud-native SaaS; React Native + Expo for cross-platform mobile apps; and Godot 4 + C# for indie games.",
-  "I’m a US citizen and operate as an independent US 1099 contractor as a digital nomad. Currently I’m based in Puebla, Mexico, where I live with my wife, Abby, and our two cats. Contact me for fractional architecture and engineering if results, accountability, and UI/UX matter to you!",
+  "I’m a US citizen and operate as an independent US 1099 contractor as a digital nomad. Currently, I’m based in Puebla, Mexico, where I live with my wife, Abby, and our two cats.",
+  "Contact me for fractional architecture and engineering if results, accountability, and UI/UX matter to you!",
 ] as const
 
 export type AiConsultancyPitch = {
@@ -47,7 +49,7 @@ export type AiConsultancyPitch = {
 }
 
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
-  header: "Fractional Architecture & Engineering",
+  header: "What I Do Best",
   body: "Startups are drowning in fragile, AI-generated prototypes that cannot scale. I help founders and VC-backed teams build deterministic apps in regulated industries (like HealthTech) at 10x velocity. I hate bugs, I love results, and I know when to move fast and when to pay down tech debt. I partner with teams as a Fractional Architect (part-time) or Design Engineer (full-time) to ship robust, world-class software that feels “right” for users.",
   ctaButtonText: "Inquire About Availability",
   subtext:
@@ -58,10 +60,9 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
 export const CONTACT_BULLETS: string[] = [
   "I architect, build, and scale deterministic software systems using elite, AI-augmented engineering approaches including agentic SWE workflows.",
   "I’ve built my career around taking broken MVPs—whether delivered by underperforming agencies or AI—and turning them into real apps.",
-  "Currently, I partner with founders and early-stage startups on a fractional or full-time contract basis (US 1099 / Global B2B) to deliver 10x velocity without the technical debt of “vibe coding.”",
-  "Reach out to discuss how my 5-Step Forge (Plan, Build, Test, Reflect), Anti-Slop pillars, and commitment to using state machines for deterministic state management can accelerate your engineering pipeline.",
+  "I partner with founders and early-stage startups on a fractional or full-time contract basis (US 1099 / Global B2B) to deliver 10x velocity without the technical debt of “vibe coding.”",
 ] as const
-export const CONTACT_CTA = "Discuss Contract Engagement" as const
+export const CONTACT_CTA = "Contact Me" as const
 
 export type WorkExperience = {
   duration: string

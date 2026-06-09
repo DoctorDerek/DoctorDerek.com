@@ -31,7 +31,7 @@ export const INTRO_BIO_SHORT =
   "AI-Native Senior Full-Stack SWE · Design Engineer · Indie Game Dev · 20+ years of SWE since 2004 · BS & MS age 19 · Doctor of Physical Therapy" as const
 
 export const ABOUT_BIO_LONG: string[] = [
-  "I'm Dr. Derek Austin: an AI-Native Senior Full-Stack SWE, Fractional Architect, and Design Engineer. I specialize in architecting and building full-stack TypeScript apps that scale and world-class UI/UX that “feels” right.",
+  "I’m Dr. Derek Austin: an AI-Native Senior Full-Stack SWE, Fractional Architect, and Design Engineer. I specialize in architecting and building full-stack TypeScript apps that scale and world-class UI/UX that “feels” right.",
   "I leverage frontier LLMs like Gemini Deep Think and Claude Opus every day, but I explicitly reject the technical debt of “vibe coding.” When using agentic and other AI-assisted SWE tools, I still take full ownership of the codebase and accountability for results.",
   "Using my strict 5-Step Forge (Plan, Build, Test, Reflect) and 35 “Anti-Slop” pillars, I build with deterministic state machines (XState) and scrub AI slop from my codebases.",
   "This methodology drives my 10× development velocity across disparate stacks: Next.js, TypeScript, Node.js, and Postgres for cloud-native SaaS; React Native + Expo for cross-platform mobile apps; and Godot 4 + C# for indie games.",

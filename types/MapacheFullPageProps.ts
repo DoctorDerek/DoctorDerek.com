@@ -1,9 +1,61 @@
 import React from "react"
 
+export type FullPageSection = {
+  anchor: string
+  index: number
+  item: HTMLElement
+  isFirst: boolean
+  isLast: boolean
+}
+
+export type FullPageSlide = {
+  anchor: string
+  index: number
+  item: HTMLElement
+  isFirst: boolean
+  isLast: boolean
+}
+
+export type FullPageApi = {
+  getActiveSection: () => FullPageSection
+  getActiveSlide: () => FullPageSlide
+  getScrollY: () => number
+  getScrollX: () => number
+  moveSectionUp: () => void
+  moveSectionDown: () => void
+  moveTo: (section: string | number, slide?: number) => void
+  silentMoveTo: (section: string | number, slide?: number) => void
+  moveSlideRight: () => void
+  moveSlideLeft: () => void
+  setAutoScrolling: (value: boolean) => void
+  setFitToSection: (value: boolean) => void
+  fitToSection: () => void
+  setLockAnchors: (value: boolean) => void
+  setAllowScrolling: (value: boolean, directions?: string) => void
+  setKeyboardScrolling: (value: boolean, directions?: string) => void
+  setRecordHistory: (value: boolean) => void
+  setScrollingSpeed: (milliseconds: number) => void
+  destroy: (type?: string) => void
+  reBuild: () => void
+  setResponsive: (value: boolean) => void
+}
+
+export type FullPageState = {
+  initialized: boolean
+  sectionCount: number
+  slideCount: number
+  destination: FullPageSection | null
+  direction: string | null
+  lastEvent: string | null
+}
+
 export type MapacheFullPageProps = {
   children?: React.ReactNode
   pluginWrapper?: () => void
-  render?: (comp: { state: any; fullpageApi: any }) => React.ReactElement
+  render?: (comp: {
+    state: FullPageState
+    fullpageApi: FullPageApi
+  }) => React.ReactElement
   anchors?: string[]
 
   // Standard fullPage.js options
@@ -31,7 +83,7 @@ export type MapacheFullPageProps = {
   normalScrollElements?: string
   scrollOverflow?: boolean
   scrollOverflowMacStyle?: boolean
-  scrollOverflowOptions?: any
+  scrollOverflowOptions?: Record<string, unknown>
   touchSensitivity?: number
   normalScrollElementTouchThreshold?: number
   bigSectionsDestination?: "top" | "bottom" | null
@@ -118,22 +170,34 @@ export type MapacheFullPageProps = {
   }
 
   // Callbacks
-  onLeave?: (origin: any, destination: any, direction: string) => void
-  afterLoad?: (origin: any, destination: any, direction: string) => void
+  onLeave?: (
+    origin: FullPageSection,
+    destination: FullPageSection,
+    direction: string,
+    trigger?: string,
+  ) => void
+  afterLoad?: (
+    origin: FullPageSection,
+    destination: FullPageSection,
+    direction: string,
+    trigger?: string,
+  ) => void
   afterRender?: () => void
   afterResize?: (width: number, height: number) => void
   afterReBuild?: () => void
   afterResponsive?: (isResponsive: boolean) => void
   afterSlideLoad?: (
-    section: any,
-    origin: any,
-    destination: any,
+    section: FullPageSection,
+    origin: FullPageSlide,
+    destination: FullPageSlide,
     direction: string,
+    trigger?: string,
   ) => void
   onSlideLeave?: (
-    section: any,
-    origin: any,
-    destination: any,
+    section: FullPageSection,
+    origin: FullPageSlide,
+    destination: FullPageSlide,
     direction: string,
+    trigger?: string,
   ) => void
 }

@@ -6,13 +6,20 @@ export const FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS =
 export const FULLPAGE_ACTIVATION_KEYS = {
   cards: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CARDS || "",
   cinematic: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CINEMATIC || "",
-  continuousHorizontal: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CONTINUOUS_HORIZONTAL || "",
-  dragAndMove: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_DRAG_AND_MOVE || "",
-  offsetSections: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_OFFSET_SECTIONS || "",
-  resetSliders: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_RESET_SLIDERS || "",
-  responsiveSlides: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_RESPONSIVE_SLIDES || "",
-  scrollHorizontally: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_SCROLL_HORIZONTALLY || "",
-  scrollOverflowReset: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_SCROLL_OVERFLOW_RESET || "",
+  continuousHorizontal:
+    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CONTINUOUS_HORIZONTAL || "",
+  dragAndMove:
+    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_DRAG_AND_MOVE || "",
+  offsetSections:
+    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_OFFSET_SECTIONS || "",
+  resetSliders:
+    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_RESET_SLIDERS || "",
+  responsiveSlides:
+    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_RESPONSIVE_SLIDES || "",
+  scrollHorizontally:
+    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_SCROLL_HORIZONTALLY || "",
+  scrollOverflowReset:
+    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_SCROLL_OVERFLOW_RESET || "",
 } as const
 
 import type { StaticImageData } from "next/image"
@@ -26,12 +33,11 @@ import johnImage from "@/images/testimonials/john-syme.jpg"
 
 export const SHOW_DR_MAPACHE = false
 
-
 export const INTRO_BIO_SHORT =
-  "AI-Native Senior Full-Stack SWE · Design Engineer · Indie Game Dev · 20+ years of SWE since 2004 · BS & MS age 19 · Doctor of Physical Therapy" as const
+  "AI-Native Senior Full-Stack SWE · UI/UX Engineer · Indie Game Dev · 20+ years of SWE since 2004 · BS & MS age 19 · Doctor of Physical Therapy" as const
 
 export const ABOUT_BIO_LONG: string[] = [
-  "I’m Dr. Derek Austin: an AI-Native Senior Full-Stack SWE, Fractional Architect, and Design Engineer. I specialize in architecting and building full-stack TypeScript apps that scale and world-class UI/UX that “feels” right.",
+  "I’m Dr. Derek Austin: an AI-Native Senior Full-Stack SWE, Fractional Architect, and UI/UX Engineer. I specialize in architecting and building full-stack TypeScript apps that scale and world-class UI/UX that “feels” right.",
   "I leverage frontier LLMs like Gemini Deep Think and Claude Opus every day, but I explicitly reject the technical debt of “vibe coding.”",
   "When using agentic and other AI-assisted SWE tools, I still take full ownership of the codebase and accountability for results.",
   "Using my strict 5-Step Forge (Plan, Build, Test, Reflect) and 35 “Anti-Slop” pillars, I build with deterministic state machines (XState) and scrub AI slop from my codebases.",
@@ -50,10 +56,10 @@ export type AiConsultancyPitch = {
 
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   header: "What I Do Best",
-  body: "Startups are drowning in fragile, AI-generated prototypes that cannot scale. I help founders and VC-backed teams build deterministic apps in regulated industries (like HealthTech) at 10x velocity. I hate bugs, I love results, and I know when to move fast and when to pay down tech debt. I partner with teams as a Fractional Architect (part-time) or Design Engineer (full-time) to ship robust, world-class software that feels “right” for users.",
+  body: "Startups are drowning in fragile, AI-generated prototypes that cannot scale. I help founders and VC-backed teams build deterministic apps in regulated industries (like HealthTech) at 10x velocity. I hate bugs, I love results, and I know when to move fast and when to pay down tech debt. I partner with teams as a Fractional Architect (part-time) or UI/UX Engineer (full-time) to ship robust, world-class software that feels “right” for users.",
   ctaButtonText: "Inquire About Availability",
   subtext:
-    "Available for remote, async US 1099 or Global B2B contract roles. I operate primarily on high-leverage fractional retainers (10–20 hours/week) or full-time design engineering contracts.",
+    "Available for remote, async US 1099 or Global B2B contract roles. I operate primarily on high-leverage fractional retainers (10–20 hours/week) or full-time UI/UX Engineering contracts.",
   emailSubject: "Fractional Architect / Contract Engineering Inquiry",
 } as const
 
@@ -77,7 +83,8 @@ export const ARCHITECT_EVOLUTION: WorkExperience[] = [
   },
   {
     duration: "2019–2024",
-    company: "Senior Full-Stack SWE · UI/UX & Design Engineer | React, Next.js, TypeScript, Tailwind CSS",
+    company:
+      "Senior Full-Stack SWE · UI/UX Engineer | React, Next.js, TypeScript, Tailwind CSS",
   },
   {
     duration: "2009–2019",

@@ -139,7 +139,7 @@ These are not preferences; they are non-negotiable physical laws of the Mapachit
 ## 5. TERTIARY: DOCTOR DEREK SOVEREIGN HUB (PROJECT GOALS)
 
 **Overall Goal:** Finish `DoctorDerek.com` ASAP with minimal effort. It is a Tier 4 Strategic Hub & Authority Engine designed to project immense QREAM and technical authority, functioning as an Anti-Normie Filter.
-**Primary Monetization:** Funnel high-IQ "whales" to **Fractional Architecture & Contract Engineering engagements** (10–20 hr/week retainers or full-time design engineering contracts). [$̲̅(̲̅ιοο̲̅)̲̅$̲̅]
+**Primary Monetization:** Funnel high-IQ "whales" to **Fractional Architecture & Contract Engineering engagements** (10–20 hr/week retainers or full-time UI/UX Engineering contracts). [$̲̅(̲̅ιοο̲̅)̲̅$̲̅]
 
 ### 5A. The Framework Stack
 

@@ -43,13 +43,7 @@
     useDefaultPatterns: true,
     customPatterns: [
       "public/**/*",
-      "reference/DeepSpring/**/*",
-      "reference/Figma/**/*",
-      "reference/fullPage_js/**/*.css",
-      "reference/fullPage_js/**/*.html",
-      "reference/fullPage_js/**/*.js",
-      "reference/StevenTerner/**/*",
-      "utils/fullpage*",
+      "reference/**/*",
     ],
   },
   security: {

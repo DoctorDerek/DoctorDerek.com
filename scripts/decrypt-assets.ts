@@ -19,12 +19,21 @@ const ARCHIVES: GhostArchive[] = [
       "../ghost_assets/fullPage_js_extensions_bundle.zip",
     ),
     targetDir: join(__dirname, "../vendor"),
+    /**
+     * APPROVED EXCEPTION TO NO CODE COMMENT RULE:
+     * Keeps internal folder structure (e.g., /cinematic/)
+     */
     junkPaths: false,
   },
   {
     name: "Restora Fonts",
     zipPath: join(__dirname, "../ghost_assets/fonts.zip"),
     targetDir: join(__dirname, "../vendor/fonts"),
+    /**
+     * APPROVED EXCEPTION TO NO CODE COMMENT RULE:
+     * Flattens directory structure so .otf files
+     * land directly in vendor/fonts/
+     */
     junkPaths: true,
   },
 ]

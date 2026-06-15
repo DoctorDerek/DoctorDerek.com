@@ -41,7 +41,7 @@ export default function AboutSection() {
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-[90%]">
         <div className="-translate-x-12 py-2 text-white opacity-0 drop-shadow-md transition-all duration-700 ease-spring-soft md:relative md:pt-2 md:pb-8 lg:pt-3 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
           <SectionHeading>
-            <h2 className="text-5xl min-[375px]:text-6xl font-semibold md:text-8xl lg:text-9xl">
+            <h2 className="text-5xl font-semibold min-[375px]:text-6xl md:text-8xl lg:text-9xl">
               About
             </h2>
           </SectionHeading>
@@ -122,8 +122,8 @@ export default function AboutSection() {
               {SHOW_DR_MAPACHE && (
                 <div className="rounded-2xl border border-[#F38B57]/20 bg-black/50 p-4 shadow-xl backdrop-blur-md">
                   <p className="animate-pulse text-lg leading-tight font-bold text-white drop-shadow-md lg:text-xl">
-                    But enough talk. Scroll down to play the WebGL game I built to
-                    prove my stack. \ud83d\udc47\ud83c\udfae\ud83e\udd9d
+                    But enough talk. Scroll down to play the WebGL game I built
+                    to prove my stack. \ud83d\udc47\ud83c\udfae\ud83e\udd9d
                   </p>
                 </div>
               )}

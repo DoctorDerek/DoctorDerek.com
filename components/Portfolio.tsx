@@ -48,7 +48,15 @@ const projects = [
 ]
 
 export default function Portfolio() {
-  const [portfolioWork, setPortfolioWork] = useState<{ projectTitle: string, details: string, tech: string[], isClicked: boolean }[]>(projects)
+  const [portfolioWork, setPortfolioWork] =
+    useState<
+      {
+        projectTitle: string
+        details: string
+        tech: string[]
+        isClicked: boolean
+      }[]
+    >(projects)
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const handleModal = (projectName: string) => {
@@ -73,7 +81,7 @@ export default function Portfolio() {
           <div className="flex h-full w-full items-center justify-center p-8">
             <div
               onClick={() => handleModal(item.projectTitle)}
-              className="flex h-full max-h-[60vh] w-full max-w-4xl cursor-pointer flex-col justify-around rounded-3xl border border-white/20 bg-white/10 p-8 text-white backdrop-blur-md transition-all duration-300 ease-spring-bouncy hover:scale-[1.02] hover:bg-white/20 md:p-16 opacity-0 [.active_&]:opacity-100 scale-95 [.active_&]:scale-100"
+              className="flex h-full max-h-[60vh] w-full max-w-4xl scale-95 cursor-pointer flex-col justify-around rounded-3xl border border-white/20 bg-white/10 p-8 text-white opacity-0 backdrop-blur-md transition-all duration-300 ease-spring-bouncy hover:scale-[1.02] hover:bg-white/20 md:p-16 [.active_&]:scale-100 [.active_&]:opacity-100"
             >
               <div className="mx-auto mb-8 h-[25vh] w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md"></div>
               <h3 className="restorabold mb-4 text-3xl lg:text-5xl">

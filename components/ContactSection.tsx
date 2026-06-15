@@ -21,7 +21,7 @@ export default function ContactSection() {
             </SectionHeading>
           </div>
 
-          <div className="w-1/2 mx-auto md:mx-0 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 ease-spring-bouncy md:h-1/2 md:w-full [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
+          <div className="mx-auto w-1/2 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 ease-spring-bouncy md:mx-0 md:h-1/2 md:w-full [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <div
               className="perspective h-full w-full animate-float"
               style={{ animationDelay: "1s" }}

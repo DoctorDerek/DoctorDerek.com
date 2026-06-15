@@ -9,25 +9,29 @@ export interface MediumPost {
 }
 
 const decodeEntities = (str: string) => {
-  return str
-    // Decode hexadecimal numeric entities (e.g., &#x201C;)
-    .replace(/&#x([0-9A-Fa-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
-    // Decode decimal numeric entities (e.g., &#8220;)
-    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
-    // Decode common named entities
-    .replace(/&quot;/g, "”")
-    .replace(/&apos;/g, "’")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&rsquo;/g, "’")
-    .replace(/&lsquo;/g, "‘")
-    .replace(/&rdquo;/g, "”")
-    .replace(/&ldquo;/g, "“")
-    .replace(/&mdash;/g, "—")
-    .replace(/&ndash;/g, "–")
-    .replace(/&hellip;/g, "…")
-    .replace(/&nbsp;/g, " ")
+  return (
+    str
+      // Decode hexadecimal numeric entities (e.g., &#x201C;)
+      .replace(/&#x([0-9A-Fa-f]+);/gi, (_, hex) =>
+        String.fromCodePoint(parseInt(hex, 16)),
+      )
+      // Decode decimal numeric entities (e.g., &#8220;)
+      .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+      // Decode common named entities
+      .replace(/&quot;/g, "”")
+      .replace(/&apos;/g, "’")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&rsquo;/g, "’")
+      .replace(/&lsquo;/g, "‘")
+      .replace(/&rdquo;/g, "”")
+      .replace(/&ldquo;/g, "“")
+      .replace(/&mdash;/g, "—")
+      .replace(/&ndash;/g, "–")
+      .replace(/&hellip;/g, "…")
+      .replace(/&nbsp;/g, " ")
+  )
 }
 
 export default async function getMediumPosts(): Promise<MediumPost[]> {
@@ -39,18 +43,21 @@ export default async function getMediumPosts(): Promise<MediumPost[]> {
       item["content:encoded"] || item.content || item.description || ""
 
     // Find all images, select the first that isn't a tracking pixel
-    const imgMatches = Array.from(content.matchAll(/<img[^>]+src="([^">]+)"/g)) as RegExpMatchArray[]
+    const imgMatches = Array.from(
+      content.matchAll(/<img[^>]+src="([^">]+)"/g),
+    ) as RegExpMatchArray[]
     const validImage = imgMatches.find(
       (m) => !m[1].includes("stat?event") && !m[1].includes("stat.medium.com"),
     )
     const thumbnail = validImage ? validImage[1] : ""
 
-    const description = decodeEntities(
-      content
-        .replace(/<[^>]*>?/gm, "")
-        .replace(/&nbsp;/g, " ")
-        .trim()
-    ).substring(0, 180) + "..."
+    const description =
+      decodeEntities(
+        content
+          .replace(/<[^>]*>?/gm, "")
+          .replace(/&nbsp;/g, " ")
+          .trim(),
+      ).substring(0, 180) + "..."
 
     return {
       title: decodeEntities(item.title || ""),

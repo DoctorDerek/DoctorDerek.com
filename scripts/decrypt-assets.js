@@ -10,15 +10,18 @@ const ASSET_KEY = process.env.GHOST_ASSET_KEY_DOCTORDEREK_COM
 const ARCHIVES = [
   {
     name: "FullPage Extensions",
-    zipPath: path.join(__dirname, "../ghost_assets/fullPage_js_extensions_bundle.zip"),
+    zipPath: path.join(
+      __dirname,
+      "../ghost_assets/fullPage_js_extensions_bundle.zip",
+    ),
     targetDir: path.join(__dirname, "../vendor"),
-    junkPaths: false // Keeps internal folder structure (e.g., /cinematic/)
+    junkPaths: false, // Keeps internal folder structure (e.g., /cinematic/)
   },
   {
     name: "Restora Fonts",
     zipPath: path.join(__dirname, "../ghost_assets/fonts.zip"),
     targetDir: path.join(__dirname, "../vendor/fonts"),
-    junkPaths: true // Flattens directory structure so .otf files land directly in vendor/fonts/
+    junkPaths: true, // Flattens directory structure so .otf files land directly in vendor/fonts/
   },
 ]
 
@@ -42,13 +45,16 @@ try {
         console.log(`📁 Creating directory: ${archive.targetDir}`)
         fs.mkdirSync(archive.targetDir, { recursive: true })
       }
-      
+
       console.log(`📦 Unzipping payload: ${archive.name}`)
       // -j flag ignores zip folder structure and puts files directly in targetDir
       const junkFlag = archive.junkPaths ? "-j " : ""
-      execSync(`unzip -o -q ${junkFlag}-P "${ASSET_KEY}" "${archive.zipPath}" -d "${archive.targetDir}"`, {
-        stdio: "inherit",
-      })
+      execSync(
+        `unzip -o -q ${junkFlag}-P "${ASSET_KEY}" "${archive.zipPath}" -d "${archive.targetDir}"`,
+        {
+          stdio: "inherit",
+        },
+      )
     } else {
       console.warn(`⚠️ Warning: Archive not found at ${archive.zipPath}`)
     }
@@ -57,10 +63,12 @@ try {
   console.log("✅ GHOST PIPELINE SUCCESS: Commercial assets injected.")
   console.log("[$̲̅(̲̅ιοο̲̅)̲̅$̲̅] Proceeding with Vercel build...")
   console.log("=========================================")
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 } catch (error) {
   console.error("❌ FATAL ERROR: Decryption failed.")
-  console.error("Possible causes: Wrong GHOST_ASSET_KEY_DOCTORDEREK_COM or missing unzip utility.")
+  console.error(
+    "Possible causes: Wrong GHOST_ASSET_KEY_DOCTORDEREK_COM or missing unzip utility.",
+  )
   console.log("=========================================")
   process.exit(1)
 }

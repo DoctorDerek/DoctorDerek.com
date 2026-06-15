@@ -28,12 +28,7 @@ export default function Icon({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d={PATHS[name]}
-        fill={fill}
-      />
+      <path fillRule="evenodd" clipRule="evenodd" d={PATHS[name]} fill={fill} />
     </svg>
   )
 }

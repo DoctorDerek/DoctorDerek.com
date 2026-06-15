@@ -7,7 +7,10 @@ type SectionHeadingProps = {
   className?: string
 }
 
-export default function SectionHeading({ children, className }: SectionHeadingProps) {
+export default function SectionHeading({
+  children,
+  className,
+}: SectionHeadingProps) {
   return (
     <Tilt
       className={classNames("w-max cursor-pointer", className)}

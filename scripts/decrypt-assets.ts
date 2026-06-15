@@ -73,8 +73,10 @@ try {
   console.log("✅ GHOST PIPELINE SUCCESS: Commercial assets injected.")
   console.log("[$̲̅(̲̅ιοο̲̅)̲̅$̲̅] Proceeding with Vercel build...")
   console.log("=========================================")
-} catch (_error: unknown) {
+} catch (error) {
+  const message = error instanceof Error ? error.message : String(error)
   console.error("❌ FATAL ERROR: Decryption failed.")
+  console.error(message)
   console.error(
     "Possible causes: Wrong GHOST_ASSET_KEY_DOCTORDEREK_COM or missing unzip utility.",
   )

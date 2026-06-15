@@ -48,15 +48,14 @@ const projects = [
 ]
 
 export default function Portfolio() {
-  const [portfolioWork, setPortfolioWork] =
-    useState<
-      {
-        projectTitle: string
-        details: string
-        tech: string[]
-        isClicked: boolean
-      }[]
-    >(projects)
+  const [portfolioWork, setPortfolioWork] = useState<
+    {
+      projectTitle: string
+      details: string
+      tech: string[]
+      isClicked: boolean
+    }[]
+  >(projects)
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const handleModal = (projectName: string) => {

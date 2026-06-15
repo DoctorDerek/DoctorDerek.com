@@ -6,7 +6,10 @@ import {
   FULLPAGE_ACTIVATION_KEYS,
   SHOW_DR_MAPACHE,
 } from "@/constants/SITE_CONTENT"
-import { MapacheFullPageProps, FullPageSection } from "@/types/MapacheFullPageProps"
+import {
+  MapacheFullPageProps,
+  FullPageSection,
+} from "@/types/MapacheFullPageProps"
 import classNames from "@/utils/classNames"
 
 const pluginWrapper = () => {

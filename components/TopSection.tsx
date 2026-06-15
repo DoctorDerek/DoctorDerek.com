@@ -18,7 +18,7 @@ const TypewriterOnInit = (typewriter: TypewriterClass) => {
 
 export default function TopSection() {
   return (
-    <div className="absolute inset-0 flex flex-col w-full h-full">
+    <div className="absolute inset-0 flex h-full w-full flex-col">
       <Navbar />
       {/* flex-1 offsets the Navbar to prevent double scrolling */}
       <div className="flex flex-1 translate-y-12 scale-95 flex-col items-center justify-center opacity-0 transition-all duration-700 ease-spring-bouncy [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">

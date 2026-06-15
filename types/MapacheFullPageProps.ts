@@ -128,12 +128,12 @@ export type MapacheFullPageProps = {
     section: any,
     origin: any,
     destination: any,
-    direction: string
+    direction: string,
   ) => void
   onSlideLeave?: (
     section: any,
     origin: any,
     destination: any,
-    direction: string
+    direction: string,
   ) => void
 }

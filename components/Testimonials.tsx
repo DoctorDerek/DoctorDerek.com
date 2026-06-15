@@ -20,7 +20,7 @@ const Testimonials = () => {
       {TESTIMONIALS.map((item: Testimonial) => (
         <div key={item.name} className="slide">
           <div className="flex h-full w-full items-center justify-center p-4 py-20 md:p-8">
-            <div className="mx-auto mt-16 w-full max-w-4xl rounded-2xl border border-white/10 bg-black/40 p-6 text-white shadow-2xl backdrop-blur-md transition-all duration-700 ease-spring-soft scale-95 opacity-0 [.active_&]:scale-100 [.active_&]:opacity-100 md:mt-24 md:p-12">
+            <div className="mx-auto mt-16 w-full max-w-4xl scale-95 rounded-2xl border border-white/10 bg-black/40 p-6 text-white opacity-0 shadow-2xl backdrop-blur-md transition-all duration-700 ease-spring-soft md:mt-24 md:p-12 [.active_&]:scale-100 [.active_&]:opacity-100">
               <div className="mb-8 flex items-center">
                 <div className="mr-6 shrink-0">
                   <Image
@@ -34,10 +34,12 @@ const Testimonials = () => {
                 </div>
                 <div className="flex flex-col">
                   <h4 className="text-lg font-bold md:text-2xl">{item.name}</h4>
-                  <h4 className="text-sm opacity-80 md:text-base">{item.title}</h4>
+                  <h4 className="text-sm opacity-80 md:text-base">
+                    {item.title}
+                  </h4>
                 </div>
               </div>
-              <div className="scrollable-content space-y-4 text-sm leading-relaxed max-h-[40vh] overflow-y-auto overscroll-contain pr-2 md:text-lg md:leading-8 lg:text-xl lg:leading-9">
+              <div className="scrollable-content max-h-[40vh] space-y-4 overflow-y-auto overscroll-contain pr-2 text-sm leading-relaxed md:text-lg md:leading-8 lg:text-xl lg:leading-9">
                 {item.comment.split("\n\n").map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}

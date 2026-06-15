@@ -58,9 +58,18 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
     { component: <TopSection key="top" />, anchor: "home" },
     { component: <IntroSection key="intro" />, anchor: "intro" },
     { component: <AboutSection key="about" />, anchor: "about" },
-    SHOW_DR_MAPACHE && { component: <DrMapacheSection key="mapache" />, anchor: "mapache" },
-    { component: <WorkExperienceSection key="experience" />, anchor: "experience" },
-    { component: <AiConsultancySection key="consultancy" />, anchor: "consultancy" },
+    SHOW_DR_MAPACHE && {
+      component: <DrMapacheSection key="mapache" />,
+      anchor: "mapache",
+    },
+    {
+      component: <WorkExperienceSection key="experience" />,
+      anchor: "experience",
+    },
+    {
+      component: <AiConsultancySection key="consultancy" />,
+      anchor: "consultancy",
+    },
     { component: <Testimonials key="testimonials" />, anchor: "testimonials" },
     { component: <BlogSection key="blog" posts={posts} />, anchor: "blog" },
     { component: <ContactSection key="contact" />, anchor: "contact" },
@@ -69,18 +78,18 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
 
   const handleLeave = (origin: any, destination: any, direction: string) => {
     const transitionMatrix: Record<string, string> = {
-      "home": "zoom",
-      "intro": "zoom",
-      "about": "chromatic",
-      "mapache": "pixelate",
-      "experience": SHOW_DR_MAPACHE ? "shatter" : "pixelate",
-      "consultancy": "shockwave",
-      "testimonials": "doorway",
-      "blog": "pageCurlLeft",
-      "contact": "burn",
-      "footer": "fade",
+      home: "zoom",
+      intro: "zoom",
+      about: "chromatic",
+      mapache: "pixelate",
+      experience: SHOW_DR_MAPACHE ? "shatter" : "pixelate",
+      consultancy: "shockwave",
+      testimonials: "doorway",
+      blog: "pageCurlLeft",
+      contact: "burn",
+      footer: "fade",
     }
-    
+
     const nextEffect = transitionMatrix[destination.anchor] || "fade"
     setCinematicEffect(nextEffect)
   }
@@ -89,7 +98,8 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
     <>
       <Head>
         <title>
-          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-Stack SWE, & Content Creator
+          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-Stack
+          SWE, & Content Creator
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
@@ -98,7 +108,6 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       <MapacheFullPage
         pluginWrapper={pluginWrapper}
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
-        
         cardsKey={FULLPAGE_ACTIVATION_KEYS.cards}
         cinematicKey={FULLPAGE_ACTIVATION_KEYS.cinematic}
         continuousHorizontalKey={FULLPAGE_ACTIVATION_KEYS.continuousHorizontal}
@@ -108,7 +117,6 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         responsiveSlidesKey={FULLPAGE_ACTIVATION_KEYS.responsiveSlides}
         scrollHorizontallyKey={FULLPAGE_ACTIVATION_KEYS.scrollHorizontally}
         scrollOverflowResetKey={FULLPAGE_ACTIVATION_KEYS.scrollOverflowReset}
-
         dragAndMove={true}
         scrollHorizontally={false}
         offsetSections={true}
@@ -120,28 +128,26 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
         resetSliders={true}
         cards="slides"
         cinematic={true}
-
         cinematicOptions={{ effect: cinematicEffect }}
         credits={{ enabled: false }}
         anchors={sectionsContent.map((s) => s.anchor)}
         onLeave={handleLeave}
-        
         render={() => (
           <ReactFullpage.Wrapper>
             {sectionsContent.map((section, index) => (
-              <div 
-                key={section.anchor} 
+              <div
+                key={section.anchor}
                 className={classNames(
                   "section",
                   section.anchor === "footer" ? "fp-auto-height" : "",
-                  section.anchor === "home" ? "fp-noscroll" : ""
+                  section.anchor === "home" ? "fp-noscroll" : "",
                 )}
               >
                 {section.component}
                 {index < sectionsContent.length - 1 && (
                   <a
                     href={`#${sectionsContent[index + 1].anchor}`}
-                    className="sr-only focus:not-sr-only focus:absolute focus:bottom-8 focus:right-8 focus:z-[9999] rounded-lg bg-black/60 px-6 py-3 font-semibold text-white outline-none ring-2 ring-yellow-400 backdrop-blur-md transition-all ease-spring-bouncy hover:scale-105"
+                    className="sr-only rounded-lg bg-black/60 px-6 py-3 font-semibold text-white ring-2 ring-yellow-400 backdrop-blur-md transition-all ease-spring-bouncy outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
                   >
                     Skip to next section ↓
                   </a>

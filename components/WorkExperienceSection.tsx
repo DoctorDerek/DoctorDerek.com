@@ -18,11 +18,12 @@ export default function WorkExperienceSection() {
 
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center py-20 pb-24">
-      <div className="translate-x-12 rounded-bl-[3rem] bg-black/60 px-6 py-6 opacity-0 backdrop-blur-md transition-all duration-700 ease-spring-soft lg:ml-auto lg:w-fit lg:pb-8 lg:pl-16 lg:pr-8 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+      <div className="translate-x-12 rounded-bl-[3rem] bg-black/60 px-6 py-6 opacity-0 backdrop-blur-md transition-all duration-700 ease-spring-soft lg:ml-auto lg:w-fit lg:pr-8 lg:pb-8 lg:pl-16 [.active_&]:translate-x-0 [.active_&]:opacity-100">
         <div className="flex flex-col items-end">
           <SectionHeading>
-            <h2 className="min-[375px]:text-3xl text-right text-3xl font-bold tracking-tight text-white drop-shadow-md whitespace-nowrap sm:text-4xl md:text-5xl lg:text-7xl">
-              Full-Stack SWE<br />
+            <h2 className="text-right text-3xl font-bold tracking-tight whitespace-nowrap text-white drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
+              Full-Stack SWE
+              <br />
               since 2005
             </h2>
           </SectionHeading>
@@ -30,7 +31,7 @@ export default function WorkExperienceSection() {
       </div>
 
       <div className="mx-auto mt-6 w-[95%] translate-y-12 opacity-0 transition-all delay-200 duration-700 ease-spring-soft lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
-        <ul className="mt-2 flex flex-col gap-y-6 pr-2 pl-4 pb-8">
+        <ul className="mt-2 flex flex-col gap-y-6 pr-2 pb-8 pl-4">
           {ARCHITECT_EVOLUTION.map((item, index) => (
             <li
               key={item.company}

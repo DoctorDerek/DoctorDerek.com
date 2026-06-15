@@ -24,7 +24,7 @@ export default function WorkExperienceSection() {
             <h2 className="text-right text-3xl font-bold tracking-tight whitespace-nowrap text-white drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
               Full-Stack SWE
               <br />
-              since 2005
+              since 2004
             </h2>
           </SectionHeading>
         </div>

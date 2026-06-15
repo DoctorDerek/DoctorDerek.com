@@ -6,7 +6,7 @@ import {
   FULLPAGE_ACTIVATION_KEYS,
   SHOW_DR_MAPACHE,
 } from "@/constants/SITE_CONTENT"
-import { MapacheFullPageProps } from "@/types/MapacheFullPageProps"
+import { MapacheFullPageProps, FullPageSection } from "@/types/MapacheFullPageProps"
 import classNames from "@/utils/classNames"
 
 const pluginWrapper = () => {
@@ -76,7 +76,10 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
     { component: <Footer key="footer" />, anchor: "footer" },
   ].filter(Boolean) as { component: React.ReactNode; anchor: string }[]
 
-  const handleLeave = (origin: any, destination: any, direction: string) => {
+  const handleLeave = (
+    _origin: FullPageSection,
+    destination: FullPageSection,
+  ) => {
     const transitionMatrix: Record<string, string> = {
       home: "zoom",
       intro: "zoom",

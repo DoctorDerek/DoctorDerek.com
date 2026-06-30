@@ -34,7 +34,7 @@ import johnImage from "@/images/testimonials/john-syme.jpg"
 export const SHOW_DR_MAPACHE = false
 
 export const INTRO_BIO_SHORT =
-  "AI-Native Senior Full-Stack SWE · UI/UX Engineer · Indie Game Dev · 20+ years of SWE since 2004 · BS & MS age 19 · Doctor of Physical Therapy" as const
+  "AI-Native Senior Full-Stack SWE · UI/UX Engineer · TypeScript specialist · 20+ years of SWE · BS & MS in Bioinformatics age 19 · Doctor of Physical Therapy" as const
 
 export const ABOUT_BIO_LONG: string[] = [
   "I’m Dr. Derek Austin: an AI-Native Senior Full-Stack SWE, Fractional Architect, and UI/UX Engineer. I specialize in architecting and building full-stack TypeScript apps that scale and world-class UI/UX that “feels” right.",

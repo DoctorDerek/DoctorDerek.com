@@ -36,7 +36,6 @@ import Testimonials from "@/components/Testimonials"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
 import TopSection from "@/components/TopSection"
-import Footer from "@/components/Footer"
 import getMediumPosts, { MediumPost } from "@/utils/medium"
 import dynamic from "next/dynamic"
 
@@ -76,7 +75,6 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
     { component: <Testimonials key="testimonials" />, anchor: "testimonials" },
     { component: <BlogSection key="blog" posts={posts} />, anchor: "blog" },
     { component: <ContactSection key="contact" />, anchor: "contact" },
-    { component: <Footer key="footer" />, anchor: "footer" },
   ].filter(Boolean) as { component: React.ReactNode; anchor: string }[]
 
   const handleLeave = (
@@ -93,7 +91,6 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
       testimonials: "doorway",
       blog: "pageCurlLeft",
       contact: "burn",
-      footer: "fade",
     }
 
     const nextEffect = transitionMatrix[destination.anchor] || "fade"
@@ -145,7 +142,6 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
                 key={section.anchor}
                 className={classNames(
                   "section",
-                  section.anchor === "footer" ? "fp-auto-height" : "",
                   section.anchor === "home" ? "fp-noscroll" : "",
                 )}
               >

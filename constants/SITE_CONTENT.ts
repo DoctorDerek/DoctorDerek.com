@@ -126,30 +126,6 @@ export const BLOG_METRICS: BlogMetrics = {
   mediumFollowers: 21936,
 } as const
 
-export type LegalDisclaimer = {
-  aiDisclosure: string[]
-  websiteDisclaimer: string[]
-}
-
-export const LEGAL_DISCLAIMER: LegalDisclaimer = {
-  aiDisclosure: [
-    "Hello, fellow human! I’m Dr. Derek Austin. Thanks for visiting! 👋",
-    "I use LLMs to augment 100% of my software engineering, code architecture, data visualization, and proofreading.",
-    "On my Medium blog (Career Programming and According to Context), I use LLMs for data visualization and proofreading ONLY.",
-    "I do not use AI-generated images, video, nor text on Career Programming or According to Context.",
-  ],
-  websiteDisclaimer: [
-    "I have taken care when crafting my opinions and compiling data / facts, but errors WILL occur. **Please fact check me!**",
-    "This content is for entertainment and educational purposes ONLY. It does NOT constitute career, financial, legal, health, psychological, or any other type of professional advice.",
-    "I have included ALL content relating to the conduct, views, activities, and/or aspects of ALL persons or characters for ENTERTAINMENT PURPOSES ONLY.",
-    "This website does NOT represent an assertion of fact on those matters or any matters related to ANY persons, living or dead.",
-    "ALL included data / facts should be considered illustrative, NOT definitive; thus, the website’s veracity should not be relied on under ANY circumstances beyond ENTERTAINMENT.",
-    "THIS WEBSITE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED!",
-    "IN NO EVENT SHALL I BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THIS WEBSITE.",
-    "Side effects may include systems thinking. BROWSE AT YOUR OWN RISK! 😉🫡🦝",
-  ],
-} as const
-
 export type Testimonial = {
   id: number
   name: string

@@ -142,6 +142,11 @@ export type SocialLink = {
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
+    id: "github",
+    label: "GitHub",
+    url: "https://github.com/DoctorDerek",
+  },
+  {
     id: "medium",
     label: "Medium",
     url: "https://doctorderek.medium.com/",
@@ -156,9 +161,9 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: "Inquire",
   },
   {
-    id: "github",
-    label: "GitHub",
-    url: "https://github.com/DoctorDerek",
+    id: "linkedin",
+    label: "LinkedIn",
+    url: "https://www.linkedin.com/in/doctorderek",
   },
 ] as const
 

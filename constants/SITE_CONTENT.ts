@@ -41,7 +41,8 @@ export const ABOUT_BIO_LONG: string[] = [
   "I leverage frontier LLMs like Gemini Deep Think and Claude Opus every day, but I explicitly reject the technical debt of “vibe coding.”",
   "When using agentic and other AI-assisted SWE tools, I still take full ownership of the codebase and accountability for results.",
   "Using my strict 5-Step Forge (Plan, Build, Test, Reflect) and 40 “Anti-Slop” pillars, I build with deterministic state machines (XState) and scrub AI slop from my codebases.",
-  "This methodology drives my 10× development velocity across disparate stacks: Next.js, TypeScript, Node.js, and Postgres for cloud-native SaaS; and React Native + Expo for cross-platform mobile apps.",
+  "This methodology drives my 10× development velocity across disparate stacks: Next.js, TypeScript, Tailwind CSS, Node.js, and Postgres for cloud-native SaaS; and React Native + Expo for cross-platform mobile apps.",
+  "I enforce code quality with automated testing (React Testing Library, Playwright), CI/CD pipelines (GitHub Actions, Docker), and production deployments to Vercel and AWS.",
   "I’m a US citizen based in Puebla, Mexico, where I live with my wife and our two cats. I work remotely on US Pacific Time.",
   "Contact me if you need a code owner who values results, accountability, and world-class UI/UX.",
 ] as const
@@ -67,6 +68,7 @@ export const CONTACT_BULLETS: string[] = [
   "I architect, build, and scale deterministic software systems using elite, AI-augmented engineering approaches including agentic SWE workflows.",
   "I’ve built my career around taking broken MVPs—whether delivered by underperforming agencies or AI—and turning them into real apps.",
   "I partner with founders and early-stage startups as a full-time code owner to deliver 10x velocity without the technical debt of “vibe coding.”",
+  "I deliver MVPs in under 3 months, and I’ve improved web performance by up to 90% and page speed by 60×.",
 ] as const
 export const CONTACT_CTA = "Contact Me" as const
 

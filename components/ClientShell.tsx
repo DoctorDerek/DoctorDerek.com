@@ -1,4 +1,5 @@
-import Head from "next/head"
+"use client"
+
 import React, { useState } from "react"
 import ReactFullpage from "@fullpage/react-fullpage"
 import {
@@ -11,6 +12,24 @@ import {
   FullPageSection,
 } from "@/types/MapacheFullPageProps"
 import classNames from "@/utils/classNames"
+import { GlobalStateContext } from "@/machines/globalMachine"
+import GlobalBackground from "@/components/GlobalBackground"
+import CustomCursor from "@/components/ui/CustomCursor"
+import IntroSection from "@/components/IntroSection"
+import AboutSection from "@/components/AboutSection"
+import DrMapacheSection from "@/components/DrMapacheSection"
+import AiConsultancySection from "@/components/AiConsultancySection"
+import WorkExperienceSection from "@/components/WorkExperienceSection"
+import Testimonials from "@/components/Testimonials"
+import BlogSection from "@/components/BlogSection"
+import ContactSection from "@/components/ContactSection"
+import TopSection from "@/components/TopSection"
+import dynamic from "next/dynamic"
+import type { MediumPost } from "@/utils/medium"
+
+const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
+  ssr: false,
+})
 
 const pluginWrapper = () => {
   require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
@@ -27,33 +46,7 @@ const pluginWrapper = () => {
 const MapacheFullPage =
   ReactFullpage as unknown as React.FC<MapacheFullPageProps>
 
-import IntroSection from "@/components/IntroSection"
-import AboutSection from "@/components/AboutSection"
-import DrMapacheSection from "@/components/DrMapacheSection"
-import AiConsultancySection from "@/components/AiConsultancySection"
-import WorkExperienceSection from "@/components/WorkExperienceSection"
-import Testimonials from "@/components/Testimonials"
-import BlogSection from "@/components/BlogSection"
-import ContactSection from "@/components/ContactSection"
-import TopSection from "@/components/TopSection"
-import getMediumPosts, { MediumPost } from "@/utils/medium"
-import dynamic from "next/dynamic"
-
-const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
-  ssr: false,
-})
-
-export async function getStaticProps() {
-  const posts = await getMediumPosts()
-  return {
-    props: {
-      posts,
-    },
-    revalidate: 86400,
-  }
-}
-
-export default function Home({ posts }: { posts: MediumPost[] }) {
+export default function ClientShell({ posts }: { posts: MediumPost[] }) {
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
 
   const sectionsContent = [
@@ -98,14 +91,9 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
   }
 
   return (
-    <>
-      <Head>
-        <title>
-          Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-Stack
-          SWE, & Content Creator
-        </title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
+    <GlobalStateContext.Provider>
+      <GlobalBackground />
+      <CustomCursor />
       <RiveAnimation />
 
       <MapacheFullPage
@@ -159,6 +147,6 @@ export default function Home({ posts }: { posts: MediumPost[] }) {
           </ReactFullpage.Wrapper>
         )}
       />
-    </>
+    </GlobalStateContext.Provider>
   )
 }

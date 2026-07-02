@@ -1,4 +1,3 @@
-import Image from "next/image"
 import CodeIcon from "@/images/codeIcon.svg"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"

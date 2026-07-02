@@ -13,7 +13,7 @@ export default function CustomCursor() {
   const cursorYSpring = useSpring(cursorY, springConfig)
 
   useEffect(() => {
-    setIsMounted(true)
+    setTimeout(() => setIsMounted(true), 0)
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 16) // Offset by half of 32px width
       cursorY.set(e.clientY - 16) // Offset by half of 32px height

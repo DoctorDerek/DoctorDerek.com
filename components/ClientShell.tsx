@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import { useState } from "react"
 import ReactFullpage from "@fullpage/react-fullpage"
 import {
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,

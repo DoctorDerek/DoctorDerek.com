@@ -1,4 +1,3 @@
-import React from "react"
 import Image from "next/image"
 import { MediumPost } from "@/utils/medium"
 import SectionHeading from "@/components/ui/SectionHeading"

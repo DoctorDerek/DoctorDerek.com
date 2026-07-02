@@ -1,6 +1,7 @@
 import { execSync } from "child_process"
 import { existsSync, mkdirSync } from "fs"
 import { join } from "path"
+import { getErrorMessage } from "../utils/errors"
 
 type GhostArchive = {
   name: string
@@ -74,7 +75,7 @@ try {
   console.log("[$̲̅(̲̅ιοο̲̅)̲̅$̲̅] Proceeding with Vercel build...")
   console.log("=========================================")
 } catch (error) {
-  const message = error instanceof Error ? error.message : String(error)
+  const message = getErrorMessage(error)
   console.error("❌ FATAL ERROR: Decryption failed.")
   console.error(message)
   console.error(

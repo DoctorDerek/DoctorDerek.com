@@ -15,15 +15,14 @@ export default function CustomCursor() {
   useEffect(() => {
     setTimeout(() => setIsMounted(true), 0)
     const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX - 16) // Offset by half of 32px width
-      cursorY.set(e.clientY - 16) // Offset by half of 32px height
+      cursorX.set(e.clientX - 16)
+      cursorY.set(e.clientY - 16)
       setIsVisible(true)
     }
 
     const handleMouseLeave = () => setIsVisible(false)
     const handleMouseEnter = () => setIsVisible(true)
 
-    // Passive listener prevents scrolling performance hits
     window.addEventListener("mousemove", moveCursor, { passive: true })
     document.addEventListener("mouseleave", handleMouseLeave)
     document.addEventListener("mouseenter", handleMouseEnter)

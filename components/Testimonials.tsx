@@ -1,4 +1,3 @@
-import React from "react"
 import Image from "next/image"
 import JohnDoe from "@/images/johndoe.png"
 import { TESTIMONIALS, type Testimonial } from "@/constants/SITE_CONTENT"

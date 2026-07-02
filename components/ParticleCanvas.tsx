@@ -75,13 +75,14 @@ class Particle {
 
       if (distance < INFLUENCE_RADIUS && distance > 0) {
         const normalizedDistance = 1 - distance / INFLUENCE_RADIUS
-        const force = normalizedDistance * normalizedDistance * REPULSION_STRENGTH
+        const force =
+          normalizedDistance * normalizedDistance * REPULSION_STRENGTH
         const angle = Math.atan2(dy, dx)
         this.vx += Math.cos(angle) * force
         this.vy += Math.sin(angle) * force
         this.radius =
           this.baseRadius +
-          (this.baseRadius * (GLOW_RADIUS_MULTIPLIER - 1) * normalizedDistance)
+          this.baseRadius * (GLOW_RADIUS_MULTIPLIER - 1) * normalizedDistance
       } else {
         this.radius += (this.baseRadius - this.radius) * 0.1
       }

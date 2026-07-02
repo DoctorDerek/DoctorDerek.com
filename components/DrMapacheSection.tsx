@@ -1,4 +1,3 @@
-import React from "react"
 import SectionHeading from "@/components/ui/SectionHeading"
 
 export default function DrMapacheSection() {

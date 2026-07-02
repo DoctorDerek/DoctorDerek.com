@@ -16,6 +16,12 @@ const eslintConfig = [
       "reference/**",
     ],
   },
+  {
+    files: ["components/ClientShell.tsx"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
 ]
 
 export default eslintConfig

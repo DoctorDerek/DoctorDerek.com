@@ -13,9 +13,7 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
-      ".yarn/**",
       "reference/**",
-      ".pnp.cjs",
     ],
   },
 ]

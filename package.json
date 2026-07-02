@@ -3,7 +3,7 @@
   "version": "0.8.0",
   "private": true,
   "scripts": {
-    "postinstall": "yarn node --import jiti/register scripts/decrypt-assets.ts",
+    "postinstall": "node --import jiti/register scripts/decrypt-assets.ts",
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
@@ -46,10 +46,5 @@
   "engines": {
     "node": "24.x"
   },
-  "packageManager": "yarn@4.16.0",
-  "dependenciesMeta": {
-    "prettier-plugin-tailwindcss@0.7.2": {
-      "unplugged": true
-    }
-  }
+  "packageManager": "pnpm@11.9.0+sha512.bd682d5d03fe525ef7c9fd6780c6884d1e756ac4c9c9fe00c538782824310dcf90e3ddc4f53835f06dfaebd5085e41855e0bcbb3b60de2ac5bbab89e5036f03b"
 }

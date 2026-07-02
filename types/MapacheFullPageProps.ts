@@ -58,7 +58,6 @@ export type MapacheFullPageProps = {
   }) => React.ReactElement
   anchors?: string[]
 
-  // Standard fullPage.js options
   licenseKey?: string
   menu?: string
   lockAnchors?: boolean
@@ -99,10 +98,8 @@ export type MapacheFullPageProps = {
   responsiveWidth?: number
   responsiveHeight?: number
 
-  // Credits option
   credits?: { enabled?: boolean; label?: string; position?: string }
 
-  // Extension Keys
   cardsKey?: string
   cinematicKey?: string
   continuousHorizontalKey?: string
@@ -119,7 +116,6 @@ export type MapacheFullPageProps = {
   scrollOverflowResetKey?: string
   waterEffectKey?: string
 
-  // Extension toggles
   cards?: boolean | "slides" | "sections"
   cinematic?: boolean
   continuousHorizontal?: boolean
@@ -141,7 +137,6 @@ export type MapacheFullPageProps = {
   scrollOverflowReset?: boolean | "sections" | "slides"
   waterEffect?: boolean
 
-  // Extension options
   cardsOptions?: {
     perspective?: number
     fadeContent?: boolean
@@ -169,7 +164,6 @@ export type MapacheFullPageProps = {
     animateOnMouseMove?: boolean
   }
 
-  // Callbacks
   onLeave?: (
     origin: FullPageSection,
     destination: FullPageSection,

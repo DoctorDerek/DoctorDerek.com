@@ -16,7 +16,6 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
         </SectionHeading>
       </div>
 
-      {/* Slide 1: Metrics */}
       <div className="slide">
         <div className="flex h-full w-full items-center justify-center p-4">
           <div className="mx-auto mt-16 w-full max-w-4xl translate-y-12 rounded-2xl border border-white/10 bg-black/40 p-6 text-white opacity-0 shadow-2xl backdrop-blur-md transition-all duration-700 ease-spring-soft md:mt-24 md:p-12 [.active_&]:translate-y-0 [.active_&]:opacity-100">
@@ -81,7 +80,6 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
         </div>
       </div>
 
-      {/* Slide 2+: Individual Posts */}
       {posts.map((post) => (
         <div className="slide" key={post.link}>
           <div className="flex h-full w-full items-center justify-center p-4">

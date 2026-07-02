@@ -11,13 +11,14 @@ export interface MediumPost {
 const decodeEntities = (str: string) => {
   return (
     str
-      // Decode hexadecimal numeric entities (e.g., &#x201C;)
+      /**
+       * APPROVED EXCEPTION TO NO CODE COMMENT RULE:
+       * Decode hex/decimal and common named HTML entities
+       */
       .replace(/&#x([0-9A-Fa-f]+);/gi, (_, hex) =>
         String.fromCodePoint(parseInt(hex, 16)),
       )
-      // Decode decimal numeric entities (e.g., &#8220;)
       .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
-      // Decode common named entities
       .replace(/&quot;/g, "”")
       .replace(/&apos;/g, "’")
       .replace(/&amp;/g, "&")
@@ -42,7 +43,10 @@ export default async function getMediumPosts(): Promise<MediumPost[]> {
     const content =
       item["content:encoded"] || item.content || item.description || ""
 
-    // Find all images, select the first that isn't a tracking pixel
+    /**
+     * APPROVED EXCEPTION TO NO CODE COMMENT RULE: Find all images,
+     * skip Medium's 1x1 invisible tracking pixel (stat.medium.com)
+     */
     const imgMatches = Array.from(
       content.matchAll(/<img[^>]+src="([^">]+)"/g),
     ) as RegExpMatchArray[]

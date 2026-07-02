@@ -21,8 +21,8 @@ const nextConfig: NextConfig = {
      * SVG loader to apply @svgr/webpack while negating ?url query
      */
     const fileLoaderRule = config.module.rules.find(
-      (rule: { test?: { test?: (val: string) => boolean } }) =>
-        rule.test?.test?.(".svg"),
+      (rule: { test?: RegExp | ((val: string) => boolean) }) =>
+        rule.test instanceof RegExp && rule.test.test(".svg"),
     )
 
     config.module.rules.push(

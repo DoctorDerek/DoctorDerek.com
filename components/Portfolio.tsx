@@ -1,61 +1,15 @@
 import React, { useState } from "react"
 import Modal from "./Modal"
 import SectionHeading from "@/components/ui/SectionHeading"
-
-const projects = [
-  {
-    projectTitle: "Project Title Lorem Ipsum Dolor Sit Amet",
-    details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
-    isClicked: false,
-  },
-  {
-    projectTitle: "2nd item",
-    details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
-    isClicked: false,
-  },
-  {
-    projectTitle: "3rd item",
-    details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
-    isClicked: false,
-  },
-  {
-    projectTitle: "4th item",
-    details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
-    isClicked: false,
-  },
-  {
-    projectTitle: "5th item",
-    details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
-    isClicked: false,
-  },
-  {
-    projectTitle: "6th item",
-    details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
-    isClicked: false,
-  },
-]
+import {
+  PORTFOLIO_PROJECTS,
+  type PortfolioProject,
+} from "@/constants/SITE_CONTENT"
 
 export default function Portfolio() {
   const [portfolioWork, setPortfolioWork] = useState<
-    {
-      projectTitle: string
-      details: string
-      tech: string[]
-      isClicked: boolean
-    }[]
-  >(projects)
+    (PortfolioProject & { isClicked: boolean })[]
+  >(PORTFOLIO_PROJECTS.map((p) => ({ ...p, isClicked: false })))
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const handleModal = (projectName: string) => {

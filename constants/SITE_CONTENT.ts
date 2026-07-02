@@ -225,3 +225,48 @@ export const TESTIMONIALS: Testimonial[] = [
       "I came across Dr. Derek’s articles on Medium and was always fascinated by how detailed and well-presented they were. He has fantastic writing skills that make it hard for a reader to stop reading once they started.\n\nI attended his talk at Momentum 2021, and even though I’m not an SEO geek, I found his talk incredibly valuable. It gave me a lot of things to think about when I write, and some important information about how to structure a headline that gives you clicks.\n\nDr. Derek is also a fantastic editor. He edited an article that took me the longest time to write, and with his inputs, it became even better. If you’re ever looking for a technical writer, an editor, or an SEO specialist, I can’t recommend Dr. Derek enough.",
   },
 ]
+
+export type PortfolioProject = {
+  projectTitle: string
+  details: string
+  tech: string[]
+}
+
+export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
+  {
+    projectTitle: "Project Title Lorem Ipsum Dolor Sit Amet",
+    details:
+      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
+    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+  },
+  {
+    projectTitle: "2nd item",
+    details:
+      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
+    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+  },
+  {
+    projectTitle: "3rd item",
+    details:
+      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
+    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+  },
+  {
+    projectTitle: "4th item",
+    details:
+      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
+    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+  },
+  {
+    projectTitle: "5th item",
+    details:
+      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
+    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+  },
+  {
+    projectTitle: "6th item",
+    details:
+      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
+    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+  },
+] as const

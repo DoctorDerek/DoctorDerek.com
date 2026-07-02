@@ -6,6 +6,10 @@ import {
   type PortfolioProject,
 } from "@/constants/SITE_CONTENT"
 
+/**
+ * APPROVED EXCEPTION TO NO CODE COMMENT RULE:
+ * This component is intentionally unused at this time.
+ */
 export default function Portfolio() {
   const [portfolioWork, setPortfolioWork] = useState<
     (PortfolioProject & { isClicked: boolean })[]

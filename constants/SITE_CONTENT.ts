@@ -232,6 +232,10 @@ export type PortfolioProject = {
   tech: string[]
 }
 
+/**
+ * APPROVED EXCEPTION TO NO CODE COMMENT RULE:
+ * This content is intentionally unused at this time.
+ */
 export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "Project Title Lorem Ipsum Dolor Sit Amet",

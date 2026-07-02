@@ -40,13 +40,17 @@ export type FullPageApi = {
   setResponsive: (value: boolean) => void
 }
 
+export type FullPageDirection = "up" | "down" | "left" | "right" | "none"
+export type FullPageTrigger =
+  "wheel" | "keydown" | "menu" | "nav" | "slideArrow" | "verticalNav"
+
 export type FullPageState = {
   initialized: boolean
   sectionCount: number
   slideCount: number
   destination: FullPageSection | null
-  direction: string | null
-  lastEvent: string | null
+  direction: FullPageDirection | null
+  lastEvent: FullPageTrigger | null
 }
 
 export type MapacheFullPageProps = {
@@ -120,13 +124,24 @@ export type MapacheFullPageProps = {
   cinematic?: boolean
   continuousHorizontal?: boolean
   dragAndMove?:
-    | boolean
-    | "vertical"
-    | "horizontal"
-    | "fingersonly"
-    | "mouseonly"
+    boolean | "vertical" | "horizontal" | "fingersonly" | "mouseonly"
   dropEffect?: boolean
-  effects?: boolean | string
+  effects?:
+    | boolean
+    | "cards"
+    | "cinematic"
+    | "continuousHorizontal"
+    | "dragAndMove"
+    | "dropEffect"
+    | "fadingEffect"
+    | "interlockedSlides"
+    | "offsetSections"
+    | "parallax"
+    | "resetSliders"
+    | "responsiveSlides"
+    | "scrollHorizontally"
+    | "scrollOverflowReset"
+    | "waterEffect"
   fadingEffect?: boolean | "sections" | "slides"
   interlockedSlides?: boolean | number[]
   offsetSections?: boolean
@@ -167,14 +182,14 @@ export type MapacheFullPageProps = {
   onLeave?: (
     origin: FullPageSection,
     destination: FullPageSection,
-    direction: string,
-    trigger?: string,
+    direction: FullPageDirection,
+    trigger?: FullPageTrigger,
   ) => void
   afterLoad?: (
     origin: FullPageSection,
     destination: FullPageSection,
-    direction: string,
-    trigger?: string,
+    direction: FullPageDirection,
+    trigger?: FullPageTrigger,
   ) => void
   afterRender?: () => void
   afterResize?: (width: number, height: number) => void
@@ -184,14 +199,14 @@ export type MapacheFullPageProps = {
     section: FullPageSection,
     origin: FullPageSlide,
     destination: FullPageSlide,
-    direction: string,
-    trigger?: string,
+    direction: FullPageDirection,
+    trigger?: FullPageTrigger,
   ) => void
   onSlideLeave?: (
     section: FullPageSection,
     origin: FullPageSlide,
     destination: FullPageSlide,
-    direction: string,
-    trigger?: string,
+    direction: FullPageDirection,
+    trigger?: FullPageTrigger,
   ) => void
 }

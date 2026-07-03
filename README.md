@@ -7,10 +7,10 @@ The personal website of [Dr. Derek Austin](https://doctorderek.com).
 This repository contains the frontend source code for my website.
 
 - **Framework:** Next.js 16, React 19
-- **Language:** TypeScript 5 (Strict Mode)
+- **Language:** TypeScript 6 (Strict Mode)
 - **Styling:** Tailwind CSS v4
 - **State Management:** XState v5
-- **Animations:** Tailwind CSS, Framer Motion, and Rive
+- **Animations:** Tailwind CSS, Motion, and Rive
 
 ## Architectural Highlights
 

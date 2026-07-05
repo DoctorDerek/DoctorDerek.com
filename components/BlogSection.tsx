@@ -1,8 +1,8 @@
-import Image from "next/image"
-import { MediumPost } from "@/utils/medium"
-import SectionHeading from "@/components/ui/SectionHeading"
 import CountUp from "@/components/ui/CountUp"
+import SectionHeading from "@/components/ui/SectionHeading"
 import { BLOG_METRICS } from "@/constants/SITE_CONTENT"
+import { MediumPost } from "@/utils/medium"
+import Image from "next/image"
 
 export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   return (

@@ -1,4 +1,5 @@
 "use client"
+
 import { useEffect, useRef } from "react"
 
 const INFLUENCE_RADIUS = 150

@@ -1,10 +1,10 @@
-import { useState } from "react"
-import Image from "next/image"
+import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
+import SectionHeading from "@/components/ui/SectionHeading"
+import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
-import SectionHeading from "@/components/ui/SectionHeading"
-import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
-import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
+import Image from "next/image"
+import { useState } from "react"
 
 export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)

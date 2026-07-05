@@ -1,6 +1,9 @@
 module.exports = {
   semi: false,
-  plugins: [require.resolve("prettier-plugin-tailwindcss")],
+  plugins: [
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss",
+  ],
   tailwindStylesheet: "./styles/globals.css",
   tailwindAttributes: ["tw"],
   tailwindFunctions: ["tw", "classNames"],

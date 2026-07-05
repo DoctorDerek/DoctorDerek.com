@@ -1,5 +1,5 @@
-import Image from "next/image"
 import { MediumPost } from "@/utils/medium"
+import Image from "next/image"
 
 export default function PostsSection({ posts }: { posts: MediumPost[] }) {
   return (

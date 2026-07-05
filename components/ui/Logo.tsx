@@ -1,6 +1,6 @@
-import { GlobalStateContext } from "@/machines/globalMachine"
 import LogoDefault from "@/images/Logo-Default-Landscape.svg"
 import LogoSecondary from "@/images/Logo-Secondary-Portrait.svg"
+import { GlobalStateContext } from "@/machines/globalMachine"
 import classNames from "@/utils/classNames"
 
 type LogoProps = {

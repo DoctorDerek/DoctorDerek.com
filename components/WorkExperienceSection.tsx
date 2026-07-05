@@ -1,8 +1,8 @@
-import CodeIcon from "@/images/codeIcon.svg"
-import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
-import classNames from "@/utils/classNames"
-import SectionHeading from "@/components/ui/SectionHeading"
 import CountUp from "@/components/ui/CountUp"
+import SectionHeading from "@/components/ui/SectionHeading"
+import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
+import CodeIcon from "@/images/codeIcon.svg"
+import classNames from "@/utils/classNames"
 
 export default function WorkExperienceSection() {
   const combinedLists = [...ARCHITECT_EVOLUTION]

@@ -1,10 +1,10 @@
 import Logo from "@/components/ui/Logo"
-import Navbar from "./Navbar"
+import { INTRO_BIO_SHORT } from "@/constants/SITE_CONTENT"
 import TypewriterComponent, {
   type Options,
   type TypewriterClass,
 } from "typewriter-effect"
-import { INTRO_BIO_SHORT } from "@/constants/SITE_CONTENT"
+import Navbar from "./Navbar"
 
 const TypewriterOptions: Options = { delay: 25, loop: true, deleteSpeed: 10 }
 

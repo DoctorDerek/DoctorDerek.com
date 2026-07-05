@@ -1,5 +1,5 @@
-import SocialLinks from "./ui/SocialLinks"
 import { INTRO_BIO_SHORT } from "@/constants/SITE_CONTENT"
+import SocialLinks from "./ui/SocialLinks"
 
 export default function IntroSection() {
   return (

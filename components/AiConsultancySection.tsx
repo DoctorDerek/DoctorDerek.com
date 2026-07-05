@@ -1,5 +1,5 @@
-import SectionHeading from "@/components/ui/SectionHeading"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
+import SectionHeading from "@/components/ui/SectionHeading"
 import { AI_CONSULTANCY_PITCH } from "@/constants/SITE_CONTENT"
 
 export default function AiConsultancySection() {

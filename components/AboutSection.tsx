@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react"
+import SectionHeading from "@/components/ui/SectionHeading"
 import { ABOUT_BIO_LONG, SHOW_DR_MAPACHE } from "@/constants/SITE_CONTENT"
 import DerekAustin from "@/images/DerekAustin.png"
 import DerekAustin2 from "@/images/DerekAustin2.jpg"
 import DerekAustin3 from "@/images/DerekAustin3.jpg"
 import Image from "next/image"
-import SectionHeading from "@/components/ui/SectionHeading"
+import { useEffect, useRef, useState } from "react"
 
 export default function AboutSection() {
   const [flipCount, setFlipCount] = useState(0)

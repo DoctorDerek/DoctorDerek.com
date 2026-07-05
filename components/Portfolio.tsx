@@ -1,10 +1,10 @@
-import { useState } from "react"
-import Modal from "./Modal"
 import SectionHeading from "@/components/ui/SectionHeading"
 import {
   PORTFOLIO_PROJECTS,
   type PortfolioProject,
 } from "@/constants/SITE_CONTENT"
+import { useState } from "react"
+import Modal from "./Modal"
 
 /**
  * APPROVED EXCEPTION TO NO CODE COMMENT RULE:

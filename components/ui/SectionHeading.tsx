@@ -1,6 +1,6 @@
+import classNames from "@/utils/classNames"
 import { ReactNode } from "react"
 import Tilt from "react-parallax-tilt"
-import classNames from "@/utils/classNames"
 
 type SectionHeadingProps = {
   children: ReactNode

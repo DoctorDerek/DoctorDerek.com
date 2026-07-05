@@ -1,7 +1,7 @@
-import Image from "next/image"
-import JohnDoe from "@/images/johndoe.png"
-import { TESTIMONIALS, type Testimonial } from "@/constants/SITE_CONTENT"
 import SectionHeading from "@/components/ui/SectionHeading"
+import { TESTIMONIALS, type Testimonial } from "@/constants/SITE_CONTENT"
+import JohnDoe from "@/images/johndoe.png"
+import Image from "next/image"
 
 const Testimonials = () => {
   return (

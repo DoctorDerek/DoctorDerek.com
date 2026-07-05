@@ -1,9 +1,9 @@
+import { useState } from "react"
 import SectionHeading from "@/components/ui/SectionHeading"
 import {
   PORTFOLIO_PROJECTS,
   type PortfolioProject,
 } from "@/constants/SITE_CONTENT"
-import { useState } from "react"
 import Modal from "./Modal"
 
 /**
@@ -38,7 +38,7 @@ export default function Portfolio() {
           <div className="flex h-full w-full items-center justify-center p-8">
             <div
               onClick={() => handleModal(item.projectTitle)}
-              className="flex h-full max-h-[60vh] w-full max-w-4xl scale-95 cursor-pointer flex-col justify-around rounded-3xl border border-white/20 bg-white/10 p-8 text-white opacity-0 backdrop-blur-md transition-all duration-300 ease-spring-bouncy hover:scale-[1.02] hover:bg-white/20 md:p-16 [.active_&]:scale-100 [.active_&]:opacity-100"
+              className="ease-spring-bouncy flex h-full max-h-[60vh] w-full max-w-4xl scale-95 cursor-pointer flex-col justify-around rounded-3xl border border-white/20 bg-white/10 p-8 text-white opacity-0 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:bg-white/20 md:p-16 [.active_&]:scale-100 [.active_&]:opacity-100"
             >
               <div className="mx-auto mb-8 h-[25vh] w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md"></div>
               <h3 className="restorabold mb-4 text-3xl lg:text-5xl">

@@ -1,5 +1,5 @@
-import { AI_CONSULTANCY_PITCH } from "@/constants/SITE_CONTENT"
 import { Email } from "react-obfuscate-email"
+import { AI_CONSULTANCY_PITCH } from "@/constants/SITE_CONTENT"
 
 type GlobalEmailCTAProps = {
   className?: string

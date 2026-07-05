@@ -1,5 +1,8 @@
 "use client"
 
+import ReactFullpage from "@fullpage/react-fullpage"
+import dynamic from "next/dynamic"
+import { useState } from "react"
 import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import BlogSection from "@/components/BlogSection"
@@ -23,9 +26,6 @@ import {
 } from "@/types/MapacheFullPageProps"
 import classNames from "@/utils/classNames"
 import type { MediumPost } from "@/utils/medium"
-import ReactFullpage from "@fullpage/react-fullpage"
-import dynamic from "next/dynamic"
-import { useState } from "react"
 
 const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
   ssr: false,
@@ -137,7 +137,7 @@ export default function ClientShell({ posts }: { posts: MediumPost[] }) {
                 {index < sectionsContent.length - 1 && (
                   <a
                     href={`#${sectionsContent[index + 1].anchor}`}
-                    className="sr-only rounded-lg bg-black/60 px-6 py-3 font-semibold text-white ring-2 ring-yellow-400 backdrop-blur-md transition-all ease-spring-bouncy outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
+                    className="ease-spring-bouncy sr-only rounded-lg bg-black/60 px-6 py-3 font-semibold text-white ring-2 ring-yellow-400 backdrop-blur-md transition-all outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
                   >
                     Skip to next section ↓
                   </a>

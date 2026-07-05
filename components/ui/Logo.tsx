@@ -19,7 +19,7 @@ export default function Logo({ className }: LogoProps) {
       style={{ perspective: "1000px" }}
     >
       <div
-        className="h-full w-full cursor-pointer transition-transform duration-300 ease-spring-bouncy hover:scale-105 active:scale-95"
+        className="ease-spring-bouncy h-full w-full cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95"
         onClick={(e) => {
           e.preventDefault()
           send({ type: "TOGGLE_LOGO" })

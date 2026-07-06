@@ -1,11 +1,10 @@
-import { useState } from "react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
-import Logo from "@/components/ui/Logo"
-import classNames from "@/utils/classNames"
 import Link from "next/link"
-import SocialLinks from "./ui/SocialLinks"
-
+import { useState } from "react"
+import Logo from "@/components/ui/Logo"
 import { SHOW_DR_MAPACHE } from "@/constants/SITE_CONTENT"
+import classNames from "@/utils/classNames"
+import SocialLinks from "./ui/SocialLinks"
 
 const navigation = [
   { name: "About", anchor: "about", current: true },
@@ -58,7 +57,7 @@ export default function Navbar() {
                   <li className="hover:text-white" key={item.name}>
                     <a
                       href={`#${item.anchor}`}
-                      className="md:restora-bold block py-2 text-5xl font-semibold transition-all duration-300 ease-spring-bouncy hover:scale-105 hover:text-white active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
+                      className="md:restora-bold ease-spring-bouncy block py-2 text-5xl font-semibold transition-all duration-300 hover:scale-105 hover:text-white active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
                       onClick={() => setSidebarOpen(false)}
                     >
                       {item.name}

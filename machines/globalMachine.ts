@@ -1,5 +1,5 @@
-import { assign, setup } from "xstate"
 import { createActorContext } from "@xstate/react"
+import { assign, setup } from "xstate"
 
 export const BACKGROUND_COUNT = 5
 

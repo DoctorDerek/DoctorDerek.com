@@ -1,5 +1,5 @@
+import { Alignment, Fit, Layout, useRive } from "@rive-app/react-canvas"
 import { useState } from "react"
-import { useRive, Layout, Fit, Alignment } from "@rive-app/react-canvas"
 
 export default function RiveAnimation() {
   const [hasError, setHasError] = useState(false)

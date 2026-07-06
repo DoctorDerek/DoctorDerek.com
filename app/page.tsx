@@ -1,5 +1,5 @@
-import getMediumPosts from "@/utils/medium"
 import ClientShell from "@/components/ClientShell"
+import getMediumPosts from "@/utils/medium"
 
 export const revalidate = 86400
 

@@ -11,7 +11,7 @@ export default function PostsSection({ posts }: { posts: MediumPost[] }) {
               href={post.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group mx-auto flex h-[65vh] w-full max-w-2xl scale-95 flex-col overflow-hidden rounded-2xl border border-white/20 bg-black/40 opacity-0 shadow-2xl backdrop-blur-md transition-transform duration-300 ease-spring-bouncy hover:-translate-y-2 hover:scale-[1.02] [.active_&]:scale-100 [.active_&]:opacity-100"
+              className="group ease-spring-bouncy mx-auto flex h-[65vh] w-full max-w-2xl scale-95 flex-col overflow-hidden rounded-2xl border border-white/20 bg-black/40 opacity-0 shadow-2xl backdrop-blur-md transition-transform duration-300 hover:-translate-y-2 hover:scale-[1.02] [.active_&]:scale-100 [.active_&]:opacity-100"
             >
               <div className="relative h-1/2 w-full shrink-0 border-b border-white/20 bg-[#1E1E1E]">
                 <p className="absolute top-3 left-4 z-10 rounded-tr-xl border border-white/20 bg-black/60 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">

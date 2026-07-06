@@ -1,14 +1,14 @@
 "use client"
 
 import { AnimatePresence, motion } from "motion/react"
-import { GlobalStateContext } from "@/machines/globalMachine"
-import Background0 from "@/images/Background.svg"
 import Background1 from "@/images/Background-1.svg"
 import Background2 from "@/images/Background-2.svg"
 import Background3 from "@/images/Background-3.svg"
 import Background4 from "@/images/Background-4.svg"
 import Background5 from "@/images/Background-5.svg"
 import Background6 from "@/images/Background-6.svg"
+import Background0 from "@/images/Background.svg"
+import { GlobalStateContext } from "@/machines/globalMachine"
 import ParticleCanvas from "./ParticleCanvas"
 
 const BACKGROUNDS = [
@@ -34,7 +34,7 @@ export default function GlobalBackground() {
   const key = `bg-${bgIndex}-${useInverse ? "inverse" : "standard"}`
 
   return (
-    <div className="pointer-events-none fixed inset-0 -z-20 h-full w-full animate-rainbow-vivid">
+    <div className="animate-rainbow-vivid pointer-events-none fixed inset-0 -z-20 h-full w-full">
       <ParticleCanvas />
       <AnimatePresence initial={false}>
         <motion.div

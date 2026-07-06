@@ -1,30 +1,30 @@
 "use client"
 
-import { useState } from "react"
 import ReactFullpage from "@fullpage/react-fullpage"
-import {
-  FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
-  FULLPAGE_ACTIVATION_KEYS,
-  SHOW_DR_MAPACHE,
-} from "@/constants/SITE_CONTENT"
-import {
-  MapacheFullPageProps,
-  FullPageSection,
-} from "@/types/MapacheFullPageProps"
-import classNames from "@/utils/classNames"
-import { GlobalStateContext } from "@/machines/globalMachine"
-import GlobalBackground from "@/components/GlobalBackground"
-import CustomCursor from "@/components/ui/CustomCursor"
-import IntroSection from "@/components/IntroSection"
+import dynamic from "next/dynamic"
+import { useState } from "react"
 import AboutSection from "@/components/AboutSection"
-import DrMapacheSection from "@/components/DrMapacheSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
-import WorkExperienceSection from "@/components/WorkExperienceSection"
-import Testimonials from "@/components/Testimonials"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
+import DrMapacheSection from "@/components/DrMapacheSection"
+import GlobalBackground from "@/components/GlobalBackground"
+import IntroSection from "@/components/IntroSection"
+import Testimonials from "@/components/Testimonials"
 import TopSection from "@/components/TopSection"
-import dynamic from "next/dynamic"
+import CustomCursor from "@/components/ui/CustomCursor"
+import WorkExperienceSection from "@/components/WorkExperienceSection"
+import {
+  FULLPAGE_ACTIVATION_KEYS,
+  FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
+  SHOW_DR_MAPACHE,
+} from "@/constants/SITE_CONTENT"
+import { GlobalStateContext } from "@/machines/globalMachine"
+import {
+  FullPageSection,
+  MapacheFullPageProps,
+} from "@/types/MapacheFullPageProps"
+import classNames from "@/utils/classNames"
 import type { MediumPost } from "@/utils/medium"
 
 const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
@@ -137,7 +137,7 @@ export default function ClientShell({ posts }: { posts: MediumPost[] }) {
                 {index < sectionsContent.length - 1 && (
                   <a
                     href={`#${sectionsContent[index + 1].anchor}`}
-                    className="sr-only rounded-lg bg-black/60 px-6 py-3 font-semibold text-white ring-2 ring-yellow-400 backdrop-blur-md transition-all ease-spring-bouncy outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
+                    className="ease-spring-bouncy sr-only rounded-lg bg-black/60 px-6 py-3 font-semibold text-white ring-2 ring-yellow-400 backdrop-blur-md transition-all outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
                   >
                     Skip to next section ↓
                   </a>

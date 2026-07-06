@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react"
+import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
+import SectionHeading from "@/components/ui/SectionHeading"
 import { ABOUT_BIO_LONG, SHOW_DR_MAPACHE } from "@/constants/SITE_CONTENT"
 import DerekAustin from "@/images/DerekAustin.png"
 import DerekAustin2 from "@/images/DerekAustin2.jpg"
 import DerekAustin3 from "@/images/DerekAustin3.jpg"
-import Image from "next/image"
-import SectionHeading from "@/components/ui/SectionHeading"
 
 export default function AboutSection() {
   const [flipCount, setFlipCount] = useState(0)
@@ -39,7 +39,7 @@ export default function AboutSection() {
   return (
     <div className="h-full w-full pt-2 pb-10 md:pt-3 md:pb-16">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-[90%]">
-        <div className="-translate-x-12 py-2 text-white opacity-0 drop-shadow-md transition-all duration-700 ease-spring-soft md:relative md:pt-2 md:pb-8 lg:pt-3 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+        <div className="ease-spring-soft -translate-x-12 py-2 text-white opacity-0 drop-shadow-md transition-all duration-700 md:relative md:pt-2 md:pb-8 lg:pt-3 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
           <SectionHeading>
             <h2 className="text-5xl font-semibold min-[375px]:text-6xl md:text-8xl lg:text-9xl">
               About
@@ -47,7 +47,7 @@ export default function AboutSection() {
           </SectionHeading>
         </div>
         <div className="relative pb-10 md:h-[60vh]">
-          <div className="w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 ease-spring-bouncy md:w-1/2 lg:w-[45%] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
+          <div className="ease-spring-bouncy w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:w-1/2 lg:w-[45%] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <div
               className="perspective animate-float"
               style={{ animationDelay: "0s", perspective: "1000px" }}
@@ -110,7 +110,7 @@ export default function AboutSection() {
               </div>
             </div>
           </div>
-          <div className="relative mt-8 translate-y-12 rounded-tl-3xl border border-white/20 bg-black/40 px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 ease-spring-soft md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[65%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-[60%] lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
+          <div className="ease-spring-soft relative mt-8 translate-y-12 rounded-tl-3xl border border-white/20 bg-black/40 px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[65%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-[60%] lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <div className="flex flex-col gap-4 lg:gap-6">
               <div className="scrollable-content max-h-[45vh] overflow-y-auto overscroll-contain pr-2 text-lg leading-7 text-white lg:text-xl lg:leading-9">
                 {ABOUT_BIO_LONG.map((paragraph, index) => (

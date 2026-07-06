@@ -1,12 +1,13 @@
 "use client"
-import { useEffect, useRef } from "react"
+
 import {
   animate,
+  motion,
   useInView,
   useMotionValue,
   useTransform,
-  motion,
 } from "motion/react"
+import { useEffect, useRef } from "react"
 import classNames from "@/utils/classNames"
 
 export default function CountUp({

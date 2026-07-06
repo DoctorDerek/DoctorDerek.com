@@ -2,8 +2,8 @@
 
 import { SOCIAL_LINKS, type SocialLink } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
-import Icon, { type IconName } from "./Icon"
 import GlobalEmailCTA from "./GlobalEmailCTA"
+import Icon, { type IconName } from "./Icon"
 
 export default function SocialLinks({
   fill = "#F38B57",

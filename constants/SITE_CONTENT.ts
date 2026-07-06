@@ -1,3 +1,12 @@
+import type { StaticImageData } from "next/image"
+import anangshaImage from "@/images/testimonials/anangsha-alammyan.jpg"
+import danImage from "@/images/testimonials/dan-haas.jpg"
+import johnImage from "@/images/testimonials/john-syme.jpg"
+import pranjalImage from "@/images/testimonials/pranjal-jain.jpg"
+import stevenImage from "@/images/testimonials/steven-terner.webp"
+import toriImage from "@/images/testimonials/tori-bonagura.jpg"
+import yosevuImage from "@/images/testimonials/yosevu-kilonzo.webp"
+
 export const FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS =
   process.env.NEXT_PUBLIC_FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS || ""
 export const FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS =
@@ -21,15 +30,6 @@ export const FULLPAGE_ACTIVATION_KEYS = {
   scrollOverflowReset:
     process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_SCROLL_OVERFLOW_RESET || "",
 } as const
-
-import type { StaticImageData } from "next/image"
-import pranjalImage from "@/images/testimonials/pranjal-jain.jpg"
-import anangshaImage from "@/images/testimonials/anangsha-alammyan.jpg"
-import danImage from "@/images/testimonials/dan-haas.jpg"
-import toriImage from "@/images/testimonials/tori-bonagura.jpg"
-import yosevuImage from "@/images/testimonials/yosevu-kilonzo.webp"
-import stevenImage from "@/images/testimonials/steven-terner.webp"
-import johnImage from "@/images/testimonials/john-syme.jpg"
 
 export const SHOW_DR_MAPACHE = false
 

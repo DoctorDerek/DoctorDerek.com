@@ -1,10 +1,10 @@
-import { useState } from "react"
 import Image from "next/image"
+import { useState } from "react"
+import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
+import SectionHeading from "@/components/ui/SectionHeading"
+import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
-import SectionHeading from "@/components/ui/SectionHeading"
-import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
-import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
 
 export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)
@@ -13,7 +13,7 @@ export default function ContactSection() {
     <div className="flex h-full w-full items-center py-10 md:py-20">
       <div className="flex flex-col md:flex-row md:items-stretch">
         <div className="mx-auto w-[85%] md:flex md:w-1/2 md:flex-col md:pl-8 lg:w-[45%] lg:justify-start lg:pl-20">
-          <div className="-translate-x-12 py-2 opacity-0 transition-all duration-700 ease-spring-soft md:mt-16 md:mb-2 lg:mb-0 lg:py-0 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+          <div className="ease-spring-soft -translate-x-12 py-2 opacity-0 transition-all duration-700 md:mt-16 md:mb-2 lg:mb-0 lg:py-0 [.active_&]:translate-x-0 [.active_&]:opacity-100">
             <SectionHeading>
               <h2 className="text-6xl text-white drop-shadow-lg md:text-8xl lg:pt-8 lg:pb-14 lg:text-9xl">
                 Contact
@@ -21,13 +21,13 @@ export default function ContactSection() {
             </SectionHeading>
           </div>
 
-          <div className="mx-auto w-1/2 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 ease-spring-bouncy md:mx-0 md:h-1/2 md:w-full [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
+          <div className="ease-spring-bouncy mx-auto w-1/2 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:mx-0 md:h-1/2 md:w-full [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <div
-              className="perspective h-full w-full animate-float"
+              className="perspective animate-float h-full w-full"
               style={{ animationDelay: "1s" }}
             >
               <div
-                className="cursor-pointer transition-transform duration-300 ease-spring-bouncy hover:scale-105 active:scale-95"
+                className="ease-spring-bouncy cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95"
                 onClick={() => setIsFlipped(!isFlipped)}
               >
                 <div
@@ -62,7 +62,7 @@ export default function ContactSection() {
           </div>
         </div>
 
-        <div className="mx-auto mt-4 flex w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 ease-spring-soft md:mt-0 md:w-1/2 md:pl-8 lg:w-[55%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
+        <div className="ease-spring-soft mx-auto mt-4 flex w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 md:mt-0 md:w-1/2 md:pl-8 lg:w-[55%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
           <div className="mx-auto mt-4 w-[90%] md:ml-0 md:w-11/12 lg:mr-0 lg:ml-auto lg:w-11/12 lg:pl-14">
             <div className="space-y-4 rounded-xl border border-white/10 bg-black/40 px-5 py-6 text-lg leading-7 text-white shadow-xl backdrop-blur-md md:px-8 md:text-xl lg:pr-12 lg:text-2xl lg:leading-9">
               {CONTACT_BULLETS.map((bullet) => (
@@ -72,7 +72,7 @@ export default function ContactSection() {
                 </p>
               ))}
             </div>
-            <GlobalEmailCTA className="mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 ease-spring-bouncy hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
+            <GlobalEmailCTA className="ease-spring-bouncy mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
               {CONTACT_CTA}
             </GlobalEmailCTA>
           </div>

@@ -23,3 +23,14 @@ This repository contains the frontend source code for my website.
 - [Live Website](https://doctorderek.com)
 - [Medium Blog (@DoctorDerek)](https://doctorderek.medium.com/)
 - [GitHub (@DoctorDerek)](https://github.com/DoctorDerek)
+
+## Local Development
+
+Use [fnm](https://github.com/Schniz/fnm) for Node version management and [pnpm](https://pnpm.io/) as the package manager:
+
+```bash
+fnm use
+corepack enable pnpm
+pnpm install
+pnpm dev
+```

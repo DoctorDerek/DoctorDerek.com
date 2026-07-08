@@ -1,3 +1,4 @@
+import gitignore from "eslint-config-flat-gitignore"
 import nextCoreWebVitals from "eslint-config-next/core-web-vitals"
 import nextTypescript from "eslint-config-next/typescript"
 import eslintConfigPrettier from "eslint-config-prettier/flat"
@@ -12,16 +13,7 @@ const eslintConfig = [
       "only-warn": onlyWarn,
     },
   },
-  {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-      "reference/**",
-    ],
-  },
+  gitignore(),
   {
     files: ["components/ClientShell.tsx"],
     rules: {

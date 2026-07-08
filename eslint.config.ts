@@ -5,6 +5,7 @@ import eslintConfigPrettier from "eslint-config-prettier/flat"
 import onlyWarn from "eslint-plugin-only-warn"
 
 const eslintConfig = [
+  { files: ["**/*.ts", "**/*.tsx"] },
   ...nextCoreWebVitals,
   ...nextTypescript,
   eslintConfigPrettier,

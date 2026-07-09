@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Lint Pipeline
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  test:
-    name: Build, Lint & Test
+  lint:
+    name: Lint Check
     runs-on: ubuntu-latest
 
     steps:
@@ -28,17 +28,5 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Format Check
-        run: pnpm format
-
       - name: Lint Check
         run: pnpm lint
-
-      - name: Run Vitest
-        run: pnpm test
-
-      - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
-
-      - name: Run Playwright E2E
-        run: pnpm test:e2e

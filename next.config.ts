@@ -1,5 +1,5 @@
-import type { RuleSetRule } from "webpack"
 import type { NextConfig } from "next"
+import type { RuleSetRule } from "webpack"
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

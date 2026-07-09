@@ -11,6 +11,11 @@
     "format": "prettier --write .",
     "test": "vitest"
   },
+  "postcss": {
+    "plugins": {
+      "@tailwindcss/postcss": {}
+    }
+  },
   "dependencies": {
     "@fullpage/react-fullpage": "^0.1.49",
     "@headlessui/react": "^2",

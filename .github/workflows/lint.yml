@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: '.node-version'
+          node-version-file: ".node-version"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
@@ -35,7 +35,7 @@ jobs:
         run: |
           # Run lint and capture output, ignoring the exit code
           OUTPUT=$(pnpm lint || true)
-          
+
           # Write to multiline GitHub environment variable
           echo "LINT_OUTPUT<<EOF" >> $GITHUB_ENV
           echo "$OUTPUT" >> $GITHUB_ENV
@@ -47,13 +47,13 @@ jobs:
           script: |
             const output = process.env.LINT_OUTPUT;
             let body = '';
-            
+
             if (!output || (output.includes('Done in') && output.trim().split('\n').length <= 3)) {
               body = '### 🧹 ESLint Report\n\n✅ **Zero warnings.**';
             } else {
               body = `### 🧹 ESLint Warnings Report\n\n\`\`\`text\n${output}\n\`\`\``;
             }
-            
+
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,

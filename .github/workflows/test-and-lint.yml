@@ -60,3 +60,12 @@ jobs:
               repo: context.repo.repo,
               body: body
             });
+
+      - name: Run Vitest (Coverage)
+        run: pnpm vitest run --coverage --passWithNoTests
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: vitest

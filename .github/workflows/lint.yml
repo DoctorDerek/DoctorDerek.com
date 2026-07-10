@@ -46,14 +46,13 @@ jobs:
         with:
           script: |
             const output = process.env.LINT_OUTPUT;
+            let body = '';
             
-            // If output is basically just the pnpm success message or empty, skip
-            if (!output || output.includes('Done in') && output.trim().split('\n').length <= 2) {
-              console.log('No lint warnings to report.');
-              return;
+            if (!output || (output.includes('Done in') && output.trim().split('\n').length <= 3)) {
+              body = '### 🧹 ESLint Report\n\n✅ **Zero warnings.** The codebase is immaculate.';
+            } else {
+              body = `### 🧹 ESLint Warnings Report\n\n\`\`\`text\n${output}\n\`\`\``;
             }
-            
-            const body = `### 🧹 ESLint Warnings Report\n\n\`\`\`text\n${output}\n\`\`\``;
             
             await github.rest.issues.createComment({
               issue_number: context.issue.number,

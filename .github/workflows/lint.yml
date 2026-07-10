@@ -49,7 +49,7 @@ jobs:
             let body = '';
             
             if (!output || (output.includes('Done in') && output.trim().split('\n').length <= 3)) {
-              body = '### 🧹 ESLint Report\n\n✅ **Zero warnings.** The codebase is immaculate.';
+              body = '### 🧹 ESLint Report\n\n✅ **Zero warnings.**';
             } else {
               body = `### 🧹 ESLint Warnings Report\n\n\`\`\`text\n${output}\n\`\`\``;
             }

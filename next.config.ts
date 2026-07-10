@@ -1,4 +1,5 @@
 import type { NextConfig } from "next"
+import type { RuleSetRule } from "webpack"
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -21,7 +22,7 @@ const nextConfig: NextConfig = {
      * SVG loader to apply @svgr/webpack while negating ?url query
      */
     const fileLoaderRule = config.module.rules.find(
-      (rule: { test?: RegExp | ((val: string) => boolean) }) =>
+      (rule: RuleSetRule) =>
         rule.test instanceof RegExp && rule.test.test(".svg"),
     )
 

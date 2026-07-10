@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: "html",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || "http://localhost:3000",
     trace: "on-first-retry",
   },
   projects: [
@@ -25,9 +25,13 @@ export default defineConfig({
       use: { ...devices["Desktop Safari"] },
     },
   ],
-  webServer: {
-    command: "pnpm run dev",
-    url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
-  },
+  ...(process.env.PLAYWRIGHT_TEST_BASE_URL
+    ? {}
+    : {
+        webServer: {
+          command: "pnpm run dev",
+          url: "http://localhost:3000",
+          reuseExistingServer: !process.env.CI,
+        },
+      }),
 })

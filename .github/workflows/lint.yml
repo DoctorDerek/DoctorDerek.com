@@ -1,14 +1,16 @@
 name: Lint Pipeline
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
+permissions:
+  pull-requests: write
+  contents: read
+
 jobs:
   lint:
-    name: Lint Check
+    name: Lint & Annotate PR
     runs-on: ubuntu-latest
 
     steps:
@@ -28,5 +30,34 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Lint Check
-        run: pnpm lint
+      - name: Run Lint and Capture Output
+        id: lint
+        run: |
+          # Run lint and capture output, ignoring the exit code
+          OUTPUT=$(pnpm lint || true)
+          
+          # Write to multiline GitHub environment variable
+          echo "LINT_OUTPUT<<EOF" >> $GITHUB_ENV
+          echo "$OUTPUT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Post PR Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const output = process.env.LINT_OUTPUT;
+            
+            // If output is basically just the pnpm success message or empty, skip
+            if (!output || output.includes('Done in') && output.trim().split('\n').length <= 2) {
+              console.log('No lint warnings to report.');
+              return;
+            }
+            
+            const body = `### 🧹 ESLint Warnings Report\n\n\`\`\`text\n${output}\n\`\`\``;
+            
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });

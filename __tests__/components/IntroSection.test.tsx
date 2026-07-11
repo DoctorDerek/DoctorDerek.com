@@ -1,11 +1,7 @@
 import { render, screen } from "@testing-library/react"
-import { describe, it, expect, vi } from "vitest"
+import { describe, it, expect } from "vitest"
 import IntroSection from "@/components/IntroSection"
-import { INTRO_BIO_SHORT } from "@/constants/SITE_CONTENT"
-
-vi.mock("@/components/ui/SocialLinks", () => ({
-  default: () => <div data-testid="social-links-mock" />,
-}))
+import { INTRO_BIO_SHORT, SOCIAL_LINKS } from "@/constants/SITE_CONTENT"
 
 describe("IntroSection", () => {
   it("renders the short bio with correct typography classes", () => {
@@ -18,10 +14,12 @@ describe("IntroSection", () => {
     expect(bioText).toHaveClass("text-3xl")
   })
 
-  it("renders the social links component within the flex layout", () => {
+  it("renders all social links with correct real UI text", () => {
     render(<IntroSection />)
-    const socialLinks = screen.getByTestId("social-links-mock")
     
-    expect(socialLinks).toBeInTheDocument()
+    SOCIAL_LINKS.forEach((link) => {
+      const linkElement = screen.getByText(link.label)
+      expect(linkElement).toBeInTheDocument()
+    })
   })
 })

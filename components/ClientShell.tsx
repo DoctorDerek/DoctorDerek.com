@@ -9,6 +9,7 @@ import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
 import GlobalBackground from "@/components/GlobalBackground"
 import IntroSection from "@/components/IntroSection"
+import Portfolio from "@/components/Portfolio"
 import Testimonials from "@/components/Testimonials"
 import TopSection from "@/components/TopSection"
 import CustomCursor from "@/components/ui/CustomCursor"
@@ -59,6 +60,7 @@ export default function ClientShell({ posts }: { posts: MediumPost[] }) {
       component: <AiConsultancySection key="consultancy" />,
       anchor: "consultancy",
     },
+    { component: <Portfolio key="portfolio" />, anchor: "portfolio" },
     { component: <Testimonials key="testimonials" />, anchor: "testimonials" },
     { component: <BlogSection key="blog" posts={posts} />, anchor: "blog" },
     { component: <ContactSection key="contact" />, anchor: "contact" },
@@ -74,6 +76,7 @@ export default function ClientShell({ posts }: { posts: MediumPost[] }) {
       about: "chromatic",
       experience: "pixelate",
       consultancy: "shockwave",
+      portfolio: "shatter",
       testimonials: "doorway",
       blog: "pageCurlLeft",
       contact: "burn",

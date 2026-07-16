@@ -68,5 +68,18 @@ describe("Portfolio", () => {
         expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
       })
     }
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: `Explore ${PORTFOLIO_PROJECTS[0].projectTitle}`,
+      }),
+    )
+    await screen.findByRole("dialog", {
+      name: PORTFOLIO_PROJECTS[0].projectTitle,
+    })
+    fireEvent.keyDown(document, { key: "Escape" })
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+    })
   })
 })

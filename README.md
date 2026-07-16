@@ -1,5 +1,7 @@
 # DoctorDerek.com
 
+[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=doctor-derek)](https://doctorderek.com) [![Codecov](https://codecov.io/gh/DoctorDerek/DoctorDerek.com/graph/badge.svg)](https://app.codecov.io/gh/DoctorDerek/DoctorDerek.com)
+
 The personal website of [Dr. Derek Austin](https://doctorderek.com).
 
 ## Tech Stack

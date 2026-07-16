@@ -31,8 +31,6 @@ export const FULLPAGE_ACTIVATION_KEYS = {
     process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_SCROLL_OVERFLOW_RESET || "",
 } as const
 
-export const SHOW_DR_MAPACHE = false
-
 export const INTRO_BIO_SHORT =
   "AI-Native Senior Full-Stack SWE · UI/UX Engineer · TypeScript specialist · 20+ years of SWE · BS & MS in Bioinformatics age 19 · Doctor of Physical Therapy" as const
 

@@ -7,7 +7,6 @@ import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
-import DrMapacheSection from "@/components/DrMapacheSection"
 import GlobalBackground from "@/components/GlobalBackground"
 import IntroSection from "@/components/IntroSection"
 import Testimonials from "@/components/Testimonials"
@@ -17,7 +16,6 @@ import WorkExperienceSection from "@/components/WorkExperienceSection"
 import {
   FULLPAGE_ACTIVATION_KEYS,
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
-  SHOW_DR_MAPACHE,
 } from "@/constants/SITE_CONTENT"
 import { GlobalStateContext } from "@/machines/globalMachine"
 import {
@@ -53,10 +51,6 @@ export default function ClientShell({ posts }: { posts: MediumPost[] }) {
     { component: <TopSection key="top" />, anchor: "home" },
     { component: <IntroSection key="intro" />, anchor: "intro" },
     { component: <AboutSection key="about" />, anchor: "about" },
-    SHOW_DR_MAPACHE && {
-      component: <DrMapacheSection key="mapache" />,
-      anchor: "mapache",
-    },
     {
       component: <WorkExperienceSection key="experience" />,
       anchor: "experience",
@@ -68,7 +62,7 @@ export default function ClientShell({ posts }: { posts: MediumPost[] }) {
     { component: <Testimonials key="testimonials" />, anchor: "testimonials" },
     { component: <BlogSection key="blog" posts={posts} />, anchor: "blog" },
     { component: <ContactSection key="contact" />, anchor: "contact" },
-  ].filter(Boolean) as { component: React.ReactNode; anchor: string }[]
+  ]
 
   const handleLeave = (
     _origin: FullPageSection,
@@ -78,8 +72,7 @@ export default function ClientShell({ posts }: { posts: MediumPost[] }) {
       home: "zoom",
       intro: "zoom",
       about: "chromatic",
-      mapache: "pixelate",
-      experience: SHOW_DR_MAPACHE ? "shatter" : "pixelate",
+      experience: "pixelate",
       consultancy: "shockwave",
       testimonials: "doorway",
       blog: "pageCurlLeft",

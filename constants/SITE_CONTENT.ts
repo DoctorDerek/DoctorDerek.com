@@ -226,49 +226,46 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export type PortfolioProject = {
   projectTitle: string
+  summary: string
   details: string
   tech: string[]
+  liveUrl: string
 }
 
-/**
- * APPROVED EXCEPTION TO NO CODE COMMENT RULE:
- * This content is intentionally unused at this time.
- */
 export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
-    projectTitle: "Project Title Lorem Ipsum Dolor Sit Amet",
+    projectTitle: "Weather",
+    summary:
+      "A resilient city weather search with responsive light and dark themes.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "Built on the Next.js App Router, this interface normalizes unpredictable upstream weather data into strict success and error states while keeping search, loading, and failure feedback clear.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vitest"],
+    liveUrl: "https://portfolio-weather.doctorderek.com/",
   },
   {
-    projectTitle: "2nd item",
+    projectTitle: "Offline-First CRM",
+    summary:
+      "A private contact manager with local persistence and state-driven CRUD workflows.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "XState coordinates contact creation, updates, deletion, reset flows, filtering, and accessible dialogs while local storage keeps the experience useful without an account or backend.",
+    tech: ["Next.js", "TypeScript", "XState", "Tailwind CSS"],
+    liveUrl: "https://portfolio-crm.doctorderek.com/",
   },
   {
-    projectTitle: "3rd item",
+    projectTitle: "Calendar & Appointments",
+    summary:
+      "A responsive calendar for navigating months, scheduling reminders, and reviewing a daily agenda.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "Redux Toolkit owns calendar state while Material UI and Day.js support typed date interactions, reminder creation, hour visibility, responsive layouts, and light or dark themes.",
+    tech: ["Next.js", "TypeScript", "Redux Toolkit", "Material UI"],
+    liveUrl: "https://portfolio-calendar.doctorderek.com/",
   },
   {
-    projectTitle: "4th item",
+    projectTitle: "Pokédex",
+    summary: "A typed GraphQL explorer for browsing the original 151 Pokémon.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "Statically generated routes pair paginated navigation with accessible detail panels for classifications, combat statistics, dimensions, weaknesses, and resistances.",
+    tech: ["Next.js", "TypeScript", "GraphQL", "React Query"],
+    liveUrl: "https://portfolio-pokedex.doctorderek.com/",
   },
-  {
-    projectTitle: "5th item",
-    details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
-  },
-  {
-    projectTitle: "6th item",
-    details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
-  },
-] as const
+]

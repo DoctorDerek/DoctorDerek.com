@@ -2,12 +2,13 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { useState } from "react"
 import Logo from "@/components/ui/Logo"
+import SocialLinks from "@/components/ui/SocialLinks"
 import classNames from "@/utils/classNames"
-import SocialLinks from "./ui/SocialLinks"
 
 const navigation = [
   { name: "About", anchor: "about" },
   { name: "Experience", anchor: "experience" },
+  { name: "Portfolio", anchor: "portfolio" },
   { name: "Testimonials", anchor: "testimonials" },
   { name: "Blog", anchor: "blog" },
   { name: "Contact", anchor: "contact" },

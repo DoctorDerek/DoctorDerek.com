@@ -2,18 +2,16 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { useState } from "react"
 import Logo from "@/components/ui/Logo"
-import { SHOW_DR_MAPACHE } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
 import SocialLinks from "./ui/SocialLinks"
 
 const navigation = [
-  { name: "About", anchor: "about", current: true },
-  { name: "Experience", anchor: "experience", current: false },
-  SHOW_DR_MAPACHE && { name: "Dr. Mapache", anchor: "mapache", current: false },
-  { name: "Testimonials", anchor: "testimonials", current: false },
-  { name: "Blog", anchor: "blog", current: false },
-  { name: "Contact", anchor: "contact", current: false },
-].filter(Boolean) as { name: string; anchor: string; current: boolean }[]
+  { name: "About", anchor: "about" },
+  { name: "Experience", anchor: "experience" },
+  { name: "Testimonials", anchor: "testimonials" },
+  { name: "Blog", anchor: "blog" },
+  { name: "Contact", anchor: "contact" },
+]
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)

@@ -1,4 +1,4 @@
-import { act, fireEvent, render } from "@testing-library/react"
+import { act, fireEvent, render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import AboutSection from "@/components/AboutSection"
@@ -23,16 +23,12 @@ describe("AboutSection", () => {
 
   it("continues the portrait sequence without advancing merely from pointer entry", () => {
     vi.useFakeTimers()
-    const { container } = render(<AboutSection />)
+    render(<AboutSection />)
 
-    const portraitControl =
-      container.querySelector<HTMLDivElement>(".perspective")
-
-    if (!portraitControl) {
-      throw new Error("Expected the About portrait control to render")
-    }
-
-    const portraitCard = portraitControl.firstElementChild
+    const portraitControl = screen.getByRole("button", {
+      name: "Show next portrait of Dr. Derek Austin",
+    })
+    const portraitCard = portraitControl.firstElementChild as HTMLElement
 
     expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
 

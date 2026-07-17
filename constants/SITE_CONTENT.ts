@@ -269,8 +269,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       "Redux Toolkit separates reminder, agenda, dialog, and display state while Material UI and Day.js power date-time entry, month navigation, daily agendas, and optional hour labels.",
     tech: ["Next.js", "TypeScript", "Redux Toolkit", "Material UI"],
     liveUrl: "https://portfolio-calendar.doctorderek.com/",
-    sourceUrl:
-      "https://github.com/DoctorDerek/doctorderek-portfolio-calendar",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-calendar",
   },
   {
     projectTitle: "Weather",
@@ -280,8 +279,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       "The Next.js App Router keeps the OpenWeather API key server-side, validates untrusted responses, and turns missing cities or service failures into clear, screen-reader-friendly feedback.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "OpenWeather API"],
     liveUrl: "https://portfolio-weather.doctorderek.com/",
-    sourceUrl:
-      "https://github.com/DoctorDerek/doctorderek-portfolio-weather",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-weather",
   },
   {
     projectTitle: "Pokédex",
@@ -291,8 +289,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       "Next.js prebuilds all 151 detail routes from typed GraphQL data, with ten-entry catalog pages and panels for classification, size, combat, weaknesses, and resistances.",
     tech: ["Next.js", "TypeScript", "GraphQL", "React Query"],
     liveUrl: "https://portfolio-pokedex.doctorderek.com/",
-    sourceUrl:
-      "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",
   },
   {
     projectTitle: "DoctorDerek.com",

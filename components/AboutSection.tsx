@@ -11,7 +11,6 @@ export default function AboutSection() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const handleMouseEnter = () => {
-    setFlipCount((prev) => prev + 1)
     if (intervalRef.current) clearInterval(intervalRef.current)
     intervalRef.current = setInterval(() => {
       setFlipCount((prev) => prev + 1)

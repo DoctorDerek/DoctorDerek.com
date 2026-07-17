@@ -15,9 +15,10 @@ describe("Navbar", () => {
     render(<Navbar />)
 
     fireEvent.click(screen.getByRole("button"))
+    const navigation = screen.getByRole("navigation")
 
     expect(
-      within(screen.getByRole("navigation"))
+      within(navigation)
         .getAllByRole("link")
         .map((link) => link.textContent),
     ).toEqual([
@@ -28,5 +29,8 @@ describe("Navbar", () => {
       "Blog",
       "Contact",
     ])
+
+    fireEvent.click(within(navigation).getByRole("link", { name: "About" }))
+    expect(navigation).toHaveAttribute("inert")
   })
 })

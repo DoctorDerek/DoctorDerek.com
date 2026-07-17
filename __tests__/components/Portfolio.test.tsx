@@ -10,12 +10,29 @@ import Portfolio from "@/components/Portfolio"
 import { PORTFOLIO_PROJECTS } from "@/constants/SITE_CONTENT"
 
 describe("Portfolio", () => {
-  it("renders every verified production project with semantic controls", () => {
+  it("renders the audited project order with semantic controls and no phase copy", () => {
     render(<Portfolio />)
 
     expect(
       screen.getByRole("heading", { name: "Portfolio", level: 2 }),
     ).toBeInTheDocument()
+
+    expect(
+      screen
+        .getAllByRole("heading", { level: 3 })
+        .map((heading) => heading.textContent),
+    ).toEqual([
+      "What Are Your Values, Mapache?",
+      "CRM",
+      "Calendar",
+      "Weather",
+      "Pokédex",
+      "DoctorDerek.com",
+    ])
+    expect(PORTFOLIO_PROJECTS[0]?.tech).toEqual(
+      expect.arrayContaining(["Expo", "React Native"]),
+    )
+    expect(JSON.stringify(PORTFOLIO_PROJECTS)).not.toMatch(/\bphase\b/i)
 
     PORTFOLIO_PROJECTS.forEach((project) => {
       expect(
@@ -31,13 +48,9 @@ describe("Portfolio", () => {
         }),
       ).toBeInTheDocument()
     })
-
-    expect(
-      screen.queryByRole("link", { name: /GitHub|source/i }),
-    ).not.toBeInTheDocument()
   })
 
-  it("opens and closes each project dialog with its verified live link", async () => {
+  it("opens and closes each project dialog with verified live and source links", async () => {
     render(<Portfolio />)
 
     for (const project of PORTFOLIO_PROJECTS) {
@@ -58,6 +71,15 @@ describe("Portfolio", () => {
       expect(liveProjectLink).toHaveAttribute("href", project.liveUrl)
       expect(liveProjectLink).toHaveAttribute("target", "_blank")
       expect(liveProjectLink).toHaveAttribute("rel", "noopener noreferrer")
+      expect(liveProjectLink).toHaveTextContent("View live project")
+
+      const sourceProjectLink = within(dialog).getByRole("link", {
+        name: `View ${project.projectTitle} source`,
+      })
+      expect(sourceProjectLink).toHaveAttribute("href", project.sourceUrl)
+      expect(sourceProjectLink).toHaveAttribute("target", "_blank")
+      expect(sourceProjectLink).toHaveAttribute("rel", "noopener noreferrer")
+      expect(sourceProjectLink).toHaveTextContent("View source")
 
       fireEvent.click(
         within(dialog).getByRole("button", {

@@ -117,7 +117,7 @@ export type BlogMetrics = {
 }
 
 export const BLOG_METRICS: BlogMetrics = {
-  totalPosts: 503,
+  totalPosts: 586,
   totalWordsK: 500,
   yearStarted: 2019,
   emailSubscribers: 749,

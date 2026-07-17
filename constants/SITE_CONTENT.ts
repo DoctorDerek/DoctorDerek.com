@@ -304,4 +304,4 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     liveUrl: "https://www.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/DoctorDerek.com",
   },
-]
+] as const

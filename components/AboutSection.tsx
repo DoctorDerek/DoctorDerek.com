@@ -47,8 +47,10 @@ export default function AboutSection() {
         </div>
         <div className="relative pb-10 md:h-[60vh]">
           <div className="ease-spring-bouncy w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:w-1/2 lg:w-[45%] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
-            <div
-              className="perspective animate-float"
+            <button
+              type="button"
+              aria-label="Show next portrait of Dr. Derek Austin"
+              className="perspective animate-float block w-full text-left"
               style={{ animationDelay: "0s", perspective: "1000px" }}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -107,7 +109,7 @@ export default function AboutSection() {
                   />
                 </div>
               </div>
-            </div>
+            </button>
           </div>
           <div className="ease-spring-soft relative mt-8 translate-y-12 rounded-tl-3xl border border-white/20 bg-black/40 px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[65%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-[60%] lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <div className="flex flex-col gap-4 lg:gap-6">

@@ -1,68 +1,90 @@
 import { useState } from "react"
+import PortfolioProjectDialog from "@/components/PortfolioProjectDialog"
 import SectionHeading from "@/components/ui/SectionHeading"
 import {
   PORTFOLIO_PROJECTS,
   type PortfolioProject,
 } from "@/constants/SITE_CONTENT"
-import Modal from "./Modal"
 
-/**
- * APPROVED EXCEPTION TO NO CODE COMMENT RULE:
- * This component is intentionally unused at this time.
- */
 export default function Portfolio() {
-  const [portfolioWork, setPortfolioWork] = useState<
-    (PortfolioProject & { isClicked: boolean })[]
-  >(PORTFOLIO_PROJECTS.map((p) => ({ ...p, isClicked: false })))
-  const [showModal, setShowModal] = useState<boolean>(false)
-
-  const handleModal = (projectName: string) => {
-    setShowModal(true)
-    const selectProject = portfolioWork.map((item) => {
-      if (item.projectTitle === projectName) return { ...item, isClicked: true }
-      return { ...item, isClicked: false }
-    })
-    setPortfolioWork(selectProject)
-  }
+  const [selectedProject, setSelectedProject] =
+    useState<PortfolioProject | null>(null)
 
   return (
     <>
-      <div className="pointer-events-none absolute top-10 left-0 z-10 flex w-full justify-center text-center text-white drop-shadow-md">
+      <div className="pointer-events-none absolute top-6 left-6 z-10 text-white drop-shadow-md md:top-12 md:left-12">
         <SectionHeading>
-          <h2 className="text-7xl lg:text-9xl">Portfolio</h2>
+          <h2 className="ease-spring-soft text-5xl opacity-0 transition-all duration-700 md:text-8xl lg:text-9xl [.active_&]:opacity-100">
+            Portfolio
+          </h2>
         </SectionHeading>
       </div>
 
-      {portfolioWork.map((item) => (
-        <div key={item.projectTitle} className="slide">
-          <div className="flex h-full w-full items-center justify-center p-8">
-            <div
-              onClick={() => handleModal(item.projectTitle)}
-              className="ease-spring-bouncy flex h-full max-h-[60vh] w-full max-w-4xl scale-95 cursor-pointer flex-col justify-around rounded-3xl border border-white/20 bg-white/10 p-8 text-white opacity-0 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:bg-white/20 md:p-16 [.active_&]:scale-100 [.active_&]:opacity-100"
+      {PORTFOLIO_PROJECTS.map((project, index) => (
+        <div key={project.projectTitle} className="slide">
+          <div className="flex h-full w-full items-center justify-center px-4 pt-24 pb-10 sm:px-6 md:px-8 md:pt-32">
+            <article
+              aria-labelledby={"portfolio-project-" + index}
+              className="scrollable-content ease-spring-bouncy max-h-[68dvh] w-full max-w-4xl translate-y-12 scale-95 overflow-y-auto overscroll-contain rounded-3xl border border-white/20 bg-black/50 p-5 text-white opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-700 sm:p-8 md:p-10 [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100"
             >
-              <div className="mx-auto mb-8 h-[25vh] w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md"></div>
-              <h3 className="restorabold mb-4 text-3xl lg:text-5xl">
-                {item.projectTitle}
-              </h3>
-              <p className="mb-6 text-xl lg:text-2xl">{item.details}</p>
-              <div className="flex flex-wrap gap-2">
-                {item.tech.map((str: string, index: number) => (
-                  <p
-                    key={`${item.projectTitle + str + index}`}
-                    className="rounded-xl border border-white/30 bg-white/20 px-4 py-2 text-lg text-white backdrop-blur-md"
-                  >
-                    {str}
-                  </p>
-                ))}
+              <div className="flex items-center justify-between gap-4">
+                <p className="rounded-full border border-emerald-300/40 bg-emerald-300/10 px-3 py-1 text-sm font-semibold text-emerald-100">
+                  Live production
+                </p>
+                <p
+                  aria-hidden="true"
+                  className="restorabold text-3xl text-white/40 md:text-5xl"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </p>
               </div>
-            </div>
+
+              <div className="mt-5 md:mt-8">
+                <p className="text-sm font-semibold tracking-[0.22em] text-[#FFE366] uppercase">
+                  Selected project
+                </p>
+                <h3
+                  id={"portfolio-project-" + index}
+                  className="restorabold mt-2 text-3xl leading-tight sm:text-4xl lg:text-6xl"
+                >
+                  {project.projectTitle}
+                </h3>
+                <p className="mt-4 max-w-3xl text-lg leading-7 text-white/90 sm:text-xl sm:leading-8 lg:text-2xl">
+                  {project.summary}
+                </p>
+              </div>
+
+              <ul
+                aria-label={project.projectTitle + " technologies"}
+                className="mt-6 flex flex-wrap gap-2"
+              >
+                {project.tech.map((technology) => (
+                  <li
+                    key={technology}
+                    className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-semibold text-white backdrop-blur-md sm:px-4 sm:py-2"
+                  >
+                    {technology}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                type="button"
+                aria-label={"Explore " + project.projectTitle}
+                onClick={() => setSelectedProject(project)}
+                className="ease-spring-bouncy mt-7 inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#F38B57] px-6 py-4 text-lg font-bold text-white shadow-xl transition-all hover:scale-[1.02] hover:bg-[#ff9c6a] focus-visible:ring-4 focus-visible:ring-[#FFE366] focus-visible:outline-none active:scale-95 sm:w-fit"
+              >
+                Explore project
+                <span aria-hidden="true">→</span>
+              </button>
+            </article>
           </div>
         </div>
       ))}
-      <Modal
-        portfolioWork={portfolioWork}
-        showModal={showModal}
-        setShowModal={setShowModal}
+
+      <PortfolioProjectDialog
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
       />
     </>
   )

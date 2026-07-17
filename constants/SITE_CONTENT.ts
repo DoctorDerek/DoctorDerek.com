@@ -117,7 +117,7 @@ export type BlogMetrics = {
 }
 
 export const BLOG_METRICS: BlogMetrics = {
-  totalPosts: 503,
+  totalPosts: 586,
   totalWordsK: 500,
   yearStarted: 2019,
   emailSubscribers: 749,
@@ -226,49 +226,79 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export type PortfolioProject = {
   projectTitle: string
+  summary: string
   details: string
   tech: string[]
+  liveUrl: string
+  sourceUrl: string
 }
 
-/**
- * APPROVED EXCEPTION TO NO CODE COMMENT RULE:
- * This content is intentionally unused at this time.
- */
 export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
-    projectTitle: "Project Title Lorem Ipsum Dolor Sit Amet",
+    projectTitle: "What Are Your Values, Mapache?",
+    summary:
+      "A fast values game that turns 83 human values into 3,403 possible one-on-one decisions.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "One TypeScript monorepo supports iOS, Android, mobile web, and desktop web. XState actors keep matchups, input, queueing, XP awards, and offline saves deterministic across platforms.",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "XState",
+      "Expo",
+      "React Native",
+      "Turborepo",
+    ],
+    liveUrl: "https://what-are-your-values-mapache.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/what-are-your-values-mapache",
   },
   {
-    projectTitle: "2nd item",
+    projectTitle: "CRM",
+    summary:
+      "An offline-first contact manager with state-driven CRUD, age filtering, and no account required.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "XState owns create, update, delete, and reset transitions; local storage preserves contacts; React Hook Form and Headless UI drive responsive, accessible editing dialogs.",
+    tech: ["Next.js", "TypeScript", "XState", "Tailwind CSS"],
+    liveUrl: "https://portfolio-crm.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-crm",
   },
   {
-    projectTitle: "3rd item",
+    projectTitle: "Calendar",
+    summary:
+      "A responsive calendar for scheduling, color-coding, and reviewing time-ordered reminders.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "Redux Toolkit separates reminder, agenda, dialog, and display state while Material UI and Day.js power date-time entry, month navigation, daily agendas, and optional hour labels.",
+    tech: ["Next.js", "TypeScript", "Redux Toolkit", "Material UI"],
+    liveUrl: "https://portfolio-calendar.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-calendar",
   },
   {
-    projectTitle: "4th item",
+    projectTitle: "Weather",
+    summary:
+      "An accessible city weather search with explicit loading, success, and failure states.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "The Next.js App Router keeps the OpenWeather API key server-side, validates untrusted responses, and turns missing cities or service failures into clear, screen-reader-friendly feedback.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "OpenWeather API"],
+    liveUrl: "https://portfolio-weather.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-weather",
   },
   {
-    projectTitle: "5th item",
+    projectTitle: "Pokédex",
+    summary:
+      "A statically generated field guide for browsing the original 151 Pokémon.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "Next.js prebuilds all 151 detail routes from typed GraphQL data, with ten-entry catalog pages and panels for classification, size, combat, weaknesses, and resistances.",
+    tech: ["Next.js", "TypeScript", "GraphQL", "React Query"],
+    liveUrl: "https://portfolio-pokedex.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",
   },
   {
-    projectTitle: "6th item",
+    projectTitle: "DoctorDerek.com",
+    summary:
+      "The site you’re using now: a cinematic portfolio built around motion, depth, and fast access to real work.",
     details:
-      "Duis aute irure dolor in reprehenderit in volputate velit esse cillum dolore eu fugasdiate nulla pariateur. Excepteur sint occaecat cupidtat non proident, sunt in culpa qui offcia deserunt.",
-    tech: ["Lorem", "Ipsum", "Dolor", "Amet"],
+      "XState coordinates global UI timing while fullPage.js, Motion, Rive, and Canvas render the visual system; the Next.js server reads and cleans the live Medium feed.",
+    tech: ["Next.js", "TypeScript", "XState", "Motion", "Rive"],
+    liveUrl: "https://www.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/DoctorDerek.com",
   },
 ] as const

@@ -21,7 +21,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
             <div className="mb-8 grid grid-cols-3 gap-2 md:gap-4">
               <div className="flex flex-col items-center justify-center text-center">
                 <p className="text-3xl font-bold tabular-nums md:text-5xl">
-                  <CountUp to={BLOG_METRICS.totalPosts} />
+                  <CountUp to={BLOG_METRICS.totalPosts} />+
                 </p>
                 <p className="mt-1 text-[10px] font-bold tracking-wider text-white/80 uppercase md:text-sm">
                   Posts

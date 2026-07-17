@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react"
 import {
   ArrowTopRightOnSquareIcon,
+  CodeBracketIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline"
 import { Fragment } from "react"
@@ -76,19 +77,34 @@ export default function PortfolioProjectDialog({
                         </li>
                       ))}
                     </ul>
-                    <a
-                      href={project.liveUrl}
-                      aria-label={"View " + project.projectTitle + " live"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ease-spring-bouncy mt-8 inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-lg font-bold text-[#311B4D] shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:ring-white focus-visible:outline-none active:scale-95 sm:w-fit"
-                    >
-                      View live project
-                      <ArrowTopRightOnSquareIcon
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    </a>
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                      <a
+                        href={project.liveUrl}
+                        aria-label={"View " + project.projectTitle + " live"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ease-spring-bouncy inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-lg font-bold text-[#311B4D] shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:ring-white focus-visible:outline-none active:scale-95 sm:w-fit"
+                      >
+                        View live project
+                        <ArrowTopRightOnSquareIcon
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        />
+                      </a>
+                      <a
+                        href={project.sourceUrl}
+                        aria-label={"View " + project.projectTitle + " source"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ease-spring-bouncy inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl border border-white/30 bg-white/10 px-6 py-4 text-lg font-bold text-white shadow-xl transition-transform hover:scale-[1.02] hover:bg-white/20 focus-visible:ring-4 focus-visible:ring-[#FFE366] focus-visible:outline-none active:scale-95 sm:w-fit"
+                      >
+                        View source
+                        <CodeBracketIcon
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    </div>
                   </>
                 )}
               </Dialog.Panel>

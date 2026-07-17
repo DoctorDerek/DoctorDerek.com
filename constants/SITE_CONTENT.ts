@@ -230,42 +230,78 @@ export type PortfolioProject = {
   details: string
   tech: string[]
   liveUrl: string
+  sourceUrl: string
 }
 
 export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
-    projectTitle: "Weather",
+    projectTitle: "What Are Your Values, Mapache?",
     summary:
-      "A resilient city weather search with responsive light and dark themes.",
+      "A fast values game that turns 83 human values into 3,403 possible one-on-one decisions.",
     details:
-      "Built on the Next.js App Router, this interface normalizes unpredictable upstream weather data into strict success and error states while keeping search, loading, and failure feedback clear.",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vitest"],
-    liveUrl: "https://portfolio-weather.doctorderek.com/",
+      "One TypeScript monorepo supports iOS, Android, mobile web, and desktop web. XState actors keep matchups, input, queueing, XP awards, and offline saves deterministic across platforms.",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "XState",
+      "Expo",
+      "React Native",
+      "Turborepo",
+    ],
+    liveUrl: "https://what-are-your-values-mapache.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/what-are-your-values-mapache",
   },
   {
-    projectTitle: "Offline-First CRM",
+    projectTitle: "CRM",
     summary:
-      "A private contact manager with local persistence and state-driven CRUD workflows.",
+      "An offline-first contact manager with state-driven CRUD, age filtering, and no account required.",
     details:
-      "XState coordinates contact creation, updates, deletion, reset flows, filtering, and accessible dialogs while local storage keeps the experience useful without an account or backend.",
+      "XState owns create, update, delete, and reset transitions; local storage preserves contacts; React Hook Form and Headless UI drive responsive, accessible editing dialogs.",
     tech: ["Next.js", "TypeScript", "XState", "Tailwind CSS"],
     liveUrl: "https://portfolio-crm.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-crm",
   },
   {
-    projectTitle: "Calendar & Appointments",
+    projectTitle: "Calendar",
     summary:
-      "A responsive calendar for navigating months, scheduling reminders, and reviewing a daily agenda.",
+      "A responsive calendar for scheduling, color-coding, and reviewing time-ordered reminders.",
     details:
-      "Redux Toolkit owns calendar state while Material UI and Day.js support typed date interactions, reminder creation, hour visibility, responsive layouts, and light or dark themes.",
+      "Redux Toolkit separates reminder, agenda, dialog, and display state while Material UI and Day.js power date-time entry, month navigation, daily agendas, and optional hour labels.",
     tech: ["Next.js", "TypeScript", "Redux Toolkit", "Material UI"],
     liveUrl: "https://portfolio-calendar.doctorderek.com/",
+    sourceUrl:
+      "https://github.com/DoctorDerek/doctorderek-portfolio-calendar",
+  },
+  {
+    projectTitle: "Weather",
+    summary:
+      "An accessible city weather search with explicit loading, success, and failure states.",
+    details:
+      "The Next.js App Router keeps the OpenWeather API key server-side, validates untrusted responses, and turns missing cities or service failures into clear, screen-reader-friendly feedback.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "OpenWeather API"],
+    liveUrl: "https://portfolio-weather.doctorderek.com/",
+    sourceUrl:
+      "https://github.com/DoctorDerek/doctorderek-portfolio-weather",
   },
   {
     projectTitle: "Pokédex",
-    summary: "A typed GraphQL explorer for browsing the original 151 Pokémon.",
+    summary:
+      "A statically generated field guide for browsing the original 151 Pokémon.",
     details:
-      "Statically generated routes pair paginated navigation with accessible detail panels for classifications, combat statistics, dimensions, weaknesses, and resistances.",
+      "Next.js prebuilds all 151 detail routes from typed GraphQL data, with ten-entry catalog pages and panels for classification, size, combat, weaknesses, and resistances.",
     tech: ["Next.js", "TypeScript", "GraphQL", "React Query"],
     liveUrl: "https://portfolio-pokedex.doctorderek.com/",
+    sourceUrl:
+      "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",
+  },
+  {
+    projectTitle: "DoctorDerek.com",
+    summary:
+      "The site you’re using now: a cinematic portfolio built around motion, depth, and fast access to real work.",
+    details:
+      "XState coordinates global UI timing while fullPage.js, Motion, Rive, and Canvas render the visual system; the Next.js server reads and cleans the live Medium feed.",
+    tech: ["Next.js", "TypeScript", "XState", "Motion", "Rive"],
+    liveUrl: "https://www.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/DoctorDerek.com",
   },
 ]

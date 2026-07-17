@@ -60,8 +60,8 @@ export default function ClientShell({ posts }: { posts: MediumPost[] }) {
       component: <AiConsultancySection key="consultancy" />,
       anchor: "consultancy",
     },
-    { component: <Portfolio key="portfolio" />, anchor: "portfolio" },
     { component: <Testimonials key="testimonials" />, anchor: "testimonials" },
+    { component: <Portfolio key="portfolio" />, anchor: "portfolio" },
     { component: <BlogSection key="blog" posts={posts} />, anchor: "blog" },
     { component: <ContactSection key="contact" />, anchor: "contact" },
   ]

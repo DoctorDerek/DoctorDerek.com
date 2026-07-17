@@ -8,8 +8,8 @@ import classNames from "@/utils/classNames"
 const navigation = [
   { name: "About", anchor: "about" },
   { name: "Experience", anchor: "experience" },
-  { name: "Portfolio", anchor: "portfolio" },
   { name: "Testimonials", anchor: "testimonials" },
+  { name: "Portfolio", anchor: "portfolio" },
   { name: "Blog", anchor: "blog" },
   { name: "Contact", anchor: "contact" },
 ]

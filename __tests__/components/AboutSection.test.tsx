@@ -49,4 +49,44 @@ describe("AboutSection", () => {
     })
     expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
   })
+
+  it("restarts one portrait timer and clears it on unmount", () => {
+    vi.useFakeTimers()
+    const { unmount } = render(<AboutSection />)
+    const portraitControl = screen.getByRole("button", {
+      name: "Show next portrait of Dr. Derek Austin",
+    })
+    const portraitCard = portraitControl.firstElementChild as HTMLElement
+
+    fireEvent.mouseEnter(portraitControl)
+    act(() => {
+      vi.advanceTimersByTime(750)
+    })
+    fireEvent.mouseEnter(portraitControl)
+    act(() => {
+      vi.advanceTimersByTime(750)
+    })
+
+    expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
+
+    act(() => {
+      vi.advanceTimersByTime(750)
+    })
+    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
+
+    unmount()
+  })
+
+  it("leaves and unmounts cleanly before portrait rotation begins", () => {
+    vi.useFakeTimers()
+    const { unmount } = render(<AboutSection />)
+    const portraitControl = screen.getByRole("button", {
+      name: "Show next portrait of Dr. Derek Austin",
+    })
+
+    fireEvent.mouseLeave(portraitControl)
+    unmount()
+
+    expect(vi.getTimerCount()).toBe(0)
+  })
 })

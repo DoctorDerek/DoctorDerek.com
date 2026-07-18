@@ -5,7 +5,10 @@ import BlogSection from "@/components/BlogSection"
 import type { MediumPost } from "@/utils/medium"
 
 vi.mock("next/image", () => ({
-  default: ({ fill: _fill, ...imageProps }: ComponentProps<"img"> & {
+  default: ({
+    fill: _fill,
+    ...imageProps
+  }: ComponentProps<"img"> & {
     fill?: boolean
   }) => createElement("img", imageProps),
 }))

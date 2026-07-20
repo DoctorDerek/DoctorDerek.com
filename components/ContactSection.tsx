@@ -10,8 +10,8 @@ export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)
 
   return (
-    <div className="flex h-full w-full items-center py-10 md:py-20">
-      <div className="flex flex-col md:flex-row md:items-stretch">
+    <div className="flex min-h-full w-full py-10 md:py-20">
+      <div className="my-auto flex w-full flex-col md:flex-row md:items-stretch">
         <div className="mx-auto w-[85%] md:flex md:w-1/2 md:flex-col md:pl-8 lg:w-[45%] lg:justify-start lg:pl-20">
           <div className="ease-spring-soft -translate-x-12 py-2 opacity-0 transition-all duration-700 md:mt-16 md:mb-2 lg:mb-0 lg:py-0 [.active_&]:translate-x-0 [.active_&]:opacity-100">
             <SectionHeading>

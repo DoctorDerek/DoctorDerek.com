@@ -27,4 +27,17 @@ describe("ContactSection", () => {
     expect(contactComposition).toHaveClass("my-auto", "w-full")
     expect(screen.getByRole("link", { name: "Contact Me" })).toBeInTheDocument()
   })
+
+  it("announces the end of the site and offers a return to the beginning", () => {
+    render(<ContactSection />)
+
+    expect(
+      screen.getByRole("contentinfo", { name: "End of DoctorDerek.com" }),
+    ).toHaveTextContent(
+      "You’ve reached the end of DoctorDerek.com. Let’s build something great.",
+    )
+    expect(
+      screen.getByRole("link", { name: "Back to the beginning ↑" }),
+    ).toHaveAttribute("href", "#home")
+  })
 })

@@ -69,6 +69,11 @@ export const CONTACT_BULLETS: string[] = [
   "I deliver MVPs in under 3 months, and I’ve improved web performance by up to 90% and page speed by 60×.",
 ] as const
 export const CONTACT_CTA = "Contact Me" as const
+export const CONTACT_COMPLETION = {
+  message:
+    "You’ve reached the end of DoctorDerek.com. Let’s build something great.",
+  returnLabel: "Back to the beginning ↑",
+} as const
 
 export type WorkExperience = {
   duration: string

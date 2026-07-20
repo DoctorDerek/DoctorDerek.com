@@ -11,7 +11,7 @@ describe("AiConsultancySection", () => {
     const pitchCard = heading.closest("div.my-auto")
 
     expect(sectionContent).not.toHaveClass("h-full")
-    expect(sectionContent).not.toHaveClass("justify-center")
+    expect(sectionContent).toHaveClass("items-center", "justify-center")
     expect(pitchCard).toHaveClass("my-auto")
     expect(
       screen.getByRole("link", { name: "Inquire About Availability" }),

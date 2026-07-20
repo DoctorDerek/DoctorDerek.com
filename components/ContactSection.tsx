@@ -2,7 +2,11 @@ import Image from "next/image"
 import { useState } from "react"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
-import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
+import {
+  CONTACT_BULLETS,
+  CONTACT_COMPLETION,
+  CONTACT_CTA,
+} from "@/constants/SITE_CONTENT"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 
@@ -10,8 +14,8 @@ export default function ContactSection() {
   const [isFlipped, setIsFlipped] = useState(false)
 
   return (
-    <div className="flex h-full w-full items-center py-10 md:py-20">
-      <div className="flex flex-col md:flex-row md:items-stretch">
+    <div className="flex min-h-full w-full py-10 md:py-20">
+      <div className="my-auto flex w-full flex-col md:flex-row md:items-stretch">
         <div className="mx-auto w-[85%] md:flex md:w-1/2 md:flex-col md:pl-8 lg:w-[45%] lg:justify-start lg:pl-20">
           <div className="ease-spring-soft -translate-x-12 py-2 opacity-0 transition-all duration-700 md:mt-16 md:mb-2 lg:mb-0 lg:py-0 [.active_&]:translate-x-0 [.active_&]:opacity-100">
             <SectionHeading>
@@ -26,9 +30,14 @@ export default function ContactSection() {
               className="perspective animate-float h-full w-full"
               style={{ animationDelay: "1s" }}
             >
-              <div
-                className="ease-spring-bouncy cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95"
-                onClick={() => setIsFlipped(!isFlipped)}
+              <button
+                type="button"
+                aria-label="Flip portrait of Dr. Derek Austin"
+                aria-pressed={isFlipped}
+                className="ease-spring-bouncy block w-full cursor-pointer rounded-xl bg-transparent p-0 text-left transition-transform duration-300 hover:scale-105 focus-visible:ring-2 focus-visible:ring-[#FFE366] focus-visible:ring-offset-4 focus-visible:ring-offset-[#311B4D] focus-visible:outline-none active:scale-95"
+                onClick={() =>
+                  setIsFlipped((currentIsFlipped) => !currentIsFlipped)
+                }
               >
                 <div
                   className="wrapper md:relative lg:inline-flex"
@@ -57,7 +66,7 @@ export default function ContactSection() {
                     />
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -75,6 +84,20 @@ export default function ContactSection() {
             <GlobalEmailCTA className="ease-spring-bouncy mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
               {CONTACT_CTA}
             </GlobalEmailCTA>
+            <footer
+              aria-label="End of DoctorDerek.com"
+              className="mt-8 flex flex-col gap-3 border-t border-white/20 pt-6 text-center text-white md:items-start md:text-left"
+            >
+              <p className="text-sm font-bold tracking-wide text-balance md:text-base">
+                {CONTACT_COMPLETION.message}
+              </p>
+              <a
+                href="#home"
+                className="w-fit rounded-lg text-sm font-semibold text-[#FFE366] underline decoration-[#FFE366]/60 underline-offset-4 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-[#FFE366] focus-visible:ring-offset-4 focus-visible:ring-offset-[#311B4D] focus-visible:outline-none md:text-base"
+              >
+                {CONTACT_COMPLETION.returnLabel}
+              </a>
+            </footer>
           </div>
         </div>
       </div>

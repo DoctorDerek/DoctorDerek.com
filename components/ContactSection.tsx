@@ -2,7 +2,11 @@ import Image from "next/image"
 import { useState } from "react"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
-import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
+import {
+  CONTACT_BULLETS,
+  CONTACT_COMPLETION,
+  CONTACT_CTA,
+} from "@/constants/SITE_CONTENT"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 
@@ -75,6 +79,20 @@ export default function ContactSection() {
             <GlobalEmailCTA className="ease-spring-bouncy mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
               {CONTACT_CTA}
             </GlobalEmailCTA>
+            <footer
+              aria-label="End of DoctorDerek.com"
+              className="mt-8 flex flex-col gap-3 border-t border-white/20 pt-6 text-center text-white md:items-start md:text-left"
+            >
+              <p className="text-sm font-bold tracking-wide text-balance md:text-base">
+                {CONTACT_COMPLETION.message}
+              </p>
+              <a
+                href="#home"
+                className="w-fit rounded-lg text-sm font-semibold text-[#FFE366] underline decoration-[#FFE366]/60 underline-offset-4 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-[#FFE366] focus-visible:ring-offset-4 focus-visible:ring-offset-[#311B4D] focus-visible:outline-none md:text-base"
+              >
+                {CONTACT_COMPLETION.returnLabel}
+              </a>
+            </footer>
           </div>
         </div>
       </div>

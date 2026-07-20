@@ -70,7 +70,8 @@ export const CONTACT_BULLETS: string[] = [
 ] as const
 export const CONTACT_CTA = "Contact Me" as const
 export const CONTACT_COMPLETION = {
-  message: "You’ve reached the end of DoctorDerek.com. Let’s build something great.",
+  message:
+    "You’ve reached the end of DoctorDerek.com. Let’s build something great.",
   returnLabel: "Back to the beginning ↑",
 } as const
 

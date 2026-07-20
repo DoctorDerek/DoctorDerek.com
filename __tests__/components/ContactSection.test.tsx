@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
 import { describe, expect, it, vi } from "vitest"
 import ContactSection from "@/components/ContactSection"
@@ -39,5 +39,22 @@ describe("ContactSection", () => {
     expect(
       screen.getByRole("link", { name: "Back to the beginning ↑" }),
     ).toHaveAttribute("href", "#home")
+  })
+
+  it("flips the portrait through its public button control", () => {
+    render(<ContactSection />)
+
+    const portraitControl = screen.getByRole("button", {
+      name: "Flip portrait of Dr. Derek Austin",
+    })
+    const portraitCard = portraitControl.querySelector(".wrapper")
+
+    expect(portraitControl).toHaveAttribute("aria-pressed", "false")
+    expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
+
+    fireEvent.click(portraitControl)
+
+    expect(portraitControl).toHaveAttribute("aria-pressed", "true")
+    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
   })
 })

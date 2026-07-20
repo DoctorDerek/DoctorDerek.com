@@ -90,7 +90,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
             >
               <div className="relative h-1/2 w-full shrink-0 border-b border-white/20 bg-[#1E1E1E]">
                 <p className="absolute top-3 left-4 z-10 rounded-tr-xl border border-white/20 bg-black/60 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">
-                  Medium
+                  {post.topic}
                 </p>
                 {post.thumbnail && (
                   <Image

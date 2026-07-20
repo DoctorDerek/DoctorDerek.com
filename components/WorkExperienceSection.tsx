@@ -16,7 +16,7 @@ export default function WorkExperienceSection() {
   )
 
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center py-20 pb-24">
+    <div className="relative flex min-h-full w-full flex-col items-center justify-start py-20 pb-24 lg:h-full lg:justify-center">
       <div className="ease-spring-soft translate-x-12 rounded-bl-[3rem] bg-black/60 px-6 py-6 opacity-0 backdrop-blur-md transition-all duration-700 lg:ml-auto lg:w-fit lg:pr-8 lg:pb-8 lg:pl-16 [.active_&]:translate-x-0 [.active_&]:opacity-100">
         <div className="flex flex-col items-end">
           <SectionHeading>

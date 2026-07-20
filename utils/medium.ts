@@ -6,7 +6,22 @@ export interface MediumPost {
   pubDate: string
   thumbnail: string
   description: string
+  topic: string
 }
+
+const UPPERCASE_MEDIUM_TOPIC_WORDS = ["ai", "ui", "ux"]
+
+const formatMediumTopic = (topic: string | undefined) =>
+  (topic || "article")
+    .split("-")
+    .map((word) => {
+      const lowercaseWord = word.toLowerCase()
+
+      return UPPERCASE_MEDIUM_TOPIC_WORDS.includes(lowercaseWord)
+        ? lowercaseWord.toUpperCase()
+        : `${lowercaseWord.charAt(0).toUpperCase()}${lowercaseWord.slice(1)}`
+    })
+    .join(" ")
 
 const decodeEntities = (str: string) => {
   return (
@@ -69,6 +84,7 @@ export default async function getMediumPosts(): Promise<MediumPost[]> {
       pubDate: item.pubDate || "",
       thumbnail,
       description,
+      topic: formatMediumTopic(item.categories?.[0]),
     }
   })
 }

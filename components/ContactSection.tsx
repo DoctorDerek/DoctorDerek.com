@@ -30,9 +30,14 @@ export default function ContactSection() {
               className="perspective animate-float h-full w-full"
               style={{ animationDelay: "1s" }}
             >
-              <div
-                className="ease-spring-bouncy cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95"
-                onClick={() => setIsFlipped(!isFlipped)}
+              <button
+                type="button"
+                aria-label="Flip portrait of Dr. Derek Austin"
+                aria-pressed={isFlipped}
+                className="ease-spring-bouncy block w-full cursor-pointer rounded-xl bg-transparent p-0 text-left transition-transform duration-300 hover:scale-105 focus-visible:ring-2 focus-visible:ring-[#FFE366] focus-visible:ring-offset-4 focus-visible:ring-offset-[#311B4D] focus-visible:outline-none active:scale-95"
+                onClick={() =>
+                  setIsFlipped((currentIsFlipped) => !currentIsFlipped)
+                }
               >
                 <div
                   className="wrapper md:relative lg:inline-flex"
@@ -61,7 +66,7 @@ export default function ContactSection() {
                     />
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 # DoctorDerek.com
 
-[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=doctor-derek)](https://doctorderek.com) [![Codecov](https://codecov.io/gh/DoctorDerek/DoctorDerek.com/graph/badge.svg)](https://app.codecov.io/gh/DoctorDerek/DoctorDerek.com)
+[![Production](https://img.shields.io/website?url=https%3A%2F%2Fwww.doctorderek.com%2F&up_message=live&down_message=offline&label=production&logo=vercel&logoColor=white)](https://www.doctorderek.com/) [![Codecov](https://codecov.io/gh/DoctorDerek/DoctorDerek.com/graph/badge.svg)](https://app.codecov.io/gh/DoctorDerek/DoctorDerek.com) [![Test and Lint](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/test-and-lint.yml/badge.svg)](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/test-and-lint.yml) [![Playwright](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/playwright.yml/badge.svg)](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/playwright.yml)
 
 The personal website of [Dr. Derek Austin](https://doctorderek.com).
 

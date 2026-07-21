@@ -1,7 +1,19 @@
 import { act, fireEvent, render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
-import { afterEach, describe, expect, it, vi } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import AboutSection from "@/components/AboutSection"
+
+const { reducedMotionPreference } = vi.hoisted(() => ({
+  reducedMotionPreference: { value: false },
+}))
+
+vi.mock("@/components/MotionPreferenceProvider", () => ({
+  useMotionPreference: () => ({
+    motionPreference: reducedMotionPreference.value ? "reduce" : "full",
+    setMotionPreference: vi.fn(),
+    shouldReduceMotion: reducedMotionPreference.value,
+  }),
+}))
 
 vi.mock("next/image", () => ({
   default: ({
@@ -17,6 +29,10 @@ vi.mock("next/image", () => ({
 }))
 
 describe("AboutSection", () => {
+  beforeEach(() => {
+    reducedMotionPreference.value = false
+  })
+
   afterEach(() => {
     vi.useRealTimers()
   })
@@ -88,5 +104,26 @@ describe("AboutSection", () => {
     unmount()
 
     expect(vi.getTimerCount()).toBe(0)
+  })
+
+  it("keeps portrait changes user-driven and instantaneous when motion is reduced", () => {
+    vi.useFakeTimers()
+    reducedMotionPreference.value = true
+    render(<AboutSection />)
+    const portraitControl = screen.getByRole("button", {
+      name: "Show next portrait of Dr. Derek Austin",
+    })
+    const portraitCard = portraitControl.firstElementChild as HTMLElement
+
+    expect(portraitCard).toHaveStyle({ transition: "none" })
+
+    fireEvent.mouseEnter(portraitControl)
+    act(() => {
+      vi.advanceTimersByTime(3000)
+    })
+    expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
+
+    fireEvent.click(portraitControl)
+    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
   })
 })

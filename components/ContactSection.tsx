@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { useState } from "react"
+import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
 import {
@@ -11,6 +12,7 @@ import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 
 export default function ContactSection() {
+  const { shouldReduceMotion } = useMotionPreference()
   const [isFlipped, setIsFlipped] = useState(false)
 
   return (
@@ -43,7 +45,9 @@ export default function ContactSection() {
                   className="wrapper md:relative lg:inline-flex"
                   style={{
                     transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-                    transition: "transform 0.8s ease-out",
+                    transition: shouldReduceMotion
+                      ? "none"
+                      : "transform 0.8s ease-out",
                     transformStyle: "preserve-3d",
                   }}
                 >

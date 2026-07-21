@@ -126,4 +126,27 @@ describe("AboutSection", () => {
     fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
   })
+
+  it("stops an active portrait loop when reduced motion is selected", () => {
+    vi.useFakeTimers()
+    const { rerender } = render(<AboutSection />)
+    const portraitControl = screen.getByRole("button", {
+      name: "Show next portrait of Dr. Derek Austin",
+    })
+    const portraitCard = portraitControl.firstElementChild as HTMLElement
+
+    fireEvent.mouseEnter(portraitControl)
+    act(() => {
+      vi.advanceTimersByTime(750)
+    })
+
+    reducedMotionPreference.value = true
+    rerender(<AboutSection />)
+
+    act(() => {
+      vi.advanceTimersByTime(1500)
+    })
+    expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(vi.getTimerCount()).toBe(0)
+  })
 })

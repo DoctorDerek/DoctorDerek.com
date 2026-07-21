@@ -30,6 +30,13 @@ export default function AboutSection() {
     }
   }, [])
 
+  useEffect(() => {
+    if (shouldReduceMotion && intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+  }, [shouldReduceMotion])
+
   const photos = [DerekAustin, DerekAustin2, DerekAustin3]
 
   const currentPhoto = photos[flipCount % 3]

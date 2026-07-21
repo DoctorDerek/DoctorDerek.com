@@ -9,6 +9,7 @@ import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
 import GlobalBackground from "@/components/GlobalBackground"
 import IntroSection from "@/components/IntroSection"
+import MotionPreferenceProvider from "@/components/MotionPreferenceProvider"
 import Portfolio from "@/components/Portfolio"
 import Testimonials from "@/components/Testimonials"
 import TopSection from "@/components/TopSection"
@@ -45,7 +46,7 @@ const pluginWrapper = () => {
 const MapacheFullPage =
   ReactFullpage as unknown as React.FC<MapacheFullPageProps>
 
-export default function ClientShell({ posts }: { posts: MediumPost[] }) {
+function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
 
   const sectionsContent = [
@@ -144,5 +145,13 @@ export default function ClientShell({ posts }: { posts: MediumPost[] }) {
         )}
       />
     </GlobalStateContext.Provider>
+  )
+}
+
+export default function ClientShell({ posts }: { posts: MediumPost[] }) {
+  return (
+    <MotionPreferenceProvider>
+      <PortfolioExperience posts={posts} />
+    </MotionPreferenceProvider>
   )
 }

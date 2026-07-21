@@ -1,19 +1,17 @@
 "use client"
 
 import ReactFullpage from "@fullpage/react-fullpage"
-import dynamic from "next/dynamic"
 import { useState } from "react"
 import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
-import GlobalBackground from "@/components/GlobalBackground"
 import IntroSection from "@/components/IntroSection"
+import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 import MotionPreferenceProvider from "@/components/MotionPreferenceProvider"
 import Portfolio from "@/components/Portfolio"
 import Testimonials from "@/components/Testimonials"
 import TopSection from "@/components/TopSection"
-import CustomCursor from "@/components/ui/CustomCursor"
 import WorkExperienceSection from "@/components/WorkExperienceSection"
 import {
   FULLPAGE_ACTIVATION_KEYS,
@@ -26,10 +24,6 @@ import {
 } from "@/types/MapacheFullPageProps"
 import classNames from "@/utils/classNames"
 import type { MediumPost } from "@/utils/medium"
-
-const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
-  ssr: false,
-})
 
 const pluginWrapper = () => {
   require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
@@ -89,9 +83,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
 
   return (
     <GlobalStateContext.Provider>
-      <GlobalBackground />
-      <CustomCursor />
-      <RiveAnimation />
+      <MotionAwareAmbience />
 
       <MapacheFullPage
         pluginWrapper={pluginWrapper}

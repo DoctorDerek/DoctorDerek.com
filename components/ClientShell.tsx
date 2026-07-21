@@ -8,7 +8,9 @@ import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
 import IntroSection from "@/components/IntroSection"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
-import MotionPreferenceProvider from "@/components/MotionPreferenceProvider"
+import MotionPreferenceProvider, {
+  useMotionPreference,
+} from "@/components/MotionPreferenceProvider"
 import Portfolio from "@/components/Portfolio"
 import Testimonials from "@/components/Testimonials"
 import TopSection from "@/components/TopSection"
@@ -23,6 +25,7 @@ import {
   MapacheFullPageProps,
 } from "@/types/MapacheFullPageProps"
 import classNames from "@/utils/classNames"
+import getFullPageMotionOptions from "@/utils/fullPageMotionOptions"
 import type { MediumPost } from "@/utils/medium"
 
 const pluginWrapper = () => {
@@ -41,7 +44,9 @@ const MapacheFullPage =
   ReactFullpage as unknown as React.FC<MapacheFullPageProps>
 
 function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
+  const { shouldReduceMotion } = useMotionPreference()
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
+  const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
 
   const sectionsContent = [
     { component: <TopSection key="top" />, anchor: "home" },
@@ -86,6 +91,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
       <MotionAwareAmbience />
 
       <MapacheFullPage
+        {...fullPageMotionOptions}
         pluginWrapper={pluginWrapper}
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
         cardsKey={FULLPAGE_ACTIVATION_KEYS.cards}
@@ -106,12 +112,10 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
         normalScrollElements=".scrollable-content"
         loopHorizontal={false}
         resetSliders={true}
-        cards="slides"
-        cinematic={true}
         cinematicOptions={{ effect: cinematicEffect }}
         credits={{ enabled: false }}
         anchors={sectionsContent.map((s) => s.anchor)}
-        onLeave={handleLeave}
+        onLeave={shouldReduceMotion ? undefined : handleLeave}
         render={() => (
           <ReactFullpage.Wrapper>
             {sectionsContent.map((section, index) => (

@@ -2,10 +2,20 @@ import { render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import CountUp from "@/components/ui/CountUp"
 
-const { animateMock, stopMock, useInViewMock } = vi.hoisted(() => ({
-  animateMock: vi.fn(),
-  stopMock: vi.fn(),
-  useInViewMock: vi.fn(),
+const { animateMock, reducedMotionPreference, stopMock, useInViewMock } =
+  vi.hoisted(() => ({
+    animateMock: vi.fn(),
+    reducedMotionPreference: { value: false },
+    stopMock: vi.fn(),
+    useInViewMock: vi.fn(),
+  }))
+
+vi.mock("@/components/MotionPreferenceProvider", () => ({
+  useMotionPreference: () => ({
+    motionPreference: reducedMotionPreference.value ? "reduce" : "full",
+    setMotionPreference: vi.fn(),
+    shouldReduceMotion: reducedMotionPreference.value,
+  }),
 }))
 
 vi.mock("motion/react", () => ({
@@ -23,6 +33,7 @@ describe("CountUp", () => {
   beforeEach(() => {
     vi.clearAllMocks()
     animateMock.mockReturnValue({ stop: stopMock })
+    reducedMotionPreference.value = false
     useInViewMock.mockReturnValue(true)
   })
 
@@ -53,6 +64,15 @@ describe("CountUp", () => {
     )
 
     expect(screen.getByText("1234")).toHaveClass("inline-block", "metric")
+    expect(animateMock).not.toHaveBeenCalled()
+  })
+
+  it("renders the final value without animating when motion is reduced", () => {
+    reducedMotionPreference.value = true
+
+    render(<CountUp to={2000} />)
+
+    expect(screen.getByText("2,000")).toHaveClass("inline-block")
     expect(animateMock).not.toHaveBeenCalled()
   })
 })

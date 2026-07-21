@@ -88,7 +88,7 @@ export default function MotionPreferenceProvider({
 }: {
   children: ReactNode
 }) {
-  const motionPreference = useSyncExternalStore(
+  const motionPreference = useSyncExternalStore<MotionPreference>(
     subscribeToMotionPreference,
     getMotionPreferenceSnapshot,
     () => "system",

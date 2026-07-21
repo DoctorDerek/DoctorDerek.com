@@ -7,7 +7,14 @@ const { reducedMotionPreference } = vi.hoisted(() => ({
 }))
 
 vi.mock("next/dynamic", () => ({
-  default: () => () => <p>Rive animation</p>,
+  default: (loadComponent: () => Promise<unknown>) => {
+    void loadComponent()
+    return () => <p>Rive animation</p>
+  },
+}))
+
+vi.mock("@/components/RiveAnimation", () => ({
+  default: () => null,
 }))
 
 vi.mock("@/components/GlobalBackground", () => ({

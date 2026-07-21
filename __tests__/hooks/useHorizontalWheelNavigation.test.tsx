@@ -32,6 +32,11 @@ describe("useHorizontalWheelNavigation", () => {
   const moveSlideLeft = vi.fn()
   const moveSlideRight = vi.fn()
   const fullPageApiReference = createRef<FullPageApi | null>()
+  const fullPageApi = {
+    getActiveSection: () => ({ item: activeSection }),
+    moveSlideLeft,
+    moveSlideRight,
+  } as unknown as FullPageApi
 
   beforeEach(() => {
     activeSection.replaceChildren(
@@ -41,11 +46,7 @@ describe("useHorizontalWheelNavigation", () => {
     for (const slide of activeSection.children) slide.className = "slide"
     moveSlideLeft.mockClear()
     moveSlideRight.mockClear()
-    fullPageApiReference.current = {
-      getActiveSection: () => ({ item: activeSection }),
-      moveSlideLeft,
-      moveSlideRight,
-    } as FullPageApi
+    fullPageApiReference.current = fullPageApi
   })
 
   it("navigates dominant horizontal intent in each direction", () => {
@@ -148,9 +149,7 @@ describe("useHorizontalWheelNavigation", () => {
 
     unmount()
     nestedScroller.remove()
-    fullPageApiReference.current = {
-      moveSlideRight,
-    } as FullPageApi
+    fullPageApiReference.current = fullPageApi
     window.dispatchEvent(
       createWheelEvent({ deltaX: 20, deltaY: 0, timeStamp: 3100 }),
     )

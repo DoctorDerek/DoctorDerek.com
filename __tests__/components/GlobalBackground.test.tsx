@@ -90,4 +90,14 @@ describe("GlobalBackground", () => {
       container.querySelector('[data-transition-duration="0"]'),
     ).toBeInTheDocument()
   })
+
+  it("renders the active inverse background when motion is allowed", () => {
+    backgroundState.bgIndex = 0
+    backgroundState.bgUseInverse = true
+
+    render(<GlobalBackground />)
+
+    expect(screen.getByLabelText("Background one")).toBeInTheDocument()
+    expect(screen.queryByLabelText("Background zero")).not.toBeInTheDocument()
+  })
 })

@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
+import { renderToString } from "react-dom/server"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import MotionPreferenceProvider, {
   useMotionPreference,
@@ -76,6 +77,16 @@ describe("MotionPreferenceProvider", () => {
 
     unmount()
     expect(document.documentElement.dataset.motionPreference).toBeUndefined()
+  })
+
+  it("uses a stable system snapshot during server rendering", () => {
+    const serverMarkup = renderToString(
+      <MotionPreferenceProvider>
+        <MotionPreferenceHarness />
+      </MotionPreferenceProvider>,
+    )
+
+    expect(serverMarkup).toContain("system:false")
   })
 
   it("reflects a system reduced-motion preference", () => {

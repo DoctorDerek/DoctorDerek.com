@@ -1,7 +1,7 @@
 "use client"
 
 import ReactFullpage from "@fullpage/react-fullpage"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import BlogSection from "@/components/BlogSection"
@@ -19,8 +19,10 @@ import {
   FULLPAGE_ACTIVATION_KEYS,
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
 } from "@/constants/SITE_CONTENT"
+import useHorizontalWheelNavigation from "@/hooks/useHorizontalWheelNavigation"
 import { GlobalStateContext } from "@/machines/globalMachine"
 import {
+  FullPageApi,
   FullPageSection,
   MapacheFullPageProps,
 } from "@/types/MapacheFullPageProps"
@@ -46,7 +48,9 @@ const MapacheFullPage =
 function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const { shouldReduceMotion } = useMotionPreference()
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
+  const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
+  useHorizontalWheelNavigation(fullPageApiReference)
 
   const sectionsContent = [
     { component: <TopSection key="top" />, anchor: "home" },
@@ -116,29 +120,32 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
         credits={{ enabled: false }}
         anchors={sectionsContent.map((s) => s.anchor)}
         onLeave={shouldReduceMotion ? undefined : handleLeave}
-        render={() => (
-          <ReactFullpage.Wrapper>
-            {sectionsContent.map((section, index) => (
-              <div
-                key={section.anchor}
-                className={classNames(
-                  "section",
-                  section.anchor === "home" ? "fp-noscroll" : "",
-                )}
-              >
-                {section.component}
-                {index < sectionsContent.length - 1 && (
-                  <a
-                    href={`#${sectionsContent[index + 1].anchor}`}
-                    className="ease-spring-bouncy sr-only rounded-lg bg-black/60 px-6 py-3 font-semibold text-white ring-2 ring-yellow-400 backdrop-blur-md transition-all outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
-                  >
-                    Skip to next section ↓
-                  </a>
-                )}
-              </div>
-            ))}
-          </ReactFullpage.Wrapper>
-        )}
+        render={({ fullpageApi }) => {
+          fullPageApiReference.current = fullpageApi
+          return (
+            <ReactFullpage.Wrapper>
+              {sectionsContent.map((section, index) => (
+                <div
+                  key={section.anchor}
+                  className={classNames(
+                    "section",
+                    section.anchor === "home" ? "fp-noscroll" : "",
+                  )}
+                >
+                  {section.component}
+                  {index < sectionsContent.length - 1 && (
+                    <a
+                      href={`#${sectionsContent[index + 1].anchor}`}
+                      className="ease-spring-bouncy sr-only rounded-lg bg-black/60 px-6 py-3 font-semibold text-white ring-2 ring-yellow-400 backdrop-blur-md transition-all outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
+                    >
+                      Skip to next section ↓
+                    </a>
+                  )}
+                </div>
+              ))}
+            </ReactFullpage.Wrapper>
+          )
+        }}
       />
     </GlobalStateContext.Provider>
   )

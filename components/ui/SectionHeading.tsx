@@ -15,16 +15,18 @@ export default function SectionHeading({
   const { shouldReduceMotion } = useMotionPreference()
 
   return (
-    <Tilt
-      className={classNames("w-max cursor-pointer", className)}
-      tiltEnable={!shouldReduceMotion}
-      tiltMaxAngleX={10}
-      tiltMaxAngleY={10}
-      perspective={1000}
-      scale={1.02}
-      transitionSpeed={1000}
-    >
-      {children}
-    </Tilt>
+    <div className={classNames("section-heading-entrance w-max", className)}>
+      <Tilt
+        className="w-max cursor-pointer"
+        tiltEnable={!shouldReduceMotion}
+        tiltMaxAngleX={10}
+        tiltMaxAngleY={10}
+        perspective={1000}
+        scale={1.02}
+        transitionSpeed={1000}
+      >
+        {children}
+      </Tilt>
+    </div>
   )
 }

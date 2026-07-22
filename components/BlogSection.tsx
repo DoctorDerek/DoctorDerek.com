@@ -9,7 +9,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
     <>
       <div className="pointer-events-none absolute top-10 left-10 z-10 md:top-20 md:left-20">
         <SectionHeading>
-          <h2 className="ease-spring-soft text-site-foreground text-5xl opacity-0 drop-shadow-md transition-all duration-700 md:text-8xl lg:text-9xl [.active_&]:opacity-100">
+          <h2 className="text-site-foreground text-5xl drop-shadow-md md:text-8xl lg:text-9xl">
             Blog
           </h2>
         </SectionHeading>

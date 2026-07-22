@@ -14,9 +14,7 @@ export default function Portfolio() {
     <>
       <div className="text-site-foreground pointer-events-none absolute top-6 left-6 z-10 drop-shadow-md md:top-12 md:left-12">
         <SectionHeading>
-          <h2 className="ease-spring-soft text-5xl opacity-0 transition-all duration-700 md:text-8xl lg:text-9xl [.active_&]:opacity-100">
-            Portfolio
-          </h2>
+          <h2 className="text-5xl md:text-8xl lg:text-9xl">Portfolio</h2>
         </SectionHeading>
       </div>
 

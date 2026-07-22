@@ -48,7 +48,7 @@ export default function AboutSection() {
   return (
     <div className="h-full w-full pt-2 pb-10 md:pt-3 md:pb-16">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-[90%]">
-        <div className="ease-spring-soft text-site-foreground -translate-x-12 py-2 opacity-0 drop-shadow-md transition-all duration-700 md:relative md:pt-2 md:pb-8 lg:pt-3 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+        <div className="text-site-foreground py-2 drop-shadow-md md:relative md:pt-2 md:pb-8 lg:pt-3 lg:pb-10">
           <SectionHeading>
             <h2 className="text-5xl font-semibold min-[375px]:text-6xl md:text-8xl lg:text-9xl">
               About

@@ -7,7 +7,7 @@ const Testimonials = () => {
   return (
     <>
       <div className="pointer-events-none absolute top-10 right-10 z-10 w-full md:right-20 lg:top-16">
-        <div className="ease-spring-soft flex justify-end opacity-0 transition-all delay-300 duration-700 [.active_&]:opacity-100">
+        <div className="flex justify-end">
           <SectionHeading>
             <h3 className="text-site-foreground rounded-tl-3xl rounded-br-3xl bg-[#89CFFD]/30 px-8 py-4 text-right text-5xl drop-shadow-md backdrop-blur-md md:text-7xl lg:text-9xl">
               What People Say

@@ -87,8 +87,7 @@ export default function useEndOfSiteCelebration(
     }
 
     const handleWheel = (event: WheelEvent) => {
-      if (!event.defaultPrevented && event.deltaY > 0)
-        celebrateContactEnd(event.target)
+      if (event.deltaY > 0) celebrateContactEnd(event.target)
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {

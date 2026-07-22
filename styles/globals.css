@@ -18,12 +18,14 @@
   --color-site-foreground-muted: var(--site-foreground-muted);
   --color-site-foreground-faint: var(--site-foreground-faint);
   --color-site-surface: var(--site-surface);
+  --color-site-surface-deep: var(--site-surface-deep);
   --color-site-surface-strong: var(--site-surface-strong);
   --color-site-surface-soft: var(--site-surface-soft);
   --color-site-surface-hover: var(--site-surface-hover);
   --color-site-border: var(--site-border);
   --color-site-border-faint: var(--site-border-faint);
   --color-site-border-strong: var(--site-border-strong);
+  --color-site-border-emphasis: var(--site-border-emphasis);
   --color-site-accent-text: var(--site-accent-text);
   --color-site-focus: var(--site-focus);
 
@@ -67,12 +69,14 @@ html.dark {
   --site-foreground-muted: rgb(255 255 255 / 90%);
   --site-foreground-faint: rgb(255 255 255 / 80%);
   --site-surface: rgb(0 0 0 / 40%);
+  --site-surface-deep: rgb(0 0 0 / 60%);
   --site-surface-strong: rgb(23 17 38 / 95%);
   --site-surface-soft: rgb(255 255 255 / 10%);
   --site-surface-hover: rgb(255 255 255 / 20%);
   --site-border: rgb(255 255 255 / 20%);
   --site-border-faint: rgb(255 255 255 / 10%);
   --site-border-strong: rgb(255 255 255 / 30%);
+  --site-border-emphasis: rgb(255 255 255 / 40%);
   --site-accent-text: #ffe366;
   --site-focus: #ffe366;
 }
@@ -83,12 +87,14 @@ html.light {
   --site-foreground-muted: rgb(23 17 38 / 90%);
   --site-foreground-faint: rgb(23 17 38 / 75%);
   --site-surface: rgb(255 255 255 / 72%);
+  --site-surface-deep: rgb(255 255 255 / 85%);
   --site-surface-strong: rgb(255 255 255 / 95%);
   --site-surface-soft: rgb(255 255 255 / 50%);
   --site-surface-hover: rgb(255 255 255 / 75%);
   --site-border: rgb(23 17 38 / 20%);
   --site-border-faint: rgb(23 17 38 / 12%);
   --site-border-strong: rgb(23 17 38 / 30%);
+  --site-border-emphasis: rgb(23 17 38 / 40%);
   --site-accent-text: #6a3f00;
   --site-focus: #6d28d9;
 }

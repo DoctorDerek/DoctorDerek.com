@@ -17,10 +17,10 @@ export default function WorkExperienceSection() {
 
   return (
     <div className="relative flex min-h-full w-full flex-col items-center justify-start py-20 pb-24 lg:h-full lg:justify-center">
-      <div className="ease-spring-soft translate-x-12 rounded-bl-[3rem] bg-black/60 px-6 py-6 opacity-0 backdrop-blur-md transition-all duration-700 lg:ml-auto lg:w-fit lg:pr-8 lg:pb-8 lg:pl-16 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+      <div className="ease-spring-soft bg-site-surface-deep translate-x-12 rounded-bl-[3rem] px-6 py-6 opacity-0 backdrop-blur-md transition-all duration-700 lg:ml-auto lg:w-fit lg:pr-8 lg:pb-8 lg:pl-16 [.active_&]:translate-x-0 [.active_&]:opacity-100">
         <div className="flex flex-col items-end">
           <SectionHeading>
-            <h2 className="text-right text-3xl font-bold tracking-tight whitespace-nowrap text-white drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
+            <h2 className="text-site-foreground text-right text-3xl font-bold tracking-tight whitespace-nowrap drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
               Full-Stack SWE
               <br />
               since 2004
@@ -49,12 +49,12 @@ export default function WorkExperienceSection() {
                 <CodeIcon className="h-full w-full" />
               </div>
               <div className="">
-                <p className="text-xl font-bold text-white/80">
+                <p className="text-site-foreground-faint text-xl font-bold">
                   {item.duration}
                 </p>
               </div>
               <div className="py-1">
-                <p className="restorabold text-xl font-bold text-white">
+                <p className="restorabold text-site-foreground text-xl font-bold">
                   {item.company.includes("20M+") ? (
                     <>
                       {item.company.split("20M+")[0]}
@@ -92,9 +92,9 @@ export default function WorkExperienceSection() {
                 <li
                   className={classNames(
                     "ease-spring-soft translate-y-12 pl-4 opacity-0 transition-all duration-700 [.active_&]:translate-y-0 [.active_&]:opacity-100",
-                    isLeftReal && "mr-8 border-r-4 border-white/40",
+                    isLeftReal && "border-site-border-emphasis mr-8 border-r-4",
                     index === getHalfNum - 1 &&
-                      "rounded-br-3xl border-b-4 border-white/40",
+                      "border-site-border-emphasis rounded-br-3xl border-b-4",
                     (isLeftReal || isRightPipe) &&
                       "border-l-4 border-[#F38B57]",
                     index === combinedLists.length - 1 &&
@@ -108,7 +108,7 @@ export default function WorkExperienceSection() {
                   key={`${item.duration} ${index}`}
                 >
                   {!isPlaceholder && (
-                    <div className="relative flex flex-col text-white">
+                    <div className="text-site-foreground relative flex flex-col">
                       <div
                         className="animate-float absolute top-0 -left-9 h-8 w-8"
                         style={{ animationDelay: `${index * 0.2}s` }}

@@ -1,7 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import type { CSSProperties } from "react"
+import { renderToString } from "react-dom/server"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import EndOfSiteCelebration from "@/components/EndOfSiteCelebration"
+import useViewportSize from "@/hooks/useViewportSize"
 
 type ConfettiProperties = {
   "aria-hidden"?: boolean | "false" | "true"
@@ -29,6 +31,11 @@ vi.mock("react-confetti", () => ({
     )
   },
 }))
+
+function ViewportSizeHarness() {
+  const { height, width } = useViewportSize()
+  return <output>{`${width}×${height}`}</output>
+}
 
 describe("EndOfSiteCelebration", () => {
   beforeEach(() => {
@@ -89,5 +96,9 @@ describe("EndOfSiteCelebration", () => {
     expect(captureConfettiProperties).toHaveBeenLastCalledWith(
       expect.objectContaining({ height: 1112, width: 834 }),
     )
+  })
+
+  it("uses a stable zero-sized viewport snapshot during server rendering", () => {
+    expect(renderToString(<ViewportSizeHarness />)).toContain("0×0")
   })
 })

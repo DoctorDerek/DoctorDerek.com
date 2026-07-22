@@ -5,9 +5,13 @@ import {
   waitFor,
   within,
 } from "@testing-library/react"
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import Portfolio from "@/components/Portfolio"
 import { PORTFOLIO_PROJECTS } from "@/constants/SITE_CONTENT"
+
+vi.mock("@/components/MotionPreferenceProvider", () => ({
+  useMotionPreference: () => ({ shouldReduceMotion: false }),
+}))
 
 describe("Portfolio", () => {
   it("renders the audited project order with semantic controls and no phase copy", () => {

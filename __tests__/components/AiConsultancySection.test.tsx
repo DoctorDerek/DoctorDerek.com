@@ -1,6 +1,10 @@
 import { render, screen } from "@testing-library/react"
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import AiConsultancySection from "@/components/AiConsultancySection"
+
+vi.mock("@/components/MotionPreferenceProvider", () => ({
+  useMotionPreference: () => ({ shouldReduceMotion: false }),
+}))
 
 describe("AiConsultancySection", () => {
   it("safely centers the hiring pitch without hiding overflowing content", () => {

@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import Tilt from "react-parallax-tilt"
+import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import classNames from "@/utils/classNames"
 
 type SectionHeadingProps = {
@@ -11,9 +12,12 @@ export default function SectionHeading({
   children,
   className,
 }: SectionHeadingProps) {
+  const { shouldReduceMotion } = useMotionPreference()
+
   return (
     <Tilt
       className={classNames("w-max cursor-pointer", className)}
+      tiltEnable={!shouldReduceMotion}
       tiltMaxAngleX={10}
       tiltMaxAngleY={10}
       perspective={1000}

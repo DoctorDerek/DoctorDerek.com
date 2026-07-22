@@ -1,4 +1,5 @@
 import "@/styles/globals.css"
+import "@/styles/theme-toggle.css"
 import type { Metadata, Viewport } from "next"
 import SiteThemeProvider from "@/components/SiteThemeProvider"
 

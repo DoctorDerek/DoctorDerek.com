@@ -1,7 +1,7 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { useState } from "react"
-import MotionSettings from "@/components/MotionSettings"
+import SiteSettings from "@/components/SiteSettings"
 import Logo from "@/components/ui/Logo"
 import SocialLinks from "@/components/ui/SocialLinks"
 import classNames from "@/utils/classNames"
@@ -79,7 +79,7 @@ export default function Navbar() {
                 ))}
               </ul>
               <div className="mt-auto flex flex-col gap-6 pr-5 pb-6">
-                <MotionSettings />
+                <SiteSettings />
                 <div className="w-10/12 md:hidden">
                   <SocialLinks
                     fill="white"

@@ -6,8 +6,8 @@ vi.mock("@/components/ui/Logo", () => ({
   default: () => null,
 }))
 
-vi.mock("@/components/MotionSettings", () => ({
-  default: () => <p>Motion settings</p>,
+vi.mock("@/components/SiteSettings", () => ({
+  default: () => <p>Site settings</p>,
 }))
 
 vi.mock("@/components/ui/SocialLinks", () => ({
@@ -31,7 +31,7 @@ describe("Navbar", () => {
     ).toHaveAttribute("aria-expanded", "true")
     expect(navigation).toHaveAttribute("id", "site-navigation")
     expect(navigation).not.toHaveAttribute("inert")
-    expect(within(navigation).getByText("Motion settings")).toBeInTheDocument()
+    expect(within(navigation).getByText("Site settings")).toBeInTheDocument()
 
     expect(
       within(navigation)

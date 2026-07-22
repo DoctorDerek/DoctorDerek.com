@@ -15,16 +15,10 @@ export default function MotionSettings() {
   const { motionPreference, setMotionPreference } = useMotionPreference()
 
   return (
-    <section aria-labelledby="motion-settings-heading" className="max-w-sm">
-      <h2
-        id="motion-settings-heading"
-        className="restorabold text-xl text-white"
-      >
-        Settings
-      </h2>
+    <div className="mt-6 max-w-sm">
       <label
         htmlFor="motion-preference"
-        className="mt-3 block text-sm font-semibold text-white"
+        className="block text-sm font-semibold text-white"
       >
         Motion
       </label>
@@ -47,6 +41,6 @@ export default function MotionSettings() {
       >
         {MOTION_PREFERENCE_DESCRIPTIONS[motionPreference]}
       </p>
-    </section>
+    </div>
   )
 }

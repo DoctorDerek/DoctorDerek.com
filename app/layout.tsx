@@ -1,5 +1,6 @@
 import "@/styles/globals.css"
 import type { Metadata, Viewport } from "next"
+import SiteThemeProvider from "@/components/SiteThemeProvider"
 
 export const metadata: Metadata = {
   title:
@@ -17,8 +18,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <SiteThemeProvider>{children}</SiteThemeProvider>
+      </body>
     </html>
   )
 }

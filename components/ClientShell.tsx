@@ -136,7 +136,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
                   {index < sectionsContent.length - 1 && (
                     <a
                       href={`#${sectionsContent[index + 1].anchor}`}
-                      className="ease-spring-bouncy sr-only rounded-lg bg-black/60 px-6 py-3 font-semibold text-white ring-2 ring-yellow-400 backdrop-blur-md transition-all outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
+                      className="ease-spring-bouncy bg-site-surface-deep text-site-foreground ring-site-focus sr-only rounded-lg px-6 py-3 font-semibold ring-2 backdrop-blur-md transition-all outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
                     >
                       Skip to next section ↓
                     </a>

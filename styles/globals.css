@@ -87,7 +87,7 @@ html.dark {
   --site-border-strong: rgb(255 255 255 / 30%);
   --site-border-emphasis: rgb(255 255 255 / 40%);
   --site-accent-text: #ffe366;
-  --site-focus: #ffe366;
+  --site-focus: #facc15;
   --site-status-foreground: #d1fae5;
   --site-status-surface: rgb(110 231 183 / 10%);
   --site-status-border: rgb(110 231 183 / 40%);
@@ -141,11 +141,9 @@ https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
 */
 :focus-visible {
   outline: none !important;
-  box-shadow: 0 0 0 0.0625rem #facc15 !important; /* 1px */
-  /* Tailwind CSS color yellow-400 === #facc15 */
+  box-shadow: 0 0 0 0.0625rem var(--site-focus) !important;
   border-color: transparent !important;
   border-radius: 0.5rem;
-  /* Tailwind CSS rounded-lg === 0.5rem === 8px */
 }
 
 /* Suppress focus rings on fullpage.js structural elements */

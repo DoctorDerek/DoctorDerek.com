@@ -10,11 +10,10 @@ vi.mock("react-hot-toast", () => ({ toast }))
 
 const createTouchList = (clientY: number) => {
   const touch = { clientY } as Touch
-  return {
-    0: touch,
-    item: () => touch,
-    length: 1,
-  } as TouchList
+  const touches = [touch]
+  return Object.assign(touches, {
+    item: (index: number) => touches[index] ?? null,
+  }) satisfies TouchList
 }
 
 const fireTouch = (

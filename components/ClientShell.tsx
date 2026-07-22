@@ -6,6 +6,7 @@ import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
+import EndOfSiteCelebration from "@/components/EndOfSiteCelebration"
 import IntroSection from "@/components/IntroSection"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 import MotionPreferenceProvider, {
@@ -19,6 +20,7 @@ import {
   FULLPAGE_ACTIVATION_KEYS,
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
 } from "@/constants/SITE_CONTENT"
+import useEndOfSiteCelebration from "@/hooks/useEndOfSiteCelebration"
 import useHorizontalWheelNavigation from "@/hooks/useHorizontalWheelNavigation"
 import { GlobalStateContext } from "@/machines/globalMachine"
 import {
@@ -51,6 +53,8 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
   useHorizontalWheelNavigation(fullPageApiReference)
+  const { beginContactVisit, endContactVisit } =
+    useEndOfSiteCelebration(fullPageApiReference)
 
   const sectionsContent = [
     { component: <TopSection key="top" />, anchor: "home" },
@@ -71,9 +75,12 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   ]
 
   const handleLeave = (
-    _origin: FullPageSection,
+    origin: FullPageSection,
     destination: FullPageSection,
   ) => {
+    if (origin.anchor === "contact") endContactVisit()
+    if (shouldReduceMotion) return
+
     const transitionMatrix: Record<string, string> = {
       home: "zoom",
       intro: "zoom",
@@ -90,9 +97,18 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
     setCinematicEffect(nextEffect)
   }
 
+  const handleAfterLoad = (
+    _origin: FullPageSection,
+    destination: FullPageSection,
+  ) => {
+    if (destination.anchor === "contact") beginContactVisit()
+    else endContactVisit()
+  }
+
   return (
     <GlobalStateContext.Provider>
       <MotionAwareAmbience />
+      <EndOfSiteCelebration />
 
       <MapacheFullPage
         {...fullPageMotionOptions}
@@ -119,7 +135,8 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
         cinematicOptions={{ effect: cinematicEffect }}
         credits={{ enabled: false }}
         anchors={sectionsContent.map((s) => s.anchor)}
-        onLeave={shouldReduceMotion ? undefined : handleLeave}
+        onLeave={handleLeave}
+        afterLoad={handleAfterLoad}
         render={({ fullpageApi }) => {
           fullPageApiReference.current = fullpageApi
           return (

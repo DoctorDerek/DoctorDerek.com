@@ -85,7 +85,7 @@ export default function ContactSection() {
                 </p>
               ))}
             </div>
-            <GlobalEmailCTA className="ease-spring-bouncy mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
+            <GlobalEmailCTA className="ease-spring-bouncy site-focus-contrast mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
               {CONTACT_CTA}
             </GlobalEmailCTA>
             <footer

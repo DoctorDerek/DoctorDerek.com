@@ -88,6 +88,7 @@ html.dark {
   --site-border-emphasis: rgb(255 255 255 / 40%);
   --site-accent-text: #ffe366;
   --site-focus: #facc15;
+  --site-focus-contrast: #fff;
   --site-status-foreground: #d1fae5;
   --site-status-surface: rgb(110 231 183 / 10%);
   --site-status-border: rgb(110 231 183 / 40%);
@@ -112,6 +113,7 @@ html.light {
   --site-border-emphasis: rgb(23 17 38 / 40%);
   --site-accent-text: #6a3f00;
   --site-focus: #6d28d9;
+  --site-focus-contrast: #6d28d9;
   --site-status-foreground: #065f46;
   --site-status-surface: rgb(16 185 129 / 14%);
   --site-status-border: rgb(4 120 87 / 35%);
@@ -144,6 +146,10 @@ https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
   box-shadow: 0 0 0 0.0625rem var(--site-focus) !important;
   border-color: transparent !important;
   border-radius: 0.5rem;
+}
+
+.site-focus-contrast {
+  --site-focus: var(--site-focus-contrast);
 }
 
 /* Suppress focus rings on fullpage.js structural elements */

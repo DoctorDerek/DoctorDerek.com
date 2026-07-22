@@ -72,7 +72,7 @@ export default function Portfolio() {
                 type="button"
                 aria-label={"Explore " + project.projectTitle}
                 onClick={() => setSelectedProject(project)}
-                className="ease-spring-bouncy mt-7 inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#F38B57] px-6 py-4 text-lg font-bold text-white shadow-xl transition-all hover:scale-[1.02] hover:bg-[#ff9c6a] focus-visible:ring-4 focus-visible:ring-[#FFE366] focus-visible:outline-none active:scale-95 sm:w-fit"
+                className="ease-spring-bouncy site-focus-contrast mt-7 inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#F38B57] px-6 py-4 text-lg font-bold text-white shadow-xl transition-all hover:scale-[1.02] hover:bg-[#ff9c6a] focus-visible:ring-4 focus-visible:outline-none active:scale-95 sm:w-fit"
               >
                 Explore project
                 <span aria-hidden="true">→</span>

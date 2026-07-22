@@ -83,7 +83,7 @@ export default function PortfolioProjectDialog({
                         aria-label={"View " + project.projectTitle + " live"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ease-spring-bouncy inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-lg font-bold text-[#311B4D] shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:ring-white focus-visible:outline-none active:scale-95 sm:w-fit"
+                        className="ease-spring-bouncy site-focus-contrast inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-lg font-bold text-[#311B4D] shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:outline-none active:scale-95 sm:w-fit"
                       >
                         View live project
                         <ArrowTopRightOnSquareIcon

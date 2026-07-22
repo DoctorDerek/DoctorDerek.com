@@ -17,17 +17,23 @@
   --color-site-foreground: var(--site-foreground);
   --color-site-foreground-muted: var(--site-foreground-muted);
   --color-site-foreground-faint: var(--site-foreground-faint);
+  --color-site-foreground-subtle: var(--site-foreground-subtle);
   --color-site-surface: var(--site-surface);
   --color-site-surface-deep: var(--site-surface-deep);
   --color-site-surface-strong: var(--site-surface-strong);
   --color-site-surface-soft: var(--site-surface-soft);
   --color-site-surface-hover: var(--site-surface-hover);
+  --color-site-surface-active: var(--site-surface-active);
+  --color-site-surface-emphasis: var(--site-surface-emphasis);
   --color-site-border: var(--site-border);
   --color-site-border-faint: var(--site-border-faint);
   --color-site-border-strong: var(--site-border-strong);
   --color-site-border-emphasis: var(--site-border-emphasis);
   --color-site-accent-text: var(--site-accent-text);
   --color-site-focus: var(--site-focus);
+  --color-site-status-foreground: var(--site-status-foreground);
+  --color-site-status-surface: var(--site-status-surface);
+  --color-site-status-border: var(--site-status-border);
 
   @keyframes rainbow-vivid {
     0%,
@@ -68,17 +74,23 @@ html.dark {
   --site-foreground: #fff;
   --site-foreground-muted: rgb(255 255 255 / 90%);
   --site-foreground-faint: rgb(255 255 255 / 80%);
+  --site-foreground-subtle: rgb(255 255 255 / 40%);
   --site-surface: rgb(0 0 0 / 40%);
   --site-surface-deep: rgb(0 0 0 / 60%);
   --site-surface-strong: rgb(23 17 38 / 95%);
   --site-surface-soft: rgb(255 255 255 / 10%);
   --site-surface-hover: rgb(255 255 255 / 20%);
+  --site-surface-active: rgb(255 255 255 / 30%);
+  --site-surface-emphasis: rgb(0 0 0 / 50%);
   --site-border: rgb(255 255 255 / 20%);
   --site-border-faint: rgb(255 255 255 / 10%);
   --site-border-strong: rgb(255 255 255 / 30%);
   --site-border-emphasis: rgb(255 255 255 / 40%);
   --site-accent-text: #ffe366;
   --site-focus: #ffe366;
+  --site-status-foreground: #d1fae5;
+  --site-status-surface: rgb(110 231 183 / 10%);
+  --site-status-border: rgb(110 231 183 / 40%);
 }
 
 html.light {
@@ -86,17 +98,23 @@ html.light {
   --site-foreground: #171126;
   --site-foreground-muted: rgb(23 17 38 / 90%);
   --site-foreground-faint: rgb(23 17 38 / 75%);
+  --site-foreground-subtle: rgb(23 17 38 / 55%);
   --site-surface: rgb(255 255 255 / 72%);
   --site-surface-deep: rgb(255 255 255 / 85%);
   --site-surface-strong: rgb(255 255 255 / 95%);
   --site-surface-soft: rgb(255 255 255 / 50%);
   --site-surface-hover: rgb(255 255 255 / 75%);
+  --site-surface-active: rgb(255 255 255 / 90%);
+  --site-surface-emphasis: rgb(255 255 255 / 80%);
   --site-border: rgb(23 17 38 / 20%);
   --site-border-faint: rgb(23 17 38 / 12%);
   --site-border-strong: rgb(23 17 38 / 30%);
   --site-border-emphasis: rgb(23 17 38 / 40%);
   --site-accent-text: #6a3f00;
   --site-focus: #6d28d9;
+  --site-status-foreground: #065f46;
+  --site-status-surface: rgb(16 185 129 / 14%);
+  --site-status-border: rgb(4 120 87 / 35%);
 }
 
 /*

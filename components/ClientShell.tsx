@@ -53,8 +53,12 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
   useHorizontalWheelNavigation(fullPageApiReference)
-  const { beginContactVisit, endContactVisit } =
-    useEndOfSiteCelebration(fullPageApiReference)
+  const {
+    beginContactVisit,
+    completeConfetti,
+    endContactVisit,
+    isConfettiActive,
+  } = useEndOfSiteCelebration(fullPageApiReference, shouldReduceMotion)
 
   const sectionsContent = [
     { component: <TopSection key="top" />, anchor: "home" },
@@ -108,7 +112,10 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   return (
     <GlobalStateContext.Provider>
       <MotionAwareAmbience />
-      <EndOfSiteCelebration />
+      <EndOfSiteCelebration
+        isConfettiActive={isConfettiActive}
+        onConfettiComplete={completeConfetti}
+      />
 
       <MapacheFullPage
         {...fullPageMotionOptions}

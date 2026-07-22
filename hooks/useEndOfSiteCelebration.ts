@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, type RefObject } from "react"
+import { useCallback, useEffect, useRef, useState, type RefObject } from "react"
 import { toast } from "react-hot-toast"
 import { CONTACT_COMPLETION } from "@/constants/SITE_CONTENT"
 import type { FullPageApi } from "@/types/MapacheFullPageProps"
@@ -46,19 +46,25 @@ const hasReachedContactEnd = (
 
 export default function useEndOfSiteCelebration(
   fullPageApiReference: RefObject<FullPageApi | null>,
+  shouldReduceMotion: boolean,
 ) {
   const contactVisitIsActive = useRef(false)
   const hasCelebratedThisVisit = useRef(false)
   const touchStartY = useRef<number | null>(null)
+  const [isConfettiActive, setIsConfettiActive] = useState(false)
 
   const beginContactVisit = useCallback(() => {
     contactVisitIsActive.current = true
     hasCelebratedThisVisit.current = false
+    setIsConfettiActive(false)
   }, [])
 
   const endContactVisit = useCallback(() => {
     contactVisitIsActive.current = false
+    setIsConfettiActive(false)
   }, [])
+
+  const completeConfetti = useCallback(() => setIsConfettiActive(false), [])
 
   useEffect(() => {
     const celebrateContactEnd = (eventTarget: EventTarget | null) => {
@@ -73,6 +79,7 @@ export default function useEndOfSiteCelebration(
         return
 
       hasCelebratedThisVisit.current = true
+      setIsConfettiActive(!shouldReduceMotion)
       toast(CONTACT_COMPLETION.message, {
         id: END_OF_SITE_TOAST_ID,
         ariaProps: { role: "status", "aria-live": "polite" },
@@ -136,7 +143,12 @@ export default function useEndOfSiteCelebration(
       window.removeEventListener("touchstart", handleTouchStart, true)
       window.removeEventListener("touchend", handleTouchEnd, true)
     }
-  }, [fullPageApiReference])
+  }, [fullPageApiReference, shouldReduceMotion])
 
-  return { beginContactVisit, endContactVisit }
+  return {
+    beginContactVisit,
+    completeConfetti,
+    endContactVisit,
+    isConfettiActive: isConfettiActive && !shouldReduceMotion,
+  }
 }

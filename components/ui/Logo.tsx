@@ -1,3 +1,4 @@
+import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import LogoDefault from "@/images/Logo-Default-Landscape.svg"
 import LogoSecondary from "@/images/Logo-Secondary-Portrait.svg"
 import { GlobalStateContext } from "@/machines/globalMachine"
@@ -8,6 +9,7 @@ type LogoProps = {
 }
 
 export default function Logo({ className }: LogoProps) {
+  const { shouldReduceMotion } = useMotionPreference()
   const isAlternative = GlobalStateContext.useSelector((state) =>
     state.matches({ logo: "alternative" }),
   )
@@ -29,7 +31,7 @@ export default function Logo({ className }: LogoProps) {
           className="wrapper relative h-full w-full"
           style={{
             transform: isAlternative ? "rotateY(0deg)" : "rotateY(180deg)",
-            transition: "transform 0.8s ease-out",
+            transition: shouldReduceMotion ? "none" : "transform 0.8s ease-out",
             transformStyle: "preserve-3d",
           }}
         >

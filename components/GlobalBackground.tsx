@@ -1,6 +1,8 @@
 "use client"
 
 import { AnimatePresence, motion } from "motion/react"
+import { useMotionPreference } from "@/components/MotionPreferenceProvider"
+import ParticleCanvas from "@/components/ParticleCanvas"
 import Background1 from "@/images/Background-1.svg"
 import Background2 from "@/images/Background-2.svg"
 import Background3 from "@/images/Background-3.svg"
@@ -9,7 +11,6 @@ import Background5 from "@/images/Background-5.svg"
 import Background6 from "@/images/Background-6.svg"
 import Background0 from "@/images/Background.svg"
 import { GlobalStateContext } from "@/machines/globalMachine"
-import ParticleCanvas from "./ParticleCanvas"
 
 const BACKGROUNDS = [
   { standard: Background0, inverse: Background1 },
@@ -20,12 +21,15 @@ const BACKGROUNDS = [
 ]
 
 export default function GlobalBackground() {
-  const bgIndex = GlobalStateContext.useSelector(
+  const { shouldReduceMotion } = useMotionPreference()
+  const activeBackgroundIndex = GlobalStateContext.useSelector(
     (state) => state.context.bgIndex,
   )
-  const bgUseInverse = GlobalStateContext.useSelector(
+  const activeBackgroundUsesInverse = GlobalStateContext.useSelector(
     (state) => state.context.bgUseInverse,
   )
+  const bgIndex = shouldReduceMotion ? 0 : activeBackgroundIndex
+  const bgUseInverse = shouldReduceMotion ? false : activeBackgroundUsesInverse
 
   const bgConfig = BACKGROUNDS[bgIndex]
   const useInverse = bgConfig.inverse && bgUseInverse
@@ -35,14 +39,17 @@ export default function GlobalBackground() {
 
   return (
     <div className="animate-rainbow-vivid pointer-events-none fixed inset-0 -z-20 h-full w-full">
-      <ParticleCanvas />
+      {!shouldReduceMotion && <ParticleCanvas />}
       <AnimatePresence initial={false}>
         <motion.div
           key={key}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.6 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 20, ease: "linear" }}
+          transition={{
+            duration: shouldReduceMotion ? 0 : 20,
+            ease: "linear",
+          }}
           className="absolute inset-0 h-full w-full mix-blend-overlay"
         >
           <Component

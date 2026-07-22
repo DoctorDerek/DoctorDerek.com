@@ -1,7 +1,19 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
-import { describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import ContactSection from "@/components/ContactSection"
+
+const { reducedMotionPreference } = vi.hoisted(() => ({
+  reducedMotionPreference: { value: false },
+}))
+
+vi.mock("@/components/MotionPreferenceProvider", () => ({
+  useMotionPreference: () => ({
+    motionPreference: reducedMotionPreference.value ? "reduce" : "full",
+    setMotionPreference: vi.fn(),
+    shouldReduceMotion: reducedMotionPreference.value,
+  }),
+}))
 
 vi.mock("next/image", () => ({
   default: ({
@@ -15,6 +27,10 @@ vi.mock("next/image", () => ({
 }))
 
 describe("ContactSection", () => {
+  beforeEach(() => {
+    reducedMotionPreference.value = false
+  })
+
   it("safely centers the final section without hiding overflowing content", () => {
     render(<ContactSection />)
 
@@ -55,6 +71,21 @@ describe("ContactSection", () => {
     fireEvent.click(portraitControl)
 
     expect(portraitControl).toHaveAttribute("aria-pressed", "true")
+    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
+  })
+
+  it("flips the portrait without a spatial transition when motion is reduced", () => {
+    reducedMotionPreference.value = true
+    render(<ContactSection />)
+
+    const portraitControl = screen.getByRole("button", {
+      name: "Flip portrait of Dr. Derek Austin",
+    })
+    const portraitCard = portraitControl.querySelector(".wrapper")
+
+    expect(portraitCard).toHaveStyle({ transition: "none" })
+
+    fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
   })
 })

@@ -1,6 +1,7 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { useState } from "react"
+import MotionSettings from "@/components/MotionSettings"
 import Logo from "@/components/ui/Logo"
 import SocialLinks from "@/components/ui/SocialLinks"
 import classNames from "@/utils/classNames"
@@ -28,6 +29,13 @@ export default function Navbar() {
           </div>
           <button
             type="button"
+            aria-controls="site-navigation"
+            aria-expanded={sidebarOpen}
+            aria-label={
+              sidebarOpen
+                ? "Close navigation and settings"
+                : "Open navigation and settings"
+            }
             className="ml-auto bg-white/20 px-3.5 py-2 text-white backdrop-blur-md"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
@@ -44,6 +52,7 @@ export default function Navbar() {
         <div className="pointer-events-auto flex grow flex-col overflow-y-auto overscroll-contain">
           <div className="h-14 md:hidden" />
           <nav
+            id="site-navigation"
             inert={!sidebarOpen ? true : undefined}
             className={classNames(
               "flex h-full flex-col rounded-tr-3xl duration-500 md:mt-auto md:h-11/12 md:flex-row",
@@ -64,13 +73,16 @@ export default function Navbar() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-auto w-10/12 pb-6 md:hidden">
-                <SocialLinks
-                  fill="white"
-                  containerClasses="flex flex-col gap-y-4"
-                  linkClasses="mb-2 flex items-center gap-x-2 text-xl"
-                  showLabels={true}
-                />
+              <div className="mt-auto flex flex-col gap-6 pr-5 pb-6">
+                <MotionSettings />
+                <div className="w-10/12 md:hidden">
+                  <SocialLinks
+                    fill="white"
+                    containerClasses="flex flex-col gap-y-4"
+                    linkClasses="mb-2 flex items-center gap-x-2 text-xl"
+                    showLabels={true}
+                  />
+                </div>
               </div>
             </div>
             <div className="mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex">

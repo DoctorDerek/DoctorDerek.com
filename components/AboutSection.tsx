@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
+import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import SectionHeading from "@/components/ui/SectionHeading"
 import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
 import DerekAustin from "@/images/DerekAustin.png"
@@ -7,10 +8,12 @@ import DerekAustin2 from "@/images/DerekAustin2.jpg"
 import DerekAustin3 from "@/images/DerekAustin3.jpg"
 
 export default function AboutSection() {
+  const { shouldReduceMotion } = useMotionPreference()
   const [flipCount, setFlipCount] = useState(0)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const handleMouseEnter = () => {
+    if (shouldReduceMotion) return
     if (intervalRef.current) clearInterval(intervalRef.current)
     intervalRef.current = setInterval(() => {
       setFlipCount((prev) => prev + 1)
@@ -26,6 +29,13 @@ export default function AboutSection() {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
   }, [])
+
+  useEffect(() => {
+    if (shouldReduceMotion && intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+  }, [shouldReduceMotion])
 
   const photos = [DerekAustin, DerekAustin2, DerekAustin3]
 
@@ -60,7 +70,9 @@ export default function AboutSection() {
                 className="relative w-full cursor-pointer"
                 style={{
                   transform: `rotateY(${flipCount * 180}deg)`,
-                  transition: "transform 0.8s ease-out",
+                  transition: shouldReduceMotion
+                    ? "none"
+                    : "transform 0.8s ease-out",
                   transformStyle: "preserve-3d",
                 }}
               >

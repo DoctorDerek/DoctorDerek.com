@@ -8,9 +8,8 @@ const { toast } = vi.hoisted(() => ({ toast: vi.fn() }))
 
 vi.mock("react-hot-toast", () => ({ toast }))
 
-const createTouchList = (clientY: number) => {
-  const touch = { clientY } as Touch
-  const touches = [touch]
+const createTouchList = (clientY: number | null) => {
+  const touches = clientY === null ? [] : ([{ clientY } as Touch] as Touch[])
   return Object.assign(touches, {
     item: (index: number) => touches[index] ?? null,
   }) satisfies TouchList
@@ -19,7 +18,7 @@ const createTouchList = (clientY: number) => {
 const fireTouch = (
   target: HTMLElement,
   eventName: "touchstart" | "touchend",
-  clientY: number,
+  clientY: number | null,
 ) => {
   const event = new Event(eventName, { bubbles: true })
   Object.defineProperty(
@@ -112,13 +111,17 @@ describe("useEndOfSiteCelebration", () => {
     const { fullPageApiReference, scrollContainer } = createContactBoundary()
     scrollContainer.scrollTop = 600
     const input = document.createElement("input")
+    const contentEditable = document.createElement("div")
+    Object.defineProperty(contentEditable, "isContentEditable", { value: true })
     scrollContainer.append(input)
+    scrollContainer.append(contentEditable)
     const { result } = renderHook(() =>
       useEndOfSiteCelebration(fullPageApiReference, false),
     )
 
     act(() => result.current.beginContactVisit())
     fireEvent.keyDown(input, { key: "ArrowDown" })
+    fireEvent.keyDown(contentEditable, { key: "PageDown" })
     fireEvent.keyDown(window, { key: "End" })
     expect(toast).not.toHaveBeenCalled()
 
@@ -134,6 +137,10 @@ describe("useEndOfSiteCelebration", () => {
     )
 
     act(() => result.current.beginContactVisit())
+    fireTouch(scrollContainer, "touchstart", null)
+    fireTouch(scrollContainer, "touchend", 60)
+    expect(toast).not.toHaveBeenCalled()
+
     fireTouch(scrollContainer, "touchstart", 100)
     fireTouch(scrollContainer, "touchend", 80)
     expect(toast).not.toHaveBeenCalled()

@@ -20,7 +20,7 @@ export default function Navbar() {
 
   return (
     <div className="h-[7dvh]">
-      <div className="sticky top-0 z-40 flex h-full bg-white/10 shadow-xs backdrop-blur-md sm:gap-x-6 sm:px-6">
+      <div className="bg-site-surface-soft sticky top-0 z-40 flex h-full shadow-xs backdrop-blur-md sm:gap-x-6 sm:px-6">
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex items-center pl-3">
             <Link href="/" className="flex items-center">
@@ -36,13 +36,19 @@ export default function Navbar() {
                 ? "Close navigation and settings"
                 : "Open navigation and settings"
             }
-            className="ml-auto bg-white/20 px-3.5 py-2 text-white backdrop-blur-md"
+            className="bg-site-surface-hover text-site-foreground ml-auto px-3.5 py-2 backdrop-blur-md"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             {sidebarOpen ? (
-              <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
+              <XMarkIcon
+                className="text-site-foreground h-6 w-6"
+                aria-hidden="true"
+              />
             ) : (
-              <Bars3Icon className="h-6 w-6 text-white" aria-hidden="true" />
+              <Bars3Icon
+                className="text-site-foreground h-6 w-6"
+                aria-hidden="true"
+              />
             )}
           </button>
         </div>
@@ -61,16 +67,16 @@ export default function Navbar() {
           >
             <div
               className={classNames(
-                "flex h-full w-11/12 flex-col content-between rounded-tr-2xl border border-white/20 bg-black/40 pl-5 text-white backdrop-blur-xl md:w-3/4",
+                "border-site-border bg-site-surface text-site-foreground flex h-full w-11/12 flex-col content-between rounded-tr-2xl border pl-5 backdrop-blur-xl md:w-3/4",
                 sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
               )}
             >
               <ul role="list" className="pt-8">
                 {navigation.map((item) => (
-                  <li className="hover:text-white" key={item.name}>
+                  <li className="hover:text-site-foreground" key={item.name}>
                     <a
                       href={`#${item.anchor}`}
-                      className="md:restora-bold ease-spring-bouncy block py-2 text-5xl font-semibold transition-all duration-300 hover:scale-105 hover:text-white active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
+                      className="md:restora-bold ease-spring-bouncy hover:text-site-foreground block py-2 text-5xl font-semibold transition-all duration-300 hover:scale-105 active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
                       onClick={() => setSidebarOpen(false)}
                     >
                       {item.name}
@@ -82,8 +88,8 @@ export default function Navbar() {
                 <SiteSettings />
                 <div className="w-10/12 md:hidden">
                   <SocialLinks
-                    fill="white"
-                    containerClasses="flex flex-col gap-y-4"
+                    fill="currentColor"
+                    containerClasses="text-site-foreground flex flex-col gap-y-4"
                     linkClasses="mb-2 flex items-center gap-x-2 text-xl"
                     showLabels={true}
                   />

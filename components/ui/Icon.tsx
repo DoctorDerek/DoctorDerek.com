@@ -18,7 +18,7 @@ export default function Icon({
   className,
 }: {
   name: IconName
-  fill: "#F38B57" | "white"
+  fill: "#F38B57" | "currentColor" | "white"
   className?: string
 }) {
   return (

@@ -49,7 +49,7 @@ export default function Navbar() {
       </div>
 
       <div className="pointer-events-none fixed inset-0 z-30 mt-auto flex h-[90%]">
-        <div className="pointer-events-auto flex grow flex-col overflow-y-auto overscroll-contain">
+        <div className="pointer-events-none flex grow flex-col overflow-y-auto overscroll-contain">
           <div className="h-14 md:hidden" />
           <nav
             id="site-navigation"
@@ -59,7 +59,12 @@ export default function Navbar() {
               sidebarOpen ? "translate-x-0" : "-translate-x-full",
             )}
           >
-            <div className="flex h-full w-11/12 flex-col content-between rounded-tr-2xl border border-white/20 bg-black/40 pl-5 text-white backdrop-blur-xl md:w-3/4">
+            <div
+              className={classNames(
+                "flex h-full w-11/12 flex-col content-between rounded-tr-2xl border border-white/20 bg-black/40 pl-5 text-white backdrop-blur-xl md:w-3/4",
+                sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
+              )}
+            >
               <ul role="list" className="pt-8">
                 {navigation.map((item) => (
                   <li className="hover:text-white" key={item.name}>
@@ -85,7 +90,12 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-            <div className="mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex">
+            <div
+              className={classNames(
+                "mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex",
+                sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
+              )}
+            >
               <SocialLinks
                 fill="#F38B57"
                 containerClasses="flex flex-col gap-y-4"

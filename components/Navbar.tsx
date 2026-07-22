@@ -48,7 +48,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="pointer-events-none fixed inset-0 mt-auto flex h-[90%]">
+      <div className="pointer-events-none fixed inset-0 z-30 mt-auto flex h-[90%]">
         <div className="pointer-events-auto flex grow flex-col overflow-y-auto overscroll-contain">
           <div className="h-14 md:hidden" />
           <nav

@@ -89,7 +89,13 @@ describe("useEndOfSiteCelebration", () => {
     expect(toast).not.toHaveBeenCalled()
 
     activeSection.anchor = "contact"
-    fireEvent.wheel(scrollContainer, { deltaY: 120 })
+    const fullPageConsumedWheelEvent = new WheelEvent("wheel", {
+      bubbles: true,
+      cancelable: true,
+      deltaY: 120,
+    })
+    fullPageConsumedWheelEvent.preventDefault()
+    fireEvent(scrollContainer, fullPageConsumedWheelEvent)
 
     expect(toast).toHaveBeenCalledOnce()
     expect(toast).toHaveBeenCalledWith(CONTACT_COMPLETION.message, {

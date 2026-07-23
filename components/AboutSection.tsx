@@ -48,7 +48,7 @@ export default function AboutSection() {
   return (
     <div className="h-full w-full pt-2 pb-10 md:pt-3 md:pb-16">
       <div className="mx-auto w-4/5 md:w-[90%] lg:w-[90%]">
-        <div className="ease-spring-soft -translate-x-12 py-2 text-white opacity-0 drop-shadow-md transition-all duration-700 md:relative md:pt-2 md:pb-8 lg:pt-3 lg:pb-10 [.active_&]:translate-x-0 [.active_&]:opacity-100">
+        <div className="text-site-foreground py-2 drop-shadow-md md:relative md:pt-2 md:pb-8 lg:pt-3 lg:pb-10">
           <SectionHeading>
             <h2 className="text-5xl font-semibold min-[375px]:text-6xl md:text-8xl lg:text-9xl">
               About
@@ -123,9 +123,9 @@ export default function AboutSection() {
               </div>
             </button>
           </div>
-          <div className="ease-spring-soft relative mt-8 translate-y-12 rounded-tl-3xl border border-white/20 bg-black/40 px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[65%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-[60%] lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
+          <div className="ease-spring-soft border-site-border bg-site-surface relative mt-8 translate-y-12 rounded-tl-3xl border px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[65%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-[60%] lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <div className="flex flex-col gap-4 lg:gap-6">
-              <div className="scrollable-content max-h-[45vh] overflow-y-auto overscroll-contain pr-2 text-lg leading-7 text-white lg:text-xl lg:leading-9">
+              <div className="scrollable-content text-site-foreground max-h-[45vh] overflow-y-auto overscroll-contain pr-2 text-lg leading-7 lg:text-xl lg:leading-9">
                 {ABOUT_BIO_LONG.map((paragraph, index) => (
                   <p key={index} className="mb-4">
                     {paragraph}

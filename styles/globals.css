@@ -14,26 +14,46 @@
   --animate-float: float 6s ease-in-out infinite;
 
   --color-brand-pink: #fb70aa;
+  --color-site-foreground: var(--site-foreground);
+  --color-site-foreground-muted: var(--site-foreground-muted);
+  --color-site-foreground-faint: var(--site-foreground-faint);
+  --color-site-foreground-subtle: var(--site-foreground-subtle);
+  --color-site-surface: var(--site-surface);
+  --color-site-surface-deep: var(--site-surface-deep);
+  --color-site-surface-strong: var(--site-surface-strong);
+  --color-site-surface-soft: var(--site-surface-soft);
+  --color-site-surface-hover: var(--site-surface-hover);
+  --color-site-surface-active: var(--site-surface-active);
+  --color-site-surface-emphasis: var(--site-surface-emphasis);
+  --color-site-border: var(--site-border);
+  --color-site-border-faint: var(--site-border-faint);
+  --color-site-border-strong: var(--site-border-strong);
+  --color-site-border-emphasis: var(--site-border-emphasis);
+  --color-site-accent-text: var(--site-accent-text);
+  --color-site-focus: var(--site-focus);
+  --color-site-status-foreground: var(--site-status-foreground);
+  --color-site-status-surface: var(--site-status-surface);
+  --color-site-status-border: var(--site-status-border);
 
   @keyframes rainbow-vivid {
     0%,
     100% {
-      background-color: #008b8b;
+      background-color: var(--site-background-teal);
     }
     16% {
-      background-color: #9c0052;
+      background-color: var(--site-background-pink);
     }
     33% {
-      background-color: #008ec1;
+      background-color: var(--site-background-blue);
     }
     50% {
-      background-color: #ff4500;
+      background-color: var(--site-background-orange);
     }
     66% {
-      background-color: #790fc5;
+      background-color: var(--site-background-purple);
     }
     83% {
-      background-color: #009c4a;
+      background-color: var(--site-background-green);
     }
   }
 
@@ -46,6 +66,69 @@
       transform: translateY(-20px);
     }
   }
+}
+
+:root,
+html.dark {
+  color-scheme: dark;
+  --site-foreground: #fff;
+  --site-foreground-muted: rgb(255 255 255 / 90%);
+  --site-foreground-faint: rgb(255 255 255 / 80%);
+  --site-foreground-subtle: rgb(255 255 255 / 40%);
+  --site-surface: rgb(0 0 0 / 40%);
+  --site-surface-deep: rgb(0 0 0 / 60%);
+  --site-surface-strong: rgb(23 17 38 / 95%);
+  --site-surface-soft: rgb(255 255 255 / 10%);
+  --site-surface-hover: rgb(255 255 255 / 20%);
+  --site-surface-active: rgb(255 255 255 / 30%);
+  --site-surface-emphasis: rgb(0 0 0 / 50%);
+  --site-border: rgb(255 255 255 / 20%);
+  --site-border-faint: rgb(255 255 255 / 10%);
+  --site-border-strong: rgb(255 255 255 / 30%);
+  --site-border-emphasis: rgb(255 255 255 / 40%);
+  --site-accent-text: #ffe366;
+  --site-focus: #facc15;
+  --site-focus-contrast: #fff;
+  --site-status-foreground: #d1fae5;
+  --site-status-surface: rgb(110 231 183 / 10%);
+  --site-status-border: rgb(110 231 183 / 40%);
+  --site-background-teal: #008b8b;
+  --site-background-pink: #9c0052;
+  --site-background-blue: #008ec1;
+  --site-background-orange: #ff4500;
+  --site-background-purple: #790fc5;
+  --site-background-green: #009c4a;
+}
+
+html.light {
+  color-scheme: light;
+  --site-foreground: #171126;
+  --site-foreground-muted: rgb(23 17 38 / 90%);
+  --site-foreground-faint: rgb(23 17 38 / 75%);
+  --site-foreground-subtle: rgb(23 17 38 / 55%);
+  --site-surface: rgb(255 255 255 / 72%);
+  --site-surface-deep: rgb(255 255 255 / 85%);
+  --site-surface-strong: rgb(255 255 255 / 95%);
+  --site-surface-soft: rgb(255 255 255 / 50%);
+  --site-surface-hover: rgb(255 255 255 / 75%);
+  --site-surface-active: rgb(255 255 255 / 90%);
+  --site-surface-emphasis: rgb(255 255 255 / 80%);
+  --site-border: rgb(23 17 38 / 20%);
+  --site-border-faint: rgb(23 17 38 / 12%);
+  --site-border-strong: rgb(23 17 38 / 30%);
+  --site-border-emphasis: rgb(23 17 38 / 40%);
+  --site-accent-text: #6a3f00;
+  --site-focus: #6d28d9;
+  --site-focus-contrast: #6d28d9;
+  --site-status-foreground: #065f46;
+  --site-status-surface: rgb(16 185 129 / 14%);
+  --site-status-border: rgb(4 120 87 / 35%);
+  --site-background-teal: #80c5c5;
+  --site-background-pink: #ce80a9;
+  --site-background-blue: #80c7e0;
+  --site-background-orange: #ffa280;
+  --site-background-purple: #bc87e2;
+  --site-background-green: #80cea5;
 }
 
 /*
@@ -72,11 +155,13 @@ https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
 */
 :focus-visible {
   outline: none !important;
-  box-shadow: 0 0 0 0.0625rem #facc15 !important; /* 1px */
-  /* Tailwind CSS color yellow-400 === #facc15 */
+  box-shadow: 0 0 0 0.0625rem var(--site-focus) !important;
   border-color: transparent !important;
   border-radius: 0.5rem;
-  /* Tailwind CSS rounded-lg === 0.5rem === 8px */
+}
+
+.site-focus-contrast {
+  --site-focus: var(--site-focus-contrast);
 }
 
 /* Suppress focus rings on fullpage.js structural elements */
@@ -87,12 +172,42 @@ https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
   outline: none !important;
 }
 
+.section-heading-entrance {
+  opacity: 0;
+  transform: perspective(1000px) translate3d(5rem, 0, -10rem) rotateX(-70deg)
+    rotateY(35deg) scale(0);
+  transform-origin: center;
+  transition:
+    transform 900ms cubic-bezier(0.51, 0.92, 0.24, 1.15),
+    opacity 450ms ease-out;
+}
+
+.active .section-heading-entrance {
+  opacity: 1;
+  transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0) rotateY(0)
+    scale(1);
+}
+
+html[data-motion-preference="reduce"] .section-heading-entrance {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion-preference="full"]) .section-heading-entrance {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* HTML scroll behavior and font */
 html,
 body {
   scroll-behavior: smooth;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  color: white;
+  color: var(--site-foreground);
 }
 
 html[data-motion-preference="reduce"] {

@@ -17,6 +17,10 @@ vi.mock("@/components/ui/CountUp", () => ({
   default: ({ to }: { to: number }) => <span>{to}</span>,
 }))
 
+vi.mock("@/components/MotionPreferenceProvider", () => ({
+  useMotionPreference: () => ({ shouldReduceMotion: false }),
+}))
+
 const POSTS: MediumPost[] = [
   {
     title: "Deterministic product engineering",

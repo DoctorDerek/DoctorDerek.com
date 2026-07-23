@@ -10,7 +10,7 @@ describe("IntroSection", () => {
 
     expect(bioText).toBeInTheDocument()
     expect(bioText).toHaveClass("restoramedium")
-    expect(bioText).toHaveClass("text-white")
+    expect(bioText).toHaveClass("text-site-foreground")
     expect(bioText).toHaveClass("text-3xl")
   })
 

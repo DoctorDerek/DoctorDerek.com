@@ -7,9 +7,9 @@ const Testimonials = () => {
   return (
     <>
       <div className="pointer-events-none absolute top-10 right-10 z-10 w-full md:right-20 lg:top-16">
-        <div className="ease-spring-soft flex justify-end opacity-0 transition-all delay-300 duration-700 [.active_&]:opacity-100">
+        <div className="flex justify-end">
           <SectionHeading>
-            <h3 className="rounded-tl-3xl rounded-br-3xl bg-[#89CFFD]/30 px-8 py-4 text-right text-5xl text-white drop-shadow-md backdrop-blur-md md:text-7xl lg:text-9xl">
+            <h3 className="text-site-foreground rounded-tl-3xl rounded-br-3xl bg-[#89CFFD]/30 px-8 py-4 text-right text-5xl drop-shadow-md backdrop-blur-md md:text-7xl lg:text-9xl">
               What People Say
             </h3>
           </SectionHeading>
@@ -19,7 +19,7 @@ const Testimonials = () => {
       {TESTIMONIALS.map((item: Testimonial) => (
         <div key={item.name} className="slide">
           <div className="flex h-full w-full items-center justify-center p-4 py-20 md:p-8">
-            <div className="ease-spring-soft mx-auto mt-16 w-full max-w-4xl scale-95 rounded-2xl border border-white/10 bg-black/40 p-6 text-white opacity-0 shadow-2xl backdrop-blur-md transition-all duration-700 md:mt-24 md:p-12 [.active_&]:scale-100 [.active_&]:opacity-100">
+            <div className="ease-spring-soft border-site-border-faint bg-site-surface text-site-foreground mx-auto mt-16 w-full max-w-4xl scale-95 rounded-2xl border p-6 opacity-0 shadow-2xl backdrop-blur-md transition-all duration-700 md:mt-24 md:p-12 [.active_&]:scale-100 [.active_&]:opacity-100">
               <div className="mb-8 flex items-center">
                 <div className="mr-6 shrink-0">
                   <Image

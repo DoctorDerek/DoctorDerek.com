@@ -25,7 +25,7 @@ export default function TopSection() {
       <Navbar />
       <div className="ease-spring-bouncy flex flex-1 translate-y-12 scale-95 flex-col items-center justify-center opacity-0 transition-all duration-700 [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
         <Logo className="h-16 w-48 md:h-32 md:w-96" />
-        <div className="restorabold mt-8 min-h-[4rem] text-center text-xl font-bold text-white drop-shadow-md md:mt-12 md:min-h-[5rem] md:text-3xl lg:text-4xl">
+        <div className="restorabold text-site-foreground mt-8 min-h-[4rem] text-center text-xl font-bold drop-shadow-md md:mt-12 md:min-h-[5rem] md:text-3xl lg:text-4xl">
           {shouldReduceMotion ? (
             <p>{INTRO_BIO_SHORT}</p>
           ) : (

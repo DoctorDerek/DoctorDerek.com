@@ -13,7 +13,7 @@ export default function SocialLinks({
   labelClasses = "ml-2 block whitespace-nowrap",
   showLabels = false,
 }: {
-  fill?: "#F38B57" | "white"
+  fill?: "#F38B57" | "currentColor" | "white"
   containerClasses?: string
   linkClasses?: string
   iconClasses?: string

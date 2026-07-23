@@ -6,6 +6,10 @@ vi.mock("@/components/ui/CountUp", () => ({
   default: ({ to }: { to: number }) => <span>{to}</span>,
 }))
 
+vi.mock("@/components/MotionPreferenceProvider", () => ({
+  useMotionPreference: () => ({ shouldReduceMotion: false }),
+}))
+
 vi.mock("@/constants/SITE_CONTENT", () => ({
   ARCHITECT_EVOLUTION: [
     { duration: "2024–Present", company: "Serving 20M+ users" },

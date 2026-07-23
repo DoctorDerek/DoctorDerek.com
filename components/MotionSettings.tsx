@@ -15,16 +15,10 @@ export default function MotionSettings() {
   const { motionPreference, setMotionPreference } = useMotionPreference()
 
   return (
-    <section aria-labelledby="motion-settings-heading" className="max-w-sm">
-      <h2
-        id="motion-settings-heading"
-        className="restorabold text-xl text-white"
-      >
-        Settings
-      </h2>
+    <div className="mt-6 max-w-sm">
       <label
         htmlFor="motion-preference"
-        className="mt-3 block text-sm font-semibold text-white"
+        className="text-site-foreground block text-sm font-semibold"
       >
         Motion
       </label>
@@ -32,7 +26,7 @@ export default function MotionSettings() {
         id="motion-preference"
         value={motionPreference}
         aria-describedby="motion-preference-description"
-        className="mt-2 w-full rounded-lg border border-white/30 bg-[#171126] px-3 py-2 text-base text-white focus-visible:ring-2 focus-visible:ring-[#FFE366]"
+        className="border-site-border-strong bg-site-surface-strong text-site-foreground focus-visible:ring-site-focus mt-2 w-full rounded-lg border px-3 py-2 text-base focus-visible:ring-2"
         onChange={(event) =>
           setMotionPreference(event.currentTarget.value as MotionPreference)
         }
@@ -43,10 +37,10 @@ export default function MotionSettings() {
       </select>
       <p
         id="motion-preference-description"
-        className="mt-2 text-sm leading-5 text-white/80"
+        className="text-site-foreground-faint mt-2 text-sm leading-5"
       >
         {MOTION_PREFERENCE_DESCRIPTIONS[motionPreference]}
       </p>
-    </section>
+    </div>
   )
 }

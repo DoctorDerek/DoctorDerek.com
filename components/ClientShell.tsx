@@ -6,6 +6,7 @@ import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
+import EndOfSiteCelebration from "@/components/EndOfSiteCelebration"
 import IntroSection from "@/components/IntroSection"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 import MotionPreferenceProvider, {
@@ -19,6 +20,7 @@ import {
   FULLPAGE_ACTIVATION_KEYS,
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
 } from "@/constants/SITE_CONTENT"
+import useEndOfSiteCelebration from "@/hooks/useEndOfSiteCelebration"
 import useHorizontalWheelNavigation from "@/hooks/useHorizontalWheelNavigation"
 import { GlobalStateContext } from "@/machines/globalMachine"
 import {
@@ -51,6 +53,12 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
   useHorizontalWheelNavigation(fullPageApiReference)
+  const {
+    beginContactVisit,
+    completeConfetti,
+    endContactVisit,
+    isConfettiActive,
+  } = useEndOfSiteCelebration(fullPageApiReference, shouldReduceMotion)
 
   const sectionsContent = [
     { component: <TopSection key="top" />, anchor: "home" },
@@ -71,9 +79,12 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   ]
 
   const handleLeave = (
-    _origin: FullPageSection,
+    origin: FullPageSection,
     destination: FullPageSection,
   ) => {
+    if (origin.anchor === "contact") endContactVisit()
+    if (shouldReduceMotion) return
+
     const transitionMatrix: Record<string, string> = {
       home: "zoom",
       intro: "zoom",
@@ -90,9 +101,21 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
     setCinematicEffect(nextEffect)
   }
 
+  const handleAfterLoad = (
+    _origin: FullPageSection,
+    destination: FullPageSection,
+  ) => {
+    if (destination.anchor === "contact") beginContactVisit()
+    else endContactVisit()
+  }
+
   return (
     <GlobalStateContext.Provider>
       <MotionAwareAmbience />
+      <EndOfSiteCelebration
+        isConfettiActive={isConfettiActive}
+        onConfettiComplete={completeConfetti}
+      />
 
       <MapacheFullPage
         {...fullPageMotionOptions}
@@ -119,7 +142,8 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
         cinematicOptions={{ effect: cinematicEffect }}
         credits={{ enabled: false }}
         anchors={sectionsContent.map((s) => s.anchor)}
-        onLeave={shouldReduceMotion ? undefined : handleLeave}
+        onLeave={handleLeave}
+        afterLoad={handleAfterLoad}
         render={({ fullpageApi }) => {
           fullPageApiReference.current = fullpageApi
           return (
@@ -136,7 +160,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
                   {index < sectionsContent.length - 1 && (
                     <a
                       href={`#${sectionsContent[index + 1].anchor}`}
-                      className="ease-spring-bouncy sr-only rounded-lg bg-black/60 px-6 py-3 font-semibold text-white ring-2 ring-yellow-400 backdrop-blur-md transition-all outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
+                      className="ease-spring-bouncy bg-site-surface-deep text-site-foreground ring-site-focus sr-only rounded-lg px-6 py-3 font-semibold ring-2 backdrop-blur-md transition-all outline-none hover:scale-105 focus:not-sr-only focus:absolute focus:right-8 focus:bottom-8 focus:z-[9999]"
                     >
                       Skip to next section ↓
                     </a>

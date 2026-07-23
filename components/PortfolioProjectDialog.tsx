@@ -40,19 +40,19 @@ export default function PortfolioProjectDialog({
               leaveFrom="translate-y-0 opacity-100 sm:scale-100"
               leaveTo="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="scrollable-content relative max-h-[85dvh] w-full max-w-2xl transform overflow-y-auto rounded-3xl border border-white/20 bg-[#171126]/95 p-6 text-white shadow-2xl backdrop-blur-xl transition-all sm:p-10">
+              <Dialog.Panel className="scrollable-content border-site-border bg-site-surface-strong text-site-foreground relative max-h-[85dvh] w-full max-w-2xl transform overflow-y-auto rounded-3xl border p-6 shadow-2xl backdrop-blur-xl transition-all sm:p-10">
                 {project && (
                   <>
                     <button
                       type="button"
                       aria-label="Close project details"
-                      className="absolute top-4 right-4 rounded-full border border-white/20 bg-white/10 p-2 text-white transition-colors hover:bg-white/20 focus-visible:ring-4 focus-visible:ring-[#FFE366] focus-visible:outline-none"
+                      className="border-site-border bg-site-surface-soft text-site-foreground hover:bg-site-surface-hover focus-visible:ring-site-focus absolute top-4 right-4 rounded-full border p-2 transition-colors focus-visible:ring-4 focus-visible:outline-none"
                       onClick={onClose}
                     >
                       <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
 
-                    <p className="mb-4 w-fit rounded-full border border-emerald-300/40 bg-emerald-300/10 px-3 py-1 text-sm font-semibold text-emerald-100">
+                    <p className="border-site-status-border bg-site-status-surface text-site-status-foreground mb-4 w-fit rounded-full border px-3 py-1 text-sm font-semibold">
                       Live production
                     </p>
                     <Dialog.Title
@@ -61,7 +61,7 @@ export default function PortfolioProjectDialog({
                     >
                       {project.projectTitle}
                     </Dialog.Title>
-                    <p className="mt-6 text-lg leading-8 text-white/90 sm:text-xl">
+                    <p className="text-site-foreground-muted mt-6 text-lg leading-8 sm:text-xl">
                       {project.details}
                     </p>
                     <ul
@@ -71,7 +71,7 @@ export default function PortfolioProjectDialog({
                       {project.tech.map((technology) => (
                         <li
                           key={technology}
-                          className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-semibold text-white"
+                          className="border-site-border bg-site-surface-soft text-site-foreground rounded-full border px-3 py-1.5 text-sm font-semibold"
                         >
                           {technology}
                         </li>
@@ -83,7 +83,7 @@ export default function PortfolioProjectDialog({
                         aria-label={"View " + project.projectTitle + " live"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ease-spring-bouncy inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-lg font-bold text-[#311B4D] shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:ring-white focus-visible:outline-none active:scale-95 sm:w-fit"
+                        className="ease-spring-bouncy site-focus-contrast inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-lg font-bold text-[#311B4D] shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:outline-none active:scale-95 sm:w-fit"
                       >
                         View live project
                         <ArrowTopRightOnSquareIcon
@@ -96,7 +96,7 @@ export default function PortfolioProjectDialog({
                         aria-label={"View " + project.projectTitle + " source"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ease-spring-bouncy inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl border border-white/30 bg-white/10 px-6 py-4 text-lg font-bold text-white shadow-xl transition-transform hover:scale-[1.02] hover:bg-white/20 focus-visible:ring-4 focus-visible:ring-[#FFE366] focus-visible:outline-none active:scale-95 sm:w-fit"
+                        className="ease-spring-bouncy border-site-border-strong bg-site-surface-soft text-site-foreground hover:bg-site-surface-hover focus-visible:ring-site-focus inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl border px-6 py-4 text-lg font-bold shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:outline-none active:scale-95 sm:w-fit"
                       >
                         View source
                         <CodeBracketIcon

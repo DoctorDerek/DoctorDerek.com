@@ -54,20 +54,20 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="pointer-events-none fixed inset-0 z-30 mt-auto flex h-[90%]">
+      <div className="pointer-events-none fixed inset-0 z-30 mt-auto flex h-[90dvh]">
         <div className="pointer-events-none flex grow flex-col overflow-y-auto overscroll-contain">
           <div className="h-14 md:hidden" />
           <nav
             id="site-navigation"
             inert={!sidebarOpen ? true : undefined}
             className={classNames(
-              "flex h-full flex-col rounded-tr-3xl duration-500 md:mt-auto md:h-11/12 md:flex-row",
+              "flex h-full min-h-0 max-h-full flex-col overflow-y-auto rounded-tr-3xl duration-500 md:mt-auto md:h-11/12 md:max-h-[85dvh] md:flex-row",
               sidebarOpen ? "translate-x-0" : "-translate-x-full",
             )}
           >
             <div
               className={classNames(
-                "border-site-border bg-site-surface text-site-foreground flex h-full w-11/12 flex-col content-between rounded-tr-2xl border pl-5 backdrop-blur-xl md:w-3/4",
+                "border-site-border bg-site-surface text-site-foreground flex min-h-0 w-11/12 flex-col content-between overflow-y-auto rounded-tr-2xl border pl-5 backdrop-blur-xl md:w-3/4",
                 sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
               )}
             >

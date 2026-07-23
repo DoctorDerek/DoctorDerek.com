@@ -72,6 +72,7 @@ export const CONTACT_CTA = "Contact Me" as const
 export const CONTACT_COMPLETION = {
   message:
     "You’ve reached the end of DoctorDerek.com. Let’s build something great.",
+  toastMessage: "That’s it! Confetti time!",
   returnLabel: "Back to the beginning ↑",
 } as const
 
@@ -242,9 +243,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "What Are Your Values, Mapache?",
     summary:
-      "A fast values game that turns 83 human values into 3,403 possible one-on-one decisions.",
+      "A fast values game that helps teams and individuals make clearer decisions under uncertainty.",
     details:
-      "One TypeScript monorepo supports iOS, Android, mobile web, and desktop web. XState actors keep matchups, input, queueing, XP awards, and offline saves deterministic across platforms.",
+      "A TypeScript monorepo supports iOS, Android, mobile web, and desktop web. XState actors keep matchups, input, queueing, and offline saves deterministic across platforms.",
     tech: [
       "Next.js",
       "TypeScript",

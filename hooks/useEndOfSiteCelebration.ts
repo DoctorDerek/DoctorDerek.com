@@ -80,7 +80,7 @@ export default function useEndOfSiteCelebration(
 
       hasCelebratedThisVisit.current = true
       setIsConfettiActive(!shouldReduceMotion)
-      toast(CONTACT_COMPLETION.message, {
+      toast(CONTACT_COMPLETION.toastMessage, {
         id: END_OF_SITE_TOAST_ID,
         ariaProps: { role: "status", "aria-live": "polite" },
       })

@@ -97,7 +97,7 @@ describe("useEndOfSiteCelebration", () => {
     fireEvent(scrollContainer, fullPageConsumedWheelEvent)
 
     expect(toast).toHaveBeenCalledOnce()
-    expect(toast).toHaveBeenCalledWith(CONTACT_COMPLETION.message, {
+    expect(toast).toHaveBeenCalledWith(CONTACT_COMPLETION.toastMessage, {
       ariaProps: { "aria-live": "polite", role: "status" },
       id: "end-of-doctorderek",
     })

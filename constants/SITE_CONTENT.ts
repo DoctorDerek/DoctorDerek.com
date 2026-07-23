@@ -243,7 +243,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "What Are Your Values, Mapache?",
     summary:
-      "A fast values game that helps teams and individuals make clearer decisions under uncertainty.",
+      "A values game that helps teams and individuals make clearer decisions under pressure.",
     details:
       "A TypeScript monorepo supports iOS, Android, mobile web, and desktop web. XState actors keep matchups, input, queueing, and offline saves deterministic across platforms.",
     tech: [
@@ -260,9 +260,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "CRM",
     summary:
-      "An offline-first contact manager with state-driven CRUD, age filtering, and no account required.",
+      "A local-first contact system with deterministic CRUD, age filtering, favorites, and no account required.",
     details:
-      "XState owns create, update, delete, and reset transitions; local storage preserves contacts; React Hook Form and Headless UI drive responsive, accessible editing dialogs.",
+      "XState manages lifecycle transitions while localStorage preserves data across reloads. React Hook Form, Headless UI, and themed motion controls produce accessible edit, delete, and reset flows.",
     tech: ["Next.js", "TypeScript", "XState", "Tailwind CSS"],
     liveUrl: "https://portfolio-crm.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-crm",
@@ -272,7 +272,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     summary:
       "A responsive calendar for scheduling, color-coding, and reviewing time-ordered reminders.",
     details:
-      "Redux Toolkit separates reminder, agenda, dialog, and display state while Material UI and Day.js power date-time entry, month navigation, daily agendas, and optional hour labels.",
+      "Redux Toolkit separates reminder, agenda, dialog, and display state while Material UI and Day.js power date-time entry, month navigation, chronological ordering, and accessible day-level review.",
     tech: ["Next.js", "TypeScript", "Redux Toolkit", "Material UI"],
     liveUrl: "https://portfolio-calendar.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-calendar",
@@ -282,7 +282,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     summary:
       "An accessible city weather search with explicit loading, success, and failure states.",
     details:
-      "The Next.js App Router keeps the OpenWeather API key server-side, validates untrusted responses, and turns missing cities or service failures into clear, screen-reader-friendly feedback.",
+      "The Next.js App Router keeps the OpenWeather API key server-side, validates upstream payloads, and turns geolocation, missing-city, or upstream-failure paths into readable feedback for all users.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "OpenWeather API"],
     liveUrl: "https://portfolio-weather.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-weather",
@@ -290,9 +290,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "Pokédex",
     summary:
-      "A statically generated field guide for browsing the original 151 Pokémon.",
+      "A statically generated field guide for a full-touch mobile dossier of the original 151 Pokémon.",
     details:
-      "Next.js prebuilds all 151 detail routes from typed GraphQL data, with ten-entry catalog pages and panels for classification, size, combat, weaknesses, and resistances.",
+      "Next.js prebuilds all 151 detail routes from generated GraphQL data, with ten-entry catalog pages and touch-first detail panels for classifications, size, combat, weaknesses, and resistances.",
     tech: ["Next.js", "TypeScript", "GraphQL", "React Query"],
     liveUrl: "https://portfolio-pokedex.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",
@@ -300,7 +300,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "DoctorDerek.com",
     summary:
-      "The site you’re using now: a cinematic portfolio built around motion, depth, and fast access to real work.",
+      "The current portfolio site itself: a cinematic, accessibility-minded experience that surfaces real production work with high signal and low noise.",
     details:
       "XState coordinates global UI timing while fullPage.js, Motion, Rive, and Canvas render the visual system; the Next.js server reads and cleans the live Medium feed.",
     tech: ["Next.js", "TypeScript", "XState", "Motion", "Rive"],

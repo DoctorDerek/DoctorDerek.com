@@ -5,6 +5,7 @@ test("animates the shared 3D entrance when motion is unrestricted", async ({
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" })
   await page.goto("/")
+  await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
 
   const documentRoot = page.locator("html")
   const headingEntrance = page.locator(".section-heading-entrance").filter({

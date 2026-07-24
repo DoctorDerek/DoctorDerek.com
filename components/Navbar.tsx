@@ -87,7 +87,7 @@ export default function Navbar() {
 
       <div
         className={classNames(
-          "pointer-events-none fixed inset-x-0 top-[7dvh] z-30 flex h-[calc(100dvh-7dvh)]",
+          "pointer-events-none fixed inset-x-0 top-[7dvh] z-30 flex h-[calc(100svh-7dvh)] touch-none md:h-[calc(100dvh-7dvh)]",
           sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
         onMouseDown={(event) => {
@@ -116,7 +116,7 @@ export default function Navbar() {
             ref={navElementRef}
             inert={!sidebarOpen ? true : undefined}
             className={classNames(
-              "bg-site-surface relative z-10 flex h-full max-h-[calc(100dvh-7dvh)] min-h-0 flex-col overflow-y-auto rounded-tr-3xl duration-500 md:flex-row md:overflow-y-hidden",
+              "bg-site-surface relative z-10 flex h-full min-h-0 flex-col overflow-hidden rounded-tr-3xl duration-500 md:flex-row md:overflow-hidden",
               sidebarOpen ? "translate-x-0" : "-translate-x-full",
             )}
           >

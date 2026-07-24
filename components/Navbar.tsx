@@ -76,12 +76,18 @@ export default function Navbar() {
           sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
       >
-        <div className="flex w-full flex-col overflow-hidden">
+        <div className="relative flex w-full flex-col overflow-hidden">
+          <div
+            className={classNames(
+              "pointer-events-none absolute inset-0 bg-site-surface-soft/70 backdrop-blur-sm",
+              sidebarOpen ? "opacity-100" : "opacity-0",
+            )}
+          />
           <nav
             id="site-navigation"
             inert={!sidebarOpen ? true : undefined}
             className={classNames(
-              "bg-site-surface flex h-full max-h-[calc(100dvh-7dvh)] min-h-0 flex-col overflow-y-auto rounded-tr-3xl duration-500 md:flex-row md:overflow-y-hidden",
+              "relative z-10 bg-site-surface flex h-full max-h-[calc(100dvh-7dvh)] min-h-0 flex-col overflow-y-auto rounded-tr-3xl duration-500 md:flex-row md:overflow-y-hidden",
               sidebarOpen ? "translate-x-0" : "-translate-x-full",
             )}
           >

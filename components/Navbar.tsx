@@ -75,12 +75,20 @@ export default function Navbar() {
           "pointer-events-none fixed inset-x-0 top-[7dvh] z-30 flex h-[calc(100dvh-7dvh)]",
           sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
+        onMouseDown={(event) => {
+          if (event.currentTarget === event.target) {
+            setSidebarOpen(false)
+          }
+        }}
+        data-testid="site-navigation-overlay"
       >
         <div className="relative flex w-full flex-col overflow-hidden">
           <div
             className={classNames(
-              "pointer-events-none absolute inset-0 bg-site-surface-soft/70 backdrop-blur-sm",
-              sidebarOpen ? "opacity-100" : "opacity-0",
+              "absolute inset-0 bg-site-surface-soft/70 backdrop-blur-sm",
+              sidebarOpen
+                ? "pointer-events-auto opacity-100"
+                : "pointer-events-none opacity-0",
             )}
           />
           <nav

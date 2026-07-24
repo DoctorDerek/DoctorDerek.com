@@ -64,4 +64,21 @@ describe("Navbar", () => {
     fireEvent.keyDown(window, { key: "Escape" })
     expect(navigation).toHaveAttribute("inert")
   })
+
+  it("closes when the overlay background is clicked", () => {
+    render(<Navbar />)
+
+    const navigationButton = screen.getByRole("button", {
+      name: "Open navigation and settings",
+    })
+    fireEvent.click(navigationButton)
+
+    const navigation = screen.getByRole("navigation")
+    const overlay = screen.getByTestId("site-navigation-overlay")
+
+    expect(navigation).not.toHaveAttribute("inert")
+
+    fireEvent.mouseDown(overlay)
+    expect(navigation).toHaveAttribute("inert")
+  })
 })

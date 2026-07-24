@@ -125,4 +125,21 @@ describe("Navbar", () => {
     expect(navigationButton).toHaveFocus()
     expect(screen.getByRole("navigation")).toHaveAttribute("inert")
   })
+
+  it("uses dynamic viewport sizing and overflow containment for the open menu", () => {
+    render(<Navbar />)
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Open navigation and settings",
+      }),
+    )
+
+    const overlay = screen.getByTestId("site-navigation-overlay")
+    const navigation = screen.getByRole("navigation")
+
+    expect(overlay.className).toContain("h-[calc(100svh-7dvh)]")
+    expect(navigation.className).not.toContain("max-h-[calc(100dvh-7dvh)]")
+    expect(navigation.className).toContain("overflow-hidden")
+  })
 })

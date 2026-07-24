@@ -118,10 +118,7 @@ export default function Navbar() {
               </div>
             </div>
             <div
-              className={classNames(
-                "mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex",
-                sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
-              )}
+              className="mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex"
             >
               <SocialLinks
                 fill="#F38B57"

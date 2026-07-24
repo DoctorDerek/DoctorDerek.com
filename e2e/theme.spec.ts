@@ -1,7 +1,9 @@
 import { expect, test, type Page } from "@playwright/test"
 
 async function openSettings(page: Page) {
+  await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
   await page.getByRole("button", { name: "Open navigation" }).click()
+  await expect(page.getByRole("navigation")).not.toHaveAttribute("inert")
 }
 
 test("defaults to dark and persists an explicit light choice", async ({
@@ -30,6 +32,7 @@ test("defaults to dark and persists an explicit light choice", async ({
   await expect(themeToggle).toHaveClass(/theme-toggle--dark/)
   expect(await page.evaluate(() => localStorage.getItem("theme"))).toBeNull()
 
+  await themeToggle.scrollIntoViewIfNeeded()
   await themeToggle.click()
 
   await expect(documentRoot).toHaveClass(/light/)
@@ -73,6 +76,9 @@ test("keeps the theme control static when system motion is reduced", async ({
     "transition-duration",
     "0s",
   )
+  await page
+    .getByRole("button", { name: "Switch to light theme" })
+    .scrollIntoViewIfNeeded()
   await page.getByRole("button", { name: "Switch to light theme" }).click()
   await expect(page.locator("html")).toHaveClass(/light/)
 })

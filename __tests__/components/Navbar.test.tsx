@@ -49,4 +49,19 @@ describe("Navbar", () => {
     fireEvent.click(within(navigation).getByRole("link", { name: "About" }))
     expect(navigation).toHaveAttribute("inert")
   })
+
+  it("closes with Escape when open", () => {
+    render(<Navbar />)
+
+    const navigationButton = screen.getByRole("button", {
+      name: "Open navigation and settings",
+    })
+
+    fireEvent.click(navigationButton)
+    const navigation = screen.getByRole("navigation")
+    expect(navigation).not.toHaveAttribute("inert")
+
+    fireEvent.keyDown(window, { key: "Escape" })
+    expect(navigation).toHaveAttribute("inert")
+  })
 })

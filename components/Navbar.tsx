@@ -20,12 +20,17 @@ export default function Navbar() {
   const navElementRef = useRef<HTMLElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
 
+  const closeSidebar = () => {
+    setSidebarOpen(false)
+    menuButtonRef.current?.focus({ preventScroll: true })
+  }
+
   useEffect(() => {
     if (!sidebarOpen) return
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setSidebarOpen(false)
+        closeSidebar()
       }
     }
 
@@ -41,14 +46,6 @@ export default function Navbar() {
       window.cancelAnimationFrame(requestId)
       window.removeEventListener("keydown", handleEscape, true)
     }
-  }, [sidebarOpen])
-
-  useEffect(() => {
-    if (sidebarOpen) return
-    const returnFocusToMenuButton = () => {
-      menuButtonRef.current?.focus({ preventScroll: true })
-    }
-    window.requestAnimationFrame(returnFocusToMenuButton)
   }, [sidebarOpen])
 
   return (
@@ -95,12 +92,12 @@ export default function Navbar() {
         )}
         onMouseDown={(event) => {
           if (event.currentTarget === event.target) {
-            setSidebarOpen(false)
+            closeSidebar()
           }
         }}
         onTouchStart={(event) => {
           if (event.currentTarget === event.target) {
-            setSidebarOpen(false)
+            closeSidebar()
           }
         }}
         data-testid="site-navigation-overlay"
@@ -108,7 +105,7 @@ export default function Navbar() {
         <div className="relative flex w-full flex-col overflow-hidden">
           <div
             className={classNames(
-              "absolute inset-0 bg-site-surface-soft/70 backdrop-blur-sm",
+              "bg-site-surface-soft/70 absolute inset-0 backdrop-blur-sm",
               sidebarOpen
                 ? "pointer-events-auto opacity-100"
                 : "pointer-events-none opacity-0",
@@ -119,7 +116,7 @@ export default function Navbar() {
             ref={navElementRef}
             inert={!sidebarOpen ? true : undefined}
             className={classNames(
-              "relative z-10 bg-site-surface flex h-full max-h-[calc(100dvh-7dvh)] min-h-0 flex-col overflow-y-auto rounded-tr-3xl duration-500 md:flex-row md:overflow-y-hidden",
+              "bg-site-surface relative z-10 flex h-full max-h-[calc(100dvh-7dvh)] min-h-0 flex-col overflow-y-auto rounded-tr-3xl duration-500 md:flex-row md:overflow-y-hidden",
               sidebarOpen ? "translate-x-0" : "-translate-x-full",
             )}
           >
@@ -130,7 +127,7 @@ export default function Navbar() {
                     <a
                       href={`#${item.anchor}`}
                       className="md:restora-bold ease-spring-bouncy hover:text-site-foreground block py-2 text-5xl font-semibold transition-all duration-300 hover:scale-105 active:scale-95 md:p-1 md:pr-12 md:text-end md:text-7xl lg:text-8xl"
-                      onClick={() => setSidebarOpen(false)}
+                      onClick={closeSidebar}
                     >
                       {item.name}
                     </a>
@@ -149,9 +146,7 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-            <div
-              className="mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex"
-            >
+            <div className="mx-auto my-auto hidden flex-col justify-between gap-y-4 md:flex">
               <SocialLinks
                 fill="#F38B57"
                 containerClasses="flex flex-col gap-y-4"

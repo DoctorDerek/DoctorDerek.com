@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest"
 import {
+  AI_CONSULTANCY_PITCH,
+  BLOG_METRICS,
+  CONTACT_BULLETS,
   CONTACT_COMPLETION,
   CONTACT_CTA,
   INTRO_BIO_SHORT,
@@ -23,6 +26,18 @@ describe("site copy quality gates", () => {
     expect(INTRO_BIO_SHORT).toContain("Next.js + React Native + Expo")
   })
 
+  it("locks logistics-first consultancy positioning", () => {
+    expect(AI_CONSULTANCY_PITCH.body).toContain("10× AI-native velocity")
+    expect(AI_CONSULTANCY_PITCH.subtext).toContain("Employer of Record")
+    expect(AI_CONSULTANCY_PITCH.subtext).toContain("1099")
+    expect(AI_CONSULTANCY_PITCH.subtext).toContain("US Pacific")
+  })
+
+  it("locks key proof-point metrics", () => {
+    expect(BLOG_METRICS.totalPosts).toBe(586)
+    expect(BLOG_METRICS.emailSubscribers).toBeGreaterThan(700)
+  })
+
   it("keeps portfolio narrative aligned to the job-hunt framing", () => {
     const firstProject = PORTFOLIO_PROJECTS[0]
     const doctorDerekProject = PORTFOLIO_PROJECTS[PORTFOLIO_PROJECTS.length - 1]
@@ -42,9 +57,18 @@ describe("site copy quality gates", () => {
         project.details.toLowerCase().includes("phase"),
     )
     expect(anyPhase).toBe(false)
+
+    const anyStoreClaims = PORTFOLIO_PROJECTS.some(
+      (project) =>
+        project.summary.includes("App Store") ||
+        project.summary.includes("Play Store") ||
+        project.details.includes("App Store") ||
+        project.details.includes("Play Store"),
+    )
+    expect(anyStoreClaims).toBe(false)
   })
 
-  it("guards against stale app-store claims in the portfolio narrative", () => {
+  it("guards against stale app-store claims in the values project narrative", () => {
     const mapache = PORTFOLIO_PROJECTS.find(
       (project) => project.projectTitle === "What Are Your Values, Mapache?",
     )
@@ -52,5 +76,12 @@ describe("site copy quality gates", () => {
     expect(mapache?.details).toBeTruthy()
     expect(mapache!.details).not.toContain("App Store")
     expect(mapache!.details).not.toContain("Play Store")
+  })
+
+  it("keeps contact copy concise and evidence-driven", () => {
+    expect(CONTACT_BULLETS).toHaveLength(4)
+    expect(CONTACT_BULLETS[2]).toContain("code owner")
+    expect(CONTACT_BULLETS[3]).toContain("under 3 months")
+    expect(CONTACT_BULLETS.join(" ")).not.toContain("underperforming")
   })
 })

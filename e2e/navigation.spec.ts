@@ -10,6 +10,7 @@ test("keeps the closed drawer off the pointer path and the open drawer interacti
   })
   const navigation = page.getByRole("navigation")
 
+  await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
   await expect(navigation).toHaveAttribute("inert")
   expect(
     await page.evaluate(() =>
@@ -21,7 +22,11 @@ test("keeps the closed drawer off the pointer path and the open drawer interacti
 
   await navigationButton.click()
   await expect(navigation).not.toHaveAttribute("inert")
-  await expect(navigation.getByRole("button", { name: "Switch to light theme" })).toBeVisible()
+  const themeToggle = navigation.getByRole("button", {
+    name: "Switch to light theme",
+  })
+  await expect(themeToggle).toBeVisible()
+  await themeToggle.scrollIntoViewIfNeeded()
   await expect(navigation.getByText("Settings", { exact: true })).toHaveCount(0)
   await expect(navigation.getByText("Motion", { exact: true })).toHaveCount(0)
 

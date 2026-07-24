@@ -54,23 +54,22 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="pointer-events-none fixed inset-0 z-30 mt-auto flex h-[90dvh]">
-        <div className="pointer-events-none flex grow flex-col overflow-y-auto overscroll-contain">
-          <div className="h-14 md:hidden" />
+      <div
+        className={classNames(
+          "pointer-events-none fixed inset-x-0 top-[7dvh] z-30 flex h-[calc(100dvh-7dvh)]",
+          sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
+        )}
+      >
+        <div className="flex w-full flex-col overflow-hidden">
           <nav
             id="site-navigation"
             inert={!sidebarOpen ? true : undefined}
             className={classNames(
-              "flex h-full min-h-0 max-h-full flex-col overflow-y-auto rounded-tr-3xl duration-500 md:mt-auto md:h-11/12 md:max-h-[85dvh] md:flex-row",
+              "bg-site-surface flex h-full max-h-[calc(100dvh-7dvh)] min-h-0 flex-col overflow-y-auto rounded-tr-3xl duration-500 md:flex-row md:overflow-y-hidden",
               sidebarOpen ? "translate-x-0" : "-translate-x-full",
             )}
           >
-            <div
-              className={classNames(
-                "border-site-border bg-site-surface text-site-foreground flex min-h-0 w-11/12 flex-col content-between overflow-y-auto rounded-tr-2xl border pl-5 backdrop-blur-xl md:w-3/4",
-                sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
-              )}
-            >
+            <div className="border-site-border bg-site-surface text-site-foreground flex min-h-0 w-11/12 flex-col content-between overflow-y-auto rounded-tr-2xl border pb-6 pl-5 backdrop-blur-xl md:w-3/4">
               <ul role="list" className="pt-8">
                 {navigation.map((item) => (
                   <li className="hover:text-site-foreground" key={item.name}>

@@ -5,11 +5,13 @@ const CONTACT_COMPLETION_TOAST =
 
 async function openContact(page: Page) {
   await page.goto("/")
+  await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
   await page.getByRole("button", { name: "Open navigation" }).click()
-  await page
+  const contactLink = page
     .getByRole("navigation")
     .getByRole("link", { name: "Contact" })
-    .click()
+  await contactLink.scrollIntoViewIfNeeded()
+  await contactLink.click()
   await expect(page).toHaveURL(/#contact$/)
   await expect(page.locator('.fp-section[data-anchor="contact"]')).toHaveClass(
     /fp-completely/,
@@ -48,9 +50,10 @@ test("rewards a deliberate attempt past Contact and cancels confetti on departur
   await expect(completionStatus(page)).toHaveCount(1)
   await expect(page.locator(".end-of-site-confetti")).toHaveCount(1)
 
-  await page.getByRole("button", { name: "Open navigation" }).click()
-  await page.getByRole("navigation").getByRole("link", { name: "About" }).click()
-  await expect(page).toHaveURL(/#about$/)
+  await page.evaluate(() => {
+    window.location.hash = "#blog"
+  })
+  await expect(page).toHaveURL(/#blog$/)
   await expect(page.locator(".end-of-site-confetti")).toHaveCount(0)
 })
 

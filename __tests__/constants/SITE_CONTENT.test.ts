@@ -17,7 +17,9 @@ describe("site copy quality gates", () => {
   })
 
   it("keeps the flagship bio on-point and concise", () => {
-    expect(INTRO_BIO_SHORT).toContain("AI-Native Senior Full-Stack TypeScript Engineer")
+    expect(INTRO_BIO_SHORT).toContain(
+      "AI-Native Senior Full-Stack TypeScript Engineer",
+    )
     expect(INTRO_BIO_SHORT).toContain("Next.js + React Native + Expo")
   })
 

@@ -277,3 +277,7 @@ button {
 .back {
   transform: rotateY(180deg);
 }
+
+html.light .site-logo {
+  filter: invert(1);
+}

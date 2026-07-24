@@ -17,7 +17,7 @@ export default function Logo({ className }: LogoProps) {
 
   return (
     <div
-      className={classNames("perspective", className)}
+      className={classNames("perspective site-logo", className)}
       style={{ perspective: "1000px" }}
     >
       <div

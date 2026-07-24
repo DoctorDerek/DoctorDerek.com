@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test"
 
-const CONTACT_COMPLETION_TOAST = "That’s it! Confetti time!"
+const CONTACT_COMPLETION_TOAST =
+  "🎊 You’ve reached the end of DoctorDerek.com. Let’s build something great. 🎉"
 
 async function openContact(page: Page) {
   await page.goto("/")

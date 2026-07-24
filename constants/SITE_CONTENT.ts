@@ -70,7 +70,8 @@ export const CONTACT_BULLETS: string[] = [
 ] as const
 export const CONTACT_CTA = "Contact Me" as const
 export const CONTACT_COMPLETION = {
-  toastMessage: "That’s it! Confetti time!",
+  toastMessage:
+    "🎊 You’ve reached the end of DoctorDerek.com. Let’s build something great. 🎉",
 } as const
 
 export type WorkExperience = {

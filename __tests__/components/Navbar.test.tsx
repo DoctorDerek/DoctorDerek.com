@@ -81,4 +81,33 @@ describe("Navbar", () => {
     fireEvent.mouseDown(overlay)
     expect(navigation).toHaveAttribute("inert")
   })
+
+  it("returns focus to the navigation toggle when closed with Escape", () => {
+    render(<Navbar />)
+
+    const navigationButton = screen.getByRole("button", {
+      name: "Open navigation and settings",
+    })
+
+    fireEvent.click(navigationButton)
+    fireEvent.keyDown(window, { key: "Escape" })
+
+    expect(navigationButton).toHaveFocus()
+    expect(screen.getByRole("navigation")).toHaveAttribute("inert")
+  })
+
+  it("returns focus to the navigation toggle when closed by overlay touch", () => {
+    render(<Navbar />)
+
+    const navigationButton = screen.getByRole("button", {
+      name: "Open navigation and settings",
+    })
+    fireEvent.click(navigationButton)
+
+    const overlay = screen.getByTestId("site-navigation-overlay")
+    fireEvent.touchStart(overlay)
+
+    expect(navigationButton).toHaveFocus()
+    expect(screen.getByRole("navigation")).toHaveAttribute("inert")
+  })
 })

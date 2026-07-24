@@ -1,6 +1,6 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import SiteSettings from "@/components/SiteSettings"
 import Logo from "@/components/ui/Logo"
 import SocialLinks from "@/components/ui/SocialLinks"
@@ -17,6 +17,8 @@ const navigation = [
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const navElementRef = useRef<HTMLElement>(null)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     if (!sidebarOpen) return
@@ -28,10 +30,25 @@ export default function Navbar() {
     }
 
     window.addEventListener("keydown", handleEscape, true)
+    const focusFirstNavLink = () => {
+      navElementRef.current
+        ?.querySelector<HTMLAnchorElement>("a")
+        ?.focus({ preventScroll: true })
+    }
+    const requestId = window.requestAnimationFrame(focusFirstNavLink)
 
     return () => {
+      window.cancelAnimationFrame(requestId)
       window.removeEventListener("keydown", handleEscape, true)
     }
+  }, [sidebarOpen])
+
+  useEffect(() => {
+    if (sidebarOpen) return
+    const returnFocusToMenuButton = () => {
+      menuButtonRef.current?.focus({ preventScroll: true })
+    }
+    window.requestAnimationFrame(returnFocusToMenuButton)
   }, [sidebarOpen])
 
   return (
@@ -54,6 +71,7 @@ export default function Navbar() {
             }
             className="bg-site-surface-hover text-site-foreground ml-auto px-3.5 py-2 backdrop-blur-md"
             onClick={() => setSidebarOpen(!sidebarOpen)}
+            ref={menuButtonRef}
           >
             {sidebarOpen ? (
               <XMarkIcon
@@ -80,6 +98,11 @@ export default function Navbar() {
             setSidebarOpen(false)
           }
         }}
+        onTouchStart={(event) => {
+          if (event.currentTarget === event.target) {
+            setSidebarOpen(false)
+          }
+        }}
         data-testid="site-navigation-overlay"
       >
         <div className="relative flex w-full flex-col overflow-hidden">
@@ -93,6 +116,7 @@ export default function Navbar() {
           />
           <nav
             id="site-navigation"
+            ref={navElementRef}
             inert={!sidebarOpen ? true : undefined}
             className={classNames(
               "relative z-10 bg-site-surface flex h-full max-h-[calc(100dvh-7dvh)] min-h-0 flex-col overflow-y-auto rounded-tr-3xl duration-500 md:flex-row md:overflow-y-hidden",

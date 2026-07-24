@@ -1,12 +1,9 @@
 import { expect, test } from "@playwright/test"
 
-test("animates the shared 3D entrance when full motion is explicit", async ({
+test("animates the shared 3D entrance when motion is unrestricted", async ({
   page,
 }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" })
-  await page.addInitScript(() => {
-    localStorage.setItem("doctorderek-motion-preference", "full")
-  })
+  await page.emulateMedia({ reducedMotion: "no-preference" })
   await page.goto("/")
 
   const documentRoot = page.locator("html")
@@ -14,7 +11,7 @@ test("animates the shared 3D entrance when full motion is explicit", async ({
     has: page.locator("h2").filter({ hasText: /^About$/ }),
   })
 
-  await expect(documentRoot).toHaveAttribute("data-motion-preference", "full")
+  await expect(documentRoot).not.toHaveAttribute("data-motion-preference")
   await expect(headingEntrance).toHaveCSS("opacity", "0")
   await expect(headingEntrance).not.toHaveCSS("transform", "none")
   await expect(headingEntrance).not.toHaveCSS("transition-duration", "0s")
@@ -23,7 +20,7 @@ test("animates the shared 3D entrance when full motion is explicit", async ({
   )
 
   await page
-    .getByRole("button", { name: "Open navigation and settings" })
+    .getByRole("button", { name: "Open navigation" })
     .click()
   await page
     .getByRole("navigation")
@@ -51,9 +48,8 @@ test("renders inactive headings statically for system reduced motion", async ({
     has: page.locator("h2").filter({ hasText: /^About$/ }),
   })
 
-  await expect(page.locator("html")).toHaveAttribute(
+  await expect(page.locator("html")).not.toHaveAttribute(
     "data-motion-preference",
-    "system",
   )
   await expect(headingEntrance).toHaveCSS("opacity", "1")
   await expect(headingEntrance).toHaveCSS("transform", "none")

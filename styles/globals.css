@@ -188,14 +188,8 @@ https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
     scale(1);
 }
 
-html[data-motion-preference="reduce"] .section-heading-entrance {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  html:not([data-motion-preference="full"]) .section-heading-entrance {
+  .section-heading-entrance {
     opacity: 1;
     transform: none;
     transition: none;
@@ -210,27 +204,14 @@ body {
   color: var(--site-foreground);
 }
 
-html[data-motion-preference="reduce"] {
-  scroll-behavior: auto;
-}
-
-html[data-motion-preference="reduce"] *,
-html[data-motion-preference="reduce"] ::before,
-html[data-motion-preference="reduce"] ::after {
-  scroll-behavior: auto !important;
-  animation: none !important;
-  transition-duration: 0s !important;
-  transition-delay: 0s !important;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  html:not([data-motion-preference="full"]) {
+  html {
     scroll-behavior: auto;
   }
 
-  html:not([data-motion-preference="full"]) *,
-  html:not([data-motion-preference="full"]) ::before,
-  html:not([data-motion-preference="full"]) ::after {
+  html *,
+  html ::before,
+  html ::after {
     scroll-behavior: auto !important;
     animation: none !important;
     transition-duration: 0s !important;

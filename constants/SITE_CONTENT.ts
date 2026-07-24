@@ -32,17 +32,17 @@ export const FULLPAGE_ACTIVATION_KEYS = {
 } as const
 
 export const INTRO_BIO_SHORT =
-  "AI-Native Senior Full-Stack SWE · UI/UX Engineer · TypeScript specialist · 20+ years of SWE · BS & MS in Bioinformatics age 19 · Doctor of Physical Therapy" as const
+  "AI-Native Senior Full-Stack TypeScript Engineer · Next.js + React Native + Expo · UI/UX Engineer · 20+ years of SWE · BS & MS in Bioinformatics age 19 · Doctor of Physical Therapy" as const
 
 export const ABOUT_BIO_LONG: string[] = [
-  "I’m Dr. Derek Austin: an AI-Native Senior Full-Stack SWE and UI/UX Engineer. I specialize in architecting and building full-stack TypeScript apps that scale and world-class UI/UX that “feels” right.",
-  "I leverage frontier LLMs like Gemini Deep Think and Claude Opus every day, but I explicitly reject the technical debt of “vibe coding.”",
-  "When using agentic and other AI-assisted SWE tools, I still take full ownership of the codebase and accountability for results.",
-  "Using my strict 5-Step Forge (Plan, Build, Test, Reflect) and 40 “Anti-Slop” pillars, I build with deterministic state machines (XState) and scrub AI slop from my codebases.",
-  "This methodology drives my 10× development velocity across disparate stacks: Next.js, TypeScript, Tailwind CSS, Node.js, and Postgres for cloud-native SaaS; and React Native + Expo for cross-platform mobile apps.",
-  "I enforce code quality with automated testing (React Testing Library, Playwright), CI/CD pipelines (GitHub Actions, Docker), and production deployments to Vercel and AWS.",
-  "I’m a US citizen based in Puebla, Mexico, where I live with my wife and our two cats. I work remotely on US Pacific Time.",
-  "Contact me if you need a code owner who values results, accountability, and world-class UI/UX.",
+  "I’m Dr. Derek Austin: an AI-native senior full-stack TypeScript product engineer and UI/UX engineer. Since 2019, I’ve specialized in architecting and building products with React, Next.js, Tailwind CSS, Node.js, and React Native + Expo.",
+  "I use frontier LLMs to increase both velocity and professionalism—not to outsource judgment. I work from functional specifications, technical architecture, and persistent project context, then verify agent output through human review, automated testing, and manual QA.",
+  "My engineering loop is Plan → Build → Test → Reflect: decide what matters, build it, prove it works, and use the result to improve the next cycle.",
+  "Inside that loop, my Five-Step Forge is the execution protocol: 1PLAN → 2CHECK → 3WRITE → 4CHECK → 5RUN. The loop describes how I work; the forge defines the checkpoints that keep agentic work reliable. Before the forge, 0LIST audits canonical ownership and impacted files.",
+  "I maintain language-specific coding standards, 40 anti-slop engineering pillars, and seven game and UX design lenses so quality, accessibility, performance, and maintainability are explicit requirements instead of last-minute cleanup.",
+  "This approach lets me move quickly across four product surfaces—desktop web, mobile web, iOS, and Android—while keeping state, UI, testing, and release behavior deliberate across platforms.",
+  "I’m a US citizen and Mexican Permanent Resident based in Puebla, Mexico, where I work remotely on US Pacific Time.",
+  "Contact me if you need a high-autonomy code owner who can take a product from functional specification through production release.",
 ] as const
 
 export type AiConsultancyPitch = {
@@ -55,17 +55,17 @@ export type AiConsultancyPitch = {
 
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   header: "What I Do Best",
-  body: "Startups are drowning in fragile, AI-generated prototypes that cannot scale. I help founders and VC-backed teams build deterministic apps in regulated industries (like HealthTech) at 10x velocity. I hate bugs, I love results, and I know when to move fast and when to pay down tech debt. I ship robust, world-class software that feels “right” for users.",
+  body: "Startups need more than a fast prototype: they need a product that survives real users, real data, and real change. I help founders and small teams build deterministic, full-stack TypeScript products—including privacy-sensitive and regulated applications—at 10× AI-native velocity without the technical debt of vibe coding. I hate bugs, I love results, and I know when to move quickly and when to pay down technical debt.",
   ctaButtonText: "Inquire About Availability",
   subtext:
-    "Seeking a remote, full-time SWE role at a US startup hiring via a global Employer of Record (EOR). I work on US Pacific Time from Puebla, Mexico.",
+    "Seeking a remote, full-time SWE/code-owner role at a US startup hiring through a global Employer of Record (EOR). If direct US 1099 contracting works better for the company, I can use that arrangement from Mexico while working US Pacific hours.",
   emailSubject: "Full-Time SWE / Code Owner Inquiry",
 } as const
 
 export const CONTACT_BULLETS: string[] = [
-  "I architect, build, and scale deterministic software systems using elite, AI-augmented engineering approaches including agentic SWE workflows.",
-  "I’ve built my career around taking broken MVPs—whether delivered by underperforming agencies or AI—and turning them into real apps.",
-  "I partner with founders and early-stage startups as a full-time code owner to deliver 10x velocity without the technical debt of “vibe coding.”",
+  "I architect, build, and scale deterministic software systems using AI-native engineering workflows, functional specifications, persistent context, and human verification.",
+  "I turn incomplete or fragile MVPs—whether inherited from a previous team or generated with AI—into robust production applications.",
+  "I partner with founders and early-stage startups as a full-time code owner, taking product work from specification through production with 10× velocity and full accountability for the result.",
   "I deliver MVPs in under 3 months, and I’ve improved web performance by up to 90% and page speed by 60×.",
 ] as const
 export const CONTACT_CTA = "Contact Me" as const
@@ -245,7 +245,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     summary:
       "A values game that helps teams and individuals make clearer decisions under pressure.",
     details:
-      "A TypeScript monorepo supports iOS, Android, mobile web, and desktop web. XState actors keep matchups, input, queueing, and offline saves deterministic across platforms.",
+      "A TypeScript monorepo powers the live web game. XState actors keep matchups, input, queueing, and offline saves deterministic, with Expo mobile support on the roadmap.",
     tech: [
       "Next.js",
       "TypeScript",
@@ -290,9 +290,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "Pokédex",
     summary:
-      "A statically generated field guide for a full-touch mobile dossier of the original 151 Pokémon.",
+      "A statically generated field guide for all 1,025 Pokémon in the current Pokédex data.",
     details:
-      "Next.js prebuilds all 151 detail routes from generated GraphQL data, with ten-entry catalog pages and touch-first detail panels for classifications, size, combat, weaknesses, and resistances.",
+      "Next.js prebuilds 1,025 Pokémon detail routes from generated GraphQL data, with ten-entry catalog pages and touch-first detail panels for classification, size, combat, weaknesses, and resistances.",
     tech: ["Next.js", "TypeScript", "GraphQL", "React Query"],
     liveUrl: "https://portfolio-pokedex.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",

@@ -6,14 +6,10 @@ test("keeps the closed drawer off the pointer path and the open drawer interacti
   await page.goto("/")
 
   const navigationButton = page.getByRole("button", {
-    name: "Open navigation and settings",
+    name: "Open navigation",
   })
   const navigation = page.getByRole("navigation")
 
-  await expect(page.locator("html")).toHaveAttribute(
-    "data-motion-preference",
-    "system",
-  )
   await expect(navigation).toHaveAttribute("inert")
   expect(
     await page.evaluate(() =>
@@ -25,6 +21,9 @@ test("keeps the closed drawer off the pointer path and the open drawer interacti
 
   await navigationButton.click()
   await expect(navigation).not.toHaveAttribute("inert")
+  await expect(navigation.getByRole("button", { name: "Switch to light theme" })).toBeVisible()
+  await expect(navigation.getByText("Settings", { exact: true })).toHaveCount(0)
+  await expect(navigation.getByText("Motion", { exact: true })).toHaveCount(0)
 
   await navigation.getByRole("link", { name: "About" }).click()
 

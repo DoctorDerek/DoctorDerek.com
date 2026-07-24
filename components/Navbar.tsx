@@ -105,10 +105,8 @@ export default function Navbar() {
         <div className="relative flex w-full flex-col overflow-hidden">
           <div
             className={classNames(
-              "bg-site-surface-soft/70 absolute inset-0 backdrop-blur-sm",
-              sidebarOpen
-                ? "pointer-events-auto opacity-100"
-                : "pointer-events-none opacity-0",
+              "bg-site-surface-soft/70 pointer-events-none absolute inset-0 backdrop-blur-sm",
+              sidebarOpen ? "opacity-100" : "opacity-0",
             )}
           />
           <nav
@@ -117,7 +115,9 @@ export default function Navbar() {
             inert={!sidebarOpen ? true : undefined}
             className={classNames(
               "bg-site-surface relative z-10 flex h-full min-h-0 flex-col overflow-hidden rounded-tr-3xl duration-500 md:flex-row md:overflow-hidden",
-              sidebarOpen ? "translate-x-0" : "-translate-x-full",
+              sidebarOpen
+                ? "pointer-events-auto translate-x-0"
+                : "pointer-events-none -translate-x-full",
             )}
           >
             <div className="border-site-border bg-site-surface text-site-foreground flex min-h-0 w-11/12 flex-col content-between overflow-y-auto rounded-tr-2xl border pb-6 pl-5 backdrop-blur-xl md:w-3/4">

@@ -110,4 +110,19 @@ describe("Navbar", () => {
     expect(navigationButton).toHaveFocus()
     expect(screen.getByRole("navigation")).toHaveAttribute("inert")
   })
+
+  it("returns focus to the navigation toggle when a menu link closes the panel", () => {
+    render(<Navbar />)
+
+    const navigationButton = screen.getByRole("button", {
+      name: "Open navigation and settings",
+    })
+    fireEvent.click(navigationButton)
+    const aboutLink = screen.getByRole("link", { name: "About" })
+
+    fireEvent.click(aboutLink)
+
+    expect(navigationButton).toHaveFocus()
+    expect(screen.getByRole("navigation")).toHaveAttribute("inert")
+  })
 })

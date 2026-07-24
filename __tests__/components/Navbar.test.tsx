@@ -65,6 +65,44 @@ describe("Navbar", () => {
     expect(navigation).toHaveAttribute("inert")
   })
 
+  it("moves focus to the first navigation link when opened", () => {
+    const requestAnimationFrame = vi
+      .spyOn(window, "requestAnimationFrame")
+      .mockImplementation((callback) => {
+        callback(0)
+        return 1
+      })
+
+    render(<Navbar />)
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Open navigation and settings",
+      }),
+    )
+
+    expect(screen.getByRole("link", { name: "About" })).toHaveFocus()
+    requestAnimationFrame.mockRestore()
+  })
+
+  it("ignores keyboard and inside-surface dismissal events", () => {
+    render(<Navbar />)
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Open navigation and settings",
+      }),
+    )
+
+    const navigation = screen.getByRole("navigation")
+
+    fireEvent.keyDown(window, { key: "Enter" })
+    fireEvent.mouseDown(navigation)
+    fireEvent.touchStart(navigation)
+
+    expect(navigation).not.toHaveAttribute("inert")
+  })
+
   it("closes when the overlay background is clicked", () => {
     render(<Navbar />)
 

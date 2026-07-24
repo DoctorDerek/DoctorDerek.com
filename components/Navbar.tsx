@@ -102,19 +102,20 @@ export default function Navbar() {
             )}
             data-testid="site-navigation-backdrop"
             onPointerDown={closeSidebar}
+            onClick={closeSidebar}
           />
           <nav
             id="site-navigation"
             ref={navElementRef}
             inert={!sidebarOpen ? true : undefined}
             className={classNames(
-              "bg-site-surface relative z-10 flex h-full min-h-0 flex-col overflow-hidden rounded-tr-3xl duration-500 md:flex-row md:overflow-hidden",
+              "bg-site-surface relative z-10 flex h-full min-h-0 w-11/12 flex-col overflow-hidden rounded-tr-3xl duration-500 md:w-full md:flex-row md:overflow-hidden",
               sidebarOpen
                 ? "pointer-events-auto translate-x-0"
                 : "pointer-events-none -translate-x-full",
             )}
           >
-            <div className="border-site-border bg-site-surface text-site-foreground flex min-h-0 w-11/12 touch-pan-y flex-col content-between overflow-y-auto rounded-tr-2xl border pb-6 pl-5 backdrop-blur-xl md:w-3/4">
+            <div className="border-site-border bg-site-surface text-site-foreground flex min-h-0 w-full touch-pan-y flex-col content-between overflow-y-auto rounded-tr-2xl border pb-6 pl-5 backdrop-blur-xl md:w-3/4">
               <ul role="list" className="pt-8">
                 {navigation.map((item) => (
                   <li className="hover:text-site-foreground" key={item.name}>

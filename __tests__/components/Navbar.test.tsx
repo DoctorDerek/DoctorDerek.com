@@ -117,6 +117,21 @@ describe("Navbar", () => {
     expect(navigation).toHaveAttribute("inert")
   })
 
+  it("closes when the overlay background receives a click", () => {
+    render(<Navbar />)
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Open navigation",
+      }),
+    )
+
+    const navigation = screen.getByRole("navigation")
+    fireEvent.click(screen.getByTestId("site-navigation-backdrop"))
+
+    expect(navigation).toHaveAttribute("inert")
+  })
+
   it("returns focus to the navigation toggle when closed with Escape", () => {
     render(<Navbar />)
 

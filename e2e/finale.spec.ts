@@ -1,7 +1,6 @@
 import { expect, test, type Page } from "@playwright/test"
 
-const CONTACT_COMPLETION_MESSAGE =
-  "You’ve reached the end of DoctorDerek.com. Let’s build something great."
+const CONTACT_COMPLETION_TOAST = "That’s it! Confetti time!"
 
 async function openContact(page: Page) {
   await page.goto("/")
@@ -35,7 +34,7 @@ async function reachContactScrollEnd(page: Page) {
 }
 
 const completionStatus = (page: Page) =>
-  page.getByRole("status").filter({ hasText: CONTACT_COMPLETION_MESSAGE })
+  page.getByRole("status").filter({ hasText: CONTACT_COMPLETION_TOAST })
 
 test("rewards a deliberate attempt past Contact and cancels confetti on departure", async ({
   page,
@@ -53,7 +52,7 @@ test("rewards a deliberate attempt past Contact and cancels confetti on departur
   await page.mouse.wheel(0, 500)
 
   await expect(completionStatus(page)).toHaveCount(1)
-  await expect(completionStatus(page)).toContainText(CONTACT_COMPLETION_MESSAGE)
+  await expect(completionStatus(page)).toContainText(CONTACT_COMPLETION_TOAST)
   await expect(page.locator(".end-of-site-confetti")).toBeVisible()
 
   await page.mouse.wheel(0, 500)
@@ -75,6 +74,6 @@ test("announces the Contact boundary without confetti for reduced motion", async
   await page.keyboard.press("PageDown")
 
   await expect(completionStatus(page)).toHaveCount(1)
-  await expect(completionStatus(page)).toContainText(CONTACT_COMPLETION_MESSAGE)
+  await expect(completionStatus(page)).toContainText(CONTACT_COMPLETION_TOAST)
   await expect(page.locator(".end-of-site-confetti")).toHaveCount(0)
 })

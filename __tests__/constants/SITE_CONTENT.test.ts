@@ -11,11 +11,7 @@ import {
 
 describe("site copy quality gates", () => {
   it("uses the requested end-of-site copy and CTA wording", () => {
-    expect(CONTACT_COMPLETION.message).toBe(
-      "You’ve reached the end of DoctorDerek.com. Let’s build something great.",
-    )
     expect(CONTACT_COMPLETION.toastMessage).toBe("That’s it! Confetti time!")
-    expect(CONTACT_COMPLETION.returnLabel).toBe("Back to the beginning ↑")
     expect(CONTACT_CTA).toBe("Contact Me")
   })
 

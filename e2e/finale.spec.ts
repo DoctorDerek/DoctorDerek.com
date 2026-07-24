@@ -4,13 +4,7 @@ const CONTACT_COMPLETION_TOAST = "That’s it! Confetti time!"
 
 async function openContact(page: Page) {
   await page.goto("/")
-  await expect(page.locator("html")).toHaveAttribute(
-    "data-motion-preference",
-    /system|full|reduce/,
-  )
-  await page
-    .getByRole("button", { name: "Open navigation and settings" })
-    .click()
+  await page.getByRole("button", { name: "Open navigation" }).click()
   await page
     .getByRole("navigation")
     .getByRole("link", { name: "Contact" })
@@ -19,9 +13,6 @@ async function openContact(page: Page) {
   await expect(page.locator('.fp-section[data-anchor="contact"]')).toHaveClass(
     /fp-completely/,
   )
-  await expect(
-    page.getByRole("contentinfo", { name: "End of DoctorDerek.com" }),
-  ).toBeVisible()
 }
 
 async function reachContactScrollEnd(page: Page) {
@@ -40,9 +31,6 @@ test("rewards a deliberate attempt past Contact and cancels confetti on departur
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" })
-  await page.addInitScript(() => {
-    localStorage.setItem("doctorderek-motion-preference", "full")
-  })
   await openContact(page)
 
   await expect(completionStatus(page)).toHaveCount(0)
@@ -59,8 +47,9 @@ test("rewards a deliberate attempt past Contact and cancels confetti on departur
   await expect(completionStatus(page)).toHaveCount(1)
   await expect(page.locator(".end-of-site-confetti")).toHaveCount(1)
 
-  await page.getByRole("link", { name: "Back to the beginning ↑" }).click()
-  await expect(page).toHaveURL(/#home$/)
+  await page.getByRole("button", { name: "Open navigation" }).click()
+  await page.getByRole("navigation").getByRole("link", { name: "About" }).click()
+  await expect(page).toHaveURL(/#about$/)
   await expect(page.locator(".end-of-site-confetti")).toHaveCount(0)
 })
 

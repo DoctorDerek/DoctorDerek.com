@@ -63,8 +63,8 @@ export default function Navbar() {
             aria-expanded={sidebarOpen}
             aria-label={
               sidebarOpen
-                ? "Close navigation and settings"
-                : "Open navigation and settings"
+                ? "Close navigation"
+                : "Open navigation"
             }
             className="bg-site-surface-hover text-site-foreground ml-auto px-3.5 py-2 backdrop-blur-md"
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -87,27 +87,21 @@ export default function Navbar() {
 
       <div
         className={classNames(
-          "pointer-events-none fixed inset-x-0 top-[7dvh] z-30 flex h-[calc(100svh-7dvh)] touch-none md:h-[calc(100dvh-7dvh)]",
+          "pointer-events-none fixed inset-x-0 top-[7dvh] z-30 flex h-[calc(100svh-7dvh)] md:h-[calc(100dvh-7dvh)]",
           sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
-        onMouseDown={(event) => {
-          if (event.currentTarget === event.target) {
-            closeSidebar()
-          }
-        }}
-        onTouchStart={(event) => {
-          if (event.currentTarget === event.target) {
-            closeSidebar()
-          }
-        }}
         data-testid="site-navigation-overlay"
       >
         <div className="relative flex w-full flex-col overflow-hidden">
           <div
             className={classNames(
-              "bg-site-surface-soft/70 pointer-events-none absolute inset-0 backdrop-blur-sm",
-              sidebarOpen ? "opacity-100" : "opacity-0",
+              "bg-site-surface-soft/70 absolute inset-0 backdrop-blur-sm",
+              sidebarOpen
+                ? "pointer-events-auto opacity-100"
+                : "pointer-events-none opacity-0",
             )}
+            data-testid="site-navigation-backdrop"
+            onPointerDown={closeSidebar}
           />
           <nav
             id="site-navigation"
@@ -120,7 +114,7 @@ export default function Navbar() {
                 : "pointer-events-none -translate-x-full",
             )}
           >
-            <div className="border-site-border bg-site-surface text-site-foreground flex min-h-0 w-11/12 flex-col content-between overflow-y-auto rounded-tr-2xl border pb-6 pl-5 backdrop-blur-xl md:w-3/4">
+            <div className="border-site-border bg-site-surface text-site-foreground flex min-h-0 w-11/12 touch-pan-y flex-col content-between overflow-y-auto rounded-tr-2xl border pb-6 pl-5 backdrop-blur-xl md:w-3/4">
               <ul role="list" className="pt-8">
                 {navigation.map((item) => (
                   <li className="hover:text-site-foreground" key={item.name}>

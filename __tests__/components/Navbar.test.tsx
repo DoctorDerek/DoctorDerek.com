@@ -19,7 +19,7 @@ describe("Navbar", () => {
     render(<Navbar />)
 
     const navigationButton = screen.getByRole("button", {
-      name: "Open navigation and settings",
+      name: "Open navigation",
     })
     expect(navigationButton).toHaveAttribute("aria-expanded", "false")
 
@@ -27,7 +27,7 @@ describe("Navbar", () => {
     const navigation = screen.getByRole("navigation")
 
     expect(
-      screen.getByRole("button", { name: "Close navigation and settings" }),
+      screen.getByRole("button", { name: "Close navigation" }),
     ).toHaveAttribute("aria-expanded", "true")
     expect(navigation).toHaveAttribute("id", "site-navigation")
     expect(navigation).not.toHaveAttribute("inert")
@@ -54,7 +54,7 @@ describe("Navbar", () => {
     render(<Navbar />)
 
     const navigationButton = screen.getByRole("button", {
-      name: "Open navigation and settings",
+      name: "Open navigation",
     })
 
     fireEvent.click(navigationButton)
@@ -77,7 +77,7 @@ describe("Navbar", () => {
 
     fireEvent.click(
       screen.getByRole("button", {
-        name: "Open navigation and settings",
+        name: "Open navigation",
       }),
     )
 
@@ -90,15 +90,14 @@ describe("Navbar", () => {
 
     fireEvent.click(
       screen.getByRole("button", {
-        name: "Open navigation and settings",
+        name: "Open navigation",
       }),
     )
 
     const navigation = screen.getByRole("navigation")
 
     fireEvent.keyDown(window, { key: "Enter" })
-    fireEvent.mouseDown(navigation)
-    fireEvent.touchStart(navigation)
+    fireEvent.pointerDown(navigation)
 
     expect(navigation).not.toHaveAttribute("inert")
   })
@@ -107,16 +106,16 @@ describe("Navbar", () => {
     render(<Navbar />)
 
     const navigationButton = screen.getByRole("button", {
-      name: "Open navigation and settings",
+      name: "Open navigation",
     })
     fireEvent.click(navigationButton)
 
     const navigation = screen.getByRole("navigation")
-    const overlay = screen.getByTestId("site-navigation-overlay")
+    const backdrop = screen.getByTestId("site-navigation-backdrop")
 
     expect(navigation).not.toHaveAttribute("inert")
 
-    fireEvent.mouseDown(overlay)
+    fireEvent.pointerDown(backdrop)
     expect(navigation).toHaveAttribute("inert")
   })
 
@@ -124,7 +123,7 @@ describe("Navbar", () => {
     render(<Navbar />)
 
     const navigationButton = screen.getByRole("button", {
-      name: "Open navigation and settings",
+      name: "Open navigation",
     })
 
     fireEvent.click(navigationButton)
@@ -138,12 +137,12 @@ describe("Navbar", () => {
     render(<Navbar />)
 
     const navigationButton = screen.getByRole("button", {
-      name: "Open navigation and settings",
+      name: "Open navigation",
     })
     fireEvent.click(navigationButton)
 
-    const overlay = screen.getByTestId("site-navigation-overlay")
-    fireEvent.touchStart(overlay)
+    const backdrop = screen.getByTestId("site-navigation-backdrop")
+    fireEvent.pointerDown(backdrop)
 
     expect(navigationButton).toHaveFocus()
     expect(screen.getByRole("navigation")).toHaveAttribute("inert")
@@ -153,7 +152,7 @@ describe("Navbar", () => {
     render(<Navbar />)
 
     const navigationButton = screen.getByRole("button", {
-      name: "Open navigation and settings",
+      name: "Open navigation",
     })
     fireEvent.click(navigationButton)
     const aboutLink = screen.getByRole("link", { name: "About" })
@@ -169,15 +168,17 @@ describe("Navbar", () => {
 
     fireEvent.click(
       screen.getByRole("button", {
-        name: "Open navigation and settings",
+        name: "Open navigation",
       }),
     )
 
     const overlay = screen.getByTestId("site-navigation-overlay")
     const navigation = screen.getByRole("navigation")
+    const scrollRegion = within(navigation).getByRole("list").parentElement
 
     expect(overlay.className).toContain("h-[calc(100svh-7dvh)]")
     expect(navigation.className).not.toContain("max-h-[calc(100dvh-7dvh)]")
     expect(navigation.className).toContain("overflow-hidden")
+    expect(scrollRegion).toHaveClass("touch-pan-y")
   })
 })

@@ -48,8 +48,9 @@ describe("ContactSection", () => {
     render(<ContactSection />)
 
     expect(screen.queryByRole("contentinfo")).not.toBeInTheDocument()
-    expect(screen.queryByRole("link", { name: "Back to the beginning ↑" }))
-      .not.toBeInTheDocument()
+    expect(
+      screen.queryByRole("link", { name: "Back to the beginning ↑" }),
+    ).not.toBeInTheDocument()
   })
 
   it("flips the portrait through its public button control", () => {

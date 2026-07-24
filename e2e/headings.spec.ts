@@ -20,9 +20,7 @@ test("animates the shared 3D entrance when motion is unrestricted", async ({
     (element) => getComputedStyle(element).transform,
   )
 
-  await page
-    .getByRole("button", { name: "Open navigation" })
-    .click()
+  await page.getByRole("button", { name: "Open navigation" }).click()
   await page
     .getByRole("navigation")
     .getByRole("link", { name: "About" })

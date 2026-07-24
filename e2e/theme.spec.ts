@@ -59,9 +59,9 @@ test("ignores a dark system theme and keeps the dark default", async ({
   await openSettings(page)
 
   await expect(page.locator("html")).toHaveClass(/dark/)
-  await expect(page.getByRole("button", { name: "Switch to light theme" })).toHaveClass(
-    /theme-toggle--dark/,
-  )
+  await expect(
+    page.getByRole("button", { name: "Switch to light theme" }),
+  ).toHaveClass(/theme-toggle--dark/)
   expect(await page.evaluate(() => localStorage.getItem("theme"))).toBeNull()
 })
 

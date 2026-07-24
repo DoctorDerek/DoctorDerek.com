@@ -1,8 +1,6 @@
 import { expect, test } from "@playwright/test"
 
-test("honors the system reduced-motion preference", async ({
-  page,
-}) => {
+test("honors the system reduced-motion preference", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" })
   await page.goto("/")
 

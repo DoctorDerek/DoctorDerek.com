@@ -61,11 +61,7 @@ export default function Navbar() {
             type="button"
             aria-controls="site-navigation"
             aria-expanded={sidebarOpen}
-            aria-label={
-              sidebarOpen
-                ? "Close navigation"
-                : "Open navigation"
-            }
+            aria-label={sidebarOpen ? "Close navigation" : "Open navigation"}
             className="bg-site-surface-hover text-site-foreground ml-auto px-3.5 py-2 backdrop-blur-md"
             onClick={() => setSidebarOpen(!sidebarOpen)}
             ref={menuButtonRef}

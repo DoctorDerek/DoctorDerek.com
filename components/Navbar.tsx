@@ -1,6 +1,6 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SiteSettings from "@/components/SiteSettings"
 import Logo from "@/components/ui/Logo"
 import SocialLinks from "@/components/ui/SocialLinks"
@@ -17,6 +17,22 @@ const navigation = [
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  useEffect(() => {
+    if (!sidebarOpen) return
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSidebarOpen(false)
+      }
+    }
+
+    window.addEventListener("keydown", handleEscape, true)
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape, true)
+    }
+  }, [sidebarOpen])
 
   return (
     <div className="h-[7dvh]">

@@ -1,9 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { renderToString } from "react-dom/server"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import MotionPreferenceProvider, {
   useMotionPreference,
-  type MotionPreference,
 } from "@/components/MotionPreferenceProvider"
 
 const { reducedMotionConfiguration } = vi.hoisted(() => ({
@@ -24,25 +23,9 @@ vi.mock("motion/react", () => ({
 }))
 
 function MotionPreferenceHarness() {
-  const { motionPreference, setMotionPreference, shouldReduceMotion } =
-    useMotionPreference()
+  const { shouldReduceMotion } = useMotionPreference()
 
-  return (
-    <>
-      <output>{`${motionPreference}:${shouldReduceMotion}`}</output>
-      {(["system", "reduce", "full"] as MotionPreference[]).map(
-        (preference) => (
-          <button
-            key={preference}
-            type="button"
-            onClick={() => setMotionPreference(preference)}
-          >
-            {preference}
-          </button>
-        ),
-      )}
-    </>
-  )
+  return <output>{String(shouldReduceMotion)}</output>
 }
 
 const renderMotionPreference = () =>
@@ -68,12 +51,12 @@ describe("MotionPreferenceProvider", () => {
     }))
   })
 
-  it("uses the system preference by default", () => {
+  it("uses the unrestricted system preference by default", () => {
     const { unmount } = renderMotionPreference()
 
-    expect(screen.getByText("system:false")).toBeInTheDocument()
+    expect(screen.getByText("false")).toBeInTheDocument()
     expect(reducedMotionConfiguration).toHaveBeenLastCalledWith("user")
-    expect(document.documentElement.dataset.motionPreference).toBe("system")
+    expect(document.documentElement.dataset.motionPreference).toBeUndefined()
 
     unmount()
     expect(document.documentElement.dataset.motionPreference).toBeUndefined()
@@ -86,7 +69,7 @@ describe("MotionPreferenceProvider", () => {
       </MotionPreferenceProvider>,
     )
 
-    expect(serverMarkup).toContain("system:false")
+    expect(serverMarkup).toContain("false")
   })
 
   it("reflects a system reduced-motion preference", () => {
@@ -103,34 +86,8 @@ describe("MotionPreferenceProvider", () => {
 
     renderMotionPreference()
 
-    expect(screen.getByText("system:true")).toBeInTheDocument()
+    expect(screen.getByText("true")).toBeInTheDocument()
     expect(reducedMotionConfiguration).toHaveBeenLastCalledWith("user")
-  })
-
-  it("persists explicit reduced and full-motion overrides", () => {
-    renderMotionPreference()
-
-    fireEvent.click(screen.getByRole("button", { name: "reduce" }))
-    expect(screen.getByText("reduce:true")).toBeInTheDocument()
-    expect(window.localStorage.getItem("doctorderek-motion-preference")).toBe(
-      "reduce",
-    )
-    expect(reducedMotionConfiguration).toHaveBeenLastCalledWith("always")
-
-    fireEvent.click(screen.getByRole("button", { name: "full" }))
-    expect(screen.getByText("full:false")).toBeInTheDocument()
-    expect(reducedMotionConfiguration).toHaveBeenLastCalledWith("never")
-
-    fireEvent.click(screen.getByRole("button", { name: "system" }))
-    expect(screen.getByText("system:false")).toBeInTheDocument()
-  })
-
-  it("ignores an invalid stored preference", () => {
-    window.localStorage.setItem("doctorderek-motion-preference", "unexpected")
-
-    renderMotionPreference()
-
-    expect(screen.getByText("system:false")).toBeInTheDocument()
   })
 
   it("rejects consumers outside the canonical provider", () => {

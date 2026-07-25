@@ -1,16 +1,12 @@
 import { expect, test, type Page } from "@playwright/test"
 
 async function openSettings(page: Page) {
-  await expect(page.locator("html")).toHaveAttribute(
-    "data-motion-preference",
-    "system",
-  )
-  await page
-    .getByRole("button", { name: "Open navigation and settings" })
-    .click()
+  await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
+  await page.getByRole("button", { name: "Open navigation" }).click()
+  await expect(page.getByRole("navigation")).not.toHaveAttribute("inert")
 }
 
-test("follows a light system theme and persists explicit choices", async ({
+test("defaults to dark and persists an explicit light choice", async ({
   page,
 }) => {
   const hydrationFailures: string[] = []
@@ -29,32 +25,33 @@ test("follows a light system theme and persists explicit choices", async ({
 
   const documentRoot = page.locator("html")
   const themeToggle = page.getByRole("button", {
-    name: "Switch to dark theme",
+    name: "Switch to light theme",
   })
 
-  await expect(documentRoot).toHaveClass(/light/)
-  await expect(themeToggle).toHaveClass(/theme-toggle--light/)
+  await expect(documentRoot).toHaveClass(/dark/)
+  await expect(themeToggle).toHaveClass(/theme-toggle--dark/)
   expect(await page.evaluate(() => localStorage.getItem("theme"))).toBeNull()
 
+  await themeToggle.scrollIntoViewIfNeeded()
   await themeToggle.click()
 
-  await expect(documentRoot).toHaveClass(/dark/)
+  await expect(documentRoot).toHaveClass(/light/)
   await expect(
-    page.getByRole("button", { name: "Switch to light theme" }),
-  ).toHaveClass(/theme-toggle--dark/)
-  expect(await page.evaluate(() => localStorage.getItem("theme"))).toBe("dark")
+    page.getByRole("button", { name: "Switch to dark theme" }),
+  ).toHaveClass(/theme-toggle--light/)
+  expect(await page.evaluate(() => localStorage.getItem("theme"))).toBe("light")
 
   await page.reload()
   await openSettings(page)
 
-  await expect(documentRoot).toHaveClass(/dark/)
+  await expect(documentRoot).toHaveClass(/light/)
   await expect(
-    page.getByRole("button", { name: "Switch to light theme" }),
-  ).toHaveClass(/theme-toggle--dark/)
+    page.getByRole("button", { name: "Switch to dark theme" }),
+  ).toHaveClass(/theme-toggle--light/)
   expect(hydrationFailures).toEqual([])
 })
 
-test("follows a dark system theme without storing an explicit choice", async ({
+test("ignores a dark system theme and keeps the dark default", async ({
   page,
 }) => {
   await page.emulateMedia({ colorScheme: "dark" })
@@ -79,6 +76,9 @@ test("keeps the theme control static when system motion is reduced", async ({
     "transition-duration",
     "0s",
   )
-  await page.getByRole("button", { name: "Switch to dark theme" }).click()
-  await expect(page.locator("html")).toHaveClass(/dark/)
+  await page
+    .getByRole("button", { name: "Switch to light theme" })
+    .scrollIntoViewIfNeeded()
+  await page.getByRole("button", { name: "Switch to light theme" }).click()
+  await expect(page.locator("html")).toHaveClass(/light/)
 })

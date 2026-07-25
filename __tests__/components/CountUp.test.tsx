@@ -12,8 +12,6 @@ const { animateMock, reducedMotionPreference, stopMock, useInViewMock } =
 
 vi.mock("@/components/MotionPreferenceProvider", () => ({
   useMotionPreference: () => ({
-    motionPreference: reducedMotionPreference.value ? "reduce" : "full",
-    setMotionPreference: vi.fn(),
     shouldReduceMotion: reducedMotionPreference.value,
   }),
 }))

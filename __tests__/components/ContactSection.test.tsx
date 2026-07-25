@@ -9,8 +9,6 @@ const { reducedMotionPreference } = vi.hoisted(() => ({
 
 vi.mock("@/components/MotionPreferenceProvider", () => ({
   useMotionPreference: () => ({
-    motionPreference: reducedMotionPreference.value ? "reduce" : "full",
-    setMotionPreference: vi.fn(),
     shouldReduceMotion: reducedMotionPreference.value,
   }),
 }))
@@ -44,17 +42,13 @@ describe("ContactSection", () => {
     expect(screen.getByRole("link", { name: "Contact Me" })).toBeInTheDocument()
   })
 
-  it("announces the end of the site and offers a return to the beginning", () => {
+  it("ends with the Contact CTA without persistent completion content", () => {
     render(<ContactSection />)
 
+    expect(screen.queryByRole("contentinfo")).not.toBeInTheDocument()
     expect(
-      screen.getByRole("contentinfo", { name: "End of DoctorDerek.com" }),
-    ).toHaveTextContent(
-      "You’ve reached the end of DoctorDerek.com. Let’s build something great.",
-    )
-    expect(
-      screen.getByRole("link", { name: "Back to the beginning ↑" }),
-    ).toHaveAttribute("href", "#home")
+      screen.queryByRole("link", { name: "Back to the beginning ↑" }),
+    ).not.toBeInTheDocument()
   })
 
   it("flips the portrait through its public button control", () => {

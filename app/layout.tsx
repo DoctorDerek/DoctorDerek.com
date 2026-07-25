@@ -5,7 +5,7 @@ import SiteThemeProvider from "@/components/SiteThemeProvider"
 
 export const metadata: Metadata = {
   title:
-    "Dr. Derek Austin | Indie Game Dev, AI Context Engineer, Full-Stack SWE, & Content Creator",
+    "Dr. Derek Austin | AI-Native Senior Full-Stack TypeScript Engineer · Next.js + React Native + Expo",
 }
 
 export const viewport: Viewport = {

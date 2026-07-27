@@ -9,6 +9,9 @@ test("touch users can dismiss and navigate the open overlay", async ({
   page,
 }) => {
   await page.goto("/")
+  await page.addStyleTag({
+    content: "vercel-live-feedback { pointer-events: none !important; }",
+  })
 
   const navigationButton = page.getByRole("button", {
     name: "Open navigation",

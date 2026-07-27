@@ -79,8 +79,8 @@ export default function AboutSection() {
                 <Image
                   src={photos[0]}
                   alt=""
+                  sizes="(max-width: 768px) 65vw, (max-width: 1024px) 50vw, 45vw"
                   className="pointer-events-none max-h-[40vh] w-full object-cover object-top opacity-0 md:max-h-[70vh]"
-                  priority
                   aria-hidden="true"
                 />
 
@@ -97,7 +97,6 @@ export default function AboutSection() {
                     fill
                     sizes="(max-width: 768px) 65vw, (max-width: 1024px) 50vw, 45vw"
                     className="object-cover object-top"
-                    priority
                   />
                 </div>
 
@@ -115,7 +114,6 @@ export default function AboutSection() {
                     fill
                     sizes="(max-width: 768px) 65vw, (max-width: 1024px) 50vw, 45vw"
                     className="object-cover object-top"
-                    priority
                   />
                 </div>
               </div>

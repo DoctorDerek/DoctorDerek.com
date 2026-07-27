@@ -28,12 +28,10 @@ test("touch users can dismiss and navigate the open overlay", async ({
   const backdropBox = await backdrop.boundingBox()
   expect(backdropBox).not.toBeNull()
 
-  await backdrop.tap({
-    position: {
-      x: backdropBox!.width - 4,
-      y: backdropBox!.height / 2,
-    },
-  })
+  await page.touchscreen.tap(
+    backdropBox!.x + backdropBox!.width - 4,
+    backdropBox!.y + backdropBox!.height / 2,
+  )
   await expect(navigation).toHaveAttribute("inert")
 
   await navigationButton.tap()

@@ -97,7 +97,6 @@ export default function AboutSection() {
                     fill
                     sizes="(max-width: 768px) 65vw, (max-width: 1024px) 50vw, 45vw"
                     className="object-cover object-top"
-                    quality={100}
                     priority
                   />
                 </div>
@@ -116,7 +115,6 @@ export default function AboutSection() {
                     fill
                     sizes="(max-width: 768px) 65vw, (max-width: 1024px) 50vw, 45vw"
                     className="object-cover object-top"
-                    quality={100}
                     priority
                   />
                 </div>

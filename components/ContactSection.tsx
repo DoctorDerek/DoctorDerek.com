@@ -52,7 +52,6 @@ export default function ContactSection() {
                       src={contactimage}
                       alt="Derek Austin"
                       className="object-cover md:relative"
-                      quality={100}
                       priority
                     />
                   </div>
@@ -61,7 +60,6 @@ export default function ContactSection() {
                       src={DerekSpriteImg}
                       alt="Derek Austin Sprite"
                       className="object-cover md:relative"
-                      quality={100}
                       priority
                     />
                   </div>

@@ -25,17 +25,30 @@ test("touch users can dismiss and navigate the open overlay", async ({
   await themeToggle.scrollIntoViewIfNeeded()
 
   const backdrop = page.getByTestId("site-navigation-backdrop")
-  const backdropBox = await backdrop.boundingBox()
-  expect(backdropBox).not.toBeNull()
+  const backdropBounds = await backdrop.boundingBox()
+  expect(backdropBounds).not.toBeNull()
+  const navigationBounds = await navigation.boundingBox()
+  expect(navigationBounds).not.toBeNull()
 
-  await page.touchscreen.tap(
-    backdropBox!.x + backdropBox!.width - 4,
-    backdropBox!.y + backdropBox!.height / 2,
-  )
+  const backdropRight = backdropBounds!.x + backdropBounds!.width
+  const navigationRight = navigationBounds!.x + navigationBounds!.width
+  const backdropOnlyWidth = backdropRight - navigationRight
+  expect(backdropOnlyWidth).toBeGreaterThan(0)
+
+  const backdropTapPosition = {
+    x: navigationRight + backdropOnlyWidth / 2 - backdropBounds!.x,
+    y: backdropBounds!.height / 2,
+  }
+  await backdrop.tap({
+    position: backdropTapPosition,
+  })
   await expect(navigation).toHaveAttribute("inert")
 
   await navigationButton.tap()
-  await navigation.getByRole("link", { name: "About" }).tap()
+  await expect(navigation).not.toHaveAttribute("inert")
+  const aboutLink = navigation.getByRole("link", { name: "About" })
+  await expect(aboutLink).toBeVisible()
+  await aboutLink.tap()
 
   await expect(page).toHaveURL(/#about$/)
   await expect(navigation).toHaveAttribute("inert")

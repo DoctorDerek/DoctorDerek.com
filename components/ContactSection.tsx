@@ -51,18 +51,16 @@ export default function ContactSection() {
                     <Image
                       src={contactimage}
                       alt="Derek Austin"
+                      sizes="(max-width: 768px) 43vw, (max-width: 1024px) 50vw, 45vw"
                       className="object-cover md:relative"
-                      quality={100}
-                      priority
                     />
                   </div>
                   <div className="back hidden h-full md:absolute md:top-0 md:right-0 md:bottom-0 md:left-0 md:block">
                     <Image
                       src={DerekSpriteImg}
                       alt="Derek Austin Sprite"
+                      sizes="(max-width: 768px) 43vw, (max-width: 1024px) 50vw, 45vw"
                       className="object-cover md:relative"
-                      quality={100}
-                      priority
                     />
                   </div>
                 </div>

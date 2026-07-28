@@ -97,7 +97,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                     src={post.thumbnail}
                     alt={post.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 768px) calc(100vw - 2rem), 672px"
                     className="object-cover opacity-90 transition-opacity duration-500 group-hover:scale-105 group-hover:opacity-100"
                   />
                 )}

@@ -4,7 +4,10 @@ import type { RuleSetRule } from "webpack"
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    qualities: [60, 65, 70, 75, 80, 85, 90, 95, 100],
+    minimumCacheTTL: 2678400,
+    qualities: [75],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [96, 192, 384],
     remotePatterns: [
       {
         protocol: "https",

@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
+import FlipPreview from "@/components/ui/FlipPreview"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
 import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
@@ -26,48 +27,57 @@ export default function ContactSection() {
           </div>
 
           <div className="ease-spring-bouncy mx-auto w-1/2 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:mx-0 md:h-1/2 md:w-full [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
-            <div
-              className="perspective animate-float h-full w-full"
-              style={{ animationDelay: "1s" }}
+            <FlipPreview
+              accessibleName="Flip portrait of Dr. Derek Austin"
+              containerClassName="animate-float h-full w-full"
+              containerStyle={{ animationDelay: "1s" }}
+              className="w-full"
+              isPressed={isFlipped}
+              onActivate={() =>
+                setIsFlipped((currentIsFlipped) => !currentIsFlipped)
+              }
             >
-              <button
-                type="button"
-                aria-label="Flip portrait of Dr. Derek Austin"
-                aria-pressed={isFlipped}
-                className="ease-spring-bouncy focus-visible:ring-site-focus focus-visible:ring-offset-site-surface-strong block w-full cursor-pointer rounded-xl bg-transparent p-0 text-left transition-transform duration-300 hover:scale-105 focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none active:scale-95"
-                onClick={() =>
-                  setIsFlipped((currentIsFlipped) => !currentIsFlipped)
-                }
+              <div
+                className="wrapper relative aspect-square w-full max-w-[488px]"
+                style={{
+                  transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                  transition: shouldReduceMotion
+                    ? "none"
+                    : "transform 0.8s ease-out",
+                  transformStyle: "preserve-3d",
+                }}
               >
                 <div
-                  className="wrapper relative aspect-square w-full max-w-[488px]"
+                  className="front absolute inset-0 h-full w-full"
                   style={{
-                    transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-                    transition: shouldReduceMotion
-                      ? "none"
-                      : "transform 0.8s ease-out",
-                    transformStyle: "preserve-3d",
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
                   }}
                 >
-                  <div className="front absolute inset-0 h-full w-full">
-                    <Image
-                      src={contactPortrait}
-                      alt="Derek Austin"
-                      sizes={CONTACT_PORTRAIT_SIZES}
-                      className="h-full w-full object-cover object-top"
-                    />
-                  </div>
-                  <div className="back absolute inset-0 h-full w-full">
-                    <Image
-                      src={DerekSpriteImg}
-                      alt="Derek Austin Sprite"
-                      sizes={CONTACT_PORTRAIT_SIZES}
-                      className="h-full w-full object-cover object-top"
-                    />
-                  </div>
+                  <Image
+                    src={contactPortrait}
+                    alt="Derek Austin"
+                    sizes={CONTACT_PORTRAIT_SIZES}
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
-              </button>
-            </div>
+                <div
+                  className="back absolute inset-0 h-full w-full"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                  }}
+                >
+                  <Image
+                    src={DerekSpriteImg}
+                    alt="Derek Austin Sprite"
+                    sizes={CONTACT_PORTRAIT_SIZES}
+                    className="h-full w-full object-cover object-top"
+                  />
+                </div>
+              </div>
+            </FlipPreview>
           </div>
         </div>
 

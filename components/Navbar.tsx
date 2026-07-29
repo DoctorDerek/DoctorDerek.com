@@ -1,5 +1,4 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
-import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import SiteSettings from "@/components/SiteSettings"
 import Logo from "@/components/ui/Logo"
@@ -53,9 +52,7 @@ export default function Navbar() {
       <div className="bg-site-surface-soft sticky top-0 z-40 flex h-full shadow-xs backdrop-blur-md sm:gap-x-6 sm:px-6">
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex items-center pl-3">
-            <Link href="/" className="flex items-center">
-              <Logo className="ml-2 h-8 w-32" />
-            </Link>
+            <Logo className="ml-2 h-8 w-32" />
           </div>
           <button
             type="button"

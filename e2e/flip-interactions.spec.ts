@@ -21,6 +21,7 @@ test("previews the logo and activates it through pointer and keyboard input", as
   const pageErrors = trackPageErrors(page)
   await page.emulateMedia({ reducedMotion: "no-preference" })
   await page.goto("/")
+  await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
   expect(pageErrors).toEqual([])
 
   const primaryLogoControl = page
@@ -68,6 +69,7 @@ test("keeps the flip preview static under reduced motion", async ({ page }) => {
   const pageErrors = trackPageErrors(page)
   await page.emulateMedia({ reducedMotion: "reduce" })
   await page.goto("/")
+  await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
   expect(pageErrors).toEqual([])
 
   const logoControl = page

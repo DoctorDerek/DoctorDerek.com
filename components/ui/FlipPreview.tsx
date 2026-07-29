@@ -47,6 +47,9 @@ export default function FlipPreview({
     if (event.pointerType === "mouse") setIsPreviewing(true)
   }
 
+  const stopPointerPropagation = (event: PointerEvent<HTMLButtonElement>) =>
+    event.stopPropagation()
+
   const handleActivate = () => {
     stopPreview()
     onActivate()
@@ -62,7 +65,7 @@ export default function FlipPreview({
         aria-label={accessibleName}
         aria-pressed={isPressed}
         className={classNames(
-          "focus-visible:ring-site-focus focus-visible:ring-offset-site-surface-strong block cursor-pointer rounded-xl bg-transparent p-0 text-left focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none",
+          "flip-preview-control focus-visible:ring-site-focus focus-visible:ring-offset-site-surface-strong block cursor-pointer rounded-xl bg-transparent p-0 text-left focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none",
           className,
         )}
         animate={{
@@ -73,6 +76,7 @@ export default function FlipPreview({
           shouldReduceMotion ? { duration: 0 } : FLIP_PREVIEW_TRANSITION
         }
         whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+        onPointerDownCapture={stopPointerPropagation}
         onPointerEnter={handlePointerEnter}
         onPointerLeave={stopPreview}
         onPointerCancel={stopPreview}

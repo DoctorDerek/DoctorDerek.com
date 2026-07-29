@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import SectionHeading from "@/components/ui/SectionHeading"
 import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
-import DerekAustin from "@/images/DerekAustin.png"
-import DerekAustin2 from "@/images/DerekAustin2.jpg"
-import DerekAustin3 from "@/images/DerekAustin3.jpg"
+import professionalPortrait from "@/images/derek-austin-professional-portrait.webp"
+import standingPortrait from "@/images/derek-austin-standing-portrait.webp"
+import thoughtfulPortrait from "@/images/derek-austin-thoughtful-portrait.webp"
 
 const ABOUT_PORTRAIT_SIZES =
   "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw"
@@ -40,7 +40,7 @@ export default function AboutSection() {
     }
   }, [shouldReduceMotion])
 
-  const photos = [DerekAustin, DerekAustin2, DerekAustin3]
+  const photos = [professionalPortrait, thoughtfulPortrait, standingPortrait]
 
   const currentPhoto = photos[flipCount % 3]
   const nextPhoto = photos[(flipCount + 1) % 3]

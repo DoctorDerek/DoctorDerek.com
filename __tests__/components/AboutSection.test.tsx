@@ -61,9 +61,10 @@ describe("AboutSection", () => {
       "sizes",
       responsiveSizes,
     )
-    expect(
-      screen.getByAltText("Dr Derek Austin Alternative"),
-    ).toHaveAttribute("sizes", responsiveSizes)
+    expect(screen.getByAltText("Dr Derek Austin Alternative")).toHaveAttribute(
+      "sizes",
+      responsiveSizes,
+    )
   })
 
   it("does not start an automatic portrait loop on pointer entry", () => {

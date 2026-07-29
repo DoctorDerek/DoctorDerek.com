@@ -87,11 +87,7 @@ describe("ContactSection", () => {
     })
     const portraitCard = portraitControl.querySelector(".wrapper")
 
-    expect(portraitCard).toHaveClass(
-      "aspect-square",
-      "w-full",
-      "max-w-[488px]",
-    )
+    expect(portraitCard).toHaveClass("aspect-square", "w-full", "max-w-[488px]")
     expect(screen.getByAltText("Derek Austin")).toHaveAttribute(
       "sizes",
       "(max-width: 767px) 43vw, 488px",

@@ -67,7 +67,7 @@ export default function AboutSection() {
               onClick={() => setFlipCount((c) => c + 1)}
             >
               <div
-                className="relative w-full cursor-pointer"
+                className="relative aspect-square w-full cursor-pointer"
                 style={{
                   transform: `rotateY(${flipCount * 180}deg)`,
                   transition: shouldReduceMotion
@@ -76,14 +76,6 @@ export default function AboutSection() {
                   transformStyle: "preserve-3d",
                 }}
               >
-                <Image
-                  src={photos[0]}
-                  alt=""
-                  sizes="(max-width: 768px) 65vw, (max-width: 1024px) 50vw, 45vw"
-                  className="pointer-events-none max-h-[40vh] w-full object-cover object-top opacity-0 md:max-h-[70vh]"
-                  aria-hidden="true"
-                />
-
                 <div
                   className="absolute inset-0 overflow-hidden rounded-tr-[6rem] md:rounded-tr-[4.5rem]"
                   style={{

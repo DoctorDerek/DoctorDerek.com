@@ -38,7 +38,7 @@ export default function ContactSection() {
                 }
               >
                 <div
-                  className="wrapper md:relative lg:inline-flex"
+                  className="wrapper relative aspect-square w-full max-w-[488px]"
                   style={{
                     transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
                     transition: shouldReduceMotion
@@ -47,20 +47,20 @@ export default function ContactSection() {
                     transformStyle: "preserve-3d",
                   }}
                 >
-                  <div className="front h-full">
+                  <div className="front absolute inset-0 h-full w-full">
                     <Image
                       src={contactimage}
                       alt="Derek Austin"
                       sizes="(max-width: 768px) 43vw, (max-width: 1024px) 50vw, 45vw"
-                      className="object-cover md:relative"
+                      className="h-full w-full object-cover object-top"
                     />
                   </div>
-                  <div className="back hidden h-full md:absolute md:top-0 md:right-0 md:bottom-0 md:left-0 md:block">
+                  <div className="back absolute inset-0 hidden h-full w-full md:block">
                     <Image
                       src={DerekSpriteImg}
                       alt="Derek Austin Sprite"
                       sizes="(max-width: 768px) 43vw, (max-width: 1024px) 50vw, 45vw"
-                      className="object-cover md:relative"
+                      className="h-full w-full object-cover object-top"
                     />
                   </div>
                 </div>

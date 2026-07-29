@@ -51,6 +51,21 @@ describe("AboutSection", () => {
     expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
   })
 
+  it("describes the measured responsive width of both portrait faces", () => {
+    render(<AboutSection />)
+
+    const responsiveSizes =
+      "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw"
+
+    expect(screen.getByAltText("Dr Derek Austin")).toHaveAttribute(
+      "sizes",
+      responsiveSizes,
+    )
+    expect(
+      screen.getByAltText("Dr Derek Austin Alternative"),
+    ).toHaveAttribute("sizes", responsiveSizes)
+  })
+
   it("does not start an automatic portrait loop on pointer entry", () => {
     const intervalSpy = vi.spyOn(window, "setInterval")
     render(<AboutSection />)

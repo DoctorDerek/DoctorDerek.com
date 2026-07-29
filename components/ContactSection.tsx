@@ -4,7 +4,7 @@ import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
 import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
-import contactimage from "@/images/contactimage.png"
+import contactPortrait from "@/images/derek-austin-contact-portrait.webp"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 
 const CONTACT_PORTRAIT_SIZES = "(max-width: 767px) 43vw, 488px"
@@ -51,7 +51,7 @@ export default function ContactSection() {
                 >
                   <div className="front absolute inset-0 h-full w-full">
                     <Image
-                      src={contactimage}
+                      src={contactPortrait}
                       alt="Derek Austin"
                       sizes={CONTACT_PORTRAIT_SIZES}
                       className="h-full w-full object-cover object-top"

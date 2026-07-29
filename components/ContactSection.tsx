@@ -55,7 +55,7 @@ export default function ContactSection() {
                       className="h-full w-full object-cover object-top"
                     />
                   </div>
-                  <div className="back absolute inset-0 hidden h-full w-full md:block">
+                  <div className="back absolute inset-0 h-full w-full">
                     <Image
                       src={DerekSpriteImg}
                       alt="Derek Austin Sprite"

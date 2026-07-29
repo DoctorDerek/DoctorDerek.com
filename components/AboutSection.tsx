@@ -1,6 +1,7 @@
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
+import FlipPreview from "@/components/ui/FlipPreview"
 import SectionHeading from "@/components/ui/SectionHeading"
 import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
 import professionalPortrait from "@/images/derek-austin-professional-portrait.webp"
@@ -13,32 +14,6 @@ const ABOUT_PORTRAIT_SIZES =
 export default function AboutSection() {
   const { shouldReduceMotion } = useMotionPreference()
   const [flipCount, setFlipCount] = useState(0)
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
-
-  const handleMouseEnter = () => {
-    if (shouldReduceMotion) return
-    if (intervalRef.current) clearInterval(intervalRef.current)
-    intervalRef.current = setInterval(() => {
-      setFlipCount((prev) => prev + 1)
-    }, 1500)
-  }
-
-  const handleMouseLeave = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current)
-  }
-
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (shouldReduceMotion && intervalRef.current) {
-      clearInterval(intervalRef.current)
-      intervalRef.current = null
-    }
-  }, [shouldReduceMotion])
 
   const photos = [professionalPortrait, thoughtfulPortrait, standingPortrait]
 
@@ -60,14 +35,14 @@ export default function AboutSection() {
         </div>
         <div className="relative pb-10 md:h-[60vh]">
           <div className="ease-spring-bouncy w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:w-1/2 lg:w-[45%] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
-            <button
-              type="button"
-              aria-label="Show next portrait of Dr. Derek Austin"
-              className="perspective animate-float block w-full text-left"
-              style={{ animationDelay: "0s", perspective: "1000px" }}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => setFlipCount((c) => c + 1)}
+            <FlipPreview
+              accessibleName="Show next portrait of Dr. Derek Austin"
+              containerClassName="animate-float block w-full text-left"
+              containerStyle={{ animationDelay: "0s" }}
+              className="w-full"
+              onActivate={() =>
+                setFlipCount((currentFlipCount) => currentFlipCount + 1)
+              }
             >
               <div
                 className="relative aspect-square w-full cursor-pointer"
@@ -112,7 +87,7 @@ export default function AboutSection() {
                   />
                 </div>
               </div>
-            </button>
+            </FlipPreview>
           </div>
           <div className="ease-spring-soft border-site-border bg-site-surface relative mt-8 translate-y-12 rounded-tl-3xl border px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[65%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-[60%] lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <div className="flex flex-col gap-4 lg:gap-6">

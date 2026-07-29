@@ -68,6 +68,17 @@ describe("ContactSection", () => {
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
   })
 
+  it("keeps the reverse portrait face available at every breakpoint", () => {
+    render(<ContactSection />)
+
+    const reversePortraitFace = screen.getByAltText(
+      "Derek Austin Sprite",
+    ).parentElement
+
+    expect(reversePortraitFace).not.toHaveClass("hidden")
+    expect(reversePortraitFace).toHaveClass("absolute", "inset-0")
+  })
+
   it("flips the portrait without a spatial transition when motion is reduced", () => {
     reducedMotionPreference.value = true
     render(<ContactSection />)

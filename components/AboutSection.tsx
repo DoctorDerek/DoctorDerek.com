@@ -7,6 +7,9 @@ import DerekAustin from "@/images/DerekAustin.png"
 import DerekAustin2 from "@/images/DerekAustin2.jpg"
 import DerekAustin3 from "@/images/DerekAustin3.jpg"
 
+const ABOUT_PORTRAIT_SIZES =
+  "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw"
+
 export default function AboutSection() {
   const { shouldReduceMotion } = useMotionPreference()
   const [flipCount, setFlipCount] = useState(0)
@@ -87,7 +90,7 @@ export default function AboutSection() {
                     src={frontSrc}
                     alt="Dr Derek Austin"
                     fill
-                    sizes="(max-width: 768px) 65vw, (max-width: 1024px) 50vw, 45vw"
+                    sizes={ABOUT_PORTRAIT_SIZES}
                     className="object-cover object-top"
                   />
                 </div>
@@ -104,7 +107,7 @@ export default function AboutSection() {
                     src={backSrc}
                     alt="Dr Derek Austin Alternative"
                     fill
-                    sizes="(max-width: 768px) 65vw, (max-width: 1024px) 50vw, 45vw"
+                    sizes={ABOUT_PORTRAIT_SIZES}
                     className="object-cover object-top"
                   />
                 </div>

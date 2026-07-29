@@ -7,6 +7,8 @@ import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
 import contactimage from "@/images/contactimage.png"
 import DerekSpriteImg from "@/images/DerekSpriteImg.png"
 
+const CONTACT_PORTRAIT_SIZES = "(max-width: 767px) 43vw, 488px"
+
 export default function ContactSection() {
   const { shouldReduceMotion } = useMotionPreference()
   const [isFlipped, setIsFlipped] = useState(false)
@@ -51,7 +53,7 @@ export default function ContactSection() {
                     <Image
                       src={contactimage}
                       alt="Derek Austin"
-                      sizes="(max-width: 768px) 43vw, (max-width: 1024px) 50vw, 45vw"
+                      sizes={CONTACT_PORTRAIT_SIZES}
                       className="h-full w-full object-cover object-top"
                     />
                   </div>
@@ -59,7 +61,7 @@ export default function ContactSection() {
                     <Image
                       src={DerekSpriteImg}
                       alt="Derek Austin Sprite"
-                      sizes="(max-width: 768px) 43vw, (max-width: 1024px) 50vw, 45vw"
+                      sizes={CONTACT_PORTRAIT_SIZES}
                       className="h-full w-full object-cover object-top"
                     />
                   </div>

@@ -64,6 +64,7 @@ describe("FlipPreview", () => {
     const control = screen.getByRole("button", { name: "Flip portrait" })
 
     expect(control).toHaveAttribute("aria-pressed", "true")
+    expect(control).toHaveClass("flip-preview-control")
     expect(control.parentElement).toHaveClass("perspective")
     expect(control.parentElement).toHaveStyle({ perspective: "1000px" })
     expect(getLatestAnimationProperties()).toMatchObject({
@@ -107,6 +108,27 @@ describe("FlipPreview", () => {
     fireEvent.pointerEnter(control, { pointerType: "touch" })
 
     expect(getLatestAnimationProperties().animate.rotateY).toBe(0)
+  })
+
+  it("contains pointer starts without blocking the public action", () => {
+    const onActivate = vi.fn()
+    const onParentPointerDown = vi.fn()
+
+    render(
+      <div onPointerDown={onParentPointerDown}>
+        <FlipPreview accessibleName="Flip portrait" onActivate={onActivate}>
+          Portrait
+        </FlipPreview>
+      </div>,
+    )
+
+    const control = screen.getByRole("button", { name: "Flip portrait" })
+
+    fireEvent.pointerDown(control)
+    fireEvent.click(control)
+
+    expect(onParentPointerDown).not.toHaveBeenCalled()
+    expect(onActivate).toHaveBeenCalledOnce()
   })
 
   it("clears the preview before activating the public action", () => {

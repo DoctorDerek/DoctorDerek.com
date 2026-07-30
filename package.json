@@ -8,6 +8,7 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
+    "lighthouse": "lhci autorun",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1",
     "@svgr/webpack": "^8",
     "@tailwindcss/postcss": "^4",

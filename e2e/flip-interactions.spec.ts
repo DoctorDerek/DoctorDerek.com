@@ -29,16 +29,17 @@ test("previews the logo and activates it through pointer and keyboard input", as
       name: "Show alternate DoctorDerek.com logo",
     })
     .first()
-  const restingTransform = await primaryLogoControl.evaluate(
-    (control) => getComputedStyle(control).transform,
+  const primaryLogoPreview = primaryLogoControl.locator(".flip-preview-visual")
+  const restingTransform = await primaryLogoPreview.evaluate(
+    (preview) => getComputedStyle(preview).transform,
   )
 
   await primaryLogoControl.hover()
   expect(pageErrors).toEqual([])
   await expect
     .poll(() =>
-      primaryLogoControl.evaluate(
-        (control) => getComputedStyle(control).transform,
+      primaryLogoPreview.evaluate(
+        (preview) => getComputedStyle(preview).transform,
       ),
     )
     .not.toBe(restingTransform)
@@ -77,8 +78,9 @@ test("keeps the flip preview static under reduced motion", async ({ page }) => {
       name: "Show alternate DoctorDerek.com logo",
     })
     .first()
-  const restingTransform = await logoControl.evaluate(
-    (control) => getComputedStyle(control).transform,
+  const logoPreview = logoControl.locator(".flip-preview-visual")
+  const restingTransform = await logoPreview.evaluate(
+    (preview) => getComputedStyle(preview).transform,
   )
 
   await logoControl.focus()
@@ -86,10 +88,10 @@ test("keeps the flip preview static under reduced motion", async ({ page }) => {
 
   await expect
     .poll(() =>
-      logoControl.evaluate((control) => getComputedStyle(control).transform),
+      logoPreview.evaluate((preview) => getComputedStyle(preview).transform),
     )
     .toBe(restingTransform)
-  await expect(logoControl).toHaveCSS("transition-duration", "0s")
+  await expect(logoPreview).toHaveCSS("transition-duration", "0s")
 
   await logoControl.press("Enter")
   expect(pageErrors).toEqual([])
@@ -120,12 +122,14 @@ test.describe("touch portrait controls", () => {
     const aboutPortraitControl = page.getByRole("button", {
       name: "Show next portrait of Dr. Derek Austin",
     })
+    const aboutPortraitCard = aboutPortraitControl.locator(
+      ".flip-preview-visual > div",
+    )
     await aboutPortraitControl.tap()
     await expect
       .poll(() =>
-        aboutPortraitControl.evaluate(
-          (control) =>
-            (control.firstElementChild as HTMLElement | null)?.style.transform,
+        aboutPortraitCard.evaluate(
+          (portraitCard) => (portraitCard as HTMLElement).style.transform,
         ),
       )
       .toBe("rotateY(180deg)")

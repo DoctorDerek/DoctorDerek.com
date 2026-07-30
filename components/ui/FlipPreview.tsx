@@ -68,13 +68,6 @@ export default function FlipPreview({
           "flip-preview-control focus-visible:ring-site-focus focus-visible:ring-offset-site-surface-strong block cursor-pointer rounded-xl bg-transparent p-0 text-left focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none",
           className,
         )}
-        animate={{
-          rotateY:
-            shouldReduceMotion || !isPreviewing ? 0 : FLIP_PREVIEW_ROTATION,
-        }}
-        transition={
-          shouldReduceMotion ? { duration: 0 } : FLIP_PREVIEW_TRANSITION
-        }
         whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
         onPointerDownCapture={stopPointerPropagation}
         onPointerEnter={handlePointerEnter}
@@ -84,7 +77,18 @@ export default function FlipPreview({
         onBlur={stopPreview}
         onClick={handleActivate}
       >
-        {children}
+        <motion.div
+          className="flip-preview-visual pointer-events-none h-full w-full"
+          animate={{
+            rotateY:
+              shouldReduceMotion || !isPreviewing ? 0 : FLIP_PREVIEW_ROTATION,
+          }}
+          transition={
+            shouldReduceMotion ? { duration: 0 } : FLIP_PREVIEW_TRANSITION
+          }
+        >
+          {children}
+        </motion.div>
       </motion.button>
     </div>
   )

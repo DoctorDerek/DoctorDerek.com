@@ -1,0 +1,21 @@
+{
+  "ci": {
+    "collect": {
+      "url": ["https://www.doctorderek.com/"],
+      "numberOfRuns": 3,
+      "settings": {
+        "formFactor": "mobile",
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo"
+        ]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": "./lighthouse-results"
+    }
+  }
+}

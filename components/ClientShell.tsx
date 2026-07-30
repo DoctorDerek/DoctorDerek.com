@@ -136,7 +136,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
         scrollOverflow={true}
         scrollOverflowReset={true}
         responsiveSlides={false}
-        normalScrollElements=".scrollable-content"
+        normalScrollElements=".scrollable-content, .flip-preview-control"
         loopHorizontal={false}
         resetSliders={true}
         cinematicOptions={{ effect: cinematicEffect }}

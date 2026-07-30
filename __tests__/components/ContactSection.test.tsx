@@ -68,6 +68,36 @@ describe("ContactSection", () => {
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
   })
 
+  it("keeps the reverse portrait face available at every breakpoint", () => {
+    render(<ContactSection />)
+
+    const reversePortraitFace = screen.getByAltText(
+      "Derek Austin Sprite",
+    ).parentElement
+
+    expect(reversePortraitFace).not.toHaveClass("hidden")
+    expect(reversePortraitFace).toHaveClass("absolute", "inset-0")
+  })
+
+  it("describes the bounded responsive width of both portrait faces", () => {
+    render(<ContactSection />)
+
+    const portraitControl = screen.getByRole("button", {
+      name: "Flip portrait of Dr. Derek Austin",
+    })
+    const portraitCard = portraitControl.querySelector(".wrapper")
+
+    expect(portraitCard).toHaveClass("aspect-square", "w-full", "max-w-[488px]")
+    expect(screen.getByAltText("Derek Austin")).toHaveAttribute(
+      "sizes",
+      "(max-width: 767px) 43vw, 488px",
+    )
+    expect(screen.getByAltText("Derek Austin Sprite")).toHaveAttribute(
+      "sizes",
+      "(max-width: 767px) 43vw, 488px",
+    )
+  })
+
   it("flips the portrait without a spatial transition when motion is reduced", () => {
     reducedMotionPreference.value = true
     render(<ContactSection />)

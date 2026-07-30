@@ -39,14 +39,18 @@ describe("Logo", () => {
   it("marks the theme-aware logo surface and toggles its artwork", () => {
     render(<Logo />)
 
+    const logoControl = screen.getByRole("button", {
+      name: "Show alternate DoctorDerek.com logo",
+    })
     const logoSurface = screen
       .getByLabelText("Default logo")
       .closest(".site-logo")
 
     expect(logoSurface).toHaveClass("site-logo")
     expect(screen.getByLabelText("Secondary logo")).toBeInTheDocument()
+    expect(logoControl).toHaveAttribute("aria-pressed", "false")
 
-    fireEvent.click(screen.getByLabelText("Default logo"))
+    fireEvent.click(logoControl)
 
     expect(send).toHaveBeenCalledWith({ type: "TOGGLE_LOGO" })
   })
@@ -56,6 +60,12 @@ describe("Logo", () => {
     logoState.shouldReduceMotion = true
 
     render(<Logo />)
+
+    expect(
+      screen.getByRole("button", {
+        name: "Show primary DoctorDerek.com logo",
+      }),
+    ).toHaveAttribute("aria-pressed", "true")
 
     const wrapper = screen.getByLabelText("Default logo").closest(".wrapper")
 

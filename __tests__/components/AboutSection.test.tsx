@@ -1,6 +1,6 @@
-import { act, fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import AboutSection from "@/components/AboutSection"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
@@ -26,125 +26,79 @@ vi.mock("next/image", () => ({
   }) => createElement("img", imageProps),
 }))
 
+const getPortraitCard = (portraitControl: HTMLElement) =>
+  portraitControl.querySelector(".flip-preview-visual > div") as HTMLElement
+
 describe("AboutSection", () => {
   beforeEach(() => {
     reducedMotionPreference.value = false
   })
 
-  afterEach(() => {
-    vi.useRealTimers()
-  })
-
-  it("continues the portrait sequence without advancing merely from pointer entry", () => {
-    vi.useFakeTimers()
+  it("advances the portrait sequence only through explicit activation", () => {
     render(<AboutSection />)
 
     const portraitControl = screen.getByRole("button", {
       name: "Show next portrait of Dr. Derek Austin",
     })
-    const portraitCard = portraitControl.firstElementChild as HTMLElement
+    const portraitCard = getPortraitCard(portraitControl)
 
     expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
 
     fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
 
-    fireEvent.mouseEnter(portraitControl)
+    fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
 
-    act(() => {
-      vi.advanceTimersByTime(1500)
-    })
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
-
-    fireEvent.mouseLeave(portraitControl)
-    act(() => {
-      vi.advanceTimersByTime(1500)
-    })
+    fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
   })
 
-  it("restarts one portrait timer and clears it on unmount", () => {
-    vi.useFakeTimers()
-    const { unmount } = render(<AboutSection />)
+  it("describes the measured responsive width of both portrait faces", () => {
+    render(<AboutSection />)
+
+    const responsiveSizes =
+      "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw"
+
+    expect(screen.getByAltText("Dr Derek Austin")).toHaveAttribute(
+      "sizes",
+      responsiveSizes,
+    )
+    expect(screen.getByAltText("Dr Derek Austin Alternative")).toHaveAttribute(
+      "sizes",
+      responsiveSizes,
+    )
+  })
+
+  it("does not start an automatic portrait loop on pointer entry", () => {
+    const intervalSpy = vi.spyOn(window, "setInterval")
+    render(<AboutSection />)
     const portraitControl = screen.getByRole("button", {
       name: "Show next portrait of Dr. Derek Austin",
     })
-    const portraitCard = portraitControl.firstElementChild as HTMLElement
+    const portraitCard = getPortraitCard(portraitControl)
 
-    fireEvent.mouseEnter(portraitControl)
-    act(() => {
-      vi.advanceTimersByTime(750)
-    })
-    fireEvent.mouseEnter(portraitControl)
-    act(() => {
-      vi.advanceTimersByTime(750)
-    })
+    fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
 
     expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
-
-    act(() => {
-      vi.advanceTimersByTime(750)
-    })
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
-
-    unmount()
-  })
-
-  it("leaves and unmounts cleanly before portrait rotation begins", () => {
-    vi.useFakeTimers()
-    const { unmount } = render(<AboutSection />)
-    const portraitControl = screen.getByRole("button", {
-      name: "Show next portrait of Dr. Derek Austin",
-    })
-
-    fireEvent.mouseLeave(portraitControl)
-    unmount()
-
-    expect(vi.getTimerCount()).toBe(0)
+    expect(intervalSpy).not.toHaveBeenCalled()
+    intervalSpy.mockRestore()
   })
 
   it("keeps portrait changes user-driven and instantaneous when motion is reduced", () => {
-    vi.useFakeTimers()
     reducedMotionPreference.value = true
     render(<AboutSection />)
     const portraitControl = screen.getByRole("button", {
       name: "Show next portrait of Dr. Derek Austin",
     })
-    const portraitCard = portraitControl.firstElementChild as HTMLElement
+    const portraitCard = getPortraitCard(portraitControl)
 
     expect(portraitCard).toHaveStyle({ transition: "none" })
 
-    fireEvent.mouseEnter(portraitControl)
-    act(() => {
-      vi.advanceTimersByTime(3000)
-    })
+    fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
     expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
 
     fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
-  })
-
-  it("stops an active portrait loop when reduced motion is selected", () => {
-    vi.useFakeTimers()
-    const { rerender } = render(<AboutSection />)
-    const portraitControl = screen.getByRole("button", {
-      name: "Show next portrait of Dr. Derek Austin",
-    })
-    const portraitCard = portraitControl.firstElementChild as HTMLElement
-
-    fireEvent.mouseEnter(portraitControl)
-    act(() => {
-      vi.advanceTimersByTime(750)
-    })
-
-    reducedMotionPreference.value = true
-    rerender(<AboutSection />)
-
-    act(() => {
-      vi.advanceTimersByTime(1500)
-    })
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
-    expect(vi.getTimerCount()).toBe(0)
   })
 })

@@ -1,4 +1,5 @@
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
+import FlipPreview from "@/components/ui/FlipPreview"
 import LogoDefault from "@/images/Logo-Default-Landscape.svg"
 import LogoSecondary from "@/images/Logo-Secondary-Portrait.svg"
 import { GlobalStateContext } from "@/machines/globalMachine"
@@ -16,46 +17,45 @@ export default function Logo({ className }: LogoProps) {
   const send = GlobalStateContext.useActorRef().send
 
   return (
-    <div
-      className={classNames("perspective site-logo", className)}
-      style={{ perspective: "1000px" }}
+    <FlipPreview
+      accessibleName={
+        isAlternative
+          ? "Show alternate DoctorDerek.com logo"
+          : "Show primary DoctorDerek.com logo"
+      }
+      containerClassName={classNames("site-logo", className)}
+      className="h-full w-full"
+      isPressed={!isAlternative}
+      onActivate={() => send({ type: "TOGGLE_LOGO" })}
     >
       <div
-        className="ease-spring-bouncy h-full w-full cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95"
-        onClick={(e) => {
-          e.preventDefault()
-          send({ type: "TOGGLE_LOGO" })
+        className="wrapper relative h-full w-full"
+        style={{
+          transform: isAlternative ? "rotateY(0deg)" : "rotateY(180deg)",
+          transition: shouldReduceMotion ? "none" : "transform 0.8s ease-out",
+          transformStyle: "preserve-3d",
         }}
       >
         <div
-          className="wrapper relative h-full w-full"
+          className="front h-full w-full"
           style={{
-            transform: isAlternative ? "rotateY(0deg)" : "rotateY(180deg)",
-            transition: shouldReduceMotion ? "none" : "transform 0.8s ease-out",
-            transformStyle: "preserve-3d",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
           }}
         >
-          <div
-            className="front h-full w-full"
-            style={{
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-            }}
-          >
-            <LogoDefault className="h-full w-full object-contain" />
-          </div>
-          <div
-            className="back absolute top-0 left-0 h-full w-full"
-            style={{
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-              transform: "rotateY(180deg)",
-            }}
-          >
-            <LogoSecondary className="h-full w-full object-contain" />
-          </div>
+          <LogoDefault className="h-full w-full object-contain" />
+        </div>
+        <div
+          className="back absolute top-0 left-0 h-full w-full"
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+        >
+          <LogoSecondary className="h-full w-full object-contain" />
         </div>
       </div>
-    </div>
+    </FlipPreview>
   )
 }

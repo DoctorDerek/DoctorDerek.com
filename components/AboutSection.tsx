@@ -13,15 +13,11 @@ export default function AboutSection() {
   const { shouldReduceMotion } = useMotionPreference()
   const [flipCount, setFlipCount] = useState(0)
 
-  const currentPortrait =
-    ABOUT_PORTRAITS[flipCount % ABOUT_PORTRAITS.length]
-  const nextPortrait =
-    ABOUT_PORTRAITS[(flipCount + 1) % ABOUT_PORTRAITS.length]
+  const currentPortrait = ABOUT_PORTRAITS[flipCount % ABOUT_PORTRAITS.length]
+  const nextPortrait = ABOUT_PORTRAITS[(flipCount + 1) % ABOUT_PORTRAITS.length]
 
-  const frontPortrait =
-    flipCount % 2 === 0 ? currentPortrait : nextPortrait
-  const backPortrait =
-    flipCount % 2 === 1 ? currentPortrait : nextPortrait
+  const frontPortrait = flipCount % 2 === 0 ? currentPortrait : nextPortrait
+  const backPortrait = flipCount % 2 === 1 ? currentPortrait : nextPortrait
 
   return (
     <div className="h-full w-full pt-2 pb-10 md:pt-3 md:pb-16">

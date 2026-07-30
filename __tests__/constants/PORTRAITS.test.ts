@@ -23,9 +23,8 @@ const APPROVED_SOURCE_FILENAMES = [
   "Pixtore-03374.jpg",
 ] as const
 
-const getSourceFilenames = (
-  portraits: readonly { sourceFilename: string }[],
-) => portraits.map(({ sourceFilename }) => sourceFilename)
+const getSourceFilenames = (portraits: readonly { sourceFilename: string }[]) =>
+  portraits.map(({ sourceFilename }) => sourceFilename)
 
 describe("portrait catalog", () => {
   it("catalogs every approved source portrait once", () => {

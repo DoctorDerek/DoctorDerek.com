@@ -43,11 +43,20 @@ describe("site copy quality gates", () => {
     expect(firstProject.projectTitle).toBe("What Are Your Values, Mapache?")
     expect(firstProject.summary).toMatch(/values game/i)
     expect(firstProject.details).toContain("Expo mobile support")
+    expect(firstProject.liveUrl).toBe(
+      "https://www.whatareyourvaluesmapache.com/",
+    )
 
     expect(doctorDerekProject?.projectTitle).toBe("DoctorDerek.com")
     expect(doctorDerekProject?.summary).toContain(
       "cinematic, accessibility-minded experience",
     )
+
+    const pokedexProject = PORTFOLIO_PROJECTS.find(
+      (project) => project.projectTitle === "Pokédex",
+    )
+    expect(pokedexProject?.tech).toContain("TanStack Query")
+    expect(pokedexProject?.tech).not.toContain("React Query")
 
     const anyPhase = PORTFOLIO_PROJECTS.some(
       (project) =>

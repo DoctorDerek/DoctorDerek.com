@@ -7,11 +7,11 @@ import SectionHeading from "@/components/ui/SectionHeading"
 import {
   CONTACT_COLLAGE_PORTRAITS,
   CONTACT_PORTRAIT,
+  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
+  PORTRAIT_IMAGE_SIZES,
 } from "@/constants/PORTRAITS"
 import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
-
-const CONTACT_PORTRAIT_SIZES = "(max-width: 767px) 43vw, 488px"
 
 export default function ContactSection() {
   const { shouldReduceMotion } = useMotionPreference()
@@ -31,7 +31,7 @@ export default function ContactSection() {
 
           <div className="ease-spring-bouncy mx-auto w-1/2 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:mx-0 md:h-1/2 md:w-full [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <FlipPreview
-              accessibleName="Flip portrait of Dr. Derek Austin"
+              accessibleName={PORTRAIT_CONTROL_ACCESSIBLE_NAMES.contact}
               containerClassName="animate-float h-full w-full"
               containerStyle={{ animationDelay: "1s" }}
               className="w-full"
@@ -60,7 +60,7 @@ export default function ContactSection() {
                   <Image
                     src={CONTACT_PORTRAIT.src}
                     alt={CONTACT_PORTRAIT.alt}
-                    sizes={CONTACT_PORTRAIT_SIZES}
+                    sizes={PORTRAIT_IMAGE_SIZES.contactFull}
                     className="h-full w-full object-cover"
                     style={{
                       objectPosition: CONTACT_PORTRAIT.objectPosition,

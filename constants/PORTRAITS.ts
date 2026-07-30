@@ -23,6 +23,17 @@ type ContactCollagePortrait = Portrait & {
   sizes: string
 }
 
+export const PORTRAIT_CONTROL_ACCESSIBLE_NAMES = {
+  about: "Show next portrait of Dr. Derek Austin",
+  contact: "Flip portrait of Dr. Derek Austin",
+} as const
+
+export const PORTRAIT_IMAGE_SIZES = {
+  about: "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw",
+  contactFull: "(max-width: 767px) 43vw, 488px",
+  contactHalf: "(max-width: 767px) 22vw, 244px",
+} as const
+
 const redPoloStandingPortrait = {
   alt: "Dr. Derek Austin standing by the ocean in a red polo",
   objectPosition: "63% 50%",
@@ -48,7 +59,7 @@ const yellowPoloSeatedPortrait = {
   alt: "Dr. Derek Austin smiling beside the water in a yellow polo",
   layoutClassName: "",
   objectPosition: "67% 50%",
-  sizes: "(max-width: 767px) 22vw, 244px",
+  sizes: PORTRAIT_IMAGE_SIZES.contactHalf,
   sourceFilename: "Pixtore-03215.jpg",
   src: yellowPoloSeatedImage,
 } satisfies ContactCollagePortrait
@@ -85,7 +96,7 @@ const purplePoloCelebratingPortrait = {
   alt: "Dr. Derek Austin celebrating by the ocean in a purple polo",
   layoutClassName: "col-span-2",
   objectPosition: "55% 49%",
-  sizes: "(max-width: 767px) 43vw, 488px",
+  sizes: PORTRAIT_IMAGE_SIZES.contactFull,
   sourceFilename: "Pixtore-03361.jpg",
   src: purplePoloCelebratingImage,
 } satisfies ContactCollagePortrait
@@ -94,7 +105,7 @@ const purplePoloProfilePortrait = {
   alt: "Dr. Derek Austin in a thoughtful three-quarter portrait",
   layoutClassName: "",
   objectPosition: "50% 60%",
-  sizes: "(max-width: 767px) 22vw, 244px",
+  sizes: PORTRAIT_IMAGE_SIZES.contactHalf,
   sourceFilename: "Pixtore-03373.jpg",
   src: purplePoloProfileImage,
 } satisfies ContactCollagePortrait

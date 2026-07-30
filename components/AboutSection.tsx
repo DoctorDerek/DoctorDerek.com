@@ -3,11 +3,12 @@ import { useState } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
 import SectionHeading from "@/components/ui/SectionHeading"
-import { ABOUT_PORTRAITS } from "@/constants/PORTRAITS"
+import {
+  ABOUT_PORTRAITS,
+  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
+  PORTRAIT_IMAGE_SIZES,
+} from "@/constants/PORTRAITS"
 import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
-
-const ABOUT_PORTRAIT_SIZES =
-  "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw"
 
 export default function AboutSection() {
   const { shouldReduceMotion } = useMotionPreference()
@@ -32,7 +33,7 @@ export default function AboutSection() {
         <div className="relative pb-10 md:h-[60vh]">
           <div className="ease-spring-bouncy w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:w-1/2 lg:w-[45%] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <FlipPreview
-              accessibleName="Show next portrait of Dr. Derek Austin"
+              accessibleName={PORTRAIT_CONTROL_ACCESSIBLE_NAMES.about}
               containerClassName="animate-float block w-full text-left"
               containerStyle={{ animationDelay: "0s" }}
               className="w-full"
@@ -61,7 +62,7 @@ export default function AboutSection() {
                     src={frontPortrait.src}
                     alt={frontPortrait.alt}
                     fill
-                    sizes={ABOUT_PORTRAIT_SIZES}
+                    sizes={PORTRAIT_IMAGE_SIZES.about}
                     className="object-cover"
                     style={{ objectPosition: frontPortrait.objectPosition }}
                   />
@@ -79,7 +80,7 @@ export default function AboutSection() {
                     src={backPortrait.src}
                     alt={backPortrait.alt}
                     fill
-                    sizes={ABOUT_PORTRAIT_SIZES}
+                    sizes={PORTRAIT_IMAGE_SIZES.about}
                     className="object-cover"
                     style={{ objectPosition: backPortrait.objectPosition }}
                   />

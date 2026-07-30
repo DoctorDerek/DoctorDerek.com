@@ -1,5 +1,10 @@
 import { expect, test, type Page } from "@playwright/test"
 
+const VERCEL_TOOLBAR_STORAGE_ERROR =
+  "TypeError: undefined is not an object (evaluating 'navigator.storage.persisted')"
+const VERCEL_TOOLBAR_SOURCE =
+  "https://vercel.live/_next-live/feedback/feedback.html"
+
 async function openSectionWithTouch(page: Page, name: string, anchor: string) {
   await page.getByRole("button", { name: "Open navigation" }).tap()
   const navigation = page.getByRole("navigation")
@@ -9,9 +14,16 @@ async function openSectionWithTouch(page: Page, name: string, anchor: string) {
   await expect(page).toHaveURL(new RegExp(`#${anchor}$`))
 }
 
+const isVercelToolbarWebKitStorageError = (error: Error) =>
+  error.message === VERCEL_TOOLBAR_STORAGE_ERROR &&
+  error.stack?.includes(VERCEL_TOOLBAR_SOURCE) === true
+
 function trackPageErrors(page: Page) {
   const pageErrors: string[] = []
-  page.on("pageerror", (error) => pageErrors.push(error.message))
+  page.on("pageerror", (error) => {
+    if (!isVercelToolbarWebKitStorageError(error))
+      pageErrors.push(error.message)
+  })
   return pageErrors
 }
 

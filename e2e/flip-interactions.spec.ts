@@ -162,9 +162,11 @@ test.describe("touch portrait controls", () => {
           .evaluate((card) => (card as HTMLElement).style.transform),
       )
       .toBe("rotateY(180deg)")
-    await expect(
-      contactPortraitControl.getByAltText("Derek Austin Sprite"),
-    ).toBeVisible()
+    const contactPortraitMosaic = contactPortraitControl.locator(
+      ".contact-portrait-mosaic",
+    )
+    await expect(contactPortraitMosaic).toBeVisible()
+    await expect(contactPortraitMosaic.locator("img")).toHaveCount(3)
     expect(pageErrors).toEqual([])
   })
 })

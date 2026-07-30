@@ -4,11 +4,14 @@ import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
+import {
+  CONTACT_COLLAGE_PORTRAITS,
+  CONTACT_PORTRAIT,
+  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
+  PORTRAIT_IMAGE_SIZES,
+} from "@/constants/PORTRAITS"
 import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
-import contactPortrait from "@/images/derek-austin-contact-portrait.webp"
-import DerekSpriteImg from "@/images/DerekSpriteImg.png"
-
-const CONTACT_PORTRAIT_SIZES = "(max-width: 767px) 43vw, 488px"
+import classNames from "@/utils/classNames"
 
 export default function ContactSection() {
   const { shouldReduceMotion } = useMotionPreference()
@@ -28,7 +31,7 @@ export default function ContactSection() {
 
           <div className="ease-spring-bouncy mx-auto w-1/2 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:mx-0 md:h-1/2 md:w-full [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <FlipPreview
-              accessibleName="Flip portrait of Dr. Derek Austin"
+              accessibleName={PORTRAIT_CONTROL_ACCESSIBLE_NAMES.contact}
               containerClassName="animate-float h-full w-full"
               containerStyle={{ animationDelay: "1s" }}
               className="w-full"
@@ -55,10 +58,13 @@ export default function ContactSection() {
                   }}
                 >
                   <Image
-                    src={contactPortrait}
-                    alt="Derek Austin"
-                    sizes={CONTACT_PORTRAIT_SIZES}
-                    className="h-full w-full object-cover object-top"
+                    src={CONTACT_PORTRAIT.src}
+                    alt={CONTACT_PORTRAIT.alt}
+                    sizes={PORTRAIT_IMAGE_SIZES.contactFull}
+                    className="h-full w-full object-cover"
+                    style={{
+                      objectPosition: CONTACT_PORTRAIT.objectPosition,
+                    }}
                   />
                 </div>
                 <div
@@ -69,12 +75,31 @@ export default function ContactSection() {
                     transform: "rotateY(180deg)",
                   }}
                 >
-                  <Image
-                    src={DerekSpriteImg}
-                    alt="Derek Austin Sprite"
-                    sizes={CONTACT_PORTRAIT_SIZES}
-                    className="h-full w-full object-cover object-top"
-                  />
+                  <div
+                    aria-hidden="true"
+                    className="contact-portrait-mosaic bg-site-surface-deep grid h-full w-full grid-cols-2 grid-rows-[3fr_2fr] gap-0.5 overflow-hidden"
+                  >
+                    {CONTACT_COLLAGE_PORTRAITS.map((portrait) => (
+                      <div
+                        key={portrait.sourceFilename}
+                        className={classNames(
+                          "relative min-h-0 min-w-0 overflow-hidden",
+                          portrait.layoutClassName,
+                        )}
+                      >
+                        <Image
+                          src={portrait.src}
+                          alt=""
+                          fill
+                          sizes={portrait.sizes}
+                          className="object-cover"
+                          style={{
+                            objectPosition: portrait.objectPosition,
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </FlipPreview>

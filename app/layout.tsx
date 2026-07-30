@@ -3,9 +3,31 @@ import "@/styles/theme-toggle.css"
 import type { Metadata, Viewport } from "next"
 import SiteThemeProvider from "@/components/SiteThemeProvider"
 
+const siteTitle =
+  "Dr. Derek Austin | AI-Native Senior Full-Stack TypeScript Engineer · Next.js + React Native + Expo"
+const siteDescription =
+  "AI-native senior full-stack TypeScript and UI/UX engineer Dr. Derek Austin’s portfolio, featuring six live Next.js projects, public source code, CI/CD, and 100% Codecov coverage."
+
 export const metadata: Metadata = {
-  title:
-    "Dr. Derek Austin | AI-Native Senior Full-Stack TypeScript Engineer · Next.js + React Native + Expo",
+  metadataBase: new URL("https://www.doctorderek.com/"),
+  title: siteTitle,
+  description: siteDescription,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "DoctorDerek.com",
+    title: siteTitle,
+    description: siteDescription,
+  },
+  twitter: {
+    card: "summary",
+    title: siteTitle,
+    description: siteDescription,
+  },
   manifest: "/site.webmanifest",
   icons: {
     icon: [

@@ -252,7 +252,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       "React Native",
       "Turborepo",
     ],
-    liveUrl: "https://what-are-your-values-mapache.doctorderek.com/",
+    liveUrl: "https://www.whatareyourvaluesmapache.com/",
     sourceUrl: "https://github.com/DoctorDerek/what-are-your-values-mapache",
   },
   {
@@ -291,7 +291,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       "A statically generated field guide for all 1,025 Pokémon in the current Pokédex data.",
     details:
       "Next.js prebuilds 1,025 Pokémon detail routes from generated GraphQL data, with ten-entry catalog pages and touch-first detail panels for classification, size, combat, weaknesses, and resistances.",
-    tech: ["Next.js", "TypeScript", "GraphQL", "React Query"],
+    tech: ["Next.js", "TypeScript", "GraphQL", "TanStack Query"],
     liveUrl: "https://portfolio-pokedex.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",
   },

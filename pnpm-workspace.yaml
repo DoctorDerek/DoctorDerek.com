@@ -5,3 +5,13 @@ allowBuilds:
   core-js: true
   sharp: true
   unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - brace-expansion@1.1.18
+
+overrides:
+  "@svgr/plugin-svgo>svgo": "3.3.4"
+  "ajv>fast-uri": "3.1.4"
+  "brace-expansion@<1.1.18": "1.1.18"
+  "next>postcss": "8.5.25"
+  "next>sharp": "0.35.3"

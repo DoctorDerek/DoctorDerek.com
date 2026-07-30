@@ -26,6 +26,9 @@ vi.mock("next/image", () => ({
   }) => createElement("img", imageProps),
 }))
 
+const getPortraitCard = (portraitControl: HTMLElement) =>
+  portraitControl.querySelector(".flip-preview-visual > div") as HTMLElement
+
 describe("AboutSection", () => {
   beforeEach(() => {
     reducedMotionPreference.value = false
@@ -37,7 +40,7 @@ describe("AboutSection", () => {
     const portraitControl = screen.getByRole("button", {
       name: "Show next portrait of Dr. Derek Austin",
     })
-    const portraitCard = portraitControl.firstElementChild as HTMLElement
+    const portraitCard = getPortraitCard(portraitControl)
 
     expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
 
@@ -73,7 +76,7 @@ describe("AboutSection", () => {
     const portraitControl = screen.getByRole("button", {
       name: "Show next portrait of Dr. Derek Austin",
     })
-    const portraitCard = portraitControl.firstElementChild as HTMLElement
+    const portraitCard = getPortraitCard(portraitControl)
 
     fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
 
@@ -88,7 +91,7 @@ describe("AboutSection", () => {
     const portraitControl = screen.getByRole("button", {
       name: "Show next portrait of Dr. Derek Austin",
     })
-    const portraitCard = portraitControl.firstElementChild as HTMLElement
+    const portraitCard = getPortraitCard(portraitControl)
 
     expect(portraitCard).toHaveStyle({ transition: "none" })
 

@@ -1,5 +1,6 @@
+import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
-import { metadata } from "@/app/layout"
+import RootLayout, { metadata } from "@/app/layout"
 
 describe("root metadata", () => {
   it("publishes the canonical production identity", () => {
@@ -23,5 +24,16 @@ describe("root metadata", () => {
       title: metadata.title,
       description: metadata.description,
     })
+  })
+
+  it("renders the English document and theme-provider boundary", () => {
+    render(
+      <RootLayout>
+        <main>Portfolio content</main>
+      </RootLayout>,
+    )
+
+    expect(document.documentElement).toHaveAttribute("lang", "en")
+    expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
   })
 })

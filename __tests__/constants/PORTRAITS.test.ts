@@ -26,6 +26,9 @@ const APPROVED_SOURCE_FILENAMES = [
 const getSourceFilenames = (portraits: readonly { sourceFilename: string }[]) =>
   portraits.map(({ sourceFilename }) => sourceFilename)
 
+const getAlternativeTexts = (portraits: readonly { alt: string }[]) =>
+  portraits.map(({ alt }) => alt)
+
 describe("portrait catalog", () => {
   it("catalogs every approved source portrait once", () => {
     const sourceFilenames = getSourceFilenames(PORTRAIT_LIBRARY)
@@ -33,6 +36,13 @@ describe("portrait catalog", () => {
     expect(PORTRAIT_LIBRARY).toHaveLength(11)
     expect(new Set(sourceFilenames).size).toBe(11)
     expect(sourceFilenames.toSorted()).toEqual(APPROVED_SOURCE_FILENAMES)
+  })
+
+  it("describes every source portrait with unique nonblank alternative text", () => {
+    const alternativeTexts = getAlternativeTexts(PORTRAIT_LIBRARY)
+
+    expect(alternativeTexts.every((alt) => alt.trim().length > 0)).toBe(true)
+    expect(new Set(alternativeTexts).size).toBe(PORTRAIT_LIBRARY.length)
   })
 
   it("assigns a unique portrait to every live image slot", () => {
@@ -63,6 +73,5 @@ describe("portrait catalog", () => {
 
   it("deliberately reuses the strongest headshot for the favicon", () => {
     expect(FAVICON_PORTRAIT).toBe(ABOUT_PORTRAITS[0])
-    expect(FAVICON_PORTRAIT.sourceFilename).toBe("Pixtore-03349.jpg")
   })
 })

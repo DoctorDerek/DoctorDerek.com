@@ -2,6 +2,12 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import ContactSection from "@/components/ContactSection"
+import {
+  CONTACT_COLLAGE_PORTRAITS,
+  CONTACT_PORTRAIT,
+  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
+  PORTRAIT_IMAGE_SIZES,
+} from "@/constants/PORTRAITS"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
@@ -25,6 +31,11 @@ vi.mock("next/image", () => ({
     quality?: number
   }) => createElement("img", imageProps),
 }))
+
+const getPortraitControl = () =>
+  screen.getByRole("button", {
+    name: PORTRAIT_CONTROL_ACCESSIBLE_NAMES.contact,
+  })
 
 describe("ContactSection", () => {
   beforeEach(() => {
@@ -56,9 +67,7 @@ describe("ContactSection", () => {
   it("flips the portrait through its public button control", () => {
     render(<ContactSection />)
 
-    const portraitControl = screen.getByRole("button", {
-      name: "Flip portrait of Dr. Derek Austin",
-    })
+    const portraitControl = getPortraitControl()
     const portraitCard = portraitControl.querySelector(".wrapper")
 
     expect(portraitControl).toHaveAttribute("aria-pressed", "false")
@@ -73,9 +82,7 @@ describe("ContactSection", () => {
   it("keeps the reverse portrait face available at every breakpoint", () => {
     render(<ContactSection />)
 
-    const portraitControl = screen.getByRole("button", {
-      name: "Flip portrait of Dr. Derek Austin",
-    })
+    const portraitControl = getPortraitControl()
     const reversePortraitFace = portraitControl.querySelector(".back")
     const portraitMosaic = portraitControl.querySelector(
       ".contact-portrait-mosaic",
@@ -89,23 +96,23 @@ describe("ContactSection", () => {
       "grid-rows-[3fr_2fr]",
     )
     expect(portraitMosaic).toHaveAttribute("aria-hidden", "true")
-    expect(portraitMosaic?.querySelectorAll("img")).toHaveLength(3)
+    const decorativePortraits = portraitMosaic?.querySelectorAll("img") ?? []
+    expect(decorativePortraits).toHaveLength(CONTACT_COLLAGE_PORTRAITS.length)
+    for (const decorativePortrait of decorativePortraits) {
+      expect(decorativePortrait).toHaveAttribute("alt", "")
+    }
   })
 
   it("describes the bounded responsive width of both portrait faces", () => {
     render(<ContactSection />)
 
-    const portraitControl = screen.getByRole("button", {
-      name: "Flip portrait of Dr. Derek Austin",
-    })
+    const portraitControl = getPortraitControl()
     const portraitCard = portraitControl.querySelector(".wrapper")
 
     expect(portraitCard).toHaveClass("aspect-square", "w-full", "max-w-[488px]")
     expect(
-      screen.getByAltText(
-        "Dr. Derek Austin smiling by the ocean in a purple polo",
-      ),
-    ).toHaveAttribute("sizes", "(max-width: 767px) 43vw, 488px")
+      screen.getByRole("img", { name: CONTACT_PORTRAIT.alt }),
+    ).toHaveAttribute("sizes", PORTRAIT_IMAGE_SIZES.contactFull)
 
     const portraitMosaic = portraitControl.querySelector(
       ".contact-portrait-mosaic",
@@ -114,20 +121,14 @@ describe("ContactSection", () => {
       Array.from(portraitMosaic?.querySelectorAll("img") ?? [], (image) =>
         image.getAttribute("sizes"),
       ),
-    ).toEqual([
-      "(max-width: 767px) 43vw, 488px",
-      "(max-width: 767px) 22vw, 244px",
-      "(max-width: 767px) 22vw, 244px",
-    ])
+    ).toEqual(CONTACT_COLLAGE_PORTRAITS.map(({ sizes }) => sizes))
   })
 
   it("flips the portrait without a spatial transition when motion is reduced", () => {
     reducedMotionPreference.value = true
     render(<ContactSection />)
 
-    const portraitControl = screen.getByRole("button", {
-      name: "Flip portrait of Dr. Derek Austin",
-    })
+    const portraitControl = getPortraitControl()
     const portraitCard = portraitControl.querySelector(".wrapper")
 
     expect(portraitCard).toHaveStyle({ transition: "none" })

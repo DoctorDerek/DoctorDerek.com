@@ -2,6 +2,11 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import AboutSection from "@/components/AboutSection"
+import {
+  ABOUT_PORTRAITS,
+  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
+  PORTRAIT_IMAGE_SIZES,
+} from "@/constants/PORTRAITS"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
@@ -29,6 +34,19 @@ vi.mock("next/image", () => ({
 const getPortraitCard = (portraitControl: HTMLElement) =>
   portraitControl.querySelector(".flip-preview-visual > div") as HTMLElement
 
+const getPortraitControl = () =>
+  screen.getByRole("button", {
+    name: PORTRAIT_CONTROL_ACCESSIBLE_NAMES.about,
+  })
+
+const expectRenderedPortraits = (
+  expectedPortraits: readonly { alt: string }[],
+) => {
+  expect(
+    screen.getAllByRole("img").map((image) => image.getAttribute("alt")),
+  ).toEqual(expectedPortraits.map(({ alt }) => alt))
+}
+
 describe("AboutSection", () => {
   beforeEach(() => {
     reducedMotionPreference.value = false
@@ -37,58 +55,36 @@ describe("AboutSection", () => {
   it("advances the portrait sequence only through explicit activation", () => {
     render(<AboutSection />)
 
-    const portraitControl = screen.getByRole("button", {
-      name: "Show next portrait of Dr. Derek Austin",
-    })
+    const portraitControl = getPortraitControl()
     const portraitCard = getPortraitCard(portraitControl)
 
     expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
-    expect(
-      screen.getByAltText("Dr. Derek Austin smiling in a purple polo"),
-    ).toBeInTheDocument()
+    expectRenderedPortraits([ABOUT_PORTRAITS[0], ABOUT_PORTRAITS[1]])
 
     fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
-    expect(
-      screen.getByAltText(
-        "Dr. Derek Austin posing thoughtfully in a purple polo",
-      ),
-    ).toBeInTheDocument()
+    expectRenderedPortraits([ABOUT_PORTRAITS[2], ABOUT_PORTRAITS[1]])
 
     fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
 
     fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
-    expect(
-      screen.getByAltText(
-        "Dr. Derek Austin standing by the ocean in a purple polo",
-      ),
-    ).toBeInTheDocument()
+    expectRenderedPortraits([ABOUT_PORTRAITS[2], ABOUT_PORTRAITS[3]])
   })
 
   it("describes the measured responsive width of both portrait faces", () => {
     render(<AboutSection />)
 
-    const responsiveSizes =
-      "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw"
-
-    expect(
-      screen.getByAltText("Dr. Derek Austin smiling in a purple polo"),
-    ).toHaveAttribute("sizes", responsiveSizes)
-    expect(
-      screen.getByAltText(
-        "Dr. Derek Austin posing thoughtfully in a purple polo",
-      ),
-    ).toHaveAttribute("sizes", responsiveSizes)
+    for (const portraitImage of screen.getAllByRole("img")) {
+      expect(portraitImage).toHaveAttribute("sizes", PORTRAIT_IMAGE_SIZES.about)
+    }
   })
 
   it("does not start an automatic portrait loop on pointer entry", () => {
     const intervalSpy = vi.spyOn(window, "setInterval")
     render(<AboutSection />)
-    const portraitControl = screen.getByRole("button", {
-      name: "Show next portrait of Dr. Derek Austin",
-    })
+    const portraitControl = getPortraitControl()
     const portraitCard = getPortraitCard(portraitControl)
 
     fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
@@ -101,9 +97,7 @@ describe("AboutSection", () => {
   it("keeps portrait changes user-driven and instantaneous when motion is reduced", () => {
     reducedMotionPreference.value = true
     render(<AboutSection />)
-    const portraitControl = screen.getByRole("button", {
-      name: "Show next portrait of Dr. Derek Austin",
-    })
+    const portraitControl = getPortraitControl()
     const portraitCard = getPortraitCard(portraitControl)
 
     expect(portraitCard).toHaveStyle({ transition: "none" })

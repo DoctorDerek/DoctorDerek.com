@@ -3,10 +3,8 @@ import { useState } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
 import SectionHeading from "@/components/ui/SectionHeading"
+import { ABOUT_PORTRAITS } from "@/constants/PORTRAITS"
 import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
-import professionalPortrait from "@/images/derek-austin-professional-portrait.webp"
-import standingPortrait from "@/images/derek-austin-standing-portrait.webp"
-import thoughtfulPortrait from "@/images/derek-austin-thoughtful-portrait.webp"
 
 const ABOUT_PORTRAIT_SIZES =
   "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw"
@@ -15,13 +13,15 @@ export default function AboutSection() {
   const { shouldReduceMotion } = useMotionPreference()
   const [flipCount, setFlipCount] = useState(0)
 
-  const photos = [professionalPortrait, thoughtfulPortrait, standingPortrait]
+  const currentPortrait =
+    ABOUT_PORTRAITS[flipCount % ABOUT_PORTRAITS.length]
+  const nextPortrait =
+    ABOUT_PORTRAITS[(flipCount + 1) % ABOUT_PORTRAITS.length]
 
-  const currentPhoto = photos[flipCount % 3]
-  const nextPhoto = photos[(flipCount + 1) % 3]
-
-  const frontSrc = flipCount % 2 === 0 ? currentPhoto : nextPhoto
-  const backSrc = flipCount % 2 === 1 ? currentPhoto : nextPhoto
+  const frontPortrait =
+    flipCount % 2 === 0 ? currentPortrait : nextPortrait
+  const backPortrait =
+    flipCount % 2 === 1 ? currentPortrait : nextPortrait
 
   return (
     <div className="h-full w-full pt-2 pb-10 md:pt-3 md:pb-16">
@@ -62,11 +62,12 @@ export default function AboutSection() {
                   }}
                 >
                   <Image
-                    src={frontSrc}
-                    alt="Dr Derek Austin"
+                    src={frontPortrait.src}
+                    alt={frontPortrait.alt}
                     fill
                     sizes={ABOUT_PORTRAIT_SIZES}
-                    className="object-cover object-top"
+                    className="object-cover"
+                    style={{ objectPosition: frontPortrait.objectPosition }}
                   />
                 </div>
 
@@ -79,11 +80,12 @@ export default function AboutSection() {
                   }}
                 >
                   <Image
-                    src={backSrc}
-                    alt="Dr Derek Austin Alternative"
+                    src={backPortrait.src}
+                    alt={backPortrait.alt}
                     fill
                     sizes={ABOUT_PORTRAIT_SIZES}
-                    className="object-cover object-top"
+                    className="object-cover"
+                    style={{ objectPosition: backPortrait.objectPosition }}
                   />
                 </div>
               </div>

@@ -43,15 +43,28 @@ describe("AboutSection", () => {
     const portraitCard = getPortraitCard(portraitControl)
 
     expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(
+      screen.getByAltText("Dr. Derek Austin smiling in a purple polo"),
+    ).toBeInTheDocument()
 
     fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
+    expect(
+      screen.getByAltText(
+        "Dr. Derek Austin posing thoughtfully in a purple polo",
+      ),
+    ).toBeInTheDocument()
 
     fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
 
     fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
+    expect(
+      screen.getByAltText(
+        "Dr. Derek Austin standing by the ocean in a purple polo",
+      ),
+    ).toBeInTheDocument()
   })
 
   it("describes the measured responsive width of both portrait faces", () => {
@@ -60,14 +73,14 @@ describe("AboutSection", () => {
     const responsiveSizes =
       "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw"
 
-    expect(screen.getByAltText("Dr Derek Austin")).toHaveAttribute(
-      "sizes",
-      responsiveSizes,
-    )
-    expect(screen.getByAltText("Dr Derek Austin Alternative")).toHaveAttribute(
-      "sizes",
-      responsiveSizes,
-    )
+    expect(
+      screen.getByAltText("Dr. Derek Austin smiling in a purple polo"),
+    ).toHaveAttribute("sizes", responsiveSizes)
+    expect(
+      screen.getByAltText(
+        "Dr. Derek Austin posing thoughtfully in a purple polo",
+      ),
+    ).toHaveAttribute("sizes", responsiveSizes)
   })
 
   it("does not start an automatic portrait loop on pointer entry", () => {

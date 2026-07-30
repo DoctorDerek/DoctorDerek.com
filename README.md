@@ -6,7 +6,7 @@ The public website and engineering portfolio of [Dr. Derek Austin](https://www.d
 
 ## Tech Stack
 
-This repository contains the frontend source code for my website.
+This repository contains the full-stack Next.js source code for my public portfolio hub.
 
 - **Framework:** Next.js 16, React 19
 - **Language:** TypeScript 6 (Strict Mode)
@@ -39,4 +39,18 @@ fnm use
 corepack enable pnpm
 pnpm install
 pnpm dev
+```
+
+## Verification
+
+Run the complete local quality gate before submitting changes:
+
+```powershell
+pnpm format
+pnpm lint
+pnpm exec tsc --noEmit
+pnpm exec vitest run --coverage
+pnpm build
+pnpm test:e2e
+pnpm audit --prod
 ```

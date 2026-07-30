@@ -4,9 +4,12 @@ import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
+import {
+  CONTACT_COLLAGE_PORTRAITS,
+  CONTACT_PORTRAIT,
+} from "@/constants/PORTRAITS"
 import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
-import contactPortrait from "@/images/derek-austin-contact-portrait.webp"
-import DerekSpriteImg from "@/images/DerekSpriteImg.png"
+import classNames from "@/utils/classNames"
 
 const CONTACT_PORTRAIT_SIZES = "(max-width: 767px) 43vw, 488px"
 
@@ -55,10 +58,13 @@ export default function ContactSection() {
                   }}
                 >
                   <Image
-                    src={contactPortrait}
-                    alt="Derek Austin"
+                    src={CONTACT_PORTRAIT.src}
+                    alt={CONTACT_PORTRAIT.alt}
                     sizes={CONTACT_PORTRAIT_SIZES}
-                    className="h-full w-full object-cover object-top"
+                    className="h-full w-full object-cover"
+                    style={{
+                      objectPosition: CONTACT_PORTRAIT.objectPosition,
+                    }}
                   />
                 </div>
                 <div
@@ -69,12 +75,31 @@ export default function ContactSection() {
                     transform: "rotateY(180deg)",
                   }}
                 >
-                  <Image
-                    src={DerekSpriteImg}
-                    alt="Derek Austin Sprite"
-                    sizes={CONTACT_PORTRAIT_SIZES}
-                    className="h-full w-full object-cover object-top"
-                  />
+                  <div
+                    aria-hidden="true"
+                    className="contact-portrait-mosaic bg-site-surface-deep grid h-full w-full grid-cols-2 grid-rows-[3fr_2fr] gap-0.5 overflow-hidden"
+                  >
+                    {CONTACT_COLLAGE_PORTRAITS.map((portrait) => (
+                      <div
+                        key={portrait.sourceFilename}
+                        className={classNames(
+                          "relative min-h-0 min-w-0 overflow-hidden",
+                          portrait.layoutClassName,
+                        )}
+                      >
+                        <Image
+                          src={portrait.src}
+                          alt=""
+                          fill
+                          sizes={portrait.sizes}
+                          className="object-cover"
+                          style={{
+                            objectPosition: portrait.objectPosition,
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </FlipPreview>

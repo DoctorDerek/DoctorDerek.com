@@ -15,10 +15,12 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
 
 vi.mock("next/image", () => ({
   default: ({
+    fill: _fill,
     priority: _priority,
     quality: _quality,
     ...imageProps
   }: ComponentProps<"img"> & {
+    fill?: boolean
     priority?: boolean
     quality?: number
   }) => createElement("img", imageProps),
@@ -71,12 +73,23 @@ describe("ContactSection", () => {
   it("keeps the reverse portrait face available at every breakpoint", () => {
     render(<ContactSection />)
 
-    const reversePortraitFace = screen.getByAltText(
-      "Derek Austin Sprite",
-    ).parentElement
+    const portraitControl = screen.getByRole("button", {
+      name: "Flip portrait of Dr. Derek Austin",
+    })
+    const reversePortraitFace = portraitControl.querySelector(".back")
+    const portraitMosaic = portraitControl.querySelector(
+      ".contact-portrait-mosaic",
+    )
 
     expect(reversePortraitFace).not.toHaveClass("hidden")
     expect(reversePortraitFace).toHaveClass("absolute", "inset-0")
+    expect(portraitMosaic).toHaveClass(
+      "grid",
+      "grid-cols-2",
+      "grid-rows-[3fr_2fr]",
+    )
+    expect(portraitMosaic).toHaveAttribute("aria-hidden", "true")
+    expect(portraitMosaic?.querySelectorAll("img")).toHaveLength(3)
   })
 
   it("describes the bounded responsive width of both portrait faces", () => {
@@ -88,14 +101,24 @@ describe("ContactSection", () => {
     const portraitCard = portraitControl.querySelector(".wrapper")
 
     expect(portraitCard).toHaveClass("aspect-square", "w-full", "max-w-[488px]")
-    expect(screen.getByAltText("Derek Austin")).toHaveAttribute(
-      "sizes",
-      "(max-width: 767px) 43vw, 488px",
+    expect(
+      screen.getByAltText(
+        "Dr. Derek Austin smiling by the ocean in a purple polo",
+      ),
+    ).toHaveAttribute("sizes", "(max-width: 767px) 43vw, 488px")
+
+    const portraitMosaic = portraitControl.querySelector(
+      ".contact-portrait-mosaic",
     )
-    expect(screen.getByAltText("Derek Austin Sprite")).toHaveAttribute(
-      "sizes",
+    expect(
+      Array.from(portraitMosaic?.querySelectorAll("img") ?? [], (image) =>
+        image.getAttribute("sizes"),
+      ),
+    ).toEqual([
       "(max-width: 767px) 43vw, 488px",
-    )
+      "(max-width: 767px) 22vw, 244px",
+      "(max-width: 767px) 22vw, 244px",
+    ])
   })
 
   it("flips the portrait without a spatial transition when motion is reduced", () => {

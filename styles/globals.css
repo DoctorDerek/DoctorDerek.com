@@ -219,24 +219,26 @@ body {
   }
 }
 
-a,
-p,
-h1,
-h2,
-h3,
-h4,
-button {
-  font-family: var(--font-restora);
-}
-
 .restoramedium {
-  font-family: var(--font-restora);
   font-weight: 500;
 }
 
 .restorabold {
-  font-family: var(--font-restora);
   font-weight: 800;
+}
+
+@media (min-width: 48rem) {
+  a,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  button,
+  .restoramedium,
+  .restorabold {
+    font-family: var(--font-restora);
+  }
 }
 
 /* =========================== 

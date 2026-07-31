@@ -18,7 +18,7 @@ const restora = localFont({
     },
   ],
   display: "optional",
-  preload: true,
+  preload: false,
   fallback: ["Georgia", "Times New Roman", "serif"],
   adjustFontFallback: "Times New Roman",
   variable: "--font-restora",

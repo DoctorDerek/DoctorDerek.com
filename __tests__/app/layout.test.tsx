@@ -46,11 +46,11 @@ describe("root metadata", () => {
     expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
   })
 
-  it("prevents late licensed-font swaps from delaying primary content", () => {
+  it("keeps licensed fonts out of the mobile preload path", () => {
     expect(localFontMock).toHaveBeenCalledWith(
       expect.objectContaining({
         display: "optional",
-        preload: true,
+        preload: false,
         variable: "--font-restora",
       }),
     )

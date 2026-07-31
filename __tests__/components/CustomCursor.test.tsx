@@ -55,13 +55,11 @@ describe("CustomCursor", () => {
       addEventListener: (
         _event: string,
         listener: EventListenerOrEventListenerObject,
-      ) =>
-        cursorMediaQuery.listeners.add(listener as () => void),
+      ) => cursorMediaQuery.listeners.add(listener as () => void),
       removeEventListener: (
         _event: string,
         listener: EventListenerOrEventListenerObject,
-      ) =>
-        cursorMediaQuery.listeners.delete(listener as () => void),
+      ) => cursorMediaQuery.listeners.delete(listener as () => void),
       dispatchEvent: vi.fn(),
     }))
   })

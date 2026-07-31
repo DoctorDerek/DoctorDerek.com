@@ -75,6 +75,7 @@ describe("Portfolio", () => {
   })
 
   it("opens and closes each project dialog with verified live and source links", async () => {
+    await import("@/components/PortfolioProjectDialog")
     render(<Portfolio />)
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument()

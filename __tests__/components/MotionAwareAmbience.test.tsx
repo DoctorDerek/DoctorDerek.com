@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 
@@ -44,7 +44,7 @@ describe("MotionAwareAmbience", () => {
     reducedMotionPreference.value = false
   })
 
-  it("renders the complete ambient experience when motion is allowed", () => {
+  it("loads the complete ambient experience after user intent", () => {
     render(<MotionAwareAmbience />)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
@@ -52,13 +52,18 @@ describe("MotionAwareAmbience", () => {
       "true",
     )
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
+    expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
+
+    fireEvent.pointerMove(window)
+
     expect(screen.getByText("Rive animation")).toBeInTheDocument()
   })
 
-  it("defers continuous visual ambience while preserving the background and cursor", () => {
+  it("waits for critical readiness after capturing early user intent", () => {
     deferredClientFeature.isReady = false
 
-    render(<MotionAwareAmbience />)
+    const { rerender } = render(<MotionAwareAmbience />)
+    fireEvent.pointerDown(window)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-particles-ready",
@@ -66,11 +71,17 @@ describe("MotionAwareAmbience", () => {
     )
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
     expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
+
+    deferredClientFeature.isReady = true
+    rerender(<MotionAwareAmbience />)
+
+    expect(screen.getByText("Rive animation")).toBeInTheDocument()
   })
 
   it("omits continuous visual ambience when motion is reduced", () => {
     reducedMotionPreference.value = true
     render(<MotionAwareAmbience />)
+    fireEvent.keyDown(window, { key: "Tab" })
 
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-particles-ready",

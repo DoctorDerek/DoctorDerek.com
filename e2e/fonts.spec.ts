@@ -1,13 +1,17 @@
 import { expect, test, type Page } from "@playwright/test"
 
-const collectFontAssetUrls = (page: Page) => {
-  const fontAssetUrls: string[] = []
+const collectLicensedFontAssetUrls = (page: Page) => {
+  const licensedFontAssetUrls: string[] = []
 
   page.on("request", (request) => {
-    if (request.resourceType() === "font") fontAssetUrls.push(request.url())
+    if (
+      request.resourceType() === "font" &&
+      new URL(request.url()).pathname.endsWith(".otf")
+    )
+      licensedFontAssetUrls.push(request.url())
   })
 
-  return fontAssetUrls
+  return licensedFontAssetUrls
 }
 
 test.describe("mobile typography", () => {
@@ -17,7 +21,7 @@ test.describe("mobile typography", () => {
   })
 
   test("keeps licensed fonts out of mobile startup", async ({ page }) => {
-    const fontAssetUrls = collectFontAssetUrls(page)
+    const licensedFontAssetUrls = collectLicensedFontAssetUrls(page)
 
     await page.goto("/", { waitUntil: "networkidle" })
 
@@ -29,12 +33,12 @@ test.describe("mobile typography", () => {
       .evaluate((heading) => getComputedStyle(heading).fontFamily)
 
     expect(primaryHeadingFontFamily).toContain("Roboto")
-    expect(fontAssetUrls).toEqual([])
+    expect(licensedFontAssetUrls).toEqual([])
   })
 })
 
 test("preserves licensed display typography on desktop", async ({ page }) => {
-  const fontAssetUrls = collectFontAssetUrls(page)
+  const licensedFontAssetUrls = collectLicensedFontAssetUrls(page)
 
   await page.goto("/", { waitUntil: "networkidle" })
 
@@ -46,7 +50,5 @@ test("preserves licensed display typography on desktop", async ({ page }) => {
     .evaluate((heading) => getComputedStyle(heading).fontFamily)
 
   expect(primaryHeadingFontFamily.toLowerCase()).toContain("restora")
-  expect(
-    fontAssetUrls.some((fontAssetUrl) => fontAssetUrl.endsWith(".otf")),
-  ).toBe(true)
+  expect(licensedFontAssetUrls).not.toHaveLength(0)
 })

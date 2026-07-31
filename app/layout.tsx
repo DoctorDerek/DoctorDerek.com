@@ -1,7 +1,28 @@
 import "@/styles/globals.css"
 import "@/styles/theme-toggle.css"
 import type { Metadata, Viewport } from "next"
+import localFont from "next/font/local"
 import SiteThemeProvider from "@/components/SiteThemeProvider"
+
+const restora = localFont({
+  src: [
+    {
+      path: "../vendor/fonts/restora-1.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../vendor/fonts/restoraextrabold-1.otf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  display: "optional",
+  preload: false,
+  fallback: ["Georgia", "Times New Roman", "serif"],
+  adjustFontFallback: "Times New Roman",
+  variable: "--font-restora",
+})
 
 const siteTitle =
   "Dr. Derek Austin | AI-Native Senior Full-Stack TypeScript Engineer · Next.js + React Native + Expo"
@@ -57,7 +78,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={restora.variable}>
         <SiteThemeProvider>{children}</SiteThemeProvider>
       </body>
     </html>

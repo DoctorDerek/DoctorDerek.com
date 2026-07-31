@@ -1,4 +1,4 @@
-import { act, fireEvent, renderHook } from "@testing-library/react"
+import { act, fireEvent, renderHook, waitFor } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { CONTACT_COMPLETION } from "@/constants/SITE_CONTENT"
 import useEndOfSiteCelebration from "@/hooks/useEndOfSiteCelebration"
@@ -65,7 +65,7 @@ describe("useEndOfSiteCelebration", () => {
 
   afterEach(() => document.body.replaceChildren())
 
-  it("celebrates only deliberate downward intent at the active Contact boundary", () => {
+  it("celebrates only deliberate downward intent at the active Contact boundary", async () => {
     const { activeSection, fullPageApiReference, scrollContainer } =
       createContactBoundary()
     const { result } = renderHook(() =>
@@ -96,7 +96,7 @@ describe("useEndOfSiteCelebration", () => {
     fullPageConsumedWheelEvent.preventDefault()
     fireEvent(scrollContainer, fullPageConsumedWheelEvent)
 
-    expect(toast).toHaveBeenCalledOnce()
+    await waitFor(() => expect(toast).toHaveBeenCalledOnce())
     expect(toast).toHaveBeenCalledWith(CONTACT_COMPLETION.toastMessage, {
       ariaProps: { "aria-live": "polite", role: "status" },
       id: "end-of-doctorderek",
@@ -107,7 +107,7 @@ describe("useEndOfSiteCelebration", () => {
     expect(toast).toHaveBeenCalledOnce()
   })
 
-  it("supports keyboard intent while ignoring form controls", () => {
+  it("supports keyboard intent while ignoring form controls", async () => {
     const { fullPageApiReference, scrollContainer } = createContactBoundary()
     scrollContainer.scrollTop = 600
     const input = document.createElement("input")
@@ -126,10 +126,10 @@ describe("useEndOfSiteCelebration", () => {
     expect(toast).not.toHaveBeenCalled()
 
     fireEvent.keyDown(window, { key: "PageDown" })
-    expect(toast).toHaveBeenCalledOnce()
+    await waitFor(() => expect(toast).toHaveBeenCalledOnce())
   })
 
-  it("recognizes an upward touch gesture without reacting below its threshold", () => {
+  it("recognizes an upward touch gesture without reacting below its threshold", async () => {
     const { fullPageApiReference, scrollContainer } = createContactBoundary()
     scrollContainer.scrollTop = 600
     const { result } = renderHook(() =>
@@ -147,10 +147,10 @@ describe("useEndOfSiteCelebration", () => {
 
     fireTouch(scrollContainer, "touchstart", 100)
     fireTouch(scrollContainer, "touchend", 60)
-    expect(toast).toHaveBeenCalledOnce()
+    await waitFor(() => expect(toast).toHaveBeenCalledOnce())
   })
 
-  it("rearms per Contact visit and cancels completed or abandoned confetti", () => {
+  it("rearms per Contact visit and cancels completed or abandoned confetti", async () => {
     const { fullPageApiReference, scrollContainer } = createContactBoundary()
     scrollContainer.scrollTop = 600
     const { result } = renderHook(() =>
@@ -158,25 +158,26 @@ describe("useEndOfSiteCelebration", () => {
     )
 
     act(() => result.current.beginContactVisit())
+    expect(result.current.shouldRenderCelebrationRuntime).toBe(true)
     fireEvent.wheel(scrollContainer, { deltaY: 120 })
     expect(result.current.isConfettiActive).toBe(true)
 
     act(() => result.current.completeConfetti())
     expect(result.current.isConfettiActive).toBe(false)
     fireEvent.wheel(scrollContainer, { deltaY: 120 })
-    expect(toast).toHaveBeenCalledOnce()
+    await waitFor(() => expect(toast).toHaveBeenCalledOnce())
 
     act(() => result.current.endContactVisit())
     act(() => result.current.beginContactVisit())
     fireEvent.wheel(scrollContainer, { deltaY: 120 })
-    expect(toast).toHaveBeenCalledTimes(2)
+    await waitFor(() => expect(toast).toHaveBeenCalledTimes(2))
     expect(result.current.isConfettiActive).toBe(true)
 
     act(() => result.current.endContactVisit())
     expect(result.current.isConfettiActive).toBe(false)
   })
 
-  it("keeps the accessible toast while suppressing reduced-motion confetti", () => {
+  it("keeps the accessible toast while suppressing reduced-motion confetti", async () => {
     const { fullPageApiReference, scrollContainer } = createContactBoundary()
     scrollContainer.scrollTop = 600
     const { result } = renderHook(() =>
@@ -186,7 +187,7 @@ describe("useEndOfSiteCelebration", () => {
     act(() => result.current.beginContactVisit())
     fireEvent.wheel(scrollContainer, { deltaY: 120 })
 
-    expect(toast).toHaveBeenCalledOnce()
+    await waitFor(() => expect(toast).toHaveBeenCalledOnce())
     expect(result.current.isConfettiActive).toBe(false)
   })
 })

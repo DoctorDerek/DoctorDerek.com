@@ -1,12 +1,12 @@
 "use client"
 
 import ReactFullpage from "@fullpage/react-fullpage"
+import dynamic from "next/dynamic"
 import { useRef, useState } from "react"
 import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
-import EndOfSiteCelebration from "@/components/EndOfSiteCelebration"
 import IntroSection from "@/components/IntroSection"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 import MotionPreferenceProvider, {
@@ -32,15 +32,23 @@ import classNames from "@/utils/classNames"
 import getFullPageMotionOptions from "@/utils/fullPageMotionOptions"
 import type { MediumPost } from "@/utils/medium"
 
+const EndOfSiteCelebration = dynamic(
+  () => import("@/components/EndOfSiteCelebration"),
+  { ssr: false },
+)
+
 const pluginWrapper = () => {
-  require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.core.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/burn.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/chromatic.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/doorway.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/pageCurlLeft.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/pixelate.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/shatter.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/shockwave.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
-  require("@/vendor/fullPage_js_extensions_bundle/continuousHorizontal/fullpage.continuousHorizontal.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")
-  require("@/vendor/fullPage_js_extensions_bundle/offsetSections/fullpage.offsetSections.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/resetSliders/fullpage.resetSliders.min.js")
-  require("@/vendor/fullPage_js_extensions_bundle/responsiveSlides/fullpage.responsiveSlides.min.js")
-  require("@/vendor/fullPage_js_extensions_bundle/scrollHorizontally/fullpage.scrollHorizontally.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/scrollOverflowReset/fullpage.scrollOverflowReset.min.js")
 }
 
@@ -58,6 +66,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
     completeConfetti,
     endContactVisit,
     isConfettiActive,
+    shouldRenderCelebrationRuntime,
   } = useEndOfSiteCelebration(fullPageApiReference, shouldReduceMotion)
 
   const sectionsContent = [
@@ -112,10 +121,12 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   return (
     <GlobalStateContext.Provider>
       <MotionAwareAmbience />
-      <EndOfSiteCelebration
-        isConfettiActive={isConfettiActive}
-        onConfettiComplete={completeConfetti}
-      />
+      {shouldRenderCelebrationRuntime && (
+        <EndOfSiteCelebration
+          isConfettiActive={isConfettiActive}
+          onConfettiComplete={completeConfetti}
+        />
+      )}
 
       <MapacheFullPage
         {...fullPageMotionOptions}
@@ -123,19 +134,12 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
         cardsKey={FULLPAGE_ACTIVATION_KEYS.cards}
         cinematicKey={FULLPAGE_ACTIVATION_KEYS.cinematic}
-        continuousHorizontalKey={FULLPAGE_ACTIVATION_KEYS.continuousHorizontal}
         dragAndMoveKey={FULLPAGE_ACTIVATION_KEYS.dragAndMove}
-        offsetSectionsKey={FULLPAGE_ACTIVATION_KEYS.offsetSections}
         resetSlidersKey={FULLPAGE_ACTIVATION_KEYS.resetSliders}
-        responsiveSlidesKey={FULLPAGE_ACTIVATION_KEYS.responsiveSlides}
-        scrollHorizontallyKey={FULLPAGE_ACTIVATION_KEYS.scrollHorizontally}
         scrollOverflowResetKey={FULLPAGE_ACTIVATION_KEYS.scrollOverflowReset}
         dragAndMove={true}
-        scrollHorizontally={false}
-        offsetSections={true}
         scrollOverflow={true}
         scrollOverflowReset={true}
-        responsiveSlides={false}
         normalScrollElements=".scrollable-content, .flip-preview-control"
         loopHorizontal={false}
         resetSliders={true}

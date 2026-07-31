@@ -6,7 +6,7 @@ afterEach(() => {
   cleanup()
 })
 
-vi.mock("@rive-app/react-canvas", () => ({
+vi.mock("@rive-app/react-canvas-lite", () => ({
   useRive: () => ({ RiveComponent: () => null }),
 }))
 

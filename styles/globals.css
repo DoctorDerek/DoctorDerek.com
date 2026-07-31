@@ -219,34 +219,26 @@ body {
   }
 }
 
-/* =================== 
-    RESTORA FONT
-  ===================== */
-@font-face {
-  font-family: Restora;
-  src: url("../vendor/fonts/restora-1.otf");
-}
-@font-face {
-  font-family: Restoramedium;
-  src: url("../vendor/fonts/restoramedium-1.otf");
-}
-@font-face {
-  font-family: Restorabold;
-  src: url("../vendor/fonts/restoraextrabold-1.otf");
-}
-a,
-p,
-h2,
-h3,
-h4,
-button {
-  font-family: "Restora";
-}
 .restoramedium {
-  font-family: "Restoramedium";
+  font-weight: 500;
 }
+
 .restorabold {
-  font-family: "Restorabold";
+  font-weight: 800;
+}
+
+@media (min-width: 48rem) {
+  a,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  button,
+  .restoramedium,
+  .restorabold {
+    font-family: var(--font-restora);
+  }
 }
 
 /* =========================== 

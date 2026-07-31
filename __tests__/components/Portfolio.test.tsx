@@ -5,9 +5,29 @@ import {
   waitFor,
   within,
 } from "@testing-library/react"
+import type { ComponentType } from "react"
 import { describe, expect, it, vi } from "vitest"
 import Portfolio from "@/components/Portfolio"
 import { PORTFOLIO_PROJECTS } from "@/constants/SITE_CONTENT"
+
+vi.mock("next/dynamic", async () => {
+  const { lazy, Suspense } =
+    await vi.importActual<typeof import("react")>("react")
+
+  return {
+    default: <Properties extends object>(
+      loadComponent: () => Promise<{ default: ComponentType<Properties> }>,
+    ) => {
+      const LazyComponent = lazy(loadComponent)
+
+      return (properties: Properties) => (
+        <Suspense fallback={null}>
+          <LazyComponent {...properties} />
+        </Suspense>
+      )
+    },
+  }
+})
 
 vi.mock("@/components/MotionPreferenceProvider", () => ({
   useMotionPreference: () => ({ shouldReduceMotion: false }),
@@ -55,7 +75,10 @@ describe("Portfolio", () => {
   })
 
   it("opens and closes each project dialog with verified live and source links", async () => {
+    await import("@/components/PortfolioProjectDialog")
     render(<Portfolio />)
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
 
     for (const project of PORTFOLIO_PROJECTS) {
       fireEvent.click(

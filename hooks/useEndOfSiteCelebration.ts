@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react"
-import { toast } from "react-hot-toast"
 import { CONTACT_COMPLETION } from "@/constants/SITE_CONTENT"
 import type { FullPageApi } from "@/types/MapacheFullPageProps"
 
@@ -9,6 +8,14 @@ const SCROLL_END_TOLERANCE_PIXELS = 2
 const TOUCH_INTENT_MINIMUM_DISTANCE_PIXELS = 24
 const DOWNWARD_KEYS = new Set(["ArrowDown", "PageDown"])
 const SCROLL_CONTAINER_SELECTOR = ".scrollable-content, .fp-overflow"
+
+const showEndOfSiteToast = async () => {
+  const { toast } = await import("react-hot-toast")
+  toast(CONTACT_COMPLETION.toastMessage, {
+    id: END_OF_SITE_TOAST_ID,
+    ariaProps: { role: "status", "aria-live": "polite" },
+  })
+}
 
 const isAtScrollEnd = (scrollContainer: HTMLElement) =>
   scrollContainer.scrollHeight -
@@ -52,11 +59,14 @@ export default function useEndOfSiteCelebration(
   const hasCelebratedThisVisit = useRef(false)
   const touchStartY = useRef<number | null>(null)
   const [isConfettiActive, setIsConfettiActive] = useState(false)
+  const [shouldRenderCelebrationRuntime, setShouldRenderCelebrationRuntime] =
+    useState(false)
 
   const beginContactVisit = useCallback(() => {
     contactVisitIsActive.current = true
     hasCelebratedThisVisit.current = false
     setIsConfettiActive(false)
+    setShouldRenderCelebrationRuntime(true)
   }, [])
 
   const endContactVisit = useCallback(() => {
@@ -80,10 +90,7 @@ export default function useEndOfSiteCelebration(
 
       hasCelebratedThisVisit.current = true
       setIsConfettiActive(!shouldReduceMotion)
-      toast(CONTACT_COMPLETION.toastMessage, {
-        id: END_OF_SITE_TOAST_ID,
-        ariaProps: { role: "status", "aria-live": "polite" },
-      })
+      void showEndOfSiteToast()
     }
 
     const handleWheel = (event: WheelEvent) => {
@@ -149,5 +156,6 @@ export default function useEndOfSiteCelebration(
     completeConfetti,
     endContactVisit,
     isConfettiActive: isConfettiActive && !shouldReduceMotion,
+    shouldRenderCelebrationRuntime,
   }
 }

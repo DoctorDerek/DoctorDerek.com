@@ -1,6 +1,14 @@
 import { render, screen } from "@testing-library/react"
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import RootLayout, { metadata } from "@/app/layout"
+
+const { localFontMock } = vi.hoisted(() => ({
+  localFontMock: vi.fn(() => ({ variable: "font-restora" })),
+}))
+
+vi.mock("next/font/local", () => ({
+  default: localFontMock,
+}))
 
 describe("root metadata", () => {
   it("publishes the canonical production identity", () => {
@@ -34,6 +42,28 @@ describe("root metadata", () => {
     )
 
     expect(document.documentElement).toHaveAttribute("lang", "en")
+    expect(document.body).toHaveClass("font-restora")
     expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
+  })
+
+  it("keeps licensed fonts out of the mobile preload path", () => {
+    expect(localFontMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        display: "optional",
+        preload: false,
+        variable: "--font-restora",
+      }),
+    )
+  })
+
+  it("limits initial licensed-font transfer to regular and display weights", () => {
+    expect(localFontMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        src: [
+          expect.objectContaining({ weight: "400" }),
+          expect.objectContaining({ weight: "800" }),
+        ],
+      }),
+    )
   })
 })

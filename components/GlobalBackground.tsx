@@ -1,8 +1,8 @@
 "use client"
 
 import { AnimatePresence, motion } from "motion/react"
+import dynamic from "next/dynamic"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
-import ParticleCanvas from "@/components/ParticleCanvas"
 import Background1 from "@/images/Background-1.svg"
 import Background2 from "@/images/Background-2.svg"
 import Background3 from "@/images/Background-3.svg"
@@ -12,6 +12,10 @@ import Background6 from "@/images/Background-6.svg"
 import Background0 from "@/images/Background.svg"
 import { GlobalStateContext } from "@/machines/globalMachine"
 
+const ParticleCanvas = dynamic(() => import("@/components/ParticleCanvas"), {
+  ssr: false,
+})
+
 const BACKGROUNDS = [
   { standard: Background0, inverse: Background1 },
   { standard: Background2 },
@@ -20,7 +24,11 @@ const BACKGROUNDS = [
   { standard: Background5, inverse: Background6 },
 ]
 
-export default function GlobalBackground() {
+export default function GlobalBackground({
+  shouldRenderParticles,
+}: {
+  shouldRenderParticles: boolean
+}) {
   const { shouldReduceMotion } = useMotionPreference()
   const activeBackgroundIndex = GlobalStateContext.useSelector(
     (state) => state.context.bgIndex,
@@ -39,7 +47,7 @@ export default function GlobalBackground() {
 
   return (
     <div className="animate-rainbow-vivid pointer-events-none fixed inset-0 -z-20 h-full w-full">
-      {!shouldReduceMotion && <ParticleCanvas />}
+      {!shouldReduceMotion && shouldRenderParticles && <ParticleCanvas />}
       <AnimatePresence initial={false}>
         <motion.div
           key={key}

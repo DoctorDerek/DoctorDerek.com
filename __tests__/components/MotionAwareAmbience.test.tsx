@@ -2,7 +2,8 @@ import { render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 
-const { reducedMotionPreference } = vi.hoisted(() => ({
+const { deferredClientFeature, reducedMotionPreference } = vi.hoisted(() => ({
+  deferredClientFeature: { isReady: true },
   reducedMotionPreference: { value: false },
 }))
 
@@ -18,7 +19,9 @@ vi.mock("@/components/RiveAnimation", () => ({
 }))
 
 vi.mock("@/components/GlobalBackground", () => ({
-  default: () => <p>Global background</p>,
+  default: ({ shouldRenderParticles }: { shouldRenderParticles: boolean }) => (
+    <p data-particles-ready={shouldRenderParticles}>Global background</p>
+  ),
 }))
 
 vi.mock("@/components/MotionPreferenceProvider", () => ({
@@ -31,24 +34,48 @@ vi.mock("@/components/ui/CustomCursor", () => ({
   default: () => <p>Custom cursor</p>,
 }))
 
+vi.mock("@/hooks/useDeferredClientFeature", () => ({
+  default: () => deferredClientFeature.isReady,
+}))
+
 describe("MotionAwareAmbience", () => {
   beforeEach(() => {
+    deferredClientFeature.isReady = true
     reducedMotionPreference.value = false
   })
 
-  it("renders the complete ambient experience when motion is allowed", () => {
+  it("renders the complete ambient experience when enhancements are ready", () => {
     render(<MotionAwareAmbience />)
 
-    expect(screen.getByText("Global background")).toBeInTheDocument()
+    expect(screen.getByText("Global background")).toHaveAttribute(
+      "data-particles-ready",
+      "true",
+    )
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
     expect(screen.getByText("Rive animation")).toBeInTheDocument()
   })
 
-  it("omits continuous cursor and Rive work when motion is reduced", () => {
+  it("waits for deferred readiness while preserving the background and cursor", () => {
+    deferredClientFeature.isReady = false
+
+    render(<MotionAwareAmbience />)
+
+    expect(screen.getByText("Global background")).toHaveAttribute(
+      "data-particles-ready",
+      "false",
+    )
+    expect(screen.getByText("Custom cursor")).toBeInTheDocument()
+    expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
+  })
+
+  it("omits continuous visual ambience when motion is reduced", () => {
     reducedMotionPreference.value = true
     render(<MotionAwareAmbience />)
 
-    expect(screen.getByText("Global background")).toBeInTheDocument()
+    expect(screen.getByText("Global background")).toHaveAttribute(
+      "data-particles-ready",
+      "false",
+    )
     expect(screen.queryByText("Custom cursor")).not.toBeInTheDocument()
     expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
   })

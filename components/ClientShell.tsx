@@ -1,12 +1,12 @@
 "use client"
 
 import ReactFullpage from "@fullpage/react-fullpage"
+import dynamic from "next/dynamic"
 import { useRef, useState } from "react"
 import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import BlogSection from "@/components/BlogSection"
 import ContactSection from "@/components/ContactSection"
-import EndOfSiteCelebration from "@/components/EndOfSiteCelebration"
 import IntroSection from "@/components/IntroSection"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 import MotionPreferenceProvider, {
@@ -32,6 +32,11 @@ import classNames from "@/utils/classNames"
 import getFullPageMotionOptions from "@/utils/fullPageMotionOptions"
 import type { MediumPost } from "@/utils/medium"
 
+const EndOfSiteCelebration = dynamic(
+  () => import("@/components/EndOfSiteCelebration"),
+  { ssr: false },
+)
+
 const pluginWrapper = () => {
   require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
@@ -55,6 +60,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
     completeConfetti,
     endContactVisit,
     isConfettiActive,
+    shouldRenderCelebrationRuntime,
   } = useEndOfSiteCelebration(fullPageApiReference, shouldReduceMotion)
 
   const sectionsContent = [
@@ -109,10 +115,12 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   return (
     <GlobalStateContext.Provider>
       <MotionAwareAmbience />
-      <EndOfSiteCelebration
-        isConfettiActive={isConfettiActive}
-        onConfettiComplete={completeConfetti}
-      />
+      {shouldRenderCelebrationRuntime && (
+        <EndOfSiteCelebration
+          isConfettiActive={isConfettiActive}
+          onConfettiComplete={completeConfetti}
+        />
+      )}
 
       <MapacheFullPage
         {...fullPageMotionOptions}

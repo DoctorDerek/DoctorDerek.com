@@ -1,20 +1,47 @@
 "use client"
 
 import { motion, useMotionValue, useSpring } from "motion/react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useSyncExternalStore } from "react"
+
+const CUSTOM_CURSOR_MEDIA_QUERY =
+  "(hover: hover) and (pointer: fine) and (min-width: 48rem)"
+
+const getCustomCursorMediaQuerySnapshot = () =>
+  window.matchMedia(CUSTOM_CURSOR_MEDIA_QUERY).matches
+
+const subscribeToCustomCursorMediaQuery = (
+  onCustomCursorMediaQueryChange: () => void,
+) => {
+  const customCursorMediaQuery = window.matchMedia(CUSTOM_CURSOR_MEDIA_QUERY)
+  customCursorMediaQuery.addEventListener(
+    "change",
+    onCustomCursorMediaQueryChange,
+  )
+
+  return () =>
+    customCursorMediaQuery.removeEventListener(
+      "change",
+      onCustomCursorMediaQueryChange,
+    )
+}
 
 export default function CustomCursor() {
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
   const [isVisible, setIsVisible] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
+  const shouldUseCustomCursor = useSyncExternalStore(
+    subscribeToCustomCursorMediaQuery,
+    getCustomCursorMediaQuerySnapshot,
+    () => false,
+  )
 
   const springConfig = { damping: 25, stiffness: 300, mass: 0.5 }
   const cursorXSpring = useSpring(cursorX, springConfig)
   const cursorYSpring = useSpring(cursorY, springConfig)
 
   useEffect(() => {
-    setTimeout(() => setIsMounted(true), 0)
+    if (!shouldUseCustomCursor) return
+
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 16)
       cursorY.set(e.clientY - 16)
@@ -33,13 +60,13 @@ export default function CustomCursor() {
       document.removeEventListener("mouseleave", handleMouseLeave)
       document.removeEventListener("mouseenter", handleMouseEnter)
     }
-  }, [cursorX, cursorY])
+  }, [cursorX, cursorY, shouldUseCustomCursor])
 
-  if (!isMounted) return null
+  if (!shouldUseCustomCursor) return null
 
   return (
     <motion.div
-      className="pointer-events-none fixed top-0 left-0 z-[9999] hidden h-8 w-8 rounded-full border-2 border-[#F38B57] bg-transparent md:block"
+      className="pointer-events-none fixed top-0 left-0 z-[9999] h-8 w-8 rounded-full border-2 border-[#F38B57] bg-transparent"
       style={{
         x: cursorXSpring,
         y: cursorYSpring,

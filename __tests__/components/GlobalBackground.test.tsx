@@ -70,7 +70,9 @@ describe("GlobalBackground", () => {
   })
 
   it("renders animated ambient layers when motion is allowed", () => {
-    const { container } = render(<GlobalBackground />)
+    const { container } = render(
+      <GlobalBackground shouldRenderParticles={true} />,
+    )
 
     expect(screen.getByLabelText("Particle field")).toBeInTheDocument()
     expect(
@@ -81,7 +83,9 @@ describe("GlobalBackground", () => {
   it("uses one static background without continuous Canvas work", () => {
     reducedMotionPreference.value = true
     backgroundState.bgUseInverse = true
-    const { container } = render(<GlobalBackground />)
+    const { container } = render(
+      <GlobalBackground shouldRenderParticles={true} />,
+    )
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
     expect(
@@ -93,9 +97,16 @@ describe("GlobalBackground", () => {
     backgroundState.bgIndex = 0
     backgroundState.bgUseInverse = true
 
-    render(<GlobalBackground />)
+    render(<GlobalBackground shouldRenderParticles={true} />)
 
     expect(screen.getByLabelText("Background one")).toBeInTheDocument()
     expect(screen.queryByLabelText("Background zero")).not.toBeInTheDocument()
+  })
+
+  it("defers particle work while preserving the active background", () => {
+    render(<GlobalBackground shouldRenderParticles={false} />)
+
+    expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
+    expect(screen.getByLabelText("Background three")).toBeInTheDocument()
   })
 })

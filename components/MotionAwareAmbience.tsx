@@ -16,7 +16,11 @@ export default function MotionAwareAmbience() {
 
   return (
     <>
-      <GlobalBackground />
+      <GlobalBackground
+        shouldRenderParticles={
+          !shouldReduceMotion && isDeferredClientFeatureReady
+        }
+      />
       {!shouldReduceMotion && <CustomCursor />}
       {!shouldReduceMotion && isDeferredClientFeatureReady && <RiveAnimation />}
     </>

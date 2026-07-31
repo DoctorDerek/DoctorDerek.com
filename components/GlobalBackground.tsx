@@ -20,7 +20,11 @@ const BACKGROUNDS = [
   { standard: Background5, inverse: Background6 },
 ]
 
-export default function GlobalBackground() {
+export default function GlobalBackground({
+  shouldRenderParticles,
+}: {
+  shouldRenderParticles: boolean
+}) {
   const { shouldReduceMotion } = useMotionPreference()
   const activeBackgroundIndex = GlobalStateContext.useSelector(
     (state) => state.context.bgIndex,
@@ -39,7 +43,7 @@ export default function GlobalBackground() {
 
   return (
     <div className="animate-rainbow-vivid pointer-events-none fixed inset-0 -z-20 h-full w-full">
-      {!shouldReduceMotion && <ParticleCanvas />}
+      {!shouldReduceMotion && shouldRenderParticles && <ParticleCanvas />}
       <AnimatePresence initial={false}>
         <motion.div
           key={key}

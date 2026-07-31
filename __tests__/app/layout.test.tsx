@@ -1,6 +1,10 @@
 import { render, screen } from "@testing-library/react"
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import RootLayout, { metadata } from "@/app/layout"
+
+vi.mock("next/font/local", () => ({
+  default: () => ({ variable: "font-restora" }),
+}))
 
 describe("root metadata", () => {
   it("publishes the canonical production identity", () => {
@@ -34,6 +38,7 @@ describe("root metadata", () => {
     )
 
     expect(document.documentElement).toHaveAttribute("lang", "en")
+    expect(document.body).toHaveClass("font-restora")
     expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
   })
 })

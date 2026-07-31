@@ -22,7 +22,7 @@ export default function TopSection() {
   return (
     <div className="absolute inset-0 flex h-full w-full flex-col">
       <Navbar />
-      <div className="ease-spring-bouncy flex flex-1 translate-y-12 scale-95 flex-col items-center justify-center opacity-0 transition-all duration-700 [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
+      <div className="flex flex-1 flex-col items-center justify-center">
         <Logo className="h-16 w-48 md:h-32 md:w-96" />
         <div className="restorabold text-site-foreground mt-8 w-full max-w-5xl px-4 text-center font-bold drop-shadow-md md:mt-12">
           <h1 className="text-xl md:text-3xl lg:text-4xl">

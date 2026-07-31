@@ -49,12 +49,13 @@ describe("TopSection", () => {
   it("renders the primary specialist positioning before enhanced motion", () => {
     render(<TopSection />)
 
-    expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: primaryIntroduction,
-      }),
-    ).toBeInTheDocument()
+    const primaryPositioning = screen.getByRole("heading", {
+      level: 1,
+      name: primaryIntroduction,
+    })
+
+    expect(primaryPositioning).toBeInTheDocument()
+    expect(primaryPositioning.closest(".opacity-0")).toBeNull()
     expect(screen.getByTestId("intro-typewriter")).toHaveTextContent(
       supportingIntroduction,
     )

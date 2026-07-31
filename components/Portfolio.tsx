@@ -1,14 +1,21 @@
+import dynamic from "next/dynamic"
 import { useState } from "react"
-import PortfolioProjectDialog from "@/components/PortfolioProjectDialog"
 import SectionHeading from "@/components/ui/SectionHeading"
 import {
   PORTFOLIO_PROJECTS,
   type PortfolioProject,
 } from "@/constants/SITE_CONTENT"
 
+const PortfolioProjectDialog = dynamic(
+  () => import("@/components/PortfolioProjectDialog"),
+  { ssr: false },
+)
+
 export default function Portfolio() {
   const [selectedProject, setSelectedProject] =
     useState<PortfolioProject | null>(null)
+  const [shouldRenderProjectDialog, setShouldRenderProjectDialog] =
+    useState(false)
 
   return (
     <>
@@ -69,7 +76,10 @@ export default function Portfolio() {
               <button
                 type="button"
                 aria-label={"Explore " + project.projectTitle}
-                onClick={() => setSelectedProject(project)}
+                onClick={() => {
+                  setSelectedProject(project)
+                  setShouldRenderProjectDialog(true)
+                }}
                 className="ease-spring-bouncy site-focus-contrast mt-7 inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#F38B57] px-6 py-4 text-lg font-bold text-white shadow-xl transition-all hover:scale-[1.02] hover:bg-[#ff9c6a] focus-visible:ring-4 focus-visible:outline-none active:scale-95 sm:w-fit"
               >
                 Explore project
@@ -80,10 +90,12 @@ export default function Portfolio() {
         </div>
       ))}
 
-      <PortfolioProjectDialog
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      {shouldRenderProjectDialog && (
+        <PortfolioProjectDialog
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </>
   )
 }

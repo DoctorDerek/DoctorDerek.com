@@ -55,4 +55,15 @@ describe("root metadata", () => {
       }),
     )
   })
+
+  it("limits initial licensed-font transfer to regular and display weights", () => {
+    expect(localFontMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        src: [
+          expect.objectContaining({ weight: "400" }),
+          expect.objectContaining({ weight: "800" }),
+        ],
+      }),
+    )
+  })
 })

@@ -1,8 +1,8 @@
 "use client"
 
 import { AnimatePresence, motion } from "motion/react"
+import dynamic from "next/dynamic"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
-import ParticleCanvas from "@/components/ParticleCanvas"
 import Background1 from "@/images/Background-1.svg"
 import Background2 from "@/images/Background-2.svg"
 import Background3 from "@/images/Background-3.svg"
@@ -11,6 +11,10 @@ import Background5 from "@/images/Background-5.svg"
 import Background6 from "@/images/Background-6.svg"
 import Background0 from "@/images/Background.svg"
 import { GlobalStateContext } from "@/machines/globalMachine"
+
+const ParticleCanvas = dynamic(() => import("@/components/ParticleCanvas"), {
+  ssr: false,
+})
 
 const BACKGROUNDS = [
   { standard: Background0, inverse: Background1 },

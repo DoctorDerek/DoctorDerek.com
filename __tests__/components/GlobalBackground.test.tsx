@@ -69,12 +69,12 @@ describe("GlobalBackground", () => {
     reducedMotionPreference.value = false
   })
 
-  it("renders animated ambient layers when motion is allowed", () => {
+  it("renders animated ambient layers when motion is allowed", async () => {
     const { container } = render(
       <GlobalBackground shouldRenderParticles={true} />,
     )
 
-    expect(screen.getByLabelText("Particle field")).toBeInTheDocument()
+    expect(await screen.findByLabelText("Particle field")).toBeInTheDocument()
     expect(
       container.querySelector('[data-transition-duration="20"]'),
     ).toBeInTheDocument()

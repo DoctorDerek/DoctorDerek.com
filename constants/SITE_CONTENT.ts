@@ -49,7 +49,7 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   body: "Startups need more than a fast prototype: they need a product that survives real users, real data, and real change. I help founders and small teams build deterministic, full-stack TypeScript products—including privacy-sensitive and regulated applications—at 10× AI-native velocity without the technical debt of vibe coding. I hate bugs, I love results, and I know when to move quickly and when to pay down technical debt.",
   ctaButtonText: "Inquire About Availability",
   subtext:
-    "Seeking a remote, full-time SWE/code-owner role at a US startup hiring through a global Employer of Record (EOR). If direct US 1099 contracting works better for the company, I can use that arrangement from Mexico while working US Pacific hours.",
+    "Seeking a long-term, full-time remote role as a Full-Stack SWE and code owner at a US startup.",
   emailSubject: "Full-Time SWE / Code Owner Inquiry",
 } as const
 

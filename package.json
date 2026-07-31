@@ -24,7 +24,7 @@
     "@fullpage/react-fullpage": "^0.1.49",
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
-    "@rive-app/react-canvas": "^4",
+    "@rive-app/react-canvas-lite": "^4",
     "@xstate/react": "^6",
     "motion": "^12",
     "next": "^16",

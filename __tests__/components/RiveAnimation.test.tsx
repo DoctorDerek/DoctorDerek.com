@@ -8,7 +8,7 @@ const { riveConfiguration } = vi.hoisted(() => ({
   },
 }))
 
-vi.mock("@rive-app/react-canvas", () => ({
+vi.mock("@rive-app/react-canvas-lite", () => ({
   Alignment: { Center: "center" },
   Fit: { Cover: "cover" },
   Layout: class MockLayout {},

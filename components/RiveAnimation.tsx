@@ -1,4 +1,4 @@
-import { Alignment, Fit, Layout, useRive } from "@rive-app/react-canvas"
+import { Alignment, Fit, Layout, useRive } from "@rive-app/react-canvas-lite"
 import { useState } from "react"
 
 export default function RiveAnimation() {

@@ -2,7 +2,8 @@ import { render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 
-const { reducedMotionPreference } = vi.hoisted(() => ({
+const { deferredClientFeature, reducedMotionPreference } = vi.hoisted(() => ({
+  deferredClientFeature: { isReady: true },
   reducedMotionPreference: { value: false },
 }))
 
@@ -31,8 +32,13 @@ vi.mock("@/components/ui/CustomCursor", () => ({
   default: () => <p>Custom cursor</p>,
 }))
 
+vi.mock("@/hooks/useDeferredClientFeature", () => ({
+  default: () => deferredClientFeature.isReady,
+}))
+
 describe("MotionAwareAmbience", () => {
   beforeEach(() => {
+    deferredClientFeature.isReady = true
     reducedMotionPreference.value = false
   })
 
@@ -42,6 +48,16 @@ describe("MotionAwareAmbience", () => {
     expect(screen.getByText("Global background")).toBeInTheDocument()
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
     expect(screen.getByText("Rive animation")).toBeInTheDocument()
+  })
+
+  it("defers Rive while preserving the immediate background and cursor", () => {
+    deferredClientFeature.isReady = false
+
+    render(<MotionAwareAmbience />)
+
+    expect(screen.getByText("Global background")).toBeInTheDocument()
+    expect(screen.getByText("Custom cursor")).toBeInTheDocument()
+    expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
   })
 
   it("omits continuous cursor and Rive work when motion is reduced", () => {

@@ -3,28 +3,18 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 import TopSection from "@/components/TopSection"
 import { INTRO_BIO_SHORT } from "@/constants/SITE_CONTENT"
 
-const { reducedMotionPreference, typewriter } = vi.hoisted(() => {
-  const typewriterMethods = {
-    deleteAll: vi.fn(),
-    pauseFor: vi.fn(),
-    start: vi.fn(),
-    typeString: vi.fn(),
-  }
-  typewriterMethods.deleteAll.mockReturnValue(typewriterMethods)
-  typewriterMethods.pauseFor.mockReturnValue(typewriterMethods)
-  typewriterMethods.start.mockReturnValue(typewriterMethods)
-  typewriterMethods.typeString.mockReturnValue(typewriterMethods)
+const { deferredClientFeature, reducedMotionPreference } = vi.hoisted(() => ({
+  deferredClientFeature: { isReady: true },
+  reducedMotionPreference: { value: false },
+}))
 
-  return {
-    reducedMotionPreference: { value: false },
-    typewriter: typewriterMethods,
-  }
-})
+vi.mock("next/dynamic", () => ({
+  default: (loadComponent: () => Promise<unknown>) => {
+    void loadComponent()
 
-vi.mock("typewriter-effect", () => ({
-  default: ({ onInit }: { onInit: (instance: typeof typewriter) => void }) => {
-    onInit(typewriter)
-    return <p>Animated introduction</p>
+    return ({ segments }: { segments: readonly string[] }) => (
+      <p data-testid="intro-typewriter">{segments.join(" · ")}</p>
+    )
   },
 }))
 
@@ -42,31 +32,66 @@ vi.mock("@/components/Navbar", () => ({
   default: () => null,
 }))
 
+vi.mock("@/hooks/useDeferredClientFeature", () => ({
+  default: () => deferredClientFeature.isReady,
+}))
+
+const [primaryIntroduction, ...supportingIntroductionSegments] =
+  INTRO_BIO_SHORT.split(" · ")
+const supportingIntroduction = supportingIntroductionSegments.join(" · ")
+
 describe("TopSection", () => {
   beforeEach(() => {
+    deferredClientFeature.isReady = true
     reducedMotionPreference.value = false
-    vi.clearAllMocks()
   })
 
-  it("runs the complete introduction sequence when motion is allowed", () => {
+  it("renders the primary specialist positioning before enhanced motion", () => {
     render(<TopSection />)
 
-    expect(screen.getByText("Animated introduction")).toBeInTheDocument()
-    for (const introductionSegment of INTRO_BIO_SHORT.split(" · ")) {
-      expect(typewriter.typeString).toHaveBeenCalledWith(introductionSegment)
-    }
-    expect(typewriter.pauseFor).toHaveBeenCalledWith(2000)
-    expect(typewriter.deleteAll).toHaveBeenCalled()
-    expect(typewriter.start).toHaveBeenCalledOnce()
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: primaryIntroduction,
+      }),
+    ).toBeInTheDocument()
+    expect(screen.getByTestId("intro-typewriter")).toHaveTextContent(
+      supportingIntroduction,
+    )
+    expect(
+      screen.getByTestId("intro-typewriter").parentElement,
+    ).toHaveAttribute("aria-hidden", "true")
   })
 
-  it("renders the complete introduction statically when motion is reduced", () => {
+  it("keeps supporting positioning visible while Typewriter is deferred", () => {
+    deferredClientFeature.isReady = false
+
+    render(<TopSection />)
+
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: primaryIntroduction,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(supportingIntroductionSegments[0]),
+    ).toBeInTheDocument()
+    expect(screen.queryByTestId("intro-typewriter")).not.toBeInTheDocument()
+  })
+
+  it("renders all positioning statically when motion is reduced", () => {
     reducedMotionPreference.value = true
 
     render(<TopSection />)
 
-    expect(screen.getByText(INTRO_BIO_SHORT)).toBeInTheDocument()
-    expect(screen.queryByText("Animated introduction")).not.toBeInTheDocument()
-    expect(typewriter.start).not.toHaveBeenCalled()
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: primaryIntroduction,
+      }),
+    ).toBeInTheDocument()
+    expect(screen.getByText(supportingIntroduction)).toBeInTheDocument()
+    expect(screen.queryByTestId("intro-typewriter")).not.toBeInTheDocument()
   })
 })

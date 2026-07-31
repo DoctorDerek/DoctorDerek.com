@@ -17,8 +17,6 @@ export const FULLPAGE_ACTIVATION_KEYS = {
   cinematic: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CINEMATIC || "",
   dragAndMove:
     process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_DRAG_AND_MOVE || "",
-  offsetSections:
-    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_OFFSET_SECTIONS || "",
   resetSliders:
     process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_RESET_SLIDERS || "",
   scrollOverflowReset:

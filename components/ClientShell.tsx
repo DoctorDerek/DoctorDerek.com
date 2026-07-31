@@ -41,7 +41,6 @@ const pluginWrapper = () => {
   require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")
-  require("@/vendor/fullPage_js_extensions_bundle/offsetSections/fullpage.offsetSections.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/resetSliders/fullpage.resetSliders.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/scrollOverflowReset/fullpage.scrollOverflowReset.min.js")
 }
@@ -129,11 +128,9 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
         cardsKey={FULLPAGE_ACTIVATION_KEYS.cards}
         cinematicKey={FULLPAGE_ACTIVATION_KEYS.cinematic}
         dragAndMoveKey={FULLPAGE_ACTIVATION_KEYS.dragAndMove}
-        offsetSectionsKey={FULLPAGE_ACTIVATION_KEYS.offsetSections}
         resetSlidersKey={FULLPAGE_ACTIVATION_KEYS.resetSliders}
         scrollOverflowResetKey={FULLPAGE_ACTIVATION_KEYS.scrollOverflowReset}
         dragAndMove={true}
-        offsetSections={true}
         scrollOverflow={true}
         scrollOverflowReset={true}
         normalScrollElements=".scrollable-content, .flip-preview-control"

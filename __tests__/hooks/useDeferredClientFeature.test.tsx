@@ -28,6 +28,8 @@ describe("useDeferredClientFeature", () => {
 
     expect(result.current).toBe(false)
     act(() => idleCallback?.(idleDeadline))
+    expect(result.current).toBe(false)
+    act(() => window.dispatchEvent(new PointerEvent("pointermove")))
     expect(result.current).toBe(true)
 
     unmount()
@@ -49,6 +51,8 @@ describe("useDeferredClientFeature", () => {
     const { result, unmount } = renderHook(() => useDeferredClientFeature())
 
     expect(result.current).toBe(false)
+    act(() => window.dispatchEvent(new PointerEvent("pointerdown")))
+    expect(result.current).toBe(false)
     act(() => window.dispatchEvent(new Event("load")))
     expect(requestAnimationFrame).toHaveBeenCalledOnce()
     act(() => animationFrameCallback?.(0))
@@ -67,6 +71,10 @@ describe("useDeferredClientFeature", () => {
     unmount()
     expect(removeEventListener).toHaveBeenCalledWith(
       "load",
+      expect.any(Function),
+    )
+    expect(removeEventListener).toHaveBeenCalledWith(
+      "keydown",
       expect.any(Function),
     )
   })

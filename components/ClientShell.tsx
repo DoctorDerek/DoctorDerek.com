@@ -35,12 +35,9 @@ import type { MediumPost } from "@/utils/medium"
 const pluginWrapper = () => {
   require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
-  require("@/vendor/fullPage_js_extensions_bundle/continuousHorizontal/fullpage.continuousHorizontal.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/offsetSections/fullpage.offsetSections.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/resetSliders/fullpage.resetSliders.min.js")
-  require("@/vendor/fullPage_js_extensions_bundle/responsiveSlides/fullpage.responsiveSlides.min.js")
-  require("@/vendor/fullPage_js_extensions_bundle/scrollHorizontally/fullpage.scrollHorizontally.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/scrollOverflowReset/fullpage.scrollOverflowReset.min.js")
 }
 
@@ -123,19 +120,14 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
         cardsKey={FULLPAGE_ACTIVATION_KEYS.cards}
         cinematicKey={FULLPAGE_ACTIVATION_KEYS.cinematic}
-        continuousHorizontalKey={FULLPAGE_ACTIVATION_KEYS.continuousHorizontal}
         dragAndMoveKey={FULLPAGE_ACTIVATION_KEYS.dragAndMove}
         offsetSectionsKey={FULLPAGE_ACTIVATION_KEYS.offsetSections}
         resetSlidersKey={FULLPAGE_ACTIVATION_KEYS.resetSliders}
-        responsiveSlidesKey={FULLPAGE_ACTIVATION_KEYS.responsiveSlides}
-        scrollHorizontallyKey={FULLPAGE_ACTIVATION_KEYS.scrollHorizontally}
         scrollOverflowResetKey={FULLPAGE_ACTIVATION_KEYS.scrollOverflowReset}
         dragAndMove={true}
-        scrollHorizontally={false}
         offsetSections={true}
         scrollOverflow={true}
         scrollOverflowReset={true}
-        responsiveSlides={false}
         normalScrollElements=".scrollable-content, .flip-preview-control"
         loopHorizontal={false}
         resetSliders={true}

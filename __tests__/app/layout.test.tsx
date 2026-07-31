@@ -2,8 +2,12 @@ import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import RootLayout, { metadata } from "@/app/layout"
 
+const { localFontMock } = vi.hoisted(() => ({
+  localFontMock: vi.fn(() => ({ variable: "font-restora" })),
+}))
+
 vi.mock("next/font/local", () => ({
-  default: () => ({ variable: "font-restora" }),
+  default: localFontMock,
 }))
 
 describe("root metadata", () => {
@@ -40,5 +44,15 @@ describe("root metadata", () => {
     expect(document.documentElement).toHaveAttribute("lang", "en")
     expect(document.body).toHaveClass("font-restora")
     expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
+  })
+
+  it("prevents late licensed-font swaps from delaying primary content", () => {
+    expect(localFontMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        display: "optional",
+        preload: true,
+        variable: "--font-restora",
+      }),
+    )
   })
 })

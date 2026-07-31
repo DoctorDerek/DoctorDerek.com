@@ -8,6 +8,7 @@ import {
   PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
   PORTRAIT_IMAGE_SIZES,
 } from "@/constants/PORTRAITS"
+import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
@@ -52,7 +53,15 @@ describe("ContactSection", () => {
     expect(sectionContent).not.toHaveClass("h-full")
     expect(sectionContent).not.toHaveClass("items-center")
     expect(contactComposition).toHaveClass("my-auto", "w-full")
-    expect(screen.getByRole("link", { name: "Contact Me" })).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: CONTACT_CTA })).toBeInTheDocument()
+  })
+
+  it("renders every canonical contact proof point", () => {
+    render(<ContactSection />)
+
+    for (const bullet of CONTACT_BULLETS) {
+      expect(screen.getByText(bullet)).toBeInTheDocument()
+    }
   })
 
   it("ends with the Contact CTA without persistent completion content", () => {

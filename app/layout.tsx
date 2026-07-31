@@ -22,7 +22,7 @@ const restora = localFont({
       style: "normal",
     },
   ],
-  display: "swap",
+  display: "optional",
   preload: true,
   fallback: ["Georgia", "Times New Roman", "serif"],
   adjustFontFallback: "Times New Roman",

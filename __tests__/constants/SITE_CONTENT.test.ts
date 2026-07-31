@@ -1,44 +1,51 @@
 import { describe, expect, it } from "vitest"
-import {
-  AI_CONSULTANCY_PITCH,
-  BLOG_METRICS,
-  CONTACT_BULLETS,
-  CONTACT_COMPLETION,
-  CONTACT_CTA,
-  INTRO_BIO_SHORT,
-  PORTFOLIO_PROJECTS,
-} from "@/constants/SITE_CONTENT"
+import * as SITE_CONTENT from "@/constants/SITE_CONTENT"
+
+const PRIVATE_LOGISTICS_LANGUAGE =
+  /\b(?:Mexico|Mexican|Puebla|EOR|1099|visa)\b|permanent resident|Employer of Record|\bW-9\b|Pacific Time|sole proprietor|invoice in USD/i
+
+const PORTFOLIO_NARRATIVE = SITE_CONTENT.PORTFOLIO_PROJECTS.flatMap(
+  ({ summary, details }) => [summary, details],
+).join(" ")
 
 describe("site copy quality gates", () => {
   it("uses the requested end-of-site copy and CTA wording", () => {
-    expect(CONTACT_COMPLETION.toastMessage).toBe(
+    expect(SITE_CONTENT.CONTACT_COMPLETION.toastMessage).toBe(
       "🎊 You’ve reached the end of DoctorDerek.com. Let’s build something great. 🎉",
     )
-    expect(CONTACT_CTA).toBe("Contact Me")
+    expect(SITE_CONTENT.CONTACT_CTA).toBe("Contact Me")
   })
 
   it("keeps the flagship bio on-point and concise", () => {
-    expect(INTRO_BIO_SHORT).toContain(
+    expect(SITE_CONTENT.INTRO_BIO_SHORT).toContain(
       "AI-Native Senior Full-Stack TypeScript Engineer",
     )
-    expect(INTRO_BIO_SHORT).toContain("Next.js + React Native + Expo")
+    expect(SITE_CONTENT.INTRO_BIO_SHORT).toContain(
+      "Next.js + React Native + Expo",
+    )
   })
 
-  it("locks logistics-first consultancy positioning", () => {
-    expect(AI_CONSULTANCY_PITCH.body).toContain("10× AI-native velocity")
-    expect(AI_CONSULTANCY_PITCH.subtext).toContain("Employer of Record")
-    expect(AI_CONSULTANCY_PITCH.subtext).toContain("1099")
-    expect(AI_CONSULTANCY_PITCH.subtext).toContain("US Pacific")
+  it("keeps the hiring target focused and excludes private logistics", () => {
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
+      "10× AI-native velocity",
+    )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.subtext).toContain(
+      "long-term, full-time remote role",
+    )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.subtext).toContain(
+      "Full-Stack SWE and code owner",
+    )
+    expect(JSON.stringify(SITE_CONTENT)).not.toMatch(PRIVATE_LOGISTICS_LANGUAGE)
   })
 
   it("locks key proof-point metrics", () => {
-    expect(BLOG_METRICS.totalPosts).toBe(586)
-    expect(BLOG_METRICS.emailSubscribers).toBeGreaterThan(700)
+    expect(SITE_CONTENT.BLOG_METRICS.totalPosts).toBe(589)
+    expect(SITE_CONTENT.BLOG_METRICS.emailSubscribers).toBeGreaterThan(700)
   })
 
   it("keeps portfolio narrative aligned to the job-hunt framing", () => {
-    const firstProject = PORTFOLIO_PROJECTS[0]
-    const doctorDerekProject = PORTFOLIO_PROJECTS[PORTFOLIO_PROJECTS.length - 1]
+    const firstProject = SITE_CONTENT.PORTFOLIO_PROJECTS[0]
+    const doctorDerekProject = SITE_CONTENT.PORTFOLIO_PROJECTS.at(-1)
 
     expect(firstProject.projectTitle).toBe("What Are Your Values, Mapache?")
     expect(firstProject.summary).toMatch(/values game/i)
@@ -52,43 +59,35 @@ describe("site copy quality gates", () => {
       "cinematic, accessibility-minded experience",
     )
 
-    const pokedexProject = PORTFOLIO_PROJECTS.find(
+    const pokedexProject = SITE_CONTENT.PORTFOLIO_PROJECTS.find(
       (project) => project.projectTitle === "Pokédex",
     )
     expect(pokedexProject?.tech).toContain("TanStack Query")
     expect(pokedexProject?.tech).not.toContain("React Query")
-
-    const anyPhase = PORTFOLIO_PROJECTS.some(
-      (project) =>
-        project.summary.toLowerCase().includes("phase") ||
-        project.details.toLowerCase().includes("phase"),
-    )
-    expect(anyPhase).toBe(false)
-
-    const anyStoreClaims = PORTFOLIO_PROJECTS.some(
-      (project) =>
-        project.summary.includes("App Store") ||
-        project.summary.includes("Play Store") ||
-        project.details.includes("App Store") ||
-        project.details.includes("Play Store"),
-    )
-    expect(anyStoreClaims).toBe(false)
   })
 
-  it("guards against stale app-store claims in the values project narrative", () => {
-    const mapache = PORTFOLIO_PROJECTS.find(
-      (project) => project.projectTitle === "What Are Your Values, Mapache?",
-    )
-
-    expect(mapache?.details).toBeTruthy()
-    expect(mapache!.details).not.toContain("App Store")
-    expect(mapache!.details).not.toContain("Play Store")
+  it("rejects stale portfolio status language", () => {
+    expect(PORTFOLIO_NARRATIVE).not.toMatch(/\bphase\b/i)
+    expect(PORTFOLIO_NARRATIVE).not.toMatch(/App Store|Play Store/)
   })
 
   it("keeps contact copy concise and evidence-driven", () => {
-    expect(CONTACT_BULLETS).toHaveLength(4)
-    expect(CONTACT_BULLETS[2]).toContain("code owner")
-    expect(CONTACT_BULLETS[3]).toContain("under 3 months")
-    expect(CONTACT_BULLETS.join(" ")).not.toContain("underperforming")
+    expect(SITE_CONTENT.CONTACT_BULLETS).toHaveLength(4)
+    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain(
+      "Next.js + React Native + Expo",
+    )
+    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain("EAS Build/Submit")
+    expect(SITE_CONTENT.CONTACT_BULLETS[2]).toContain("code owner")
+    expect(SITE_CONTENT.CONTACT_BULLETS[3]).toContain("under 3 months")
+    expect(SITE_CONTENT.CONTACT_BULLETS.join(" ")).not.toContain(
+      "underperforming",
+    )
+  })
+
+  it("keeps testimonials in the approved evidence-first order", () => {
+    expect(SITE_CONTENT.TESTIMONIALS.map(({ id }) => id)).toEqual([
+      3, 2, 1, 6, 4, 5, 7,
+    ])
+    expect(SITE_CONTENT.TESTIMONIALS[0]?.name).toBe("Tori Bonagura")
   })
 })

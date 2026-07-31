@@ -7,6 +7,7 @@ import {
   PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
   PORTRAIT_IMAGE_SIZES,
 } from "@/constants/PORTRAITS"
+import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
@@ -71,6 +72,14 @@ describe("AboutSection", () => {
     fireEvent.click(portraitControl)
     expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
     expectRenderedPortraits([ABOUT_PORTRAITS[2], ABOUT_PORTRAITS[3]])
+  })
+
+  it("renders every canonical positioning paragraph", () => {
+    render(<AboutSection />)
+
+    for (const paragraph of ABOUT_BIO_LONG) {
+      expect(screen.getByText(paragraph)).toBeInTheDocument()
+    }
   })
 
   it("describes the measured responsive width of both portrait faces", () => {

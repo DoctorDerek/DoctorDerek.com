@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
 import { describe, expect, it, vi } from "vitest"
 import BlogSection from "@/components/BlogSection"
+import { BLOG_METRICS } from "@/constants/SITE_CONTENT"
 import type { MediumPost } from "@/utils/medium"
 
 vi.mock("next/image", () => ({
@@ -59,6 +60,9 @@ describe("BlogSection", () => {
     ).not.toBeInTheDocument()
     expect(screen.getByText("Jul 18, 2026")).toBeInTheDocument()
     expect(screen.getByText("Jul 17, 2026")).toBeInTheDocument()
+    expect(
+      screen.getByText(BLOG_METRICS.totalPosts.toString()),
+    ).toBeInTheDocument()
   })
 
   it("keeps every article card linked to its canonical Medium URL", () => {

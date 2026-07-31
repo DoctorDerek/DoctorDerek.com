@@ -16,7 +16,8 @@ describe("root metadata", () => {
       "https://www.doctorderek.com/",
     )
     expect(metadata.alternates?.canonical).toBe("/")
-    expect(metadata.description).toContain("six live Next.js projects")
+    expect(metadata.description).toContain("six live Next.js products")
+    expect(metadata.description).toContain("92–100% Codecov coverage")
   })
 
   it("keeps social identity synchronized with the canonical metadata", () => {

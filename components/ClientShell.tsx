@@ -38,7 +38,14 @@ const EndOfSiteCelebration = dynamic(
 )
 
 const pluginWrapper = () => {
-  require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.core.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/burn.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/chromatic.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/doorway.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/pageCurlLeft.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/pixelate.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/shatter.min.js")
+  require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/shockwave.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/resetSliders/fullpage.resetSliders.min.js")

@@ -6,6 +6,19 @@ test("publishes the professional icon and dark application manifest", async ({
 }) => {
   await page.goto("/")
 
+  const activeBackground = page.locator(".mix-blend-overlay img").first()
+  await expect(activeBackground).toHaveAttribute(
+    "src",
+    /^\/_next\/static\/media\/Background(?:-\d)?\.[a-f0-9]+\.svg$/,
+  )
+  const activeBackgroundUrl = await activeBackground.getAttribute("src")
+  expect(activeBackgroundUrl).not.toBeNull()
+  const activeBackgroundResponse = await request.get(activeBackgroundUrl!)
+  expect(activeBackgroundResponse.ok()).toBe(true)
+  expect(activeBackgroundResponse.headers()["content-type"]).toContain(
+    "image/svg+xml",
+  )
+
   await expect(page.locator('link[rel="manifest"]')).toHaveAttribute(
     "href",
     "/site.webmanifest",

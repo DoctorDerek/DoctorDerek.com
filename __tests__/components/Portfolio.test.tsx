@@ -6,7 +6,7 @@ import {
   within,
 } from "@testing-library/react"
 import type { ComponentType } from "react"
-import { describe, expect, it, vi } from "vitest"
+import { beforeAll, describe, expect, it, vi } from "vitest"
 import Portfolio from "@/components/Portfolio"
 import { PORTFOLIO_PROJECTS } from "@/constants/SITE_CONTENT"
 
@@ -34,6 +34,10 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
 }))
 
 describe("Portfolio", () => {
+  beforeAll(async () => {
+    await import("@/components/PortfolioProjectDialog")
+  })
+
   it("renders the audited project order with semantic controls and no phase copy", () => {
     render(<Portfolio />)
 
@@ -74,13 +78,16 @@ describe("Portfolio", () => {
     })
   })
 
-  it("opens and closes each project dialog with verified live and source links", async () => {
-    await import("@/components/PortfolioProjectDialog")
-    render(<Portfolio />)
+  it.each(
+    PORTFOLIO_PROJECTS.map(
+      (project) => [project.projectTitle, project] as const,
+    ),
+  )(
+    "opens and closes the %s dialog with verified live and source links",
+    async (_projectTitle, project) => {
+      render(<Portfolio />)
 
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
-
-    for (const project of PORTFOLIO_PROJECTS) {
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
       fireEvent.click(
         screen.getByRole("button", {
           name: `Explore ${project.projectTitle}`,
@@ -116,7 +123,11 @@ describe("Portfolio", () => {
       await waitFor(() => {
         expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
       })
-    }
+    },
+  )
+
+  it("closes an open project dialog with Escape", async () => {
+    render(<Portfolio />)
 
     fireEvent.click(
       screen.getByRole("button", {

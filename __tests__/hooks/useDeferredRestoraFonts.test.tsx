@@ -13,7 +13,10 @@ const originalDocumentFonts = Object.getOwnPropertyDescriptor(document, "fonts")
 describe("useDeferredRestoraFonts", () => {
   beforeEach(() => {
     loadFontMock.mockClear()
-    document.body.style.setProperty(RESTORA_CSS_VARIABLE, '"restora"')
+    document.body.style.setProperty(
+      RESTORA_CSS_VARIABLE,
+      '"restora", "restora Fallback", Georgia, "Times New Roman", serif',
+    )
     Object.defineProperty(document, "fonts", {
       configurable: true,
       value: { load: loadFontMock },
@@ -90,6 +93,7 @@ describe("useDeferredRestoraFonts", () => {
     expect(loadFontMock).toHaveBeenCalledWith(
       `${RESTORA_FONT_WEIGHTS.medium} 1em "restora"`,
     )
+    expect(loadFontMock).toHaveBeenCalledTimes(3)
 
     unmount()
     expect(document.documentElement).not.toHaveClass(

@@ -12,14 +12,15 @@ const loadRestoraFontWeights = (
   readyClassName: string,
 ) => {
   const documentRoot = document.documentElement
-  const restoraFontFamily = getComputedStyle(document.body)
+  const primaryRestoraFontFamily = getComputedStyle(document.body)
     .getPropertyValue(RESTORA_CSS_VARIABLE)
+    .split(",", 1)[0]
     .trim()
   let isCancelled = false
 
   void Promise.all(
     fontWeights.map((fontWeight) =>
-      document.fonts.load(`${fontWeight} 1em ${restoraFontFamily}`),
+      document.fonts.load(`${fontWeight} 1em ${primaryRestoraFontFamily}`),
     ),
   )
     .then((loadedFontFaces) => {

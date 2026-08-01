@@ -106,12 +106,13 @@ const verifyDeferredRestoraLoading = async (
   expect(
     await page.evaluate(
       ({ cssVariable, fontWeights }) => {
-        const restoraFontFamily = getComputedStyle(document.body)
+        const primaryRestoraFontFamily = getComputedStyle(document.body)
           .getPropertyValue(cssVariable)
+          .split(",", 1)[0]
           .trim()
 
         return fontWeights.every((fontWeight) =>
-          document.fonts.check(`${fontWeight} 1em ${restoraFontFamily}`),
+          document.fonts.check(`${fontWeight} 1em ${primaryRestoraFontFamily}`),
         )
       },
       {

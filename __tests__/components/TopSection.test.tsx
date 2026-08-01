@@ -31,46 +31,49 @@ vi.mock("@/components/Navbar", () => ({
   default: () => null,
 }))
 
-const introductionSegments = INTRO_BIO_SHORT.split(" · ")
+const [primaryIntroduction, ...supportingIntroductionSegments] =
+  INTRO_BIO_SHORT.split(" · ")
+const supportingIntroduction = supportingIntroductionSegments.join(" · ")
 
 describe("TopSection", () => {
   beforeEach(() => {
     reducedMotionPreference.value = false
   })
 
-  it("keeps the complete introduction semantic while enhanced motion runs", () => {
+  it("keeps the primary positioning visible while supporting motion runs", () => {
     render(<TopSection shouldRenderDeferredMotion={true} />)
 
-    const completeIntroduction = screen.getByRole("heading", {
+    const primaryPositioning = screen.getByRole("heading", {
       level: 1,
-      name: INTRO_BIO_SHORT,
+      name: primaryIntroduction,
     })
 
-    expect(completeIntroduction).toBeInTheDocument()
-    expect(completeIntroduction.closest(".opacity-0")).toBeNull()
-    expect(screen.getByText(introductionSegments.at(-1)!)).toBeInTheDocument()
-    expect(completeIntroduction.nextElementSibling).toHaveAttribute(
-      "aria-hidden",
-      "true",
-    )
+    expect(primaryPositioning).toBeInTheDocument()
+    expect(primaryPositioning.closest(".opacity-0")).toBeNull()
+    expect(screen.getByText(supportingIntroduction)).toHaveClass("sr-only")
+    expect(
+      screen.getByText(supportingIntroductionSegments.at(-1)!).parentElement,
+    ).toHaveAttribute("aria-hidden", "true")
   })
 
-  it("keeps the first positioning segment visible while motion is deferred", () => {
+  it("keeps the first supporting segment visible while motion is deferred", () => {
     render(<TopSection shouldRenderDeferredMotion={false} />)
 
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: INTRO_BIO_SHORT,
+        name: primaryIntroduction,
       }),
     ).toBeInTheDocument()
-    expect(screen.getByText(introductionSegments[0])).toBeInTheDocument()
     expect(
-      screen.queryByText(introductionSegments.at(-1)!),
+      screen.getByText(supportingIntroductionSegments[0]),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByText(supportingIntroductionSegments.at(-1)!),
     ).not.toBeInTheDocument()
   })
 
-  it("renders all positioning statically when motion is reduced", () => {
+  it("renders the complete supporting introduction statically when motion is reduced", () => {
     reducedMotionPreference.value = true
 
     render(<TopSection shouldRenderDeferredMotion={true} />)
@@ -78,12 +81,12 @@ describe("TopSection", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: INTRO_BIO_SHORT,
+        name: primaryIntroduction,
       }),
     ).toBeInTheDocument()
-    expect(screen.getAllByText(INTRO_BIO_SHORT)).toHaveLength(2)
+    expect(screen.getByText(supportingIntroduction)).not.toHaveClass("sr-only")
     expect(
-      screen.queryByText(introductionSegments.at(-1)!),
+      screen.queryByText(supportingIntroductionSegments.at(-1)!),
     ).not.toBeInTheDocument()
   })
 })

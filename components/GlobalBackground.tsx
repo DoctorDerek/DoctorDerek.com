@@ -3,13 +3,13 @@
 import { AnimatePresence, motion } from "motion/react"
 import dynamic from "next/dynamic"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
-import Background1 from "@/images/Background-1.svg"
-import Background2 from "@/images/Background-2.svg"
-import Background3 from "@/images/Background-3.svg"
-import Background4 from "@/images/Background-4.svg"
-import Background5 from "@/images/Background-5.svg"
-import Background6 from "@/images/Background-6.svg"
-import Background0 from "@/images/Background.svg"
+import Background1 from "@/images/Background-1.svg?url"
+import Background2 from "@/images/Background-2.svg?url"
+import Background3 from "@/images/Background-3.svg?url"
+import Background4 from "@/images/Background-4.svg?url"
+import Background5 from "@/images/Background-5.svg?url"
+import Background6 from "@/images/Background-6.svg?url"
+import Background0 from "@/images/Background.svg?url"
 import { GlobalStateContext } from "@/machines/globalMachine"
 
 const ParticleCanvas = dynamic(() => import("@/components/ParticleCanvas"), {
@@ -41,7 +41,7 @@ export default function GlobalBackground({
 
   const bgConfig = BACKGROUNDS[bgIndex]
   const useInverse = bgConfig.inverse && bgUseInverse
-  const Component =
+  const activeBackground =
     useInverse && bgConfig.inverse ? bgConfig.inverse : bgConfig.standard
   const key = `bg-${bgIndex}-${useInverse ? "inverse" : "standard"}`
 
@@ -60,9 +60,11 @@ export default function GlobalBackground({
           }}
           className="absolute inset-0 h-full w-full mix-blend-overlay"
         >
-          <Component
+          <motion.img
+            src={activeBackground}
+            alt=""
+            aria-hidden="true"
             className="h-full w-full object-cover"
-            preserveAspectRatio="xMidYMid slice"
           />
         </motion.div>
       </AnimatePresence>

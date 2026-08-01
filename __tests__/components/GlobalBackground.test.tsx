@@ -17,29 +17,32 @@ vi.mock("motion/react", () => ({
       children: React.ReactNode
       transition: { duration: number }
     }) => <div data-transition-duration={transition.duration}>{children}</div>,
+    img: ({ src, alt }: { src: string; alt: string }) => (
+      <img src={src} alt={alt} />
+    ),
   },
 }))
 
-vi.mock("@/images/Background.svg", () => ({
-  default: () => <svg aria-label="Background zero" />,
+vi.mock("@/images/Background.svg?url", () => ({
+  default: "/background-zero.svg",
 }))
-vi.mock("@/images/Background-1.svg", () => ({
-  default: () => <svg aria-label="Background one" />,
+vi.mock("@/images/Background-1.svg?url", () => ({
+  default: "/background-one.svg",
 }))
-vi.mock("@/images/Background-2.svg", () => ({
-  default: () => <svg aria-label="Background two" />,
+vi.mock("@/images/Background-2.svg?url", () => ({
+  default: "/background-two.svg",
 }))
-vi.mock("@/images/Background-3.svg", () => ({
-  default: () => <svg aria-label="Background three" />,
+vi.mock("@/images/Background-3.svg?url", () => ({
+  default: "/background-three.svg",
 }))
-vi.mock("@/images/Background-4.svg", () => ({
-  default: () => <svg aria-label="Background four" />,
+vi.mock("@/images/Background-4.svg?url", () => ({
+  default: "/background-four.svg",
 }))
-vi.mock("@/images/Background-5.svg", () => ({
-  default: () => <svg aria-label="Background five" />,
+vi.mock("@/images/Background-5.svg?url", () => ({
+  default: "/background-five.svg",
 }))
-vi.mock("@/images/Background-6.svg", () => ({
-  default: () => <svg aria-label="Background six" />,
+vi.mock("@/images/Background-6.svg?url", () => ({
+  default: "/background-six.svg",
 }))
 
 vi.mock("@/machines/globalMachine", () => ({
@@ -97,16 +100,25 @@ describe("GlobalBackground", () => {
     backgroundState.bgIndex = 0
     backgroundState.bgUseInverse = true
 
-    render(<GlobalBackground shouldRenderParticles={true} />)
+    const { container } = render(
+      <GlobalBackground shouldRenderParticles={true} />,
+    )
 
-    expect(screen.getByLabelText("Background one")).toBeInTheDocument()
-    expect(screen.queryByLabelText("Background zero")).not.toBeInTheDocument()
+    expect(container.querySelector("img")).toHaveAttribute(
+      "src",
+      "/background-one.svg",
+    )
   })
 
   it("defers particle work while preserving the active background", () => {
-    render(<GlobalBackground shouldRenderParticles={false} />)
+    const { container } = render(
+      <GlobalBackground shouldRenderParticles={false} />,
+    )
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
-    expect(screen.getByLabelText("Background three")).toBeInTheDocument()
+    expect(container.querySelector("img")).toHaveAttribute(
+      "src",
+      "/background-three.svg",
+    )
   })
 })

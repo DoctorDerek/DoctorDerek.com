@@ -4,7 +4,6 @@ import dynamic from "next/dynamic"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import Logo from "@/components/ui/Logo"
 import { INTRO_BIO_SHORT } from "@/constants/SITE_CONTENT"
-import useDeferredClientFeature from "@/hooks/useDeferredClientFeature"
 import Navbar from "./Navbar"
 
 const IntroTypewriter = dynamic(() => import("@/components/IntroTypewriter"), {
@@ -15,9 +14,12 @@ const [PRIMARY_INTRODUCTION, ...SUPPORTING_INTRODUCTION_SEGMENTS] =
   INTRO_BIO_SHORT.split(" · ")
 const SUPPORTING_INTRODUCTION = SUPPORTING_INTRODUCTION_SEGMENTS.join(" · ")
 
-export default function TopSection() {
+export default function TopSection({
+  shouldRenderDeferredMotion,
+}: {
+  shouldRenderDeferredMotion: boolean
+}) {
   const { shouldReduceMotion } = useMotionPreference()
-  const isDeferredClientFeatureReady = useDeferredClientFeature()
 
   return (
     <div className="absolute inset-0 flex h-full w-full flex-col">
@@ -39,7 +41,7 @@ export default function TopSection() {
                 aria-hidden="true"
                 className="mt-3 min-h-[3rem] text-base md:min-h-[4rem] md:text-xl lg:text-2xl"
               >
-                {isDeferredClientFeatureReady ? (
+                {shouldRenderDeferredMotion ? (
                   <IntroTypewriter
                     segments={SUPPORTING_INTRODUCTION_SEGMENTS}
                   />

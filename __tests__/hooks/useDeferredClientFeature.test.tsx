@@ -26,11 +26,22 @@ describe("useDeferredClientFeature", () => {
 
     const { result, unmount } = renderHook(() => useDeferredClientFeature())
 
-    expect(result.current).toBe(false)
+    expect(result.current).toEqual({
+      isPostLoadIdleReady: false,
+      hasMeaningfulUserIntent: false,
+    })
     act(() => idleCallback?.(idleDeadline))
-    expect(result.current).toBe(false)
+    expect(result.current).toEqual({
+      isPostLoadIdleReady: true,
+      hasMeaningfulUserIntent: false,
+    })
     act(() => window.dispatchEvent(new PointerEvent("pointermove")))
-    expect(result.current).toBe(true)
+    expect(result.current.hasMeaningfulUserIntent).toBe(false)
+    act(() => window.dispatchEvent(new PointerEvent("pointerdown")))
+    expect(result.current).toEqual({
+      isPostLoadIdleReady: true,
+      hasMeaningfulUserIntent: true,
+    })
 
     unmount()
     expect(cancelIdleCallback).toHaveBeenCalledWith(7)
@@ -50,13 +61,22 @@ describe("useDeferredClientFeature", () => {
 
     const { result, unmount } = renderHook(() => useDeferredClientFeature())
 
-    expect(result.current).toBe(false)
+    expect(result.current).toEqual({
+      isPostLoadIdleReady: false,
+      hasMeaningfulUserIntent: false,
+    })
     act(() => window.dispatchEvent(new PointerEvent("pointerdown")))
-    expect(result.current).toBe(false)
+    expect(result.current).toEqual({
+      isPostLoadIdleReady: false,
+      hasMeaningfulUserIntent: true,
+    })
     act(() => window.dispatchEvent(new Event("load")))
     expect(requestAnimationFrame).toHaveBeenCalledOnce()
     act(() => animationFrameCallback?.(0))
-    expect(result.current).toBe(true)
+    expect(result.current).toEqual({
+      isPostLoadIdleReady: true,
+      hasMeaningfulUserIntent: true,
+    })
 
     unmount()
     expect(cancelAnimationFrame).toHaveBeenCalledWith(11)

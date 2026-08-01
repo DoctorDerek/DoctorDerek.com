@@ -4,25 +4,27 @@ import dynamic from "next/dynamic"
 import GlobalBackground from "@/components/GlobalBackground"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import CustomCursor from "@/components/ui/CustomCursor"
-import useDeferredClientFeature from "@/hooks/useDeferredClientFeature"
 
 const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
   ssr: false,
 })
 
-export default function MotionAwareAmbience() {
+export default function MotionAwareAmbience({
+  shouldRenderDeferredMotion,
+}: {
+  shouldRenderDeferredMotion: boolean
+}) {
   const { shouldReduceMotion } = useMotionPreference()
-  const isDeferredClientFeatureReady = useDeferredClientFeature()
 
   return (
     <>
       <GlobalBackground
         shouldRenderParticles={
-          !shouldReduceMotion && isDeferredClientFeatureReady
+          !shouldReduceMotion && shouldRenderDeferredMotion
         }
       />
       {!shouldReduceMotion && <CustomCursor />}
-      {!shouldReduceMotion && isDeferredClientFeatureReady && <RiveAnimation />}
+      {!shouldReduceMotion && shouldRenderDeferredMotion && <RiveAnimation />}
     </>
   )
 }

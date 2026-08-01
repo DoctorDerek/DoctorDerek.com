@@ -2,35 +2,25 @@
 
 import { useEffect, useState } from "react"
 
-const PASSIVE_USER_INTENT_EVENTS = [
-  "pointermove",
-  "pointerdown",
-  "wheel",
-] as const
+const MEANINGFUL_USER_INTENT_EVENTS = ["pointerdown", "wheel"] as const
 
 export default function useDeferredClientFeature() {
-  const [isDeferredClientFeatureReady, setIsDeferredClientFeatureReady] =
-    useState(false)
-  const [hasUserIntent, setHasUserIntent] = useState(false)
+  const [isPostLoadIdleReady, setIsPostLoadIdleReady] = useState(false)
+  const [hasMeaningfulUserIntent, setHasMeaningfulUserIntent] = useState(false)
 
   useEffect(() => {
     let idleCallbackId: number | undefined
     let animationFrameId: number | undefined
 
-    const markDeferredClientFeatureReady = () =>
-      setIsDeferredClientFeatureReady(true)
+    const markPostLoadIdleReady = () => setIsPostLoadIdleReady(true)
 
     const scheduleDeferredClientFeature = () => {
       if (typeof window.requestIdleCallback === "function") {
-        idleCallbackId = window.requestIdleCallback(
-          markDeferredClientFeatureReady,
-        )
+        idleCallbackId = window.requestIdleCallback(markPostLoadIdleReady)
         return
       }
 
-      animationFrameId = window.requestAnimationFrame(
-        markDeferredClientFeatureReady,
-      )
+      animationFrameId = window.requestAnimationFrame(markPostLoadIdleReady)
     }
 
     if (document.readyState === "complete") scheduleDeferredClientFeature()
@@ -49,22 +39,24 @@ export default function useDeferredClientFeature() {
   }, [])
 
   useEffect(() => {
-    if (hasUserIntent) return
+    if (hasMeaningfulUserIntent) return
 
-    const captureUserIntent = () => setHasUserIntent(true)
+    const captureMeaningfulUserIntent = () => setHasMeaningfulUserIntent(true)
 
-    PASSIVE_USER_INTENT_EVENTS.forEach((eventName) =>
-      window.addEventListener(eventName, captureUserIntent, { passive: true }),
+    MEANINGFUL_USER_INTENT_EVENTS.forEach((eventName) =>
+      window.addEventListener(eventName, captureMeaningfulUserIntent, {
+        passive: true,
+      }),
     )
-    window.addEventListener("keydown", captureUserIntent)
+    window.addEventListener("keydown", captureMeaningfulUserIntent)
 
     return () => {
-      PASSIVE_USER_INTENT_EVENTS.forEach((eventName) =>
-        window.removeEventListener(eventName, captureUserIntent),
+      MEANINGFUL_USER_INTENT_EVENTS.forEach((eventName) =>
+        window.removeEventListener(eventName, captureMeaningfulUserIntent),
       )
-      window.removeEventListener("keydown", captureUserIntent)
+      window.removeEventListener("keydown", captureMeaningfulUserIntent)
     }
-  }, [hasUserIntent])
+  }, [hasMeaningfulUserIntent])
 
-  return isDeferredClientFeatureReady && hasUserIntent
+  return { isPostLoadIdleReady, hasMeaningfulUserIntent }
 }

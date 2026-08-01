@@ -199,6 +199,8 @@ https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
 /* HTML scroll behavior and font */
 html,
 body {
+  height: 100%;
+  overflow: hidden;
   scroll-behavior: smooth;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   color: var(--site-foreground);

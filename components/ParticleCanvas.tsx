@@ -7,6 +7,7 @@ const REPULSION_STRENGTH = 8
 const DAMPING = 0.92
 const SPRING_BACK = 0.02
 const GLOW_RADIUS_MULTIPLIER = 1.5
+const INITIAL_SPAWN_BAND_HEIGHT_RATIO = 0.25
 
 const MAPACHITO_VIVID_COLORS = [
   "rgba(0, 139, 139, 0.6)",
@@ -34,7 +35,9 @@ class Particle {
 
   constructor(canvasWidth: number, canvasHeight: number) {
     this.x = Math.random() * canvasWidth
-    this.y = Math.random() * canvasHeight
+    this.y =
+      canvasHeight +
+      Math.random() * canvasHeight * INITIAL_SPAWN_BAND_HEIGHT_RATIO
     this.homeX = this.x
     this.homeY = this.y
     this.vx = 0

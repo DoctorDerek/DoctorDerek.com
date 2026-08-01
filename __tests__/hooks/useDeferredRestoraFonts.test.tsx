@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react"
+import { act, renderHook, waitFor } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import {
   RESTORA_CSS_VARIABLE,
@@ -95,6 +95,60 @@ describe("useDeferredRestoraFonts", () => {
     expect(document.documentElement).not.toHaveClass(
       RESTORA_READY_CLASSES.display,
       RESTORA_READY_CLASSES.text,
+    )
+  })
+
+  it("preserves fallback typography when a licensed face cannot load", async () => {
+    loadFontMock.mockRejectedValueOnce(new Error("Font unavailable"))
+    document.documentElement.classList.add(RESTORA_READY_CLASSES.display)
+
+    renderHook(() =>
+      useDeferredRestoraFonts({
+        hasMeaningfulUserIntent: false,
+        isPostLoadIdleReady: true,
+      }),
+    )
+
+    await waitFor(() =>
+      expect(document.documentElement).not.toHaveClass(
+        RESTORA_READY_CLASSES.display,
+      ),
+    )
+  })
+
+  it("does not reveal an unavailable or stale font face", async () => {
+    loadFontMock.mockResolvedValueOnce([])
+    const unavailableFont = renderHook(() =>
+      useDeferredRestoraFonts({
+        hasMeaningfulUserIntent: false,
+        isPostLoadIdleReady: true,
+      }),
+    )
+
+    await waitFor(() => expect(loadFontMock).toHaveBeenCalledOnce())
+    expect(document.documentElement).not.toHaveClass(
+      RESTORA_READY_CLASSES.display,
+    )
+    unavailableFont.unmount()
+
+    let resolveStaleFont: ((fontFaces: FontFace[]) => void) | undefined
+    loadFontMock.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveStaleFont = resolve
+        }),
+    )
+    const staleFont = renderHook(() =>
+      useDeferredRestoraFonts({
+        hasMeaningfulUserIntent: false,
+        isPostLoadIdleReady: true,
+      }),
+    )
+
+    staleFont.unmount()
+    await act(async () => resolveStaleFont?.([{} as FontFace]))
+    expect(document.documentElement).not.toHaveClass(
+      RESTORA_READY_CLASSES.display,
     )
   })
 })

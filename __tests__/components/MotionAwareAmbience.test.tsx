@@ -2,8 +2,7 @@ import { render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 
-const { deferredClientFeature, reducedMotionPreference } = vi.hoisted(() => ({
-  deferredClientFeature: { isReady: true },
+const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
 }))
 
@@ -34,18 +33,13 @@ vi.mock("@/components/ui/CustomCursor", () => ({
   default: () => <p>Custom cursor</p>,
 }))
 
-vi.mock("@/hooks/useDeferredClientFeature", () => ({
-  default: () => deferredClientFeature.isReady,
-}))
-
 describe("MotionAwareAmbience", () => {
   beforeEach(() => {
-    deferredClientFeature.isReady = true
     reducedMotionPreference.value = false
   })
 
   it("renders the complete ambient experience when enhancements are ready", () => {
-    render(<MotionAwareAmbience />)
+    render(<MotionAwareAmbience shouldRenderDeferredMotion={true} />)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-particles-ready",
@@ -56,9 +50,7 @@ describe("MotionAwareAmbience", () => {
   })
 
   it("waits for deferred readiness while preserving the background and cursor", () => {
-    deferredClientFeature.isReady = false
-
-    render(<MotionAwareAmbience />)
+    render(<MotionAwareAmbience shouldRenderDeferredMotion={false} />)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-particles-ready",
@@ -70,7 +62,7 @@ describe("MotionAwareAmbience", () => {
 
   it("omits continuous visual ambience when motion is reduced", () => {
     reducedMotionPreference.value = true
-    render(<MotionAwareAmbience />)
+    render(<MotionAwareAmbience shouldRenderDeferredMotion={true} />)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-particles-ready",

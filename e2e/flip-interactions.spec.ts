@@ -1,4 +1,8 @@
 import { expect, test, type Page } from "@playwright/test"
+import {
+  LOGO_CONTROL_ACCESSIBLE_NAMES,
+  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
+} from "@/constants/INTERACTIONS"
 
 const VERCEL_TOOLBAR_STORAGE_ERROR =
   "TypeError: undefined is not an object (evaluating 'navigator.storage.persisted')"
@@ -38,7 +42,7 @@ test("previews the logo and activates it through pointer and keyboard input", as
 
   const primaryLogoControl = page
     .getByRole("button", {
-      name: "Show alternate DoctorDerek.com logo",
+      name: LOGO_CONTROL_ACCESSIBLE_NAMES.showAlternative,
     })
     .first()
   const primaryLogoPreview = primaryLogoControl.locator(".flip-preview-visual")
@@ -58,23 +62,35 @@ test("previews the logo and activates it through pointer and keyboard input", as
 
   await primaryLogoControl.click()
   expect(pageErrors).toEqual([])
-
   const alternateLogoControl = page
     .getByRole("button", {
-      name: "Show primary DoctorDerek.com logo",
+      name: LOGO_CONTROL_ACCESSIBLE_NAMES.showPrimary,
     })
     .first()
   await expect(alternateLogoControl).toHaveAttribute("aria-pressed", "true")
+  await expect
+    .poll(() =>
+      alternateLogoControl
+        .locator(".wrapper")
+        .evaluate((card) => (card as HTMLElement).style.transform),
+    )
+    .toBe("rotateY(180deg)")
 
   await alternateLogoControl.press("Enter")
 
-  await expect(
-    page
-      .getByRole("button", {
-        name: "Show alternate DoctorDerek.com logo",
-      })
-      .first(),
-  ).toHaveAttribute("aria-pressed", "false")
+  const restoredLogoControl = page
+    .getByRole("button", {
+      name: LOGO_CONTROL_ACCESSIBLE_NAMES.showAlternative,
+    })
+    .first()
+  await expect(restoredLogoControl).toHaveAttribute("aria-pressed", "false")
+  await expect
+    .poll(() =>
+      restoredLogoControl
+        .locator(".wrapper")
+        .evaluate((card) => (card as HTMLElement).style.transform),
+    )
+    .toBe("rotateY(360deg)")
   expect(pageErrors).toEqual([])
 })
 
@@ -87,7 +103,7 @@ test("keeps the flip preview static under reduced motion", async ({ page }) => {
 
   const logoControl = page
     .getByRole("button", {
-      name: "Show alternate DoctorDerek.com logo",
+      name: LOGO_CONTROL_ACCESSIBLE_NAMES.showAlternative,
     })
     .first()
   const logoPreview = logoControl.locator(".flip-preview-visual")
@@ -110,7 +126,7 @@ test("keeps the flip preview static under reduced motion", async ({ page }) => {
   await expect(
     page
       .getByRole("button", {
-        name: "Show primary DoctorDerek.com logo",
+        name: LOGO_CONTROL_ACCESSIBLE_NAMES.showPrimary,
       })
       .first(),
   ).toHaveAttribute("aria-pressed", "true")
@@ -132,7 +148,7 @@ test.describe("touch portrait controls", () => {
     await openSectionWithTouch(page, "About", "about")
 
     const aboutPortraitControl = page.getByRole("button", {
-      name: "Show next portrait of Dr. Derek Austin",
+      name: PORTRAIT_CONTROL_ACCESSIBLE_NAMES.about,
     })
     const aboutPortraitCard = aboutPortraitControl.locator(
       ".flip-preview-visual > div",
@@ -150,7 +166,7 @@ test.describe("touch portrait controls", () => {
     await expect(page.locator("body")).toHaveClass(/fp-viewing-contact/)
 
     const contactPortraitControl = page.getByRole("button", {
-      name: "Flip portrait of Dr. Derek Austin",
+      name: PORTRAIT_CONTROL_ACCESSIBLE_NAMES.contact,
     })
     await contactPortraitControl.tap()
 
@@ -167,6 +183,19 @@ test.describe("touch portrait controls", () => {
     )
     await expect(contactPortraitMosaic).toBeVisible()
     await expect(contactPortraitMosaic.locator("img")).toHaveCount(3)
+
+    await contactPortraitControl.tap()
+    await expect(contactPortraitControl).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    )
+    await expect
+      .poll(() =>
+        contactPortraitControl
+          .locator(".wrapper")
+          .evaluate((card) => (card as HTMLElement).style.transform),
+      )
+      .toBe("rotateY(360deg)")
     expect(pageErrors).toEqual([])
   })
 })

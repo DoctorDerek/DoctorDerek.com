@@ -8,9 +8,8 @@ import {
   type ReactNode,
 } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
+import { FLIP_PREVIEW_ROTATION_DEGREES } from "@/constants/INTERACTIONS"
 import classNames from "@/utils/classNames"
-
-const FLIP_PREVIEW_ROTATION = -12
 
 const FLIP_PREVIEW_TRANSITION = {
   type: "spring",
@@ -81,7 +80,9 @@ export default function FlipPreview({
           className="flip-preview-visual pointer-events-none h-full w-full"
           animate={{
             rotateY:
-              shouldReduceMotion || !isPreviewing ? 0 : FLIP_PREVIEW_ROTATION,
+              shouldReduceMotion || !isPreviewing
+                ? 0
+                : FLIP_PREVIEW_ROTATION_DEGREES,
           }}
           transition={
             shouldReduceMotion ? { duration: 0 } : FLIP_PREVIEW_TRANSITION

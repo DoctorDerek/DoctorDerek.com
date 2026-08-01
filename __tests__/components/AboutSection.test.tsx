@@ -2,11 +2,8 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import AboutSection from "@/components/AboutSection"
-import {
-  ABOUT_PORTRAITS,
-  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
-  PORTRAIT_IMAGE_SIZES,
-} from "@/constants/PORTRAITS"
+import { PORTRAIT_CONTROL_ACCESSIBLE_NAMES } from "@/constants/INTERACTIONS"
+import { ABOUT_PORTRAITS, PORTRAIT_IMAGE_SIZES } from "@/constants/PORTRAITS"
 import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({

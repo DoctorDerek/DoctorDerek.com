@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import scheduleIdleWork from "@/utils/scheduleIdleWork"
 
 const MEANINGFUL_USER_INTENT_EVENTS = ["pointerdown", "wheel"] as const
 
@@ -9,18 +10,11 @@ export default function useDeferredClientFeature() {
   const [hasMeaningfulUserIntent, setHasMeaningfulUserIntent] = useState(false)
 
   useEffect(() => {
-    let idleCallbackId: number | undefined
-    let animationFrameId: number | undefined
+    let cancelScheduledIdleWork: (() => void) | undefined
 
     const markPostLoadIdleReady = () => setIsPostLoadIdleReady(true)
-
     const scheduleDeferredClientFeature = () => {
-      if (typeof window.requestIdleCallback === "function") {
-        idleCallbackId = window.requestIdleCallback(markPostLoadIdleReady)
-        return
-      }
-
-      animationFrameId = window.requestAnimationFrame(markPostLoadIdleReady)
+      cancelScheduledIdleWork = scheduleIdleWork(markPostLoadIdleReady)
     }
 
     if (document.readyState === "complete") scheduleDeferredClientFeature()
@@ -31,10 +25,7 @@ export default function useDeferredClientFeature() {
 
     return () => {
       window.removeEventListener("load", scheduleDeferredClientFeature)
-      if (idleCallbackId !== undefined)
-        window.cancelIdleCallback(idleCallbackId)
-      if (animationFrameId !== undefined)
-        window.cancelAnimationFrame(animationFrameId)
+      cancelScheduledIdleWork?.()
     }
   }, [])
 

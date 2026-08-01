@@ -5,9 +5,12 @@ import FlipPreview from "@/components/ui/FlipPreview"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
 import {
+  FLIP_ACTIVATION_ROTATION_DEGREES,
+  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
+} from "@/constants/INTERACTIONS"
+import {
   CONTACT_COLLAGE_PORTRAITS,
   CONTACT_PORTRAIT,
-  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
   PORTRAIT_IMAGE_SIZES,
 } from "@/constants/PORTRAITS"
 import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
@@ -15,7 +18,8 @@ import classNames from "@/utils/classNames"
 
 export default function ContactSection() {
   const { shouldReduceMotion } = useMotionPreference()
-  const [isFlipped, setIsFlipped] = useState(false)
+  const [flipCount, setFlipCount] = useState(0)
+  const isFlipped = flipCount % 2 === 1
 
   return (
     <div className="flex min-h-full w-full py-10 md:py-20">
@@ -37,13 +41,13 @@ export default function ContactSection() {
               className="w-full"
               isPressed={isFlipped}
               onActivate={() =>
-                setIsFlipped((currentIsFlipped) => !currentIsFlipped)
+                setFlipCount((currentFlipCount) => currentFlipCount + 1)
               }
             >
               <div
                 className="wrapper relative aspect-square w-full max-w-[488px]"
                 style={{
-                  transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                  transform: `rotateY(${flipCount * FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
                   transition: shouldReduceMotion
                     ? "none"
                     : "transform 0.8s ease-out",
@@ -72,7 +76,7 @@ export default function ContactSection() {
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
+                    transform: `rotateY(${FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
                   }}
                 >
                   <div

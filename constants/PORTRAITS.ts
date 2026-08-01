@@ -23,11 +23,6 @@ type ContactCollagePortrait = Portrait & {
   sizes: string
 }
 
-export const PORTRAIT_CONTROL_ACCESSIBLE_NAMES = {
-  about: "Show next portrait of Dr. Derek Austin",
-  contact: "Flip portrait of Dr. Derek Austin",
-} as const
-
 export const PORTRAIT_IMAGE_SIZES = {
   about: "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw",
   contactFull: "(max-width: 767px) 43vw, 488px",

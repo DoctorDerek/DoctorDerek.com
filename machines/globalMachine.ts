@@ -8,6 +8,7 @@ export const globalMachine = setup({
     context: {} as {
       bgIndex: number
       bgUseInverse: boolean
+      logoFlipCount: number
     },
     events: {} as { type: "TOGGLE_LOGO" } | { type: "CYCLE_BACKGROUND" },
   },
@@ -20,6 +21,9 @@ export const globalMachine = setup({
         bgUseInverse: useInverse,
       }
     }),
+    incrementLogoFlipCount: assign({
+      logoFlipCount: ({ context }) => context.logoFlipCount + 1,
+    }),
   },
 }).createMachine({
   id: "global",
@@ -27,6 +31,7 @@ export const globalMachine = setup({
   context: {
     bgIndex: 0,
     bgUseInverse: false,
+    logoFlipCount: 0,
   },
   states: {
     logo: {
@@ -34,12 +39,18 @@ export const globalMachine = setup({
       states: {
         alternative: {
           on: {
-            TOGGLE_LOGO: "cropped",
+            TOGGLE_LOGO: {
+              actions: "incrementLogoFlipCount",
+              target: "cropped",
+            },
           },
         },
         cropped: {
           on: {
-            TOGGLE_LOGO: "alternative",
+            TOGGLE_LOGO: {
+              actions: "incrementLogoFlipCount",
+              target: "alternative",
+            },
           },
         },
       },

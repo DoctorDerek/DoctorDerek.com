@@ -1,5 +1,9 @@
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
+import {
+  FLIP_ACTIVATION_ROTATION_DEGREES,
+  LOGO_CONTROL_ACCESSIBLE_NAMES,
+} from "@/constants/INTERACTIONS"
 import LogoDefault from "@/images/Logo-Default-Landscape.svg"
 import LogoSecondary from "@/images/Logo-Secondary-Portrait.svg"
 import { GlobalStateContext } from "@/machines/globalMachine"
@@ -14,14 +18,17 @@ export default function Logo({ className }: LogoProps) {
   const isAlternative = GlobalStateContext.useSelector((state) =>
     state.matches({ logo: "alternative" }),
   )
+  const logoFlipCount = GlobalStateContext.useSelector(
+    (state) => state.context.logoFlipCount,
+  )
   const send = GlobalStateContext.useActorRef().send
 
   return (
     <FlipPreview
       accessibleName={
         isAlternative
-          ? "Show alternate DoctorDerek.com logo"
-          : "Show primary DoctorDerek.com logo"
+          ? LOGO_CONTROL_ACCESSIBLE_NAMES.showAlternative
+          : LOGO_CONTROL_ACCESSIBLE_NAMES.showPrimary
       }
       containerClassName={classNames("site-logo", className)}
       className="h-full w-full"
@@ -31,7 +38,7 @@ export default function Logo({ className }: LogoProps) {
       <div
         className="wrapper relative h-full w-full"
         style={{
-          transform: isAlternative ? "rotateY(0deg)" : "rotateY(180deg)",
+          transform: `rotateY(${logoFlipCount * FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
           transition: shouldReduceMotion ? "none" : "transform 0.8s ease-out",
           transformStyle: "preserve-3d",
         }}
@@ -50,7 +57,7 @@ export default function Logo({ className }: LogoProps) {
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
+            transform: `rotateY(${FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
           }}
         >
           <LogoSecondary className="h-full w-full object-contain" />

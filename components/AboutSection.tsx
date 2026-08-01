@@ -4,10 +4,10 @@ import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
 import SectionHeading from "@/components/ui/SectionHeading"
 import {
-  ABOUT_PORTRAITS,
+  FLIP_ACTIVATION_ROTATION_DEGREES,
   PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
-  PORTRAIT_IMAGE_SIZES,
-} from "@/constants/PORTRAITS"
+} from "@/constants/INTERACTIONS"
+import { ABOUT_PORTRAITS, PORTRAIT_IMAGE_SIZES } from "@/constants/PORTRAITS"
 import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
 
 export default function AboutSection() {
@@ -44,7 +44,7 @@ export default function AboutSection() {
               <div
                 className="relative aspect-square w-full cursor-pointer"
                 style={{
-                  transform: `rotateY(${flipCount * 180}deg)`,
+                  transform: `rotateY(${flipCount * FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
                   transition: shouldReduceMotion
                     ? "none"
                     : "transform 0.8s ease-out",
@@ -73,7 +73,7 @@ export default function AboutSection() {
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
+                    transform: `rotateY(${FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
                   }}
                 >
                   <Image

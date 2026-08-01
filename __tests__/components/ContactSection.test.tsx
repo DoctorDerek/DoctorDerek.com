@@ -2,10 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { createElement, type ComponentProps } from "react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import ContactSection from "@/components/ContactSection"
+import { PORTRAIT_CONTROL_ACCESSIBLE_NAMES } from "@/constants/INTERACTIONS"
 import {
   CONTACT_COLLAGE_PORTRAITS,
   CONTACT_PORTRAIT,
-  PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
   PORTRAIT_IMAGE_SIZES,
 } from "@/constants/PORTRAITS"
 import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
@@ -86,6 +86,11 @@ describe("ContactSection", () => {
 
     expect(portraitControl).toHaveAttribute("aria-pressed", "true")
     expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
+
+    fireEvent.click(portraitControl)
+
+    expect(portraitControl).toHaveAttribute("aria-pressed", "false")
+    expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
   })
 
   it("keeps the reverse portrait face available at every breakpoint", () => {

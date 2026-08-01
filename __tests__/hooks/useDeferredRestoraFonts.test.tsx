@@ -1,9 +1,9 @@
 import { act, renderHook, waitFor } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import {
-  RESTORA_CSS_VARIABLE,
-  RESTORA_FONT_WEIGHTS,
   RESTORA_READY_CLASSES,
+  RESTORA_TEXT_CSS_VARIABLE,
+  RESTORA_TEXT_FONT_WEIGHTS,
 } from "@/constants/TYPOGRAPHY"
 import useDeferredRestoraFonts from "@/hooks/useDeferredRestoraFonts"
 
@@ -12,10 +12,11 @@ const originalDocumentFonts = Object.getOwnPropertyDescriptor(document, "fonts")
 
 describe("useDeferredRestoraFonts", () => {
   beforeEach(() => {
-    loadFontMock.mockClear()
+    loadFontMock.mockReset()
+    loadFontMock.mockResolvedValue([{} as FontFace])
     document.body.style.setProperty(
-      RESTORA_CSS_VARIABLE,
-      '"restora", "restora Fallback", Georgia, "Times New Roman", serif',
+      RESTORA_TEXT_CSS_VARIABLE,
+      '"restoraText", "restoraText Fallback", Georgia, "Times New Roman", serif',
     )
     Object.defineProperty(document, "fonts", {
       configurable: true,
@@ -24,17 +25,14 @@ describe("useDeferredRestoraFonts", () => {
   })
 
   afterEach(() => {
-    document.documentElement.classList.remove(
-      RESTORA_READY_CLASSES.display,
-      RESTORA_READY_CLASSES.text,
-    )
-    document.body.style.removeProperty(RESTORA_CSS_VARIABLE)
+    document.documentElement.classList.remove(RESTORA_READY_CLASSES.text)
+    document.body.style.removeProperty(RESTORA_TEXT_CSS_VARIABLE)
     if (originalDocumentFonts)
       Object.defineProperty(document, "fonts", originalDocumentFonts)
     else Reflect.deleteProperty(document, "fonts")
   })
 
-  it("keeps every licensed font dormant before post-load idle", () => {
+  it("keeps deferred text fonts dormant before post-load idle and intent", () => {
     renderHook(() =>
       useDeferredRestoraFonts({
         hasMeaningfulUserIntent: false,
@@ -43,13 +41,10 @@ describe("useDeferredRestoraFonts", () => {
     )
 
     expect(loadFontMock).not.toHaveBeenCalled()
-    expect(document.documentElement).not.toHaveClass(
-      RESTORA_READY_CLASSES.display,
-      RESTORA_READY_CLASSES.text,
-    )
+    expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
   })
 
-  it("loads ExtraBold after idle and Regular plus Medium after intent", async () => {
+  it("loads Regular and Medium only after post-load idle and intent", async () => {
     const { rerender, unmount } = renderHook(
       ({ hasMeaningfulUserIntent, isPostLoadIdleReady }) =>
         useDeferredRestoraFonts({
@@ -69,14 +64,7 @@ describe("useDeferredRestoraFonts", () => {
       isPostLoadIdleReady: true,
     })
 
-    await waitFor(() =>
-      expect(document.documentElement).toHaveClass(
-        RESTORA_READY_CLASSES.display,
-      ),
-    )
-    expect(loadFontMock).toHaveBeenCalledWith(
-      `${RESTORA_FONT_WEIGHTS.extraBold} 1em "restora"`,
-    )
+    expect(loadFontMock).not.toHaveBeenCalled()
     expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
 
     rerender({
@@ -88,71 +76,70 @@ describe("useDeferredRestoraFonts", () => {
       expect(document.documentElement).toHaveClass(RESTORA_READY_CLASSES.text),
     )
     expect(loadFontMock).toHaveBeenCalledWith(
-      `${RESTORA_FONT_WEIGHTS.regular} 1em "restora"`,
+      `${RESTORA_TEXT_FONT_WEIGHTS.regular} 1em "restoraText"`,
     )
     expect(loadFontMock).toHaveBeenCalledWith(
-      `${RESTORA_FONT_WEIGHTS.medium} 1em "restora"`,
+      `${RESTORA_TEXT_FONT_WEIGHTS.medium} 1em "restoraText"`,
     )
-    expect(loadFontMock).toHaveBeenCalledTimes(3)
+    expect(loadFontMock).toHaveBeenCalledTimes(2)
 
     unmount()
-    expect(document.documentElement).not.toHaveClass(
-      RESTORA_READY_CLASSES.display,
-      RESTORA_READY_CLASSES.text,
-    )
+    expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
   })
 
   it("preserves fallback typography when a licensed face cannot load", async () => {
-    loadFontMock.mockRejectedValueOnce(new Error("Font unavailable"))
-    document.documentElement.classList.add(RESTORA_READY_CLASSES.display)
+    loadFontMock.mockImplementation(() =>
+      Promise.reject(new Error("Font unavailable")),
+    )
+    document.documentElement.classList.add(RESTORA_READY_CLASSES.text)
 
     renderHook(() =>
       useDeferredRestoraFonts({
-        hasMeaningfulUserIntent: false,
+        hasMeaningfulUserIntent: true,
         isPostLoadIdleReady: true,
       }),
     )
 
-    await waitFor(() =>
-      expect(document.documentElement).not.toHaveClass(
-        RESTORA_READY_CLASSES.display,
-      ),
-    )
+    await waitFor(() => expect(loadFontMock).toHaveBeenCalledTimes(2))
+    expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
   })
 
   it("does not reveal an unavailable or stale font face", async () => {
-    loadFontMock.mockResolvedValueOnce([])
+    loadFontMock
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([{} as FontFace])
     const unavailableFont = renderHook(() =>
       useDeferredRestoraFonts({
-        hasMeaningfulUserIntent: false,
+        hasMeaningfulUserIntent: true,
         isPostLoadIdleReady: true,
       }),
     )
 
-    await waitFor(() => expect(loadFontMock).toHaveBeenCalledOnce())
-    expect(document.documentElement).not.toHaveClass(
-      RESTORA_READY_CLASSES.display,
-    )
+    await waitFor(() => expect(loadFontMock).toHaveBeenCalledTimes(2))
+    expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
     unavailableFont.unmount()
 
-    let resolveStaleFont: ((fontFaces: FontFace[]) => void) | undefined
-    loadFontMock.mockImplementationOnce(
+    const resolveStaleFontLoads: Array<(fontFaces: FontFace[]) => void> = []
+    loadFontMock.mockImplementation(
       () =>
         new Promise((resolve) => {
-          resolveStaleFont = resolve
+          resolveStaleFontLoads.push(resolve)
         }),
     )
     const staleFont = renderHook(() =>
       useDeferredRestoraFonts({
-        hasMeaningfulUserIntent: false,
+        hasMeaningfulUserIntent: true,
         isPostLoadIdleReady: true,
       }),
     )
 
+    await waitFor(() => expect(resolveStaleFontLoads).toHaveLength(2))
     staleFont.unmount()
-    await act(async () => resolveStaleFont?.([{} as FontFace]))
-    expect(document.documentElement).not.toHaveClass(
-      RESTORA_READY_CLASSES.display,
+    await act(async () =>
+      resolveStaleFontLoads.forEach((resolveStaleFontLoad) =>
+        resolveStaleFontLoad([{} as FontFace]),
+      ),
     )
+    expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
   })
 })

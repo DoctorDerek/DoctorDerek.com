@@ -2,25 +2,22 @@
 
 import { useEffect } from "react"
 import {
-  RESTORA_CSS_VARIABLE,
-  RESTORA_FONT_WEIGHTS,
   RESTORA_READY_CLASSES,
+  RESTORA_TEXT_CSS_VARIABLE,
+  RESTORA_TEXT_FONT_WEIGHTS,
 } from "@/constants/TYPOGRAPHY"
 
-const loadRestoraFontWeights = (
-  fontWeights: number[],
-  readyClassName: string,
-) => {
+const loadDeferredRestoraTextFonts = () => {
   const documentRoot = document.documentElement
-  const primaryRestoraFontFamily = getComputedStyle(document.body)
-    .getPropertyValue(RESTORA_CSS_VARIABLE)
+  const restoraTextFontFamily = getComputedStyle(document.body)
+    .getPropertyValue(RESTORA_TEXT_CSS_VARIABLE)
     .split(",", 1)[0]
     .trim()
   let isCancelled = false
 
   void Promise.all(
-    fontWeights.map((fontWeight) =>
-      document.fonts.load(`${fontWeight} 1em ${primaryRestoraFontFamily}`),
+    Object.values(RESTORA_TEXT_FONT_WEIGHTS).map((fontWeight) =>
+      document.fonts.load(`${fontWeight} 1em ${restoraTextFontFamily}`),
     ),
   )
     .then((loadedFontFaces) => {
@@ -28,13 +25,13 @@ const loadRestoraFontWeights = (
         !isCancelled &&
         loadedFontFaces.every((fontFaces) => fontFaces.length > 0)
       )
-        documentRoot.classList.add(readyClassName)
+        documentRoot.classList.add(RESTORA_READY_CLASSES.text)
     })
-    .catch(() => documentRoot.classList.remove(readyClassName))
+    .catch(() => documentRoot.classList.remove(RESTORA_READY_CLASSES.text))
 
   return () => {
     isCancelled = true
-    documentRoot.classList.remove(readyClassName)
+    documentRoot.classList.remove(RESTORA_READY_CLASSES.text)
   }
 }
 
@@ -46,20 +43,8 @@ export default function useDeferredRestoraFonts({
   isPostLoadIdleReady: boolean
 }) {
   useEffect(() => {
-    if (!isPostLoadIdleReady) return
-
-    return loadRestoraFontWeights(
-      [RESTORA_FONT_WEIGHTS.extraBold],
-      RESTORA_READY_CLASSES.display,
-    )
-  }, [isPostLoadIdleReady])
-
-  useEffect(() => {
     if (!isPostLoadIdleReady || !hasMeaningfulUserIntent) return
 
-    return loadRestoraFontWeights(
-      [RESTORA_FONT_WEIGHTS.regular, RESTORA_FONT_WEIGHTS.medium],
-      RESTORA_READY_CLASSES.text,
-    )
+    return loadDeferredRestoraTextFonts()
   }, [hasMeaningfulUserIntent, isPostLoadIdleReady])
 }

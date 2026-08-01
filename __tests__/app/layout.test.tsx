@@ -3,7 +3,9 @@ import { describe, expect, it, vi } from "vitest"
 import RootLayout, { metadata } from "@/app/layout"
 
 const { localFontMock } = vi.hoisted(() => ({
-  localFontMock: vi.fn(() => ({ variable: "font-restora" })),
+  localFontMock: vi.fn(({ variable }: { variable: string }) => ({
+    variable: variable.replace("--", ""),
+  })),
 }))
 
 vi.mock("next/font/local", () => ({
@@ -43,27 +45,44 @@ describe("root metadata", () => {
     )
 
     expect(document.documentElement).toHaveAttribute("lang", "en")
-    expect(document.body).toHaveClass("font-restora")
+    expect(document.body).toHaveClass(
+      "font-restora-display",
+      "font-restora-text",
+    )
     expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
   })
 
-  it("keeps licensed fonts out of the mobile preload path", () => {
+  it("preloads only the ExtraBold hero display font", () => {
     expect(localFontMock).toHaveBeenCalledWith(
       expect.objectContaining({
         display: "swap",
-        preload: false,
-        variable: "--font-restora",
+        preload: true,
+        variable: "--font-restora-display",
+        src: [
+          expect.objectContaining({
+            path: "../vendor/fonts/restoraextrabold-1-webfont.woff2",
+            weight: "800",
+          }),
+        ],
       }),
     )
   })
 
-  it("registers the three licensed Restora faces without preloading them", () => {
+  it("keeps Regular and Medium text faces deferred", () => {
     expect(localFontMock).toHaveBeenCalledWith(
       expect.objectContaining({
+        display: "swap",
+        preload: false,
+        variable: "--font-restora-text",
         src: [
-          expect.objectContaining({ weight: "400" }),
-          expect.objectContaining({ weight: "500" }),
-          expect.objectContaining({ weight: "800" }),
+          expect.objectContaining({
+            path: "../vendor/fonts/restora-1-webfont.woff2",
+            weight: "400",
+          }),
+          expect.objectContaining({
+            path: "../vendor/fonts/restoramedium-1-webfont.woff2",
+            weight: "500",
+          }),
         ],
       }),
     )

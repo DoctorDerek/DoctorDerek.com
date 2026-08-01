@@ -226,10 +226,10 @@ body {
 }
 
 .restorabold {
+  font-family: var(--font-restora-display);
   font-weight: 800;
 }
 
-.restora-display-ready .restorabold,
 .restora-text-ready a,
 .restora-text-ready p,
 .restora-text-ready h1,
@@ -237,9 +237,12 @@ body {
 .restora-text-ready h3,
 .restora-text-ready h4,
 .restora-text-ready button,
-.restora-text-ready .restoramedium,
+.restora-text-ready .restoramedium {
+  font-family: var(--font-restora-text);
+}
+
 .restora-text-ready .restorabold {
-  font-family: var(--font-restora);
+  font-family: var(--font-restora-display);
 }
 
 /* =========================== 

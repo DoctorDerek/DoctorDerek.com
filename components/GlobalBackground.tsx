@@ -61,7 +61,7 @@ export default function GlobalBackground({
           className="absolute inset-0 h-full w-full mix-blend-overlay"
         >
           <motion.img
-            src={activeBackground}
+            src={activeBackground.src}
             alt=""
             aria-hidden="true"
             className="h-full w-full object-cover"

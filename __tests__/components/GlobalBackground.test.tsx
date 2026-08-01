@@ -22,25 +22,25 @@ vi.mock("motion/react", () => ({
 }))
 
 vi.mock("@/images/Background.svg?url", () => ({
-  default: "/background-zero.svg",
+  default: { src: "/background-zero.svg" },
 }))
 vi.mock("@/images/Background-1.svg?url", () => ({
-  default: "/background-one.svg",
+  default: { src: "/background-one.svg" },
 }))
 vi.mock("@/images/Background-2.svg?url", () => ({
-  default: "/background-two.svg",
+  default: { src: "/background-two.svg" },
 }))
 vi.mock("@/images/Background-3.svg?url", () => ({
-  default: "/background-three.svg",
+  default: { src: "/background-three.svg" },
 }))
 vi.mock("@/images/Background-4.svg?url", () => ({
-  default: "/background-four.svg",
+  default: { src: "/background-four.svg" },
 }))
 vi.mock("@/images/Background-5.svg?url", () => ({
-  default: "/background-five.svg",
+  default: { src: "/background-five.svg" },
 }))
 vi.mock("@/images/Background-6.svg?url", () => ({
-  default: "/background-six.svg",
+  default: { src: "/background-six.svg" },
 }))
 
 vi.mock("@/machines/globalMachine", () => ({

@@ -12,12 +12,17 @@ const restora = localFont({
       style: "normal",
     },
     {
+      path: "../vendor/fonts/restoramedium-1.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
       path: "../vendor/fonts/restoraextrabold-1.otf",
       weight: "800",
       style: "normal",
     },
   ],
-  display: "optional",
+  display: "swap",
   preload: false,
   fallback: ["Georgia", "Times New Roman", "serif"],
   adjustFontFallback: "Times New Roman",

@@ -21,6 +21,7 @@ import {
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
 } from "@/constants/SITE_CONTENT"
 import useDeferredClientFeature from "@/hooks/useDeferredClientFeature"
+import useDeferredRestoraFonts from "@/hooks/useDeferredRestoraFonts"
 import useEndOfSiteCelebration from "@/hooks/useEndOfSiteCelebration"
 import useHorizontalWheelNavigation from "@/hooks/useHorizontalWheelNavigation"
 import { GlobalStateContext } from "@/machines/globalMachine"
@@ -65,6 +66,10 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
     useDeferredClientFeature()
   const shouldRenderDeferredMotion =
     isPostLoadIdleReady && hasMeaningfulUserIntent
+  useDeferredRestoraFonts({
+    hasMeaningfulUserIntent,
+    isPostLoadIdleReady,
+  })
   useHorizontalWheelNavigation(fullPageApiReference)
   const {
     beginContactVisit,

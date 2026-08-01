@@ -50,18 +50,19 @@ describe("root metadata", () => {
   it("keeps licensed fonts out of the mobile preload path", () => {
     expect(localFontMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        display: "optional",
+        display: "swap",
         preload: false,
         variable: "--font-restora",
       }),
     )
   })
 
-  it("limits initial licensed-font transfer to regular and display weights", () => {
+  it("registers the three licensed Restora faces without preloading them", () => {
     expect(localFontMock).toHaveBeenCalledWith(
       expect.objectContaining({
         src: [
           expect.objectContaining({ weight: "400" }),
+          expect.objectContaining({ weight: "500" }),
           expect.objectContaining({ weight: "800" }),
         ],
       }),

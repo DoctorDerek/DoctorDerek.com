@@ -229,18 +229,17 @@ body {
   font-weight: 800;
 }
 
-@media (min-width: 48rem) {
-  a,
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  button,
-  .restoramedium,
-  .restorabold {
-    font-family: var(--font-restora);
-  }
+.restora-display-ready .restorabold,
+.restora-text-ready a,
+.restora-text-ready p,
+.restora-text-ready h1,
+.restora-text-ready h2,
+.restora-text-ready h3,
+.restora-text-ready h4,
+.restora-text-ready button,
+.restora-text-ready .restoramedium,
+.restora-text-ready .restorabold {
+  font-family: var(--font-restora);
 }
 
 /* =========================== 

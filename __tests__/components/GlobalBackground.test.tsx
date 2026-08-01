@@ -17,9 +17,7 @@ vi.mock("motion/react", () => ({
       children: React.ReactNode
       transition: { duration: number }
     }) => <div data-transition-duration={transition.duration}>{children}</div>,
-    img: ({ src, alt }: { src: string; alt: string }) => (
-      <img src={src} alt={alt} />
-    ),
+    img: ({ src }: { src: string }) => <span data-image-source={src} />,
   },
 }))
 
@@ -104,8 +102,8 @@ describe("GlobalBackground", () => {
       <GlobalBackground shouldRenderParticles={true} />,
     )
 
-    expect(container.querySelector("img")).toHaveAttribute(
-      "src",
+    expect(container.querySelector("[data-image-source]")).toHaveAttribute(
+      "data-image-source",
       "/background-one.svg",
     )
   })
@@ -116,8 +114,8 @@ describe("GlobalBackground", () => {
     )
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
-    expect(container.querySelector("img")).toHaveAttribute(
-      "src",
+    expect(container.querySelector("[data-image-source]")).toHaveAttribute(
+      "data-image-source",
       "/background-three.svg",
     )
   })

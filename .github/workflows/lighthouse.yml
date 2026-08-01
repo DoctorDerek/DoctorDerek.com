@@ -110,11 +110,31 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deploy-first.outputs.page_url || steps.deploy-second.outputs.page_url || steps.deploy-final.outputs.page_url }}
     steps:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
 
       - name: Deploy GitHub Pages
-        id: deployment
+        id: deploy-first
+        continue-on-error: true
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+
+      - name: Wait Before Second Deployment Attempt
+        if: steps.deploy-first.outcome == 'failure'
+        run: sleep 30
+
+      - name: Retry GitHub Pages Deployment
+        id: deploy-second
+        if: steps.deploy-first.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+
+      - name: Wait Before Final Deployment Attempt
+        if: steps.deploy-first.outcome == 'failure' && steps.deploy-second.outcome == 'failure'
+        run: sleep 90
+
+      - name: Final GitHub Pages Deployment Attempt
+        id: deploy-final
+        if: steps.deploy-first.outcome == 'failure' && steps.deploy-second.outcome == 'failure'
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

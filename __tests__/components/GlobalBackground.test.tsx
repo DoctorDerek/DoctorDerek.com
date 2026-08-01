@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import GlobalBackground from "@/components/GlobalBackground"
 
@@ -60,22 +60,33 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
 }))
 
 vi.mock("@/components/ParticleCanvas", () => ({
-  default: () => <canvas aria-label="Particle field" />,
+  default: ({ onFirstFrameRendered }: { onFirstFrameRendered: () => void }) => (
+    <canvas aria-label="Particle field" onClick={onFirstFrameRendered} />
+  ),
 }))
 
 describe("GlobalBackground", () => {
+  const onParticleFirstFrameRendered = vi.fn()
+
   beforeEach(() => {
     backgroundState.bgIndex = 2
     backgroundState.bgUseInverse = false
     reducedMotionPreference.value = false
+    onParticleFirstFrameRendered.mockClear()
   })
 
   it("renders animated ambient layers when motion is allowed", async () => {
     const { container } = render(
-      <GlobalBackground shouldRenderParticles={true} />,
+      <GlobalBackground
+        onParticleFirstFrameRendered={onParticleFirstFrameRendered}
+        shouldRenderParticles={true}
+      />,
     )
 
-    expect(await screen.findByLabelText("Particle field")).toBeInTheDocument()
+    const particleField = await screen.findByLabelText("Particle field")
+    expect(particleField).toBeInTheDocument()
+    fireEvent.click(particleField)
+    expect(onParticleFirstFrameRendered).toHaveBeenCalledOnce()
     expect(
       container.querySelector('[data-transition-duration="20"]'),
     ).toBeInTheDocument()
@@ -85,7 +96,10 @@ describe("GlobalBackground", () => {
     reducedMotionPreference.value = true
     backgroundState.bgUseInverse = true
     const { container } = render(
-      <GlobalBackground shouldRenderParticles={true} />,
+      <GlobalBackground
+        onParticleFirstFrameRendered={onParticleFirstFrameRendered}
+        shouldRenderParticles={true}
+      />,
     )
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
@@ -99,7 +113,10 @@ describe("GlobalBackground", () => {
     backgroundState.bgUseInverse = true
 
     const { container } = render(
-      <GlobalBackground shouldRenderParticles={true} />,
+      <GlobalBackground
+        onParticleFirstFrameRendered={onParticleFirstFrameRendered}
+        shouldRenderParticles={true}
+      />,
     )
 
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(
@@ -110,7 +127,10 @@ describe("GlobalBackground", () => {
 
   it("defers particle work while preserving the active background", () => {
     const { container } = render(
-      <GlobalBackground shouldRenderParticles={false} />,
+      <GlobalBackground
+        onParticleFirstFrameRendered={onParticleFirstFrameRendered}
+        shouldRenderParticles={false}
+      />,
     )
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()

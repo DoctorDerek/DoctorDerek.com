@@ -38,7 +38,7 @@ vi.mock("typewriter-effect", () => ({
   },
 }))
 
-const supportingIntroductionSegments = INTRO_BIO_SHORT.split(" · ").slice(1)
+const introductionSegments = INTRO_BIO_SHORT.split(" · ")
 
 describe("IntroTypewriter", () => {
   beforeEach(() => {
@@ -46,20 +46,20 @@ describe("IntroTypewriter", () => {
     vi.clearAllMocks()
   })
 
-  it("cycles through every supporting positioning segment", () => {
-    render(<IntroTypewriter segments={supportingIntroductionSegments} />)
+  it("cycles through every positioning segment", () => {
+    render(<IntroTypewriter segments={introductionSegments} />)
 
     expect(
       screen.getByText("Animated supporting introduction"),
     ).toBeInTheDocument()
-    for (const introductionSegment of supportingIntroductionSegments)
+    for (const introductionSegment of introductionSegments)
       expect(typewriter.typeString).toHaveBeenCalledWith(introductionSegment)
     expect(typewriter.pauseFor).toHaveBeenCalledTimes(
-      supportingIntroductionSegments.length,
+      introductionSegments.length,
     )
     expect(typewriter.pauseFor).toHaveBeenCalledWith(2000)
     expect(typewriter.deleteAll).toHaveBeenCalledTimes(
-      supportingIntroductionSegments.length,
+      introductionSegments.length,
     )
     expect(typewriter.start).toHaveBeenCalledOnce()
     expect(typewriterOptions.current).toEqual({

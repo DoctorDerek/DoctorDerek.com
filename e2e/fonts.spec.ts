@@ -4,13 +4,11 @@ import {
   RESTORA_FONT_WEIGHTS,
   RESTORA_READY_CLASSES,
 } from "@/constants/TYPOGRAPHY"
-
-declare global {
-  interface Window {
-    __deferredIdleCallbackCount: number
-    __releaseDeferredIdleCallbacks: () => void
-  }
-}
+import {
+  installDeferredIdleCallbackController,
+  releaseDeferredIdleCallbacks,
+  waitForDeferredIdleCallback,
+} from "@/e2e/helpers/deferredIdleCallbacks"
 
 const collectLicensedFontAssetUrls = (page: Page) => {
   const licensedFontAssetUrls: string[] = []
@@ -25,39 +23,6 @@ const collectLicensedFontAssetUrls = (page: Page) => {
 
   return licensedFontAssetUrls
 }
-
-const controlPostLoadIdleReadiness = (page: Page) =>
-  page.addInitScript(() => {
-    const idleCallbacks = new Map<number, IdleRequestCallback>()
-    let nextIdleCallbackId = 1
-
-    window.requestIdleCallback = (callback) => {
-      const idleCallbackId = nextIdleCallbackId
-      nextIdleCallbackId += 1
-      idleCallbacks.set(idleCallbackId, callback)
-      return idleCallbackId
-    }
-    window.cancelIdleCallback = (idleCallbackId) =>
-      idleCallbacks.delete(idleCallbackId)
-
-    Object.defineProperty(window, "__releaseDeferredIdleCallbacks", {
-      configurable: true,
-      value: () => {
-        const scheduledIdleCallbacks = [...idleCallbacks.values()]
-        idleCallbacks.clear()
-        scheduledIdleCallbacks.forEach((callback) =>
-          callback({
-            didTimeout: false,
-            timeRemaining: () => 50,
-          }),
-        )
-      },
-    })
-    Object.defineProperty(window, "__deferredIdleCallbackCount", {
-      configurable: true,
-      get: () => idleCallbacks.size,
-    })
-  })
 
 const getPrimaryHeadingFontFamily = (page: Page) =>
   page
@@ -76,18 +41,15 @@ const verifyDeferredRestoraLoading = async (
   shouldVerifyNetworkRequests: boolean,
 ) => {
   const licensedFontAssetUrls = collectLicensedFontAssetUrls(page)
-  await controlPostLoadIdleReadiness(page)
+  await installDeferredIdleCallbackController(page)
 
   await page.goto("/", { waitUntil: "networkidle" })
 
   expect(await getPrimaryHeadingFontFamily(page)).toContain("Roboto")
   expect(licensedFontAssetUrls).toEqual([])
 
-  await expect
-    .poll(() => page.evaluate(() => window.__deferredIdleCallbackCount))
-    .toBeGreaterThan(0)
-
-  await page.evaluate(() => window.__releaseDeferredIdleCallbacks())
+  await waitForDeferredIdleCallback(page)
+  await releaseDeferredIdleCallbacks(page)
 
   await expect
     .poll(() => hasRootClass(page, RESTORA_READY_CLASSES.display))

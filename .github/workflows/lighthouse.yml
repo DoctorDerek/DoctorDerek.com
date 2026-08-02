@@ -1,7 +1,9 @@
 name: Mobile Web Lighthouse Measurements
 
 on:
-  deployment_status:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 concurrency:
@@ -11,12 +13,84 @@ concurrency:
 jobs:
   measure:
     name: Measure Mobile Web Lighthouse
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
       contents: read
+      deployments: read
     steps:
+      - name: Wait for Matching Vercel Production Deployment
+        if: github.event_name == 'push'
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        with:
+          retries: 3
+          script: |
+            const productionEnvironment = "Production";
+            const vercelDeploymentCreator = "vercel[bot]";
+            const maximumPollingAttempts = 48;
+            const pollingIntervalMilliseconds = 10_000;
+            const waitForNextPollingAttempt = () =>
+              new Promise(resolve =>
+                setTimeout(resolve, pollingIntervalMilliseconds),
+              );
+
+            for (
+              let pollingAttempt = 1;
+              pollingAttempt <= maximumPollingAttempts;
+              pollingAttempt += 1
+            ) {
+              const { data: deployments } =
+                await github.rest.repos.listDeployments({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  sha: context.sha,
+                  environment: productionEnvironment,
+                  per_page: 10,
+                });
+              const matchingDeployment = deployments.find(
+                deployment =>
+                  deployment.creator?.login === vercelDeploymentCreator,
+              );
+
+              if (matchingDeployment) {
+                const { data: statuses } =
+                  await github.rest.repos.listDeploymentStatuses({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    deployment_id: matchingDeployment.id,
+                    per_page: 1,
+                  });
+                const latestStatus = statuses[0];
+
+                if (latestStatus?.state === "success") {
+                  core.info(
+                    `Vercel Production deployment ${matchingDeployment.id} is ready.`,
+                  );
+                  return;
+                }
+
+                if (
+                  latestStatus?.state === "failure" ||
+                  latestStatus?.state === "error"
+                ) {
+                  throw new Error(
+                    `Vercel Production deployment ${matchingDeployment.id} finished with ${latestStatus.state}.`,
+                  );
+                }
+              }
+
+              if (pollingAttempt < maximumPollingAttempts) {
+                core.info(
+                  `Waiting for Vercel Production deployment ${context.sha} (${pollingAttempt}/${maximumPollingAttempts}).`,
+                );
+                await waitForNextPollingAttempt();
+              }
+            }
+
+            throw new Error(
+              `Vercel Production deployment ${context.sha} did not succeed within eight minutes.`,
+            );
+
       - name: Checkout Repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 

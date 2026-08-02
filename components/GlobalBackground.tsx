@@ -25,8 +25,10 @@ const BACKGROUNDS = [
 ]
 
 export default function GlobalBackground({
+  onParticleFirstFrameRendered,
   shouldRenderParticles,
 }: {
+  onParticleFirstFrameRendered: () => void
   shouldRenderParticles: boolean
 }) {
   const { shouldReduceMotion } = useMotionPreference()
@@ -47,7 +49,9 @@ export default function GlobalBackground({
 
   return (
     <div className="animate-rainbow-vivid pointer-events-none fixed inset-0 -z-20 h-full w-full">
-      {!shouldReduceMotion && shouldRenderParticles && <ParticleCanvas />}
+      {!shouldReduceMotion && shouldRenderParticles && (
+        <ParticleCanvas onFirstFrameRendered={onParticleFirstFrameRendered} />
+      )}
       <AnimatePresence initial={false}>
         <motion.div
           key={key}

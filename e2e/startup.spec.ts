@@ -5,7 +5,7 @@ import {
   waitForDeferredIdleCallback,
 } from "@/e2e/helpers/deferredIdleCallbacks"
 
-test("loads particles before the deferred Rive animation", async ({ page }) => {
+test("loads Rive before deferred particles", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" })
   await installDeferredIdleCallbackController(page)
   await page.goto("/")
@@ -19,9 +19,11 @@ test("loads particles before the deferred Rive animation", async ({ page }) => {
 
   await page.locator("body").dispatchEvent("pointerdown")
   await expect(ambientCanvases).toHaveCount(1)
+  await expect(page.locator("canvas.absolute")).toHaveCount(0)
 
   await waitForDeferredIdleCallback(page)
   await expect(ambientCanvases).toHaveCount(1)
   await releaseDeferredIdleCallbacks(page)
   await expect(ambientCanvases).toHaveCount(2)
+  await expect(page.locator("canvas.absolute")).toHaveCount(1)
 })

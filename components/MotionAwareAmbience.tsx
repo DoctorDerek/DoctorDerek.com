@@ -17,41 +17,30 @@ export default function MotionAwareAmbience({
   shouldRenderDeferredMotion: boolean
 }) {
   const { shouldReduceMotion } = useMotionPreference()
-  const [hasParticleFirstFrameRendered, setHasParticleFirstFrameRendered] =
-    useState(false)
-  const [isPostParticleIdleReady, setIsPostParticleIdleReady] = useState(false)
-  const handleParticleFirstFrameRendered = useCallback(
-    () => setHasParticleFirstFrameRendered(true),
-    [],
-  )
+  const [hasRiveReady, setHasRiveReady] = useState(false)
+  const [isPostRiveIdleReady, setIsPostRiveIdleReady] = useState(false)
+  const handleRiveReady = useCallback(() => setHasRiveReady(true), [])
 
   useEffect(() => {
-    if (
-      shouldReduceMotion ||
-      !shouldRenderDeferredMotion ||
-      !hasParticleFirstFrameRendered
-    )
+    if (shouldReduceMotion || !shouldRenderDeferredMotion || !hasRiveReady)
       return
 
-    return scheduleIdleWork(() => setIsPostParticleIdleReady(true))
-  }, [
-    hasParticleFirstFrameRendered,
-    shouldReduceMotion,
-    shouldRenderDeferredMotion,
-  ])
+    return scheduleIdleWork(() => setIsPostRiveIdleReady(true))
+  }, [hasRiveReady, shouldReduceMotion, shouldRenderDeferredMotion])
 
   return (
     <>
       <GlobalBackground
-        onParticleFirstFrameRendered={handleParticleFirstFrameRendered}
         shouldRenderParticles={
-          !shouldReduceMotion && shouldRenderDeferredMotion
+          !shouldReduceMotion &&
+          shouldRenderDeferredMotion &&
+          isPostRiveIdleReady
         }
       />
       {!shouldReduceMotion && <CustomCursor />}
-      {!shouldReduceMotion &&
-        shouldRenderDeferredMotion &&
-        isPostParticleIdleReady && <RiveAnimation />}
+      {!shouldReduceMotion && shouldRenderDeferredMotion && (
+        <RiveAnimation onRiveReady={handleRiveReady} />
+      )}
     </>
   )
 }

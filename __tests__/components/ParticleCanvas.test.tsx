@@ -49,12 +49,9 @@ const installCanvasRuntime = ({
 }
 
 describe("ParticleCanvas", () => {
-  const onFirstFrameRendered = vi.fn()
-
   afterEach(() => {
     vi.restoreAllMocks()
     vi.unstubAllGlobals()
-    onFirstFrameRendered.mockClear()
   })
 
   it("introduces deferred particles from below the viewport", () => {
@@ -64,15 +61,12 @@ describe("ParticleCanvas", () => {
       width: 320,
     })
 
-    const { container, unmount } = render(
-      <ParticleCanvas onFirstFrameRendered={onFirstFrameRendered} />,
-    )
+    const { container, unmount } = render(<ParticleCanvas />)
 
     const canvas = container.querySelector("canvas")
     expect(canvas).toHaveAttribute("width", "320")
     expect(canvas).toHaveAttribute("height", "568")
     expect(context.arc).toHaveBeenCalled()
-    expect(onFirstFrameRendered).toHaveBeenCalledOnce()
     for (const [, particleY] of context.arc.mock.calls)
       expect(particleY).toBeGreaterThan(568)
 
@@ -88,9 +82,7 @@ describe("ParticleCanvas", () => {
         width: 150,
       })
     const random = vi.mocked(Math.random)
-    const { container, unmount } = render(
-      <ParticleCanvas onFirstFrameRendered={onFirstFrameRendered} />,
-    )
+    const { container, unmount } = render(<ParticleCanvas />)
     const canvas = container.querySelector("canvas")
     const initialRandomCallCount = random.mock.calls.length
 
@@ -127,7 +119,7 @@ describe("ParticleCanvas", () => {
       width: 150,
     })
 
-    render(<ParticleCanvas onFirstFrameRendered={onFirstFrameRendered} />)
+    render(<ParticleCanvas />)
 
     expect(context.fillStyle).toBe("rgba(0, 139, 139, 0.6)")
   })
@@ -137,9 +129,8 @@ describe("ParticleCanvas", () => {
     vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null)
     vi.stubGlobal("requestAnimationFrame", requestAnimationFrame)
 
-    render(<ParticleCanvas onFirstFrameRendered={onFirstFrameRendered} />)
+    render(<ParticleCanvas />)
 
     expect(requestAnimationFrame).not.toHaveBeenCalled()
-    expect(onFirstFrameRendered).not.toHaveBeenCalled()
   })
 })

@@ -1,7 +1,11 @@
 import { Alignment, Fit, Layout, useRive } from "@rive-app/react-canvas-lite"
 import { useState } from "react"
 
-export default function RiveAnimation() {
+export default function RiveAnimation({
+  onRiveReady,
+}: {
+  onRiveReady: () => void
+}) {
   const [hasError, setHasError] = useState(false)
 
   const { RiveComponent } = useRive({
@@ -11,7 +15,11 @@ export default function RiveAnimation() {
       fit: Fit.Cover,
       alignment: Alignment.Center,
     }),
-    onLoadError: () => setHasError(true),
+    onRiveReady,
+    onLoadError: () => {
+      setHasError(true)
+      onRiveReady()
+    },
   })
 
   if (hasError)

@@ -9,7 +9,9 @@ const { reducedMotionPreference } = vi.hoisted(() => ({
 vi.mock("next/dynamic", () => ({
   default: (loadComponent: () => Promise<unknown>) => {
     void loadComponent()
-    return () => <p>Rive animation</p>
+    return ({ onRiveReady }: { onRiveReady: () => void }) => (
+      <button onClick={onRiveReady}>Rive animation</button>
+    )
   },
 }))
 
@@ -18,21 +20,8 @@ vi.mock("@/components/RiveAnimation", () => ({
 }))
 
 vi.mock("@/components/GlobalBackground", () => ({
-  default: ({
-    onParticleFirstFrameRendered,
-    shouldRenderParticles,
-  }: {
-    onParticleFirstFrameRendered: () => void
-    shouldRenderParticles: boolean
-  }) => (
-    <>
-      <p data-particles-ready={shouldRenderParticles}>Global background</p>
-      {shouldRenderParticles && (
-        <button onClick={onParticleFirstFrameRendered}>
-          Render particle frame
-        </button>
-      )}
-    </>
+  default: ({ shouldRenderParticles }: { shouldRenderParticles: boolean }) => (
+    <p data-particles-ready={shouldRenderParticles}>Global background</p>
   ),
 }))
 
@@ -66,23 +55,24 @@ describe("MotionAwareAmbience", () => {
     vi.unstubAllGlobals()
   })
 
-  it("loads Rive only after particles render and the browser becomes idle again", () => {
+  it("loads particles after Rive initialises and the browser becomes idle again", () => {
     const { unmount } = render(
       <MotionAwareAmbience shouldRenderDeferredMotion={true} />,
     )
 
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-particles-ready",
-      "true",
+      "false",
     )
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
-    expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
+    expect(screen.getByText("Rive animation")).toBeInTheDocument()
 
-    fireEvent.click(
-      screen.getByRole("button", { name: "Render particle frame" }),
-    )
+    fireEvent.click(screen.getByRole("button", { name: "Rive animation" }))
     expect(window.requestIdleCallback).toHaveBeenCalledOnce()
-    expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
+    expect(screen.getByText("Global background")).toHaveAttribute(
+      "data-particles-ready",
+      "false",
+    )
 
     act(() =>
       idleCallback?.({
@@ -90,7 +80,10 @@ describe("MotionAwareAmbience", () => {
         timeRemaining: () => 50,
       }),
     )
-    expect(screen.getByText("Rive animation")).toBeInTheDocument()
+    expect(screen.getByText("Global background")).toHaveAttribute(
+      "data-particles-ready",
+      "true",
+    )
 
     unmount()
     expect(window.cancelIdleCallback).toHaveBeenCalledWith(17)

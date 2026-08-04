@@ -17,9 +17,16 @@ export default function MotionAwareAmbience({
   shouldRenderDeferredMotion: boolean
 }) {
   const { shouldReduceMotion } = useMotionPreference()
+  const [isRiveIdleReady, setIsRiveIdleReady] = useState(false)
   const [hasRiveReady, setHasRiveReady] = useState(false)
   const [isPostRiveIdleReady, setIsPostRiveIdleReady] = useState(false)
   const handleRiveReady = useCallback(() => setHasRiveReady(true), [])
+
+  useEffect(() => {
+    if (shouldReduceMotion || !shouldRenderDeferredMotion) return
+
+    return scheduleIdleWork(() => setIsRiveIdleReady(true))
+  }, [shouldReduceMotion, shouldRenderDeferredMotion])
 
   useEffect(() => {
     if (shouldReduceMotion || !shouldRenderDeferredMotion || !hasRiveReady)
@@ -38,7 +45,7 @@ export default function MotionAwareAmbience({
         }
       />
       {!shouldReduceMotion && <CustomCursor />}
-      {!shouldReduceMotion && shouldRenderDeferredMotion && (
+      {!shouldReduceMotion && shouldRenderDeferredMotion && isRiveIdleReady && (
         <RiveAnimation onRiveReady={handleRiveReady} />
       )}
     </>

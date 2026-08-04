@@ -6,6 +6,9 @@ const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
 }))
 
+const FIRST_IDLE_CALLBACK_ID = 17
+const SECOND_IDLE_CALLBACK_ID = 18
+
 vi.mock("next/dynamic", () => ({
   default: (loadComponent: () => Promise<unknown>) => {
     void loadComponent()
@@ -36,16 +39,20 @@ vi.mock("@/components/ui/CustomCursor", () => ({
 }))
 
 describe("MotionAwareAmbience", () => {
-  let idleCallback: IdleRequestCallback | undefined
+  let idleCallbacks: IdleRequestCallback[]
+  let nextIdleCallbackId: number
 
   beforeEach(() => {
-    idleCallback = undefined
+    idleCallbacks = []
+    nextIdleCallbackId = FIRST_IDLE_CALLBACK_ID
     reducedMotionPreference.value = false
     vi.stubGlobal(
       "requestIdleCallback",
       vi.fn((callback: IdleRequestCallback) => {
-        idleCallback = callback
-        return 17
+        idleCallbacks.push(callback)
+        const idleCallbackId = nextIdleCallbackId
+        nextIdleCallbackId += 1
+        return idleCallbackId
       }),
     )
     vi.stubGlobal("cancelIdleCallback", vi.fn())
@@ -55,7 +62,7 @@ describe("MotionAwareAmbience", () => {
     vi.unstubAllGlobals()
   })
 
-  it("loads particles after Rive initialises and the browser becomes idle again", () => {
+  it("loads Rive and particles in separate idle phases", () => {
     const { unmount } = render(
       <MotionAwareAmbience shouldRenderDeferredMotion={true} />,
     )
@@ -65,17 +72,25 @@ describe("MotionAwareAmbience", () => {
       "false",
     )
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
+    expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
+
+    act(() =>
+      idleCallbacks.shift()?.({
+        didTimeout: false,
+        timeRemaining: () => 50,
+      }),
+    )
     expect(screen.getByText("Rive animation")).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole("button", { name: "Rive animation" }))
-    expect(window.requestIdleCallback).toHaveBeenCalledOnce()
+    expect(window.requestIdleCallback).toHaveBeenCalledTimes(2)
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-particles-ready",
       "false",
     )
 
     act(() =>
-      idleCallback?.({
+      idleCallbacks.shift()?.({
         didTimeout: false,
         timeRemaining: () => 50,
       }),
@@ -86,7 +101,12 @@ describe("MotionAwareAmbience", () => {
     )
 
     unmount()
-    expect(window.cancelIdleCallback).toHaveBeenCalledWith(17)
+    expect(window.cancelIdleCallback).toHaveBeenCalledWith(
+      FIRST_IDLE_CALLBACK_ID,
+    )
+    expect(window.cancelIdleCallback).toHaveBeenCalledWith(
+      SECOND_IDLE_CALLBACK_ID,
+    )
   })
 
   it("waits for deferred readiness while preserving the background and cursor", () => {

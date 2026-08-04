@@ -6,7 +6,8 @@ import { RIVE_ANIMATION_URL } from "@/constants/RIVE_ASSETS"
 const { riveConfiguration } = vi.hoisted(() => ({
   riveConfiguration: {
     onLoadError: undefined as (() => void) | undefined,
-    onRiveReady: undefined as (() => void) | undefined,
+    onLoop: undefined as (() => void) | undefined,
+    onStop: undefined as (() => void) | undefined,
     src: undefined as string | undefined,
   },
 }))
@@ -17,11 +18,13 @@ vi.mock("@rive-app/react-canvas-lite", () => ({
   Layout: class MockLayout {},
   useRive: (configuration: {
     onLoadError: () => void
-    onRiveReady: () => void
+    onLoop: () => void
+    onStop: () => void
     src: string
   }) => {
     riveConfiguration.onLoadError = configuration.onLoadError
-    riveConfiguration.onRiveReady = configuration.onRiveReady
+    riveConfiguration.onLoop = configuration.onLoop
+    riveConfiguration.onStop = configuration.onStop
     riveConfiguration.src = configuration.src
 
     return {
@@ -38,13 +41,16 @@ vi.mock("@rive-app/react-canvas-lite", () => ({
 describe("RiveAnimation", () => {
   beforeEach(() => {
     riveConfiguration.onLoadError = undefined
-    riveConfiguration.onRiveReady = undefined
+    riveConfiguration.onLoop = undefined
+    riveConfiguration.onStop = undefined
     riveConfiguration.src = undefined
   })
 
   it("layers the decorative animation between the background and content", () => {
-    const onRiveReady = vi.fn()
-    const { container } = render(<RiveAnimation onRiveReady={onRiveReady} />)
+    const onRiveComplete = vi.fn()
+    const { container } = render(
+      <RiveAnimation onRiveComplete={onRiveComplete} />,
+    )
 
     expect(container.firstElementChild).toHaveClass("-z-10")
     expect(screen.getByLabelText("Rive animation")).toHaveClass(
@@ -52,18 +58,19 @@ describe("RiveAnimation", () => {
     )
     expect(riveConfiguration.src).toBe(RIVE_ANIMATION_URL)
 
-    act(() => riveConfiguration.onRiveReady?.())
-    expect(onRiveReady).toHaveBeenCalledOnce()
+    act(() => riveConfiguration.onLoop?.())
+    act(() => riveConfiguration.onStop?.())
+    expect(onRiveComplete).toHaveBeenCalledOnce()
   })
 
   it("keeps the fallback animation beneath the site content", () => {
-    const onRiveReady = vi.fn()
+    const onRiveComplete = vi.fn()
     const container = document.createElement("div")
-    render(<RiveAnimation onRiveReady={onRiveReady} />, { container })
+    render(<RiveAnimation onRiveComplete={onRiveComplete} />, { container })
 
     act(() => riveConfiguration.onLoadError?.())
 
     expect(container.querySelector("iframe")).toHaveClass("-z-10")
-    expect(onRiveReady).toHaveBeenCalledOnce()
+    expect(onRiveComplete).toHaveBeenCalledOnce()
   })
 })

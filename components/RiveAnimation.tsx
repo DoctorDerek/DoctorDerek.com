@@ -1,13 +1,20 @@
 import { Alignment, Fit, Layout, useRive } from "@rive-app/react-canvas-lite"
-import { useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import { RIVE_ANIMATION_URL } from "@/constants/RIVE_ASSETS"
 
 export default function RiveAnimation({
-  onRiveReady,
+  onRiveComplete,
 }: {
-  onRiveReady: () => void
+  onRiveComplete: () => void
 }) {
   const [hasError, setHasError] = useState(false)
+  const hasReportedCompletion = useRef(false)
+  const reportRiveComplete = useCallback(() => {
+    if (hasReportedCompletion.current) return
+
+    hasReportedCompletion.current = true
+    onRiveComplete()
+  }, [onRiveComplete])
 
   const { RiveComponent } = useRive({
     src: RIVE_ANIMATION_URL,
@@ -16,10 +23,11 @@ export default function RiveAnimation({
       fit: Fit.Cover,
       alignment: Alignment.Center,
     }),
-    onRiveReady,
+    onStop: reportRiveComplete,
+    onLoop: reportRiveComplete,
     onLoadError: () => {
       setHasError(true)
-      onRiveReady()
+      reportRiveComplete()
     },
   })
 

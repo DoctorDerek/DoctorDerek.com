@@ -63,7 +63,6 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
   const isPostLoadExperienceReady = usePostLoadExperienceReady()
-  const shouldRenderDeferredMotion = isPostLoadExperienceReady
   useDeferredRestoraFonts(isPostLoadExperienceReady)
   useHorizontalWheelNavigation(fullPageApiReference)
   const {
@@ -129,7 +128,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   return (
     <GlobalStateContext.Provider>
       <MotionAwareAmbience
-        shouldRenderDeferredMotion={shouldRenderDeferredMotion}
+        shouldStartRive={isPostLoadExperienceReady}
       />
       {shouldRenderCelebrationRuntime && (
         <EndOfSiteCelebration

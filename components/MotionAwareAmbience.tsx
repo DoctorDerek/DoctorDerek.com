@@ -1,50 +1,41 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import GlobalBackground from "@/components/GlobalBackground"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import CustomCursor from "@/components/ui/CustomCursor"
-import scheduleIdleWork from "@/utils/scheduleIdleWork"
 
 const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
   ssr: false,
 })
 
-export default function MotionAwareAmbience({
-  shouldRenderDeferredMotion,
-}: {
-  shouldRenderDeferredMotion: boolean
-}) {
-  const { shouldReduceMotion } = useMotionPreference()
-  const [isRiveIdleReady, setIsRiveIdleReady] = useState(false)
-  const [hasRiveReady, setHasRiveReady] = useState(false)
-  const [isPostRiveIdleReady, setIsPostRiveIdleReady] = useState(false)
-  const handleRiveReady = useCallback(() => setHasRiveReady(true), [])
-
-  useEffect(() => {
-    if (shouldReduceMotion || !shouldRenderDeferredMotion) return
-
-    return scheduleIdleWork(() => setIsRiveIdleReady(true))
-  }, [shouldReduceMotion, shouldRenderDeferredMotion])
-
-  useEffect(() => {
-    if (shouldReduceMotion || !shouldRenderDeferredMotion || !hasRiveReady)
-      return
-
-    return scheduleIdleWork(() => setIsPostRiveIdleReady(true))
-  }, [hasRiveReady, shouldReduceMotion, shouldRenderDeferredMotion])
-
-  const shouldRenderAmbientMotion =
-    !shouldReduceMotion && shouldRenderDeferredMotion && isPostRiveIdleReady
+function MotionEnabledAmbience({ shouldStartRive }: { shouldStartRive: boolean }) {
+  const [hasRiveCompleted, setHasRiveCompleted] = useState(false)
+  const handleRiveComplete = useCallback(() => setHasRiveCompleted(true), [])
 
   return (
     <>
-      <GlobalBackground shouldRenderAmbientMotion={shouldRenderAmbientMotion} />
-      {!shouldReduceMotion && <CustomCursor />}
-      {!shouldReduceMotion && shouldRenderDeferredMotion && isRiveIdleReady && (
-        <RiveAnimation onRiveReady={handleRiveReady} />
+      <GlobalBackground
+        shouldRenderAmbientMotion={shouldStartRive && hasRiveCompleted}
+      />
+      <CustomCursor />
+      {shouldStartRive && (
+        <RiveAnimation onRiveComplete={handleRiveComplete} />
       )}
     </>
   )
+}
+
+export default function MotionAwareAmbience({
+  shouldStartRive,
+}: {
+  shouldStartRive: boolean
+}) {
+  const { shouldReduceMotion } = useMotionPreference()
+
+  if (shouldReduceMotion)
+    return <GlobalBackground shouldRenderAmbientMotion={false} />
+
+  return <MotionEnabledAmbience shouldStartRive={shouldStartRive} />
 }

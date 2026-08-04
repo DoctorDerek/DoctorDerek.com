@@ -1,14 +1,14 @@
 import { act, renderHook } from "@testing-library/react"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { POST_LOAD_QUIET_PERIOD_MILLISECONDS } from "@/constants/STARTUP_TIMING"
-import useDeferredClientFeature from "@/hooks/useDeferredClientFeature"
+import usePostLoadExperienceReady from "@/hooks/usePostLoadExperienceReady"
 
 const idleDeadline = {
   didTimeout: false,
   timeRemaining: () => 50,
 }
 
-describe("useDeferredClientFeature", () => {
+describe("usePostLoadExperienceReady", () => {
   afterEach(() => {
     vi.clearAllTimers()
     vi.useRealTimers()
@@ -28,7 +28,7 @@ describe("useDeferredClientFeature", () => {
     vi.stubGlobal("requestIdleCallback", requestIdleCallback)
     vi.stubGlobal("cancelIdleCallback", cancelIdleCallback)
 
-    const { result, unmount } = renderHook(() => useDeferredClientFeature())
+    const { result, unmount } = renderHook(() => usePostLoadExperienceReady())
 
     act(() => vi.advanceTimersByTime(POST_LOAD_QUIET_PERIOD_MILLISECONDS - 1))
     expect(requestIdleCallback).not.toHaveBeenCalled()
@@ -59,7 +59,7 @@ describe("useDeferredClientFeature", () => {
     vi.stubGlobal("requestAnimationFrame", requestAnimationFrame)
     vi.stubGlobal("cancelAnimationFrame", cancelAnimationFrame)
 
-    const { result, unmount } = renderHook(() => useDeferredClientFeature())
+    const { result, unmount } = renderHook(() => usePostLoadExperienceReady())
 
     expect(result.current).toBe(false)
     act(() => window.dispatchEvent(new Event("load")))
@@ -77,7 +77,7 @@ describe("useDeferredClientFeature", () => {
     const removeEventListener = vi.spyOn(window, "removeEventListener")
     vi.spyOn(document, "readyState", "get").mockReturnValue("loading")
 
-    const { unmount } = renderHook(() => useDeferredClientFeature())
+    const { unmount } = renderHook(() => usePostLoadExperienceReady())
 
     unmount()
     expect(removeEventListener).toHaveBeenCalledWith(
@@ -92,7 +92,7 @@ describe("useDeferredClientFeature", () => {
     vi.spyOn(document, "readyState", "get").mockReturnValue("loading")
     vi.stubGlobal("requestIdleCallback", requestIdleCallback)
 
-    const { unmount } = renderHook(() => useDeferredClientFeature())
+    const { unmount } = renderHook(() => usePostLoadExperienceReady())
 
     act(() => window.dispatchEvent(new Event("load")))
     unmount()

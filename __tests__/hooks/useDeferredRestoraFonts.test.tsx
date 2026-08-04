@@ -32,16 +32,17 @@ describe("useDeferredRestoraFonts", () => {
     else Reflect.deleteProperty(document, "fonts")
   })
 
-  it("keeps deferred text fonts dormant before post-load idle", () => {
+  it("keeps deferred text fonts dormant before post-load readiness", () => {
     renderHook(() => useDeferredRestoraFonts(false))
 
     expect(loadFontMock).not.toHaveBeenCalled()
     expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
   })
 
-  it("loads Regular and Medium automatically after post-load idle", async () => {
+  it("loads Regular and Medium automatically after post-load readiness", async () => {
     const { rerender, unmount } = renderHook(
-      (isPostLoadIdleReady) => useDeferredRestoraFonts(isPostLoadIdleReady),
+      (isPostLoadExperienceReady) =>
+        useDeferredRestoraFonts(isPostLoadExperienceReady),
       { initialProps: false },
     )
 

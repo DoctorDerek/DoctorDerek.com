@@ -20,10 +20,10 @@ import {
   FULLPAGE_ACTIVATION_KEYS,
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
 } from "@/constants/SITE_CONTENT"
-import useDeferredClientFeature from "@/hooks/useDeferredClientFeature"
 import useDeferredRestoraFonts from "@/hooks/useDeferredRestoraFonts"
 import useEndOfSiteCelebration from "@/hooks/useEndOfSiteCelebration"
 import useHorizontalWheelNavigation from "@/hooks/useHorizontalWheelNavigation"
+import usePostLoadExperienceReady from "@/hooks/usePostLoadExperienceReady"
 import { GlobalStateContext } from "@/machines/globalMachine"
 import {
   FullPageApi,
@@ -62,9 +62,9 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
-  const isPostLoadIdleReady = useDeferredClientFeature()
-  const shouldRenderDeferredMotion = isPostLoadIdleReady
-  useDeferredRestoraFonts(isPostLoadIdleReady)
+  const isPostLoadExperienceReady = usePostLoadExperienceReady()
+  const shouldRenderDeferredMotion = isPostLoadExperienceReady
+  useDeferredRestoraFonts(isPostLoadExperienceReady)
   useHorizontalWheelNavigation(fullPageApiReference)
   const {
     beginContactVisit,

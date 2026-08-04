@@ -1,4 +1,1 @@
-export const RIVE_ASSET_URLS = {
-  animation: "/animation.riv",
-  runtime: "/rive/rive.wasm",
-} as const
+export const RIVE_ANIMATION_URL = "/animation.riv"

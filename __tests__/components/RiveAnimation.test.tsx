@@ -1,27 +1,28 @@
 import { act, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import RiveAnimation from "@/components/RiveAnimation"
-import { RIVE_ASSET_URLS } from "@/constants/RIVE_ASSETS"
+import { RIVE_ANIMATION_URL } from "@/constants/RIVE_ASSETS"
 
-const { riveConfiguration, runtimeLoaderSetWasmUrl } = vi.hoisted(() => ({
+const { riveConfiguration } = vi.hoisted(() => ({
   riveConfiguration: {
     onLoadError: undefined as (() => void) | undefined,
     onRiveReady: undefined as (() => void) | undefined,
+    src: undefined as string | undefined,
   },
-  runtimeLoaderSetWasmUrl: vi.fn(),
 }))
 
 vi.mock("@rive-app/react-canvas-lite", () => ({
   Alignment: { Center: "center" },
   Fit: { Cover: "cover" },
   Layout: class MockLayout {},
-  RuntimeLoader: { setWasmUrl: runtimeLoaderSetWasmUrl },
   useRive: (configuration: {
     onLoadError: () => void
     onRiveReady: () => void
+    src: string
   }) => {
     riveConfiguration.onLoadError = configuration.onLoadError
     riveConfiguration.onRiveReady = configuration.onRiveReady
+    riveConfiguration.src = configuration.src
 
     return {
       RiveComponent: ({
@@ -38,6 +39,7 @@ describe("RiveAnimation", () => {
   beforeEach(() => {
     riveConfiguration.onLoadError = undefined
     riveConfiguration.onRiveReady = undefined
+    riveConfiguration.src = undefined
   })
 
   it("layers the decorative animation between the background and content", () => {
@@ -48,9 +50,7 @@ describe("RiveAnimation", () => {
     expect(screen.getByLabelText("Rive animation")).toHaveClass(
       "pointer-events-none",
     )
-    expect(runtimeLoaderSetWasmUrl).toHaveBeenCalledWith(
-      RIVE_ASSET_URLS.runtime,
-    )
+    expect(riveConfiguration.src).toBe(RIVE_ANIMATION_URL)
 
     act(() => riveConfiguration.onRiveReady?.())
     expect(onRiveReady).toHaveBeenCalledOnce()

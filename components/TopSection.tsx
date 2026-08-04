@@ -37,9 +37,7 @@ export default function TopSection() {
                 aria-hidden="true"
                 className="mt-3 min-h-[3rem] text-base md:min-h-[4rem] md:text-xl lg:text-2xl"
               >
-                <IntroTypewriter
-                  segments={SUPPORTING_INTRODUCTION_SEGMENTS}
-                />
+                <IntroTypewriter segments={SUPPORTING_INTRODUCTION_SEGMENTS} />
               </div>
             </>
           )}

@@ -20,9 +20,7 @@ const loadDeferredRestoraFonts = () => {
   const restoraDisplayFontFamily = getRestoraFontFamily(
     RESTORA_DISPLAY_CSS_VARIABLE,
   )
-  const restoraTextFontFamily = getRestoraFontFamily(
-    RESTORA_TEXT_CSS_VARIABLE,
-  )
+  const restoraTextFontFamily = getRestoraFontFamily(RESTORA_TEXT_CSS_VARIABLE)
   const deferredFontFaces = [
     [RESTORA_DISPLAY_FONT_WEIGHT, restoraDisplayFontFamily],
     ...Object.values(RESTORA_TEXT_FONT_WEIGHTS).map((fontWeight) => [

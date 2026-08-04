@@ -5,7 +5,9 @@ import {
   waitForPostLoadQuietPeriod,
 } from "@/e2e/helpers/postLoadQuietPeriod"
 
-test("loads Typewriter, Rive, and ambient layers in order", async ({ page }) => {
+test("loads Typewriter, Rive, and ambient layers in order", async ({
+  page,
+}) => {
   await page.emulateMedia({ reducedMotion: "no-preference" })
   await installPostLoadQuietPeriodController(page)
   await page.goto("/")

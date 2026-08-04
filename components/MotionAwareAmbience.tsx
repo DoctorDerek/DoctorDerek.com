@@ -10,7 +10,11 @@ const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
   ssr: false,
 })
 
-function MotionEnabledAmbience({ shouldStartRive }: { shouldStartRive: boolean }) {
+function MotionEnabledAmbience({
+  shouldStartRive,
+}: {
+  shouldStartRive: boolean
+}) {
   const [hasRiveCompleted, setHasRiveCompleted] = useState(false)
   const handleRiveComplete = useCallback(() => setHasRiveCompleted(true), [])
 
@@ -20,9 +24,7 @@ function MotionEnabledAmbience({ shouldStartRive }: { shouldStartRive: boolean }
         shouldRenderAmbientMotion={shouldStartRive && hasRiveCompleted}
       />
       <CustomCursor />
-      {shouldStartRive && (
-        <RiveAnimation onRiveComplete={handleRiveComplete} />
-      )}
+      {shouldStartRive && <RiveAnimation onRiveComplete={handleRiveComplete} />}
     </>
   )
 }

@@ -127,9 +127,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
 
   return (
     <GlobalStateContext.Provider>
-      <MotionAwareAmbience
-        shouldStartRive={isPostLoadExperienceReady}
-      />
+      <MotionAwareAmbience shouldStartRive={isPostLoadExperienceReady} />
       {shouldRenderCelebrationRuntime && (
         <EndOfSiteCelebration
           isConfettiActive={isConfettiActive}

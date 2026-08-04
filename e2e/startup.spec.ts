@@ -13,8 +13,14 @@ test("loads Rive before deferred particles", async ({ page }) => {
   await page.goto("/")
 
   const ambientCanvases = page.locator("canvas")
+  const ambientBackground = page.locator("[data-ambient-motion]")
 
   await expect(ambientCanvases).toHaveCount(0)
+  await expect(ambientBackground).toHaveAttribute(
+    "data-ambient-motion",
+    "false",
+  )
+  await expect(ambientBackground).not.toHaveClass(/animate-rainbow-vivid/)
   await waitForPostLoadQuietPeriod(page)
   await completePostLoadQuietPeriod(page)
   await waitForDeferredIdleCallback(page)
@@ -31,4 +37,6 @@ test("loads Rive before deferred particles", async ({ page }) => {
   await releaseDeferredIdleCallbacks(page)
   await expect(ambientCanvases).toHaveCount(2)
   await expect(page.locator("canvas.absolute")).toHaveCount(1)
+  await expect(ambientBackground).toHaveAttribute("data-ambient-motion", "true")
+  await expect(ambientBackground).toHaveClass(/animate-rainbow-vivid/)
 })

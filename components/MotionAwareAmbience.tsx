@@ -35,15 +35,12 @@ export default function MotionAwareAmbience({
     return scheduleIdleWork(() => setIsPostRiveIdleReady(true))
   }, [hasRiveReady, shouldReduceMotion, shouldRenderDeferredMotion])
 
+  const shouldRenderAmbientMotion =
+    !shouldReduceMotion && shouldRenderDeferredMotion && isPostRiveIdleReady
+
   return (
     <>
-      <GlobalBackground
-        shouldRenderParticles={
-          !shouldReduceMotion &&
-          shouldRenderDeferredMotion &&
-          isPostRiveIdleReady
-        }
-      />
+      <GlobalBackground shouldRenderAmbientMotion={shouldRenderAmbientMotion} />
       {!shouldReduceMotion && <CustomCursor />}
       {!shouldReduceMotion && shouldRenderDeferredMotion && isRiveIdleReady && (
         <RiveAnimation onRiveReady={handleRiveReady} />

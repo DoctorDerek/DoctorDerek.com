@@ -23,8 +23,12 @@ vi.mock("@/components/RiveAnimation", () => ({
 }))
 
 vi.mock("@/components/GlobalBackground", () => ({
-  default: ({ shouldRenderParticles }: { shouldRenderParticles: boolean }) => (
-    <p data-particles-ready={shouldRenderParticles}>Global background</p>
+  default: ({
+    shouldRenderAmbientMotion,
+  }: {
+    shouldRenderAmbientMotion: boolean
+  }) => (
+    <p data-ambient-motion={shouldRenderAmbientMotion}>Global background</p>
   ),
 }))
 
@@ -68,7 +72,7 @@ describe("MotionAwareAmbience", () => {
     )
 
     expect(screen.getByText("Global background")).toHaveAttribute(
-      "data-particles-ready",
+      "data-ambient-motion",
       "false",
     )
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
@@ -85,7 +89,7 @@ describe("MotionAwareAmbience", () => {
     fireEvent.click(screen.getByRole("button", { name: "Rive animation" }))
     expect(window.requestIdleCallback).toHaveBeenCalledTimes(2)
     expect(screen.getByText("Global background")).toHaveAttribute(
-      "data-particles-ready",
+      "data-ambient-motion",
       "false",
     )
 
@@ -96,7 +100,7 @@ describe("MotionAwareAmbience", () => {
       }),
     )
     expect(screen.getByText("Global background")).toHaveAttribute(
-      "data-particles-ready",
+      "data-ambient-motion",
       "true",
     )
 
@@ -113,7 +117,7 @@ describe("MotionAwareAmbience", () => {
     render(<MotionAwareAmbience shouldRenderDeferredMotion={false} />)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
-      "data-particles-ready",
+      "data-ambient-motion",
       "false",
     )
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
@@ -126,7 +130,7 @@ describe("MotionAwareAmbience", () => {
     render(<MotionAwareAmbience shouldRenderDeferredMotion={true} />)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
-      "data-particles-ready",
+      "data-ambient-motion",
       "false",
     )
     expect(screen.queryByText("Custom cursor")).not.toBeInTheDocument()

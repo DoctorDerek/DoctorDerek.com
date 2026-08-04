@@ -11,6 +11,7 @@ import Background5 from "@/images/Background-5.svg?url"
 import Background6 from "@/images/Background-6.svg?url"
 import Background0 from "@/images/Background.svg?url"
 import { GlobalStateContext } from "@/machines/globalMachine"
+import classNames from "@/utils/classNames"
 
 const ParticleCanvas = dynamic(() => import("@/components/ParticleCanvas"), {
   ssr: false,
@@ -25,9 +26,9 @@ const BACKGROUNDS = [
 ]
 
 export default function GlobalBackground({
-  shouldRenderParticles,
+  shouldRenderAmbientMotion,
 }: {
-  shouldRenderParticles: boolean
+  shouldRenderAmbientMotion: boolean
 }) {
   const { shouldReduceMotion } = useMotionPreference()
   const activeBackgroundIndex = GlobalStateContext.useSelector(
@@ -36,8 +37,12 @@ export default function GlobalBackground({
   const activeBackgroundUsesInverse = GlobalStateContext.useSelector(
     (state) => state.context.bgUseInverse,
   )
-  const bgIndex = shouldReduceMotion ? 0 : activeBackgroundIndex
-  const bgUseInverse = shouldReduceMotion ? false : activeBackgroundUsesInverse
+  const shouldAnimateAmbientMotion =
+    !shouldReduceMotion && shouldRenderAmbientMotion
+  const bgIndex = shouldAnimateAmbientMotion ? activeBackgroundIndex : 0
+  const bgUseInverse = shouldAnimateAmbientMotion
+    ? activeBackgroundUsesInverse
+    : false
 
   const bgConfig = BACKGROUNDS[bgIndex]
   const useInverse = bgConfig.inverse && bgUseInverse
@@ -46,8 +51,14 @@ export default function GlobalBackground({
   const key = `bg-${bgIndex}-${useInverse ? "inverse" : "standard"}`
 
   return (
-    <div className="animate-rainbow-vivid pointer-events-none fixed inset-0 -z-20 h-full w-full">
-      {!shouldReduceMotion && shouldRenderParticles && <ParticleCanvas />}
+    <div
+      data-ambient-motion={shouldAnimateAmbientMotion}
+      className={classNames(
+        "pointer-events-none fixed inset-0 -z-20 h-full w-full",
+        shouldAnimateAmbientMotion && "animate-rainbow-vivid",
+      )}
+    >
+      {shouldAnimateAmbientMotion && <ParticleCanvas />}
       <AnimatePresence initial={false}>
         <motion.div
           key={key}
@@ -55,7 +66,7 @@ export default function GlobalBackground({
           animate={{ opacity: 0.6 }}
           exit={{ opacity: 0 }}
           transition={{
-            duration: shouldReduceMotion ? 0 : 20,
+            duration: shouldAnimateAmbientMotion ? 20 : 0,
             ease: "linear",
           }}
           className="absolute inset-0 h-full w-full mix-blend-overlay"

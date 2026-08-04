@@ -26,6 +26,9 @@ describe("useDeferredClientFeature", () => {
 
     const { result, unmount } = renderHook(() => useDeferredClientFeature())
 
+    expect(requestIdleCallback).toHaveBeenCalledWith(expect.any(Function), {
+      timeout: expect.any(Number),
+    })
     expect(result.current).toEqual({
       isPostLoadIdleReady: false,
       hasMeaningfulUserIntent: false,

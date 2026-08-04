@@ -82,7 +82,7 @@ describe("GlobalBackground", () => {
     ).toBeInTheDocument()
   })
 
-  it("uses one static background without continuous Canvas work", () => {
+  it("uses the theme color without decorative layers when motion is reduced", () => {
     reducedMotionPreference.value = true
     backgroundState.bgUseInverse = true
     const { container } = render(<GlobalBackground shouldRenderAmbientMotion />)
@@ -90,9 +90,8 @@ describe("GlobalBackground", () => {
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
     expect(container.firstChild).not.toHaveClass("animate-rainbow-vivid")
-    expect(
-      container.querySelector('[data-transition-duration="0"]'),
-    ).toBeInTheDocument()
+    expect(container.querySelector("[data-transition-duration]")).toBeNull()
+    expect(container.querySelector("[data-image-source]")).toBeNull()
   })
 
   it("renders the active inverse background when motion is allowed", () => {
@@ -115,12 +114,7 @@ describe("GlobalBackground", () => {
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
     expect(container.firstChild).toHaveClass("animate-rainbow-vivid")
-    expect(
-      container.querySelector('[data-transition-duration="0"]'),
-    ).toBeInTheDocument()
-    expect(container.querySelector("[data-image-source]")).toHaveAttribute(
-      "data-image-source",
-      "/background-zero.svg",
-    )
+    expect(container.querySelector("[data-transition-duration]")).toBeNull()
+    expect(container.querySelector("[data-image-source]")).toBeNull()
   })
 })

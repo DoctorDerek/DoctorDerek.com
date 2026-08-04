@@ -61,24 +61,23 @@ export default function GlobalBackground({
     >
       {shouldRenderDeferredAmbientMotion && <ParticleCanvas />}
       <AnimatePresence initial={false}>
-        <motion.div
-          key={key}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            duration: shouldRenderDeferredAmbientMotion ? 20 : 0,
-            ease: "linear",
-          }}
-          className="absolute inset-0 h-full w-full mix-blend-overlay"
-        >
-          <motion.img
-            src={activeBackground.src}
-            alt=""
-            aria-hidden="true"
-            className="h-full w-full object-cover"
-          />
-        </motion.div>
+        {shouldRenderDeferredAmbientMotion && (
+          <motion.div
+            key={key}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.6 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 20, ease: "linear" }}
+            className="absolute inset-0 h-full w-full mix-blend-overlay"
+          >
+            <motion.img
+              src={activeBackground.src}
+              alt=""
+              aria-hidden="true"
+              className="h-full w-full object-cover"
+            />
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   )

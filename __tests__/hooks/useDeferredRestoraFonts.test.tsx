@@ -39,7 +39,14 @@ describe("useDeferredRestoraFonts", () => {
     expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
   })
 
-  it("loads Regular and Medium automatically after post-load readiness", async () => {
+  it("loads Regular and Medium in parallel before activating them together", async () => {
+    const resolveFontLoads: Array<(fontFaces: FontFace[]) => void> = []
+    loadFontMock.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveFontLoads.push(resolve)
+        }),
+    )
     const { rerender, unmount } = renderHook(
       (isPostLoadExperienceReady) =>
         useDeferredRestoraFonts(isPostLoadExperienceReady),
@@ -48,9 +55,20 @@ describe("useDeferredRestoraFonts", () => {
 
     rerender(true)
 
-    await waitFor(() =>
-      expect(document.documentElement).toHaveClass(RESTORA_READY_CLASSES.text),
-    )
+    await waitFor(() => expect(resolveFontLoads).toHaveLength(2))
+    expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
+
+    await act(async () => {
+      resolveFontLoads[0]([{} as FontFace])
+      await Promise.resolve()
+    })
+    expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
+
+    await act(async () => {
+      resolveFontLoads[1]([{} as FontFace])
+      await Promise.resolve()
+    })
+    expect(document.documentElement).toHaveClass(RESTORA_READY_CLASSES.text)
     expect(loadFontMock).toHaveBeenCalledWith(
       `${RESTORA_TEXT_FONT_WEIGHTS.regular} 1em "restoraText"`,
     )

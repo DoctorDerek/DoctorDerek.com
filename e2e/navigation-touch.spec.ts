@@ -51,7 +51,7 @@ test("touch users can dismiss and navigate the open overlay", async ({
   await expect(navigation).not.toHaveAttribute("inert")
   const aboutLink = navigation.getByRole("link", { name: "About" })
   await expect(aboutLink).toBeVisible()
-  await aboutLink.tap()
+  await aboutLink.click()
 
   await expect(page).toHaveURL(/#about$/)
   await expect(navigation).toHaveAttribute("inert")

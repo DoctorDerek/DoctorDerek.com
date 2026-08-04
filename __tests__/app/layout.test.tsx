@@ -52,11 +52,11 @@ describe("root metadata", () => {
     expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
   })
 
-  it("preloads only the ExtraBold hero display font", () => {
+  it("keeps the ExtraBold display face deferred", () => {
     expect(localFontMock).toHaveBeenCalledWith(
       expect.objectContaining({
         display: "swap",
-        preload: true,
+        preload: false,
         variable: "--font-restora-display",
         src: [
           expect.objectContaining({

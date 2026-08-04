@@ -230,8 +230,8 @@ body {
   font-family: var(--font-restora-text);
 }
 
-.restorabold,
-.restora-text-ready
+.restora-display-ready .restorabold,
+.restora-display-ready
   .restorabold
   :where(a, p, h1, h2, h3, h4, button, .restoramedium) {
   font-family: var(--font-restora-display);

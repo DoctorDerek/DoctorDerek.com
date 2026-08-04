@@ -76,12 +76,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
 
   const sectionsContent = [
     {
-      component: (
-        <TopSection
-          key="top"
-          shouldRenderDeferredMotion={shouldRenderDeferredMotion}
-        />
-      ),
+      component: <TopSection key="top" />,
       anchor: "home",
     },
     { component: <IntroSection key="intro" />, anchor: "intro" },

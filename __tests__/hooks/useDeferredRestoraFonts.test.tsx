@@ -32,45 +32,20 @@ describe("useDeferredRestoraFonts", () => {
     else Reflect.deleteProperty(document, "fonts")
   })
 
-  it("keeps deferred text fonts dormant before post-load idle and intent", () => {
-    renderHook(() =>
-      useDeferredRestoraFonts({
-        hasMeaningfulUserIntent: false,
-        isPostLoadIdleReady: false,
-      }),
-    )
+  it("keeps deferred text fonts dormant before post-load idle", () => {
+    renderHook(() => useDeferredRestoraFonts(false))
 
     expect(loadFontMock).not.toHaveBeenCalled()
     expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
   })
 
-  it("loads Regular and Medium only after post-load idle and intent", async () => {
+  it("loads Regular and Medium automatically after post-load idle", async () => {
     const { rerender, unmount } = renderHook(
-      ({ hasMeaningfulUserIntent, isPostLoadIdleReady }) =>
-        useDeferredRestoraFonts({
-          hasMeaningfulUserIntent,
-          isPostLoadIdleReady,
-        }),
-      {
-        initialProps: {
-          hasMeaningfulUserIntent: false,
-          isPostLoadIdleReady: false,
-        },
-      },
+      (isPostLoadIdleReady) => useDeferredRestoraFonts(isPostLoadIdleReady),
+      { initialProps: false },
     )
 
-    rerender({
-      hasMeaningfulUserIntent: false,
-      isPostLoadIdleReady: true,
-    })
-
-    expect(loadFontMock).not.toHaveBeenCalled()
-    expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
-
-    rerender({
-      hasMeaningfulUserIntent: true,
-      isPostLoadIdleReady: true,
-    })
+    rerender(true)
 
     await waitFor(() =>
       expect(document.documentElement).toHaveClass(RESTORA_READY_CLASSES.text),
@@ -93,12 +68,7 @@ describe("useDeferredRestoraFonts", () => {
     )
     document.documentElement.classList.add(RESTORA_READY_CLASSES.text)
 
-    renderHook(() =>
-      useDeferredRestoraFonts({
-        hasMeaningfulUserIntent: true,
-        isPostLoadIdleReady: true,
-      }),
-    )
+    renderHook(() => useDeferredRestoraFonts(true))
 
     await waitFor(() => expect(loadFontMock).toHaveBeenCalledTimes(2))
     expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
@@ -108,12 +78,7 @@ describe("useDeferredRestoraFonts", () => {
     loadFontMock
       .mockResolvedValueOnce([])
       .mockResolvedValueOnce([{} as FontFace])
-    const unavailableFont = renderHook(() =>
-      useDeferredRestoraFonts({
-        hasMeaningfulUserIntent: true,
-        isPostLoadIdleReady: true,
-      }),
-    )
+    const unavailableFont = renderHook(() => useDeferredRestoraFonts(true))
 
     await waitFor(() => expect(loadFontMock).toHaveBeenCalledTimes(2))
     expect(document.documentElement).not.toHaveClass(RESTORA_READY_CLASSES.text)
@@ -126,12 +91,7 @@ describe("useDeferredRestoraFonts", () => {
           resolveStaleFontLoads.push(resolve)
         }),
     )
-    const staleFont = renderHook(() =>
-      useDeferredRestoraFonts({
-        hasMeaningfulUserIntent: true,
-        isPostLoadIdleReady: true,
-      }),
-    )
+    const staleFont = renderHook(() => useDeferredRestoraFonts(true))
 
     await waitFor(() => expect(resolveStaleFontLoads).toHaveLength(2))
     staleFont.unmount()

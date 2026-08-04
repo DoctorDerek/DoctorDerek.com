@@ -62,14 +62,9 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
-  const { isPostLoadIdleReady, hasMeaningfulUserIntent } =
-    useDeferredClientFeature()
-  const shouldRenderDeferredMotion =
-    isPostLoadIdleReady && hasMeaningfulUserIntent
-  useDeferredRestoraFonts({
-    hasMeaningfulUserIntent,
-    isPostLoadIdleReady,
-  })
+  const isPostLoadIdleReady = useDeferredClientFeature()
+  const shouldRenderDeferredMotion = isPostLoadIdleReady
+  useDeferredRestoraFonts(isPostLoadIdleReady)
   useHorizontalWheelNavigation(fullPageApiReference)
   const {
     beginContactVisit,

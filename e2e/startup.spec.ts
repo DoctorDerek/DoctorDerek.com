@@ -15,9 +15,6 @@ test("loads Rive before deferred particles", async ({ page }) => {
   await expect(ambientCanvases).toHaveCount(0)
   await waitForDeferredIdleCallback(page)
   await releaseDeferredIdleCallbacks(page)
-  await expect(ambientCanvases).toHaveCount(0)
-
-  await page.locator("body").dispatchEvent("pointerdown")
   await expect(ambientCanvases).toHaveCount(1)
   await expect(page.locator("canvas.absolute")).toHaveCount(0)
 

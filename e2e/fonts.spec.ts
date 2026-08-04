@@ -1,8 +1,10 @@
 import { expect, test, type Page } from "@playwright/test"
 import {
-  RESTORA_CSS_VARIABLE,
-  RESTORA_FONT_WEIGHTS,
+  RESTORA_DISPLAY_CSS_VARIABLE,
+  RESTORA_DISPLAY_FONT_WEIGHT,
   RESTORA_READY_CLASSES,
+  RESTORA_TEXT_CSS_VARIABLE,
+  RESTORA_TEXT_FONT_WEIGHTS,
 } from "@/constants/TYPOGRAPHY"
 import {
   installDeferredIdleCallbackController,
@@ -10,24 +12,56 @@ import {
   waitForDeferredIdleCallback,
 } from "@/e2e/helpers/deferredIdleCallbacks"
 
-const collectLicensedFontAssetUrls = (page: Page) => {
-  const licensedFontAssetUrls: string[] = []
+const collectFontAssetUrls = (page: Page) => {
+  const fontAssetUrls: string[] = []
 
   page.on("request", (request) => {
-    if (
-      request.resourceType() === "font" &&
-      new URL(request.url()).pathname.endsWith(".otf")
-    )
-      licensedFontAssetUrls.push(request.url())
+    if (request.resourceType() === "font") fontAssetUrls.push(request.url())
   })
 
-  return licensedFontAssetUrls
+  return fontAssetUrls
 }
+
+const getFontAssetUrlsByExtension = (
+  fontAssetUrls: string[],
+  extension: string,
+) =>
+  fontAssetUrls.filter((fontAssetUrl) =>
+    new URL(fontAssetUrl).pathname.endsWith(extension),
+  )
 
 const getPrimaryHeadingFontFamily = (page: Page) =>
   page
     .getByRole("heading", { level: 1 })
     .evaluate((heading) => getComputedStyle(heading).fontFamily)
+
+const getRestoraFontFamily = (page: Page, cssVariable: string) =>
+  page
+    .evaluate(
+      (expectedCssVariable) =>
+        getComputedStyle(document.body)
+          .getPropertyValue(expectedCssVariable)
+          .split(",", 1)[0]
+          .trim(),
+      cssVariable,
+    )
+    .then((fontFamily) => fontFamily.replace(/^["']|["']$/g, ""))
+
+const hasLoadedRestoraFontWeights = async (
+  page: Page,
+  cssVariable: string,
+  fontWeights: number[],
+) => {
+  const restoraFontFamily = await getRestoraFontFamily(page, cssVariable)
+
+  return page.evaluate(
+    ({ expectedFontFamily, expectedFontWeights }) =>
+      expectedFontWeights.every((fontWeight) =>
+        document.fonts.check(`${fontWeight} 1em ${expectedFontFamily}`),
+      ),
+    { expectedFontFamily: restoraFontFamily, expectedFontWeights: fontWeights },
+  )
+}
 
 const hasRootClass = (page: Page, className: string) =>
   page.evaluate(
@@ -40,47 +74,47 @@ const verifyDeferredRestoraLoading = async (
   page: Page,
   shouldVerifyNetworkRequests: boolean,
 ) => {
-  const licensedFontAssetUrls = collectLicensedFontAssetUrls(page)
+  const fontAssetUrls = collectFontAssetUrls(page)
   await installDeferredIdleCallbackController(page)
 
   await page.goto("/", { waitUntil: "networkidle" })
 
-  expect(await getPrimaryHeadingFontFamily(page)).toContain("Roboto")
-  expect(licensedFontAssetUrls).toEqual([])
+  const displayFontFamily = await getRestoraFontFamily(
+    page,
+    RESTORA_DISPLAY_CSS_VARIABLE,
+  )
+  expect(await getPrimaryHeadingFontFamily(page)).toContain(displayFontFamily)
+  expect(
+    await hasLoadedRestoraFontWeights(page, RESTORA_DISPLAY_CSS_VARIABLE, [
+      RESTORA_DISPLAY_FONT_WEIGHT,
+    ]),
+  ).toBe(true)
+  const initialWoff2RequestCount = getFontAssetUrlsByExtension(
+    fontAssetUrls,
+    ".woff2",
+  ).length
+  if (shouldVerifyNetworkRequests) {
+    expect(initialWoff2RequestCount).toBeGreaterThan(0)
+    expect(getFontAssetUrlsByExtension(fontAssetUrls, ".otf")).toEqual([])
+  }
 
   await waitForDeferredIdleCallback(page)
   await releaseDeferredIdleCallbacks(page)
 
   await expect
-    .poll(() => hasRootClass(page, RESTORA_READY_CLASSES.display))
-    .toBe(true)
-  if (shouldVerifyNetworkRequests) expect(licensedFontAssetUrls).toHaveLength(1)
-  await expect
-    .poll(() => getPrimaryHeadingFontFamily(page))
-    .toContain("restora")
-
-  await page.locator("body").dispatchEvent("pointerdown")
-
-  await expect
     .poll(() => hasRootClass(page, RESTORA_READY_CLASSES.text))
     .toBe(true)
-  if (shouldVerifyNetworkRequests) expect(licensedFontAssetUrls).toHaveLength(3)
+  if (shouldVerifyNetworkRequests) {
+    expect(getFontAssetUrlsByExtension(fontAssetUrls, ".woff2")).toHaveLength(
+      initialWoff2RequestCount + 2,
+    )
+    expect(getFontAssetUrlsByExtension(fontAssetUrls, ".otf")).toEqual([])
+  }
   expect(
-    await page.evaluate(
-      ({ cssVariable, fontWeights }) => {
-        const primaryRestoraFontFamily = getComputedStyle(document.body)
-          .getPropertyValue(cssVariable)
-          .split(",", 1)[0]
-          .trim()
-
-        return fontWeights.every((fontWeight) =>
-          document.fonts.check(`${fontWeight} 1em ${primaryRestoraFontFamily}`),
-        )
-      },
-      {
-        cssVariable: RESTORA_CSS_VARIABLE,
-        fontWeights: Object.values(RESTORA_FONT_WEIGHTS),
-      },
+    await hasLoadedRestoraFontWeights(
+      page,
+      RESTORA_TEXT_CSS_VARIABLE,
+      Object.values(RESTORA_TEXT_FONT_WEIGHTS),
     ),
   ).toBe(true)
   expect(
@@ -99,7 +133,7 @@ test.describe("deferred licensed typography", () => {
     { name: "mobile", width: 390, height: 844 },
     { name: "desktop", width: 1440, height: 900 },
   ]) {
-    test(`${viewport.name} loads each Restora face only at its readiness gate`, async ({
+    test(`${viewport.name} preloads the display face and loads text faces after idle`, async ({
       page,
     }) => {
       await page.setViewportSize(viewport)

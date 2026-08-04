@@ -35,16 +35,10 @@ const loadDeferredRestoraTextFonts = () => {
   }
 }
 
-export default function useDeferredRestoraFonts({
-  hasMeaningfulUserIntent,
-  isPostLoadIdleReady,
-}: {
-  hasMeaningfulUserIntent: boolean
-  isPostLoadIdleReady: boolean
-}) {
+export default function useDeferredRestoraFonts(isPostLoadIdleReady: boolean) {
   useEffect(() => {
-    if (!isPostLoadIdleReady || !hasMeaningfulUserIntent) return
+    if (!isPostLoadIdleReady) return
 
     return loadDeferredRestoraTextFonts()
-  }, [hasMeaningfulUserIntent, isPostLoadIdleReady])
+  }, [isPostLoadIdleReady])
 }

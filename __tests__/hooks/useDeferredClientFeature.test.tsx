@@ -29,22 +29,9 @@ describe("useDeferredClientFeature", () => {
     expect(requestIdleCallback).toHaveBeenCalledWith(expect.any(Function), {
       timeout: expect.any(Number),
     })
-    expect(result.current).toEqual({
-      isPostLoadIdleReady: false,
-      hasMeaningfulUserIntent: false,
-    })
+    expect(result.current).toBe(false)
     act(() => idleCallback?.(idleDeadline))
-    expect(result.current).toEqual({
-      isPostLoadIdleReady: true,
-      hasMeaningfulUserIntent: false,
-    })
-    act(() => window.dispatchEvent(new PointerEvent("pointermove")))
-    expect(result.current.hasMeaningfulUserIntent).toBe(false)
-    act(() => window.dispatchEvent(new PointerEvent("pointerdown")))
-    expect(result.current).toEqual({
-      isPostLoadIdleReady: true,
-      hasMeaningfulUserIntent: true,
-    })
+    expect(result.current).toBe(true)
 
     unmount()
     expect(cancelIdleCallback).toHaveBeenCalledWith(7)
@@ -64,22 +51,11 @@ describe("useDeferredClientFeature", () => {
 
     const { result, unmount } = renderHook(() => useDeferredClientFeature())
 
-    expect(result.current).toEqual({
-      isPostLoadIdleReady: false,
-      hasMeaningfulUserIntent: false,
-    })
-    act(() => window.dispatchEvent(new PointerEvent("pointerdown")))
-    expect(result.current).toEqual({
-      isPostLoadIdleReady: false,
-      hasMeaningfulUserIntent: true,
-    })
+    expect(result.current).toBe(false)
     act(() => window.dispatchEvent(new Event("load")))
     expect(requestAnimationFrame).toHaveBeenCalledOnce()
     act(() => animationFrameCallback?.(0))
-    expect(result.current).toEqual({
-      isPostLoadIdleReady: true,
-      hasMeaningfulUserIntent: true,
-    })
+    expect(result.current).toBe(true)
 
     unmount()
     expect(cancelAnimationFrame).toHaveBeenCalledWith(11)
@@ -94,10 +70,6 @@ describe("useDeferredClientFeature", () => {
     unmount()
     expect(removeEventListener).toHaveBeenCalledWith(
       "load",
-      expect.any(Function),
-    )
-    expect(removeEventListener).toHaveBeenCalledWith(
-      "keydown",
       expect.any(Function),
     )
   })

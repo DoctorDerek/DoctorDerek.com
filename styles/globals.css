@@ -225,24 +225,19 @@ body {
   font-weight: 500;
 }
 
-.restorabold {
-  font-family: var(--font-restora-display);
-  font-weight: 800;
-}
-
-.restora-text-ready a,
-.restora-text-ready p,
-.restora-text-ready h1,
-.restora-text-ready h2,
-.restora-text-ready h3,
-.restora-text-ready h4,
-.restora-text-ready button,
-.restora-text-ready .restoramedium {
+.restora-text-ready :where(a, p, h1, h2, h3, h4, button, .restoramedium) {
   font-family: var(--font-restora-text);
 }
 
-.restora-text-ready .restorabold {
+.restorabold,
+.restora-text-ready
+  .restorabold
+  :where(a, p, h1, h2, h3, h4, button, .restoramedium) {
   font-family: var(--font-restora-display);
+}
+
+.restorabold {
+  font-weight: 800;
 }
 
 /* =========================== 

@@ -117,6 +117,7 @@ const verifyDeferredRestoraLoading = async (
       Object.values(RESTORA_TEXT_FONT_WEIGHTS),
     ),
   ).toBe(true)
+  expect(await getPrimaryHeadingFontFamily(page)).toContain(displayFontFamily)
   expect(
     await page
       .locator(".restoramedium")

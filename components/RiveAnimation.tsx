@@ -1,5 +1,14 @@
-import { Alignment, Fit, Layout, useRive } from "@rive-app/react-canvas-lite"
+import {
+  Alignment,
+  Fit,
+  Layout,
+  RuntimeLoader,
+  useRive,
+} from "@rive-app/react-canvas-lite"
 import { useState } from "react"
+import { RIVE_ASSET_URLS } from "@/constants/RIVE_ASSETS"
+
+RuntimeLoader.setWasmUrl(RIVE_ASSET_URLS.runtime)
 
 export default function RiveAnimation({
   onRiveReady,
@@ -9,7 +18,7 @@ export default function RiveAnimation({
   const [hasError, setHasError] = useState(false)
 
   const { RiveComponent } = useRive({
-    src: "/animation.riv",
+    src: RIVE_ASSET_URLS.animation,
     autoplay: true,
     layout: new Layout({
       fit: Fit.Cover,

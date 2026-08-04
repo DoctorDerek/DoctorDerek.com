@@ -1,18 +1,21 @@
 import { act, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import RiveAnimation from "@/components/RiveAnimation"
+import { RIVE_ASSET_URLS } from "@/constants/RIVE_ASSETS"
 
-const { riveConfiguration } = vi.hoisted(() => ({
+const { riveConfiguration, runtimeLoaderSetWasmUrl } = vi.hoisted(() => ({
   riveConfiguration: {
     onLoadError: undefined as (() => void) | undefined,
     onRiveReady: undefined as (() => void) | undefined,
   },
+  runtimeLoaderSetWasmUrl: vi.fn(),
 }))
 
 vi.mock("@rive-app/react-canvas-lite", () => ({
   Alignment: { Center: "center" },
   Fit: { Cover: "cover" },
   Layout: class MockLayout {},
+  RuntimeLoader: { setWasmUrl: runtimeLoaderSetWasmUrl },
   useRive: (configuration: {
     onLoadError: () => void
     onRiveReady: () => void
@@ -44,6 +47,9 @@ describe("RiveAnimation", () => {
     expect(container.firstElementChild).toHaveClass("-z-10")
     expect(screen.getByLabelText("Rive animation")).toHaveClass(
       "pointer-events-none",
+    )
+    expect(runtimeLoaderSetWasmUrl).toHaveBeenCalledWith(
+      RIVE_ASSET_URLS.runtime,
     )
 
     act(() => riveConfiguration.onRiveReady?.())

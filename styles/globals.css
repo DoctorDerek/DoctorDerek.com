@@ -202,6 +202,7 @@ body {
   height: 100%;
   overflow: hidden;
   scroll-behavior: smooth;
+  background-color: var(--site-background-teal);
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   color: var(--site-foreground);
 }

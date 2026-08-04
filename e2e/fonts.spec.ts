@@ -8,11 +8,9 @@ import {
 } from "@/constants/TYPOGRAPHY"
 import {
   completePostLoadQuietPeriod,
-  installDeferredIdleCallbackController,
-  releaseDeferredIdleCallbacks,
-  waitForDeferredIdleCallback,
+  installPostLoadQuietPeriodController,
   waitForPostLoadQuietPeriod,
-} from "@/e2e/helpers/deferredIdleCallbacks"
+} from "@/e2e/helpers/postLoadQuietPeriod"
 
 const collectFontAssetUrls = (page: Page) => {
   const fontAssetUrls: string[] = []
@@ -24,13 +22,18 @@ const collectFontAssetUrls = (page: Page) => {
   return fontAssetUrls
 }
 
-const getFontAssetUrlsByExtension = (
+const getBundledFontAssetUrlsByExtension = (
   fontAssetUrls: string[],
   extension: string,
 ) =>
-  fontAssetUrls.filter((fontAssetUrl) =>
-    new URL(fontAssetUrl).pathname.endsWith(extension),
-  )
+  fontAssetUrls.filter((fontAssetUrl) => {
+    const fontAssetPath = new URL(fontAssetUrl).pathname
+
+    return (
+      fontAssetPath.startsWith("/_next/static/media/") &&
+      fontAssetPath.endsWith(extension)
+    )
+  })
 
 const getPrimaryHeadingFontFamily = (page: Page) =>
   page
@@ -77,7 +80,7 @@ const verifyDeferredRestoraLoading = async (
   shouldVerifyNetworkRequests: boolean,
 ) => {
   const fontAssetUrls = collectFontAssetUrls(page)
-  await installDeferredIdleCallbackController(page)
+  await installPostLoadQuietPeriodController(page)
 
   await page.goto("/", { waitUntil: "networkidle" })
 
@@ -85,34 +88,40 @@ const verifyDeferredRestoraLoading = async (
     page,
     RESTORA_DISPLAY_CSS_VARIABLE,
   )
-  expect(await getPrimaryHeadingFontFamily(page)).toContain(displayFontFamily)
-  expect(
-    await hasLoadedRestoraFontWeights(page, RESTORA_DISPLAY_CSS_VARIABLE, [
-      RESTORA_DISPLAY_FONT_WEIGHT,
-    ]),
-  ).toBe(true)
-  const initialWoff2RequestCount = getFontAssetUrlsByExtension(
+  expect(await getPrimaryHeadingFontFamily(page)).not.toContain(
+    displayFontFamily,
+  )
+  const initialWoff2AssetUrls = getBundledFontAssetUrlsByExtension(
     fontAssetUrls,
     ".woff2",
-  ).length
+  )
+  const initialWoff2RequestCount = initialWoff2AssetUrls.length
   if (shouldVerifyNetworkRequests) {
-    expect(initialWoff2RequestCount).toBeGreaterThan(0)
-    expect(getFontAssetUrlsByExtension(fontAssetUrls, ".otf")).toEqual([])
+    expect(initialWoff2AssetUrls).toEqual([])
+    expect(getBundledFontAssetUrlsByExtension(fontAssetUrls, ".otf")).toEqual(
+      [],
+    )
   }
 
   await waitForPostLoadQuietPeriod(page)
   await completePostLoadQuietPeriod(page)
-  await waitForDeferredIdleCallback(page)
-  await releaseDeferredIdleCallbacks(page)
 
   await expect
-    .poll(() => hasRootClass(page, RESTORA_READY_CLASSES.text))
+    .poll(() =>
+      Promise.all(
+        Object.values(RESTORA_READY_CLASSES).map((readyClass) =>
+          hasRootClass(page, readyClass),
+        ),
+      ).then((readyClasses) => readyClasses.every(Boolean)),
+    )
     .toBe(true)
   if (shouldVerifyNetworkRequests) {
-    expect(getFontAssetUrlsByExtension(fontAssetUrls, ".woff2")).toHaveLength(
-      initialWoff2RequestCount + 2,
+    expect(
+      getBundledFontAssetUrlsByExtension(fontAssetUrls, ".woff2"),
+    ).toHaveLength(initialWoff2RequestCount + 3)
+    expect(getBundledFontAssetUrlsByExtension(fontAssetUrls, ".otf")).toEqual(
+      [],
     )
-    expect(getFontAssetUrlsByExtension(fontAssetUrls, ".otf")).toEqual([])
   }
   expect(
     await hasLoadedRestoraFontWeights(
@@ -138,7 +147,7 @@ test.describe("deferred licensed typography", () => {
     { name: "mobile", width: 390, height: 844 },
     { name: "desktop", width: 1440, height: 900 },
   ]) {
-    test(`${viewport.name} preloads the display face and loads text faces after the quiet period`, async ({
+    test(`${viewport.name} defers all Restora faces until after the quiet period`, async ({
       page,
     }) => {
       await page.setViewportSize(viewport)

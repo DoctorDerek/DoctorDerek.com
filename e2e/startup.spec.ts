@@ -1,31 +1,29 @@
 import { expect, test } from "@playwright/test"
 import {
   completePostLoadQuietPeriod,
-  expectNoDeferredIdleCallbacks,
-  installDeferredIdleCallbackController,
-  releaseDeferredIdleCallbacks,
-  waitForDeferredIdleCallback,
+  installPostLoadQuietPeriodController,
   waitForPostLoadQuietPeriod,
-} from "@/e2e/helpers/deferredIdleCallbacks"
+} from "@/e2e/helpers/postLoadQuietPeriod"
 
-test("loads Rive before deferred particles", async ({ page }) => {
+test("loads Typewriter, Rive, and ambient layers in order", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" })
-  await installDeferredIdleCallbackController(page)
+  await installPostLoadQuietPeriodController(page)
   await page.goto("/")
 
   const ambientCanvases = page.locator("canvas")
   const ambientBackground = page.locator("[data-ambient-motion]")
+  const backgroundPattern = ambientBackground.locator("img")
   const typewriter = page.locator(".Typewriter")
 
   await expect(ambientCanvases).toHaveCount(0)
-  await expect(typewriter).toHaveCount(0)
+  await expect(typewriter).toHaveCount(1)
+  await expect(backgroundPattern).toHaveCount(0)
   await expect(ambientBackground).toHaveAttribute(
     "data-ambient-motion",
     "false",
   )
   await expect(ambientBackground).toHaveClass(/animate-rainbow-vivid/)
   await waitForPostLoadQuietPeriod(page)
-  await expectNoDeferredIdleCallbacks(page)
 
   await page.evaluate(() => {
     window.dispatchEvent(new PointerEvent("pointermove"))
@@ -33,29 +31,30 @@ test("loads Rive before deferred particles", async ({ page }) => {
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "Shift" }))
   })
 
-  await expectNoDeferredIdleCallbacks(page)
-  await expect(typewriter).toHaveCount(0)
+  await expect(typewriter).toHaveCount(1)
   await expect(ambientCanvases).toHaveCount(0)
+  await expect(backgroundPattern).toHaveCount(0)
   await expect(ambientBackground).toHaveAttribute(
     "data-ambient-motion",
     "false",
   )
 
   await completePostLoadQuietPeriod(page)
-  await waitForDeferredIdleCallback(page)
-  await releaseDeferredIdleCallbacks(page)
-  await expect(ambientCanvases).toHaveCount(0)
-
-  await waitForDeferredIdleCallback(page)
-  await releaseDeferredIdleCallbacks(page)
   await expect(ambientCanvases).toHaveCount(1)
   await expect(page.locator("canvas.absolute")).toHaveCount(0)
+  await expect(backgroundPattern).toHaveCount(0)
+  await expect(ambientBackground).toHaveAttribute(
+    "data-ambient-motion",
+    "false",
+  )
 
-  await waitForDeferredIdleCallback(page)
-  await expect(ambientCanvases).toHaveCount(1)
-  await releaseDeferredIdleCallbacks(page)
+  await expect(ambientBackground).toHaveAttribute(
+    "data-ambient-motion",
+    "true",
+    { timeout: 15_000 },
+  )
   await expect(ambientCanvases).toHaveCount(2)
   await expect(page.locator("canvas.absolute")).toHaveCount(1)
-  await expect(ambientBackground).toHaveAttribute("data-ambient-motion", "true")
+  await expect(backgroundPattern).toHaveCount(1)
   await expect(ambientBackground).toHaveClass(/animate-rainbow-vivid/)
 })

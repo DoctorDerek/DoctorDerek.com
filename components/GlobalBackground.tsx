@@ -37,10 +37,11 @@ export default function GlobalBackground({
   const activeBackgroundUsesInverse = GlobalStateContext.useSelector(
     (state) => state.context.bgUseInverse,
   )
-  const shouldAnimateAmbientMotion =
+  const shouldAnimateBackgroundColor = !shouldReduceMotion
+  const shouldRenderDeferredAmbientMotion =
     !shouldReduceMotion && shouldRenderAmbientMotion
-  const bgIndex = shouldAnimateAmbientMotion ? activeBackgroundIndex : 0
-  const bgUseInverse = shouldAnimateAmbientMotion
+  const bgIndex = shouldRenderDeferredAmbientMotion ? activeBackgroundIndex : 0
+  const bgUseInverse = shouldRenderDeferredAmbientMotion
     ? activeBackgroundUsesInverse
     : false
 
@@ -52,13 +53,13 @@ export default function GlobalBackground({
 
   return (
     <div
-      data-ambient-motion={shouldAnimateAmbientMotion}
+      data-ambient-motion={shouldRenderDeferredAmbientMotion}
       className={classNames(
         "pointer-events-none fixed inset-0 -z-20 h-full w-full",
-        shouldAnimateAmbientMotion && "animate-rainbow-vivid",
+        shouldAnimateBackgroundColor && "animate-rainbow-vivid",
       )}
     >
-      {shouldAnimateAmbientMotion && <ParticleCanvas />}
+      {shouldRenderDeferredAmbientMotion && <ParticleCanvas />}
       <AnimatePresence initial={false}>
         <motion.div
           key={key}
@@ -66,7 +67,7 @@ export default function GlobalBackground({
           animate={{ opacity: 0.6 }}
           exit={{ opacity: 0 }}
           transition={{
-            duration: shouldAnimateAmbientMotion ? 20 : 0,
+            duration: shouldRenderDeferredAmbientMotion ? 20 : 0,
             ease: "linear",
           }}
           className="absolute inset-0 h-full w-full mix-blend-overlay"

@@ -20,7 +20,7 @@ test("honors the system reduced-motion preference", async ({ page }) => {
   await expect(ambientBackground).not.toHaveClass(/animate-rainbow-vivid/)
 })
 
-test("keeps ambient motion dormant during unrestricted startup", async ({
+test("starts color motion while keeping deferred ambience dormant", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" })
@@ -33,5 +33,5 @@ test("keeps ambient motion dormant during unrestricted startup", async ({
     "data-ambient-motion",
     "false",
   )
-  await expect(page.locator(".animate-rainbow-vivid")).toHaveCount(0)
+  await expect(page.locator(".animate-rainbow-vivid")).toHaveCount(1)
 })

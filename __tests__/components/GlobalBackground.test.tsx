@@ -107,14 +107,14 @@ describe("GlobalBackground", () => {
     )
   })
 
-  it("keeps the initial background static before ambient motion begins", () => {
+  it("starts color motion while keeping deferred ambience dormant", () => {
     const { container } = render(
       <GlobalBackground shouldRenderAmbientMotion={false} />,
     )
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
-    expect(container.firstChild).not.toHaveClass("animate-rainbow-vivid")
+    expect(container.firstChild).toHaveClass("animate-rainbow-vivid")
     expect(
       container.querySelector('[data-transition-duration="0"]'),
     ).toBeInTheDocument()

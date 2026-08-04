@@ -23,7 +23,7 @@ test("loads Rive before deferred particles", async ({ page }) => {
     "data-ambient-motion",
     "false",
   )
-  await expect(ambientBackground).not.toHaveClass(/animate-rainbow-vivid/)
+  await expect(ambientBackground).toHaveClass(/animate-rainbow-vivid/)
   await waitForPostLoadQuietPeriod(page)
   await expectNoDeferredIdleCallbacks(page)
 

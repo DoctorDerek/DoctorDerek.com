@@ -1,8 +1,10 @@
 import { expect, test } from "@playwright/test"
 import {
+  completePostLoadQuietPeriod,
   installDeferredIdleCallbackController,
   releaseDeferredIdleCallbacks,
   waitForDeferredIdleCallback,
+  waitForPostLoadQuietPeriod,
 } from "@/e2e/helpers/deferredIdleCallbacks"
 
 test("loads Rive before deferred particles", async ({ page }) => {
@@ -13,6 +15,8 @@ test("loads Rive before deferred particles", async ({ page }) => {
   const ambientCanvases = page.locator("canvas")
 
   await expect(ambientCanvases).toHaveCount(0)
+  await waitForPostLoadQuietPeriod(page)
+  await completePostLoadQuietPeriod(page)
   await waitForDeferredIdleCallback(page)
   await releaseDeferredIdleCallbacks(page)
   await expect(ambientCanvases).toHaveCount(0)

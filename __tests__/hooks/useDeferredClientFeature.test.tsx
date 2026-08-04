@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react"
 import { afterEach, describe, expect, it, vi } from "vitest"
+import { POST_LOAD_QUIET_PERIOD_MILLISECONDS } from "@/constants/STARTUP_TIMING"
 import useDeferredClientFeature from "@/hooks/useDeferredClientFeature"
 
 const idleDeadline = {
@@ -9,11 +10,14 @@ const idleDeadline = {
 
 describe("useDeferredClientFeature", () => {
   afterEach(() => {
+    vi.clearAllTimers()
+    vi.useRealTimers()
     vi.restoreAllMocks()
     vi.unstubAllGlobals()
   })
 
-  it("waits for idle time after a completed page load", () => {
+  it("preserves a quiet period before requesting idle time", () => {
+    vi.useFakeTimers()
     let idleCallback: IdleRequestCallback | undefined
     const cancelIdleCallback = vi.fn()
     const requestIdleCallback = vi.fn((callback: IdleRequestCallback) => {
@@ -26,6 +30,11 @@ describe("useDeferredClientFeature", () => {
 
     const { result, unmount } = renderHook(() => useDeferredClientFeature())
 
+    act(() => vi.advanceTimersByTime(POST_LOAD_QUIET_PERIOD_MILLISECONDS - 1))
+    expect(requestIdleCallback).not.toHaveBeenCalled()
+    expect(result.current).toBe(false)
+
+    act(() => vi.advanceTimersByTime(1))
     expect(requestIdleCallback).toHaveBeenCalledWith(expect.any(Function), {
       timeout: expect.any(Number),
     })
@@ -38,6 +47,7 @@ describe("useDeferredClientFeature", () => {
   })
 
   it("uses the next paint after load when idle callbacks are unavailable", () => {
+    vi.useFakeTimers()
     let animationFrameCallback: FrameRequestCallback | undefined
     const cancelAnimationFrame = vi.fn()
     const requestAnimationFrame = vi.fn((callback: FrameRequestCallback) => {
@@ -53,6 +63,8 @@ describe("useDeferredClientFeature", () => {
 
     expect(result.current).toBe(false)
     act(() => window.dispatchEvent(new Event("load")))
+    expect(requestAnimationFrame).not.toHaveBeenCalled()
+    act(() => vi.advanceTimersByTime(POST_LOAD_QUIET_PERIOD_MILLISECONDS))
     expect(requestAnimationFrame).toHaveBeenCalledOnce()
     act(() => animationFrameCallback?.(0))
     expect(result.current).toBe(true)
@@ -72,5 +84,20 @@ describe("useDeferredClientFeature", () => {
       "load",
       expect.any(Function),
     )
+  })
+
+  it("cancels the quiet period when the consumer unmounts after load", () => {
+    vi.useFakeTimers()
+    const requestIdleCallback = vi.fn()
+    vi.spyOn(document, "readyState", "get").mockReturnValue("loading")
+    vi.stubGlobal("requestIdleCallback", requestIdleCallback)
+
+    const { unmount } = renderHook(() => useDeferredClientFeature())
+
+    act(() => window.dispatchEvent(new Event("load")))
+    unmount()
+    act(() => vi.advanceTimersByTime(POST_LOAD_QUIET_PERIOD_MILLISECONDS))
+
+    expect(requestIdleCallback).not.toHaveBeenCalled()
   })
 })

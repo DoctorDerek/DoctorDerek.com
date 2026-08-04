@@ -7,9 +7,11 @@ import {
   RESTORA_TEXT_FONT_WEIGHTS,
 } from "@/constants/TYPOGRAPHY"
 import {
+  completePostLoadQuietPeriod,
   installDeferredIdleCallbackController,
   releaseDeferredIdleCallbacks,
   waitForDeferredIdleCallback,
+  waitForPostLoadQuietPeriod,
 } from "@/e2e/helpers/deferredIdleCallbacks"
 
 const collectFontAssetUrls = (page: Page) => {
@@ -98,6 +100,8 @@ const verifyDeferredRestoraLoading = async (
     expect(getFontAssetUrlsByExtension(fontAssetUrls, ".otf")).toEqual([])
   }
 
+  await waitForPostLoadQuietPeriod(page)
+  await completePostLoadQuietPeriod(page)
   await waitForDeferredIdleCallback(page)
   await releaseDeferredIdleCallbacks(page)
 
@@ -134,7 +138,7 @@ test.describe("deferred licensed typography", () => {
     { name: "mobile", width: 390, height: 844 },
     { name: "desktop", width: 1440, height: 900 },
   ]) {
-    test(`${viewport.name} preloads the display face and loads text faces after idle`, async ({
+    test(`${viewport.name} preloads the display face and loads text faces after the quiet period`, async ({
       page,
     }) => {
       await page.setViewportSize(viewport)

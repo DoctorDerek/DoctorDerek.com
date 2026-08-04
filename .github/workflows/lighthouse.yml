@@ -27,8 +27,8 @@ jobs:
           script: |
             const productionEnvironment = "Production";
             const vercelDeploymentCreator = "vercel[bot]";
-            const maximumPollingAttempts = 31;
-            const pollingIntervalMilliseconds = 30_000;
+            const maximumPollingAttempts = 16;
+            const pollingIntervalMilliseconds = 60_000;
             const waitForNextPollingAttempt = () =>
               new Promise(resolve =>
                 setTimeout(resolve, pollingIntervalMilliseconds),

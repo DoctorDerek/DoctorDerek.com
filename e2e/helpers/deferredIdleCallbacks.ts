@@ -97,6 +97,11 @@ export const completePostLoadQuietPeriod = (page: Page) =>
 export const releaseDeferredIdleCallbacks = (page: Page) =>
   page.evaluate(() => window.__releaseDeferredIdleCallbacks())
 
+export const expectNoDeferredIdleCallbacks = (page: Page) =>
+  expect
+    .poll(() => page.evaluate(() => window.__deferredIdleCallbackCount))
+    .toBe(0)
+
 export const waitForDeferredIdleCallback = (page: Page) =>
   expect
     .poll(() => page.evaluate(() => window.__deferredIdleCallbackCount))

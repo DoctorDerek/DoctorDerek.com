@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test"
 import {
   completePostLoadQuietPeriod,
+  expectNoDeferredIdleCallbacks,
   installDeferredIdleCallbackController,
   releaseDeferredIdleCallbacks,
   waitForDeferredIdleCallback,
@@ -14,14 +15,32 @@ test("loads Rive before deferred particles", async ({ page }) => {
 
   const ambientCanvases = page.locator("canvas")
   const ambientBackground = page.locator("[data-ambient-motion]")
+  const typewriter = page.locator(".Typewriter")
 
   await expect(ambientCanvases).toHaveCount(0)
+  await expect(typewriter).toHaveCount(0)
   await expect(ambientBackground).toHaveAttribute(
     "data-ambient-motion",
     "false",
   )
   await expect(ambientBackground).not.toHaveClass(/animate-rainbow-vivid/)
   await waitForPostLoadQuietPeriod(page)
+  await expectNoDeferredIdleCallbacks(page)
+
+  await page.evaluate(() => {
+    window.dispatchEvent(new PointerEvent("pointermove"))
+    window.dispatchEvent(new WheelEvent("wheel"))
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Shift" }))
+  })
+
+  await expectNoDeferredIdleCallbacks(page)
+  await expect(typewriter).toHaveCount(0)
+  await expect(ambientCanvases).toHaveCount(0)
+  await expect(ambientBackground).toHaveAttribute(
+    "data-ambient-motion",
+    "false",
+  )
+
   await completePostLoadQuietPeriod(page)
   await waitForDeferredIdleCallback(page)
   await releaseDeferredIdleCallbacks(page)

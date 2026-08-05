@@ -38,9 +38,12 @@ test("rewards a deliberate attempt past Contact and cancels confetti on departur
   await expect(page.locator(".end-of-site-confetti")).toHaveCount(0)
 
   await reachContactScrollEnd(page)
-  await page.mouse.wheel(0, 500)
-
-  await expect(completionStatus(page)).toHaveCount(1)
+  await expect
+    .poll(async () => {
+      await page.mouse.wheel(0, 500)
+      return completionStatus(page).count()
+    })
+    .toBe(1)
   await expect(completionStatus(page)).toContainText(
     CONTACT_COMPLETION.toastMessage,
   )

@@ -32,7 +32,7 @@ const ARCHIVES: GhostArchive[] = [
     targetDir: join(__dirname, "../vendor/fonts"),
     /**
      * APPROVED EXCEPTION TO NO CODE COMMENT RULE:
-     * Flattens directory structure so .otf files
+     * Flattens directory structure so webfont files
      * land directly in vendor/fonts/
      */
     junkPaths: true,

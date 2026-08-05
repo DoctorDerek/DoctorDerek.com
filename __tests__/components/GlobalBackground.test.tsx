@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import GlobalBackground from "@/components/GlobalBackground"
 
@@ -60,64 +60,54 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
 }))
 
 vi.mock("@/components/ParticleCanvas", () => ({
-  default: ({ onFirstFrameRendered }: { onFirstFrameRendered: () => void }) => (
-    <canvas aria-label="Particle field" onClick={onFirstFrameRendered} />
-  ),
+  default: () => <canvas aria-label="Particle field" />,
 }))
 
 describe("GlobalBackground", () => {
-  const onParticleFirstFrameRendered = vi.fn()
-
   beforeEach(() => {
     backgroundState.bgIndex = 2
     backgroundState.bgUseInverse = false
     reducedMotionPreference.value = false
-    onParticleFirstFrameRendered.mockClear()
   })
 
   it("renders animated ambient layers when motion is allowed", async () => {
-    const { container } = render(
-      <GlobalBackground
-        onParticleFirstFrameRendered={onParticleFirstFrameRendered}
-        shouldRenderParticles={true}
-      />,
-    )
+    const { container } = render(<GlobalBackground shouldRenderAmbientMotion />)
 
     const particleField = await screen.findByLabelText("Particle field")
     expect(particleField).toBeInTheDocument()
-    fireEvent.click(particleField)
-    expect(onParticleFirstFrameRendered).toHaveBeenCalledOnce()
+    expect(container.firstChild).toHaveAttribute("data-ambient-motion", "true")
+    expect(container.firstChild).toHaveClass("animate-rainbow-vivid")
     expect(
       container.querySelector('[data-transition-duration="20"]'),
     ).toBeInTheDocument()
+    expect(container.querySelector("[data-image-source]")).toHaveAttribute(
+      "data-image-source",
+      "/background-three.svg",
+    )
   })
 
-  it("uses one static background without continuous Canvas work", () => {
+  it("keeps the static pattern on the theme color when motion is reduced", () => {
     reducedMotionPreference.value = true
     backgroundState.bgUseInverse = true
-    const { container } = render(
-      <GlobalBackground
-        onParticleFirstFrameRendered={onParticleFirstFrameRendered}
-        shouldRenderParticles={true}
-      />,
-    )
+    const { container } = render(<GlobalBackground shouldRenderAmbientMotion />)
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
+    expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
+    expect(container.firstChild).not.toHaveClass("animate-rainbow-vivid")
     expect(
       container.querySelector('[data-transition-duration="0"]'),
     ).toBeInTheDocument()
+    expect(container.querySelector("[data-image-source]")).toHaveAttribute(
+      "data-image-source",
+      "/background-zero.svg",
+    )
   })
 
   it("renders the active inverse background when motion is allowed", () => {
     backgroundState.bgIndex = 0
     backgroundState.bgUseInverse = true
 
-    const { container } = render(
-      <GlobalBackground
-        onParticleFirstFrameRendered={onParticleFirstFrameRendered}
-        shouldRenderParticles={true}
-      />,
-    )
+    const { container } = render(<GlobalBackground shouldRenderAmbientMotion />)
 
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(
       "data-image-source",
@@ -125,18 +115,20 @@ describe("GlobalBackground", () => {
     )
   })
 
-  it("defers particle work while preserving the active background", () => {
+  it("starts color motion with a static pattern while particles stay dormant", () => {
     const { container } = render(
-      <GlobalBackground
-        onParticleFirstFrameRendered={onParticleFirstFrameRendered}
-        shouldRenderParticles={false}
-      />,
+      <GlobalBackground shouldRenderAmbientMotion={false} />,
     )
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
+    expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
+    expect(container.firstChild).toHaveClass("animate-rainbow-vivid")
+    expect(
+      container.querySelector('[data-transition-duration="0"]'),
+    ).toBeInTheDocument()
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(
       "data-image-source",
-      "/background-three.svg",
+      "/background-zero.svg",
     )
   })
 })

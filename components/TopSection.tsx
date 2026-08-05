@@ -14,11 +14,7 @@ const [PRIMARY_INTRODUCTION, ...SUPPORTING_INTRODUCTION_SEGMENTS] =
   INTRO_BIO_SHORT.split(" · ")
 const SUPPORTING_INTRODUCTION = SUPPORTING_INTRODUCTION_SEGMENTS.join(" · ")
 
-export default function TopSection({
-  shouldRenderDeferredMotion,
-}: {
-  shouldRenderDeferredMotion: boolean
-}) {
+export default function TopSection() {
   const { shouldReduceMotion } = useMotionPreference()
 
   return (
@@ -41,13 +37,7 @@ export default function TopSection({
                 aria-hidden="true"
                 className="mt-3 min-h-[3rem] text-base md:min-h-[4rem] md:text-xl lg:text-2xl"
               >
-                {shouldRenderDeferredMotion ? (
-                  <IntroTypewriter
-                    segments={SUPPORTING_INTRODUCTION_SEGMENTS}
-                  />
-                ) : (
-                  <p>{SUPPORTING_INTRODUCTION_SEGMENTS[0]}</p>
-                )}
+                <IntroTypewriter segments={SUPPORTING_INTRODUCTION_SEGMENTS} />
               </div>
             </>
           )}

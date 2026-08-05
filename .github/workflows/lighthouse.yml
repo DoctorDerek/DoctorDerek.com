@@ -14,7 +14,7 @@ jobs:
   measure:
     name: Measure Mobile Web Lighthouse
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     permissions:
       contents: read
       deployments: read
@@ -27,8 +27,8 @@ jobs:
           script: |
             const productionEnvironment = "Production";
             const vercelDeploymentCreator = "vercel[bot]";
-            const maximumPollingAttempts = 48;
-            const pollingIntervalMilliseconds = 10_000;
+            const maximumPollingAttempts = 16;
+            const pollingIntervalMilliseconds = 60_000;
             const waitForNextPollingAttempt = () =>
               new Promise(resolve =>
                 setTimeout(resolve, pollingIntervalMilliseconds),
@@ -88,7 +88,7 @@ jobs:
             }
 
             throw new Error(
-              `Vercel Production deployment ${context.sha} did not succeed within eight minutes.`,
+              `Vercel Production deployment ${context.sha} did not succeed within 15 minutes.`,
             );
 
       - name: Checkout Repository

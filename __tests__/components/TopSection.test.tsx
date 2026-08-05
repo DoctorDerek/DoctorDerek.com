@@ -41,7 +41,7 @@ describe("TopSection", () => {
   })
 
   it("keeps the primary positioning visible while supporting motion runs", () => {
-    render(<TopSection shouldRenderDeferredMotion={true} />)
+    render(<TopSection />)
 
     const primaryPositioning = screen.getByRole("heading", {
       level: 1,
@@ -56,27 +56,10 @@ describe("TopSection", () => {
     ).toHaveAttribute("aria-hidden", "true")
   })
 
-  it("keeps the first supporting segment visible while motion is deferred", () => {
-    render(<TopSection shouldRenderDeferredMotion={false} />)
-
-    expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: primaryIntroduction,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(supportingIntroductionSegments[0]),
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByText(supportingIntroductionSegments.at(-1)!),
-    ).not.toBeInTheDocument()
-  })
-
   it("renders the complete supporting introduction statically when motion is reduced", () => {
     reducedMotionPreference.value = true
 
-    render(<TopSection shouldRenderDeferredMotion={true} />)
+    render(<TopSection />)
 
     expect(
       screen.getByRole("heading", {

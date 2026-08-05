@@ -4,20 +4,10 @@ import type { Metadata, Viewport } from "next"
 import localFont from "next/font/local"
 import SiteThemeProvider from "@/components/SiteThemeProvider"
 
-const restora = localFont({
+const restoraDisplay = localFont({
   src: [
     {
-      path: "../vendor/fonts/restora-1.otf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../vendor/fonts/restoramedium-1.otf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../vendor/fonts/restoraextrabold-1.otf",
+      path: "../vendor/fonts/restoraextrabold-1-webfont.woff2",
       weight: "800",
       style: "normal",
     },
@@ -26,7 +16,27 @@ const restora = localFont({
   preload: false,
   fallback: ["Georgia", "Times New Roman", "serif"],
   adjustFontFallback: "Times New Roman",
-  variable: "--font-restora",
+  variable: "--font-restora-display",
+})
+
+const restoraText = localFont({
+  src: [
+    {
+      path: "../vendor/fonts/restora-1-webfont.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../vendor/fonts/restoramedium-1-webfont.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+  display: "swap",
+  preload: false,
+  fallback: ["Georgia", "Times New Roman", "serif"],
+  adjustFontFallback: "Times New Roman",
+  variable: "--font-restora-text",
 })
 
 const siteTitle =
@@ -83,7 +93,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={restora.variable}>
+      <body className={`${restoraDisplay.variable} ${restoraText.variable}`}>
         <SiteThemeProvider>{children}</SiteThemeProvider>
       </body>
     </html>

@@ -1,5 +1,5 @@
-import { act, fireEvent, render, screen } from "@testing-library/react"
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { fireEvent, render, screen } from "@testing-library/react"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
@@ -9,7 +9,9 @@ const { reducedMotionPreference } = vi.hoisted(() => ({
 vi.mock("next/dynamic", () => ({
   default: (loadComponent: () => Promise<unknown>) => {
     void loadComponent()
-    return () => <p>Rive animation</p>
+    return ({ onRiveComplete }: { onRiveComplete: () => void }) => (
+      <button onClick={onRiveComplete}>Rive animation</button>
+    )
   },
 }))
 
@@ -19,20 +21,11 @@ vi.mock("@/components/RiveAnimation", () => ({
 
 vi.mock("@/components/GlobalBackground", () => ({
   default: ({
-    onParticleFirstFrameRendered,
-    shouldRenderParticles,
+    shouldRenderAmbientMotion,
   }: {
-    onParticleFirstFrameRendered: () => void
-    shouldRenderParticles: boolean
+    shouldRenderAmbientMotion: boolean
   }) => (
-    <>
-      <p data-particles-ready={shouldRenderParticles}>Global background</p>
-      {shouldRenderParticles && (
-        <button onClick={onParticleFirstFrameRendered}>
-          Render particle frame
-        </button>
-      )}
-    </>
+    <p data-ambient-motion={shouldRenderAmbientMotion}>Global background</p>
   ),
 }))
 
@@ -47,77 +40,47 @@ vi.mock("@/components/ui/CustomCursor", () => ({
 }))
 
 describe("MotionAwareAmbience", () => {
-  let idleCallback: IdleRequestCallback | undefined
-
   beforeEach(() => {
-    idleCallback = undefined
     reducedMotionPreference.value = false
-    vi.stubGlobal(
-      "requestIdleCallback",
-      vi.fn((callback: IdleRequestCallback) => {
-        idleCallback = callback
-        return 17
-      }),
-    )
-    vi.stubGlobal("cancelIdleCallback", vi.fn())
   })
 
-  afterEach(() => {
-    vi.unstubAllGlobals()
-  })
-
-  it("loads Rive only after particles render and the browser becomes idle again", () => {
-    const { unmount } = render(
-      <MotionAwareAmbience shouldRenderDeferredMotion={true} />,
-    )
+  it("reveals ambient motion only after Rive completes", () => {
+    render(<MotionAwareAmbience shouldStartRive={true} />)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
-      "data-particles-ready",
-      "true",
+      "data-ambient-motion",
+      "false",
     )
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
-    expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
-
-    fireEvent.click(
-      screen.getByRole("button", { name: "Render particle frame" }),
-    )
-    expect(window.requestIdleCallback).toHaveBeenCalledOnce()
-    expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
-
-    act(() =>
-      idleCallback?.({
-        didTimeout: false,
-        timeRemaining: () => 50,
-      }),
-    )
     expect(screen.getByText("Rive animation")).toBeInTheDocument()
 
-    unmount()
-    expect(window.cancelIdleCallback).toHaveBeenCalledWith(17)
+    fireEvent.click(screen.getByRole("button", { name: "Rive animation" }))
+    expect(screen.getByText("Global background")).toHaveAttribute(
+      "data-ambient-motion",
+      "true",
+    )
   })
 
   it("waits for deferred readiness while preserving the background and cursor", () => {
-    render(<MotionAwareAmbience shouldRenderDeferredMotion={false} />)
+    render(<MotionAwareAmbience shouldStartRive={false} />)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
-      "data-particles-ready",
+      "data-ambient-motion",
       "false",
     )
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
     expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
-    expect(window.requestIdleCallback).not.toHaveBeenCalled()
   })
 
   it("omits continuous visual ambience when motion is reduced", () => {
     reducedMotionPreference.value = true
-    render(<MotionAwareAmbience shouldRenderDeferredMotion={true} />)
+    render(<MotionAwareAmbience shouldStartRive={true} />)
 
     expect(screen.getByText("Global background")).toHaveAttribute(
-      "data-particles-ready",
+      "data-ambient-motion",
       "false",
     )
     expect(screen.queryByText("Custom cursor")).not.toBeInTheDocument()
     expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
-    expect(window.requestIdleCallback).not.toHaveBeenCalled()
   })
 })

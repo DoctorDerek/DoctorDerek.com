@@ -113,11 +113,7 @@ class Particle {
   }
 }
 
-export default function ParticleCanvas({
-  onFirstFrameRendered,
-}: {
-  onFirstFrameRendered: () => void
-}) {
+export default function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef<{ x: number | null; y: number | null }>({
     x: null,
@@ -131,7 +127,6 @@ export default function ParticleCanvas({
 
     let animationFrameId: number
     let particles: Particle[] = []
-    let hasRenderedFirstFrame = false
 
     const initParticles = () => {
       particles = []
@@ -170,10 +165,6 @@ export default function ParticleCanvas({
         particles[i].update(canvas.width, canvas.height, mouseX, mouseY)
         particles[i].draw(ctx)
       }
-      if (!hasRenderedFirstFrame) {
-        hasRenderedFirstFrame = true
-        onFirstFrameRendered()
-      }
       animationFrameId = requestAnimationFrame(render)
     }
 
@@ -185,7 +176,7 @@ export default function ParticleCanvas({
       document.removeEventListener("mouseleave", handleMouseLeave)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [onFirstFrameRendered])
+  }, [])
 
   return (
     <canvas

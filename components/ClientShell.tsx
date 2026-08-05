@@ -20,10 +20,10 @@ import {
   FULLPAGE_ACTIVATION_KEYS,
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
 } from "@/constants/SITE_CONTENT"
-import useDeferredClientFeature from "@/hooks/useDeferredClientFeature"
 import useDeferredRestoraFonts from "@/hooks/useDeferredRestoraFonts"
 import useEndOfSiteCelebration from "@/hooks/useEndOfSiteCelebration"
 import useHorizontalWheelNavigation from "@/hooks/useHorizontalWheelNavigation"
+import usePostLoadExperienceReady from "@/hooks/usePostLoadExperienceReady"
 import { GlobalStateContext } from "@/machines/globalMachine"
 import {
   FullPageApi,
@@ -62,14 +62,8 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
-  const { isPostLoadIdleReady, hasMeaningfulUserIntent } =
-    useDeferredClientFeature()
-  const shouldRenderDeferredMotion =
-    isPostLoadIdleReady && hasMeaningfulUserIntent
-  useDeferredRestoraFonts({
-    hasMeaningfulUserIntent,
-    isPostLoadIdleReady,
-  })
+  const isPostLoadExperienceReady = usePostLoadExperienceReady()
+  useDeferredRestoraFonts(isPostLoadExperienceReady)
   useHorizontalWheelNavigation(fullPageApiReference)
   const {
     beginContactVisit,
@@ -81,12 +75,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
 
   const sectionsContent = [
     {
-      component: (
-        <TopSection
-          key="top"
-          shouldRenderDeferredMotion={shouldRenderDeferredMotion}
-        />
-      ),
+      component: <TopSection key="top" />,
       anchor: "home",
     },
     { component: <IntroSection key="intro" />, anchor: "intro" },
@@ -138,9 +127,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
 
   return (
     <GlobalStateContext.Provider>
-      <MotionAwareAmbience
-        shouldRenderDeferredMotion={shouldRenderDeferredMotion}
-      />
+      <MotionAwareAmbience shouldStartRive={isPostLoadExperienceReady} />
       {shouldRenderCelebrationRuntime && (
         <EndOfSiteCelebration
           isConfettiActive={isConfettiActive}

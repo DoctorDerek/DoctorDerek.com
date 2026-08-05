@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react"
-import { CONTACT_COMPLETION } from "@/constants/SITE_CONTENT"
+import { CONTACT_COMPLETION } from "@/constants/CONTACT_COMPLETION"
 import type { FullPageApi } from "@/types/MapacheFullPageProps"
 
 const CONTACT_ANCHOR = "contact"

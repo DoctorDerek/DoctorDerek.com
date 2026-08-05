@@ -23,7 +23,7 @@ import {
 import useDeferredRestoraFonts from "@/hooks/useDeferredRestoraFonts"
 import useEndOfSiteCelebration from "@/hooks/useEndOfSiteCelebration"
 import useHorizontalWheelNavigation from "@/hooks/useHorizontalWheelNavigation"
-import usePostLoadExperienceReady from "@/hooks/usePostLoadExperienceReady"
+import usePostLoadExperienceSchedule from "@/hooks/usePostLoadExperienceSchedule"
 import { GlobalStateContext } from "@/machines/globalMachine"
 import {
   FullPageApi,
@@ -62,8 +62,9 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
-  const isPostLoadExperienceReady = usePostLoadExperienceReady()
-  useDeferredRestoraFonts(isPostLoadExperienceReady)
+  const { shouldLoadDeferredTypography, shouldStartRive } =
+    usePostLoadExperienceSchedule()
+  useDeferredRestoraFonts(shouldLoadDeferredTypography)
   useHorizontalWheelNavigation(fullPageApiReference)
   const {
     beginContactVisit,
@@ -127,7 +128,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
 
   return (
     <GlobalStateContext.Provider>
-      <MotionAwareAmbience shouldStartRive={isPostLoadExperienceReady} />
+      <MotionAwareAmbience shouldStartRive={shouldStartRive} />
       {shouldRenderCelebrationRuntime && (
         <EndOfSiteCelebration
           isConfettiActive={isConfettiActive}

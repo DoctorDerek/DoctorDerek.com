@@ -1,15 +1,21 @@
 import { expect, test } from "@playwright/test"
 import {
-  completePostLoadQuietPeriod,
-  installPostLoadQuietPeriodController,
-  waitForPostLoadQuietPeriod,
-} from "@/e2e/helpers/postLoadQuietPeriod"
+  DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
+  RIVE_START_DELAY_MILLISECONDS,
+} from "@/constants/STARTUP_TIMING"
+import {
+  completeBrowserIdleCallback,
+  completePostLoadBoundary,
+  installPostLoadExperienceController,
+  waitForBrowserIdleCallback,
+  waitForPostLoadBoundary,
+} from "@/e2e/helpers/postLoadExperience"
 
 test("loads Typewriter, Rive, and ambient layers in order", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" })
-  await installPostLoadQuietPeriodController(page)
+  await installPostLoadExperienceController(page)
   await page.goto("/")
 
   const ambientCanvases = page.locator("canvas")
@@ -25,7 +31,8 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
     "false",
   )
   await expect(ambientBackground).toHaveClass(/animate-rainbow-vivid/)
-  await waitForPostLoadQuietPeriod(page)
+  await waitForPostLoadBoundary(page, DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS)
+  await waitForPostLoadBoundary(page, RIVE_START_DELAY_MILLISECONDS)
 
   await page.evaluate(() => {
     window.dispatchEvent(new PointerEvent("pointermove"))
@@ -41,7 +48,14 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
     "false",
   )
 
-  await completePostLoadQuietPeriod(page)
+  await completePostLoadBoundary(page, DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS)
+  await expect(ambientCanvases).toHaveCount(0)
+
+  await completePostLoadBoundary(page, RIVE_START_DELAY_MILLISECONDS)
+  await waitForBrowserIdleCallback(page)
+  await expect(ambientCanvases).toHaveCount(0)
+
+  await completeBrowserIdleCallback(page)
   await expect(ambientCanvases).toHaveCount(1)
   await expect(page.locator("canvas.absolute")).toHaveCount(0)
   await expect(backgroundPattern).toHaveCount(1)

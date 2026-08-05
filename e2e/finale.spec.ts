@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test"
-import { CONTACT_COMPLETION } from "@/constants/SITE_CONTENT"
+import { CONTACT_COMPLETION } from "@/constants/CONTACT_COMPLETION"
 
 async function openContact(page: Page) {
   await page.goto("/")

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+import { CONTACT_COMPLETION } from "@/constants/CONTACT_COMPLETION"
 import * as SITE_CONTENT from "@/constants/SITE_CONTENT"
 
 const PRIVATE_LOGISTICS_LANGUAGE =
@@ -10,7 +11,7 @@ const PORTFOLIO_NARRATIVE = SITE_CONTENT.PORTFOLIO_PROJECTS.flatMap(
 
 describe("site copy quality gates", () => {
   it("uses the requested end-of-site copy and CTA wording", () => {
-    expect(SITE_CONTENT.CONTACT_COMPLETION.toastMessage).toBe(
+    expect(CONTACT_COMPLETION.toastMessage).toBe(
       "🎊 You’ve reached the end of DoctorDerek.com. Let’s build something great. 🎉",
     )
     expect(SITE_CONTENT.CONTACT_CTA).toBe("Contact Me")

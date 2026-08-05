@@ -1,6 +1,6 @@
 import { act, fireEvent, renderHook, waitFor } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
-import { CONTACT_COMPLETION } from "@/constants/SITE_CONTENT"
+import { CONTACT_COMPLETION } from "@/constants/CONTACT_COMPLETION"
 import useEndOfSiteCelebration from "@/hooks/useEndOfSiteCelebration"
 import type { FullPageApi, FullPageSection } from "@/types/MapacheFullPageProps"
 

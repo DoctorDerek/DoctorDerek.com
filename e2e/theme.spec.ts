@@ -29,9 +29,10 @@ test("defaults to dark and persists an explicit light choice", async ({
   })
 
   await expect(documentRoot).toHaveClass(/dark/)
+  await expect(documentRoot).toHaveCSS("background-color", "rgb(0, 139, 139)")
   await expect(page.locator("body")).toHaveCSS(
     "background-color",
-    "rgb(0, 139, 139)",
+    "rgba(0, 0, 0, 0)",
   )
   await expect(themeToggle).toHaveClass(/theme-toggle--dark/)
   expect(await page.evaluate(() => localStorage.getItem("theme"))).toBeNull()
@@ -40,10 +41,7 @@ test("defaults to dark and persists an explicit light choice", async ({
   await themeToggle.click()
 
   await expect(documentRoot).toHaveClass(/light/)
-  await expect(page.locator("body")).toHaveCSS(
-    "background-color",
-    "rgb(128, 197, 197)",
-  )
+  await expect(documentRoot).toHaveCSS("background-color", "rgb(128, 197, 197)")
   await expect(
     page.getByRole("button", { name: "Switch to dark theme" }),
   ).toHaveClass(/theme-toggle--light/)
@@ -53,10 +51,7 @@ test("defaults to dark and persists an explicit light choice", async ({
   await openSettings(page)
 
   await expect(documentRoot).toHaveClass(/light/)
-  await expect(page.locator("body")).toHaveCSS(
-    "background-color",
-    "rgb(128, 197, 197)",
-  )
+  await expect(documentRoot).toHaveCSS("background-color", "rgb(128, 197, 197)")
   await expect(
     page.getByRole("button", { name: "Switch to dark theme" }),
   ).toHaveClass(/theme-toggle--light/)

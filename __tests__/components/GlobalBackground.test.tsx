@@ -80,9 +80,13 @@ describe("GlobalBackground", () => {
     expect(
       container.querySelector('[data-transition-duration="20"]'),
     ).toBeInTheDocument()
+    expect(container.querySelector("[data-image-source]")).toHaveAttribute(
+      "data-image-source",
+      "/background-three.svg",
+    )
   })
 
-  it("uses the theme color without decorative layers when motion is reduced", () => {
+  it("keeps the static pattern on the theme color when motion is reduced", () => {
     reducedMotionPreference.value = true
     backgroundState.bgUseInverse = true
     const { container } = render(<GlobalBackground shouldRenderAmbientMotion />)
@@ -90,8 +94,13 @@ describe("GlobalBackground", () => {
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
     expect(container.firstChild).not.toHaveClass("animate-rainbow-vivid")
-    expect(container.querySelector("[data-transition-duration]")).toBeNull()
-    expect(container.querySelector("[data-image-source]")).toBeNull()
+    expect(
+      container.querySelector('[data-transition-duration="0"]'),
+    ).toBeInTheDocument()
+    expect(container.querySelector("[data-image-source]")).toHaveAttribute(
+      "data-image-source",
+      "/background-zero.svg",
+    )
   })
 
   it("renders the active inverse background when motion is allowed", () => {
@@ -106,7 +115,7 @@ describe("GlobalBackground", () => {
     )
   })
 
-  it("starts color motion while keeping deferred ambience dormant", () => {
+  it("starts color motion with a static pattern while particles stay dormant", () => {
     const { container } = render(
       <GlobalBackground shouldRenderAmbientMotion={false} />,
     )
@@ -114,7 +123,12 @@ describe("GlobalBackground", () => {
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
     expect(container.firstChild).toHaveClass("animate-rainbow-vivid")
-    expect(container.querySelector("[data-transition-duration]")).toBeNull()
-    expect(container.querySelector("[data-image-source]")).toBeNull()
+    expect(
+      container.querySelector('[data-transition-duration="0"]'),
+    ).toBeInTheDocument()
+    expect(container.querySelector("[data-image-source]")).toHaveAttribute(
+      "data-image-source",
+      "/background-zero.svg",
+    )
   })
 })

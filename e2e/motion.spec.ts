@@ -13,6 +13,7 @@ test("honors the system reduced-motion preference", async ({ page }) => {
     "rgb(0, 139, 139)",
   )
   await expect(page.locator("canvas")).toHaveCount(0)
+  await expect(ambientBackground.locator("img")).toHaveCount(1)
   await expect(ambientBackground).toHaveAttribute(
     "data-ambient-motion",
     "false",
@@ -33,5 +34,6 @@ test("starts color motion while keeping deferred ambience dormant", async ({
     "data-ambient-motion",
     "false",
   )
+  await expect(page.locator("[data-ambient-motion] img")).toHaveCount(1)
   await expect(page.locator(".animate-rainbow-vivid")).toHaveCount(1)
 })

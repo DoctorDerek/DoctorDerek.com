@@ -19,7 +19,7 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
 
   await expect(ambientCanvases).toHaveCount(0)
   await expect(typewriter).toHaveCount(1)
-  await expect(backgroundPattern).toHaveCount(0)
+  await expect(backgroundPattern).toHaveCount(1)
   await expect(ambientBackground).toHaveAttribute(
     "data-ambient-motion",
     "false",
@@ -35,7 +35,7 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
 
   await expect(typewriter).toHaveCount(1)
   await expect(ambientCanvases).toHaveCount(0)
-  await expect(backgroundPattern).toHaveCount(0)
+  await expect(backgroundPattern).toHaveCount(1)
   await expect(ambientBackground).toHaveAttribute(
     "data-ambient-motion",
     "false",
@@ -44,7 +44,7 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
   await completePostLoadQuietPeriod(page)
   await expect(ambientCanvases).toHaveCount(1)
   await expect(page.locator("canvas.absolute")).toHaveCount(0)
-  await expect(backgroundPattern).toHaveCount(0)
+  await expect(backgroundPattern).toHaveCount(1)
   await expect(ambientBackground).toHaveAttribute(
     "data-ambient-motion",
     "false",

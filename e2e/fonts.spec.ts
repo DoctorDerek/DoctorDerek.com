@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test"
+import { DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS } from "@/constants/STARTUP_TIMING"
 import {
   RESTORA_DISPLAY_CSS_VARIABLE,
   RESTORA_DISPLAY_FONT_WEIGHT,
@@ -7,10 +8,10 @@ import {
   RESTORA_TEXT_FONT_WEIGHTS,
 } from "@/constants/TYPOGRAPHY"
 import {
-  completePostLoadQuietPeriod,
-  installPostLoadQuietPeriodController,
-  waitForPostLoadQuietPeriod,
-} from "@/e2e/helpers/postLoadQuietPeriod"
+  completePostLoadBoundary,
+  installPostLoadExperienceController,
+  waitForPostLoadBoundary,
+} from "@/e2e/helpers/postLoadExperience"
 
 const collectFontAssetUrls = (page: Page) => {
   const fontAssetUrls: string[] = []
@@ -80,7 +81,7 @@ const verifyDeferredRestoraLoading = async (
   shouldVerifyNetworkRequests: boolean,
 ) => {
   const fontAssetUrls = collectFontAssetUrls(page)
-  await installPostLoadQuietPeriodController(page)
+  await installPostLoadExperienceController(page)
 
   await page.goto("/", { waitUntil: "networkidle" })
 
@@ -103,8 +104,8 @@ const verifyDeferredRestoraLoading = async (
     )
   }
 
-  await waitForPostLoadQuietPeriod(page)
-  await completePostLoadQuietPeriod(page)
+  await waitForPostLoadBoundary(page, DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS)
+  await completePostLoadBoundary(page, DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS)
 
   await expect
     .poll(() =>

@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test"
-import { installPostLoadQuietPeriodController } from "@/e2e/helpers/postLoadQuietPeriod"
+import { installPostLoadExperienceController } from "@/e2e/helpers/postLoadExperience"
 
 test("publishes the professional icon and dark application manifest", async ({
   page,
   request,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" })
-  await installPostLoadQuietPeriodController(page)
+  await installPostLoadExperienceController(page)
   await page.goto("/")
 
   const activeBackground = page.locator(".mix-blend-overlay img").first()

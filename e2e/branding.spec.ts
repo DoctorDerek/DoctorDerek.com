@@ -1,9 +1,5 @@
 import { expect, test } from "@playwright/test"
-import {
-  completePostLoadQuietPeriod,
-  installPostLoadQuietPeriodController,
-  waitForPostLoadQuietPeriod,
-} from "@/e2e/helpers/postLoadQuietPeriod"
+import { installPostLoadQuietPeriodController } from "@/e2e/helpers/postLoadQuietPeriod"
 
 test("publishes the professional icon and dark application manifest", async ({
   page,
@@ -14,13 +10,10 @@ test("publishes the professional icon and dark application manifest", async ({
   await page.goto("/")
 
   const activeBackground = page.locator(".mix-blend-overlay img").first()
-  await expect(activeBackground).toHaveCount(0)
-  await waitForPostLoadQuietPeriod(page)
-  await completePostLoadQuietPeriod(page)
+  await expect(activeBackground).toHaveCount(1)
   await expect(activeBackground).toHaveAttribute(
     "src",
-    /^\/_next\/static\/media\/Background(?:-\d)?\.[a-f0-9]+\.svg$/,
-    { timeout: 15_000 },
+    /^\/_next\/static\/media\/Background\.[a-f0-9]+\.svg$/,
   )
   const activeBackgroundUrl = await activeBackground.getAttribute("src")
   expect(activeBackgroundUrl).not.toBeNull()

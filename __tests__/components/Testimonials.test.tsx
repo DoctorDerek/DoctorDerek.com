@@ -22,6 +22,14 @@ vi.mock("@/components/ui/SectionHeading", () => ({
 }))
 
 describe("Testimonials", () => {
+  it("keeps the complete heading visible at narrow mobile widths", () => {
+    render(<Testimonials />)
+
+    expect(
+      screen.getByRole("heading", { name: "What People Say" }),
+    ).toHaveClass("text-2xl", "min-[375px]:text-3xl", "md:text-7xl")
+  })
+
   it("renders every configured testimonial once and in order", () => {
     render(<Testimonials />)
 

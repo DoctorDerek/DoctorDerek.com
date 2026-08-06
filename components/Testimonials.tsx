@@ -9,7 +9,7 @@ const Testimonials = () => {
       <div className="pointer-events-none absolute top-10 right-10 z-10 w-full md:right-20 lg:top-16">
         <div className="flex justify-end">
           <SectionHeading>
-            <h3 className="text-site-foreground rounded-tl-3xl rounded-br-3xl bg-[#89CFFD]/30 px-8 py-4 text-right text-5xl drop-shadow-md backdrop-blur-md md:text-7xl lg:text-9xl">
+            <h3 className="text-site-foreground rounded-tl-3xl rounded-br-3xl bg-[#89CFFD]/30 px-8 py-4 text-right text-2xl drop-shadow-md backdrop-blur-md min-[375px]:text-3xl sm:text-4xl md:text-7xl lg:text-9xl">
               What People Say
             </h3>
           </SectionHeading>

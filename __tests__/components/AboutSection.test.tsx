@@ -79,6 +79,16 @@ describe("AboutSection", () => {
     }
   })
 
+  it("tightens the mobile copy region while preserving desktop spacing", () => {
+    render(<AboutSection />)
+
+    const scrollRegion = screen.getByText(ABOUT_BIO_LONG[0]).parentElement!
+    const copyCard = scrollRegion.parentElement?.parentElement
+
+    expect(scrollRegion).toHaveClass("max-h-[36dvh]", "md:max-h-[45vh]")
+    expect(copyCard).toHaveClass("mt-4", "md:mt-8")
+  })
+
   it("describes the measured responsive width of both portrait faces", () => {
     render(<AboutSection />)
 

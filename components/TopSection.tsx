@@ -15,8 +15,10 @@ const [PRIMARY_INTRODUCTION, ...SUPPORTING_INTRODUCTION_SEGMENTS] =
 const SUPPORTING_INTRODUCTION = SUPPORTING_INTRODUCTION_SEGMENTS.join(" · ")
 
 export default function TopSection({
+  onTypewriterStarted,
   shouldStartTypewriter,
 }: {
+  onTypewriterStarted: () => void
   shouldStartTypewriter: boolean
 }) {
   const { shouldReduceMotion } = useMotionPreference()
@@ -43,6 +45,7 @@ export default function TopSection({
               >
                 {shouldStartTypewriter && (
                   <IntroTypewriter
+                    onStarted={onTypewriterStarted}
                     segments={SUPPORTING_INTRODUCTION_SEGMENTS}
                   />
                 )}

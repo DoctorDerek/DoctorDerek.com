@@ -47,7 +47,13 @@ describe("IntroTypewriter", () => {
   })
 
   it("cycles through every positioning segment", () => {
-    render(<IntroTypewriter segments={introductionSegments} />)
+    const onStarted = vi.fn()
+    render(
+      <IntroTypewriter
+        onStarted={onStarted}
+        segments={introductionSegments}
+      />,
+    )
 
     expect(
       screen.getByText("Animated supporting introduction"),
@@ -61,6 +67,7 @@ describe("IntroTypewriter", () => {
     expect(typewriter.deleteAll).toHaveBeenCalledTimes(
       introductionSegments.length,
     )
+    expect(onStarted).toHaveBeenCalledOnce()
     expect(typewriter.start).toHaveBeenCalledOnce()
     expect(typewriterOptions.current).toEqual({
       delay: 25,

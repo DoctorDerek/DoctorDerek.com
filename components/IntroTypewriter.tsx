@@ -10,13 +10,16 @@ const TYPEWRITER_OPTIONS: Options = {
 }
 
 export default function IntroTypewriter({
+  onStarted,
   segments,
 }: {
+  onStarted: () => void
   segments: readonly string[]
 }) {
   const handleTypewriterInitialization = (typewriter: TypewriterClass) => {
     for (const segment of segments)
       typewriter.typeString(segment).pauseFor(2000).deleteAll()
+    onStarted()
     typewriter.start()
   }
 

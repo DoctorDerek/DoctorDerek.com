@@ -2,7 +2,7 @@
 
 import ReactFullpage from "@fullpage/react-fullpage"
 import dynamic from "next/dynamic"
-import { useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import AboutSection from "@/components/AboutSection"
 import AiConsultancySection from "@/components/AiConsultancySection"
 import BlogSection from "@/components/BlogSection"
@@ -60,10 +60,15 @@ const MapacheFullPage =
 function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   const { shouldReduceMotion } = useMotionPreference()
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
+  const [hasTypewriterStarted, setHasTypewriterStarted] = useState(false)
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
   const { shouldLoadDeferredTypography, shouldStartRive } =
-    usePostLoadExperienceSchedule()
+    usePostLoadExperienceSchedule(hasTypewriterStarted)
+  const handleTypewriterStarted = useCallback(
+    () => setHasTypewriterStarted(true),
+    [],
+  )
   useDeferredRestoraFonts(shouldLoadDeferredTypography)
   useHorizontalWheelNavigation(fullPageApiReference)
   const {
@@ -79,6 +84,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
       component: (
         <TopSection
           key="top"
+          onTypewriterStarted={handleTypewriterStarted}
           shouldStartTypewriter={shouldLoadDeferredTypography}
         />
       ),

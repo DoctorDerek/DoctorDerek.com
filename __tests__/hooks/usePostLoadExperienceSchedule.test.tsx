@@ -47,7 +47,7 @@ describe("usePostLoadExperienceSchedule", () => {
     vi.spyOn(document, "readyState", "get").mockReturnValue("complete")
 
     const { result, unmount } = renderHook(() =>
-      usePostLoadExperienceSchedule(),
+      usePostLoadExperienceSchedule(true),
     )
 
     act(() =>
@@ -79,11 +79,33 @@ describe("usePostLoadExperienceSchedule", () => {
     unmount()
   })
 
+  it("waits for Typewriter initialization after the Rive delay elapses", () => {
+    vi.spyOn(document, "readyState", "get").mockReturnValue("complete")
+
+    const { result, rerender, unmount } = renderHook(
+      (hasTypewriterStarted) =>
+        usePostLoadExperienceSchedule(hasTypewriterStarted),
+      { initialProps: false },
+    )
+
+    act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
+    expect(result.current.shouldLoadDeferredTypography).toBe(true)
+    expect(requestIdleCallbackMock).not.toHaveBeenCalled()
+    expect(result.current.shouldStartRive).toBe(false)
+
+    rerender(true)
+    expect(requestIdleCallbackMock).toHaveBeenCalledOnce()
+
+    completeRiveIdleCallback()
+    expect(result.current.shouldStartRive).toBe(true)
+    unmount()
+  })
+
   it("starts both post-load boundaries only after a loading document completes", () => {
     vi.spyOn(document, "readyState", "get").mockReturnValue("loading")
 
     const { result, unmount } = renderHook(() =>
-      usePostLoadExperienceSchedule(),
+      usePostLoadExperienceSchedule(true),
     )
 
     act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
@@ -106,7 +128,9 @@ describe("usePostLoadExperienceSchedule", () => {
       vi.stubGlobal(unsupportedIdleCallbackApi, undefined)
       vi.spyOn(document, "readyState", "get").mockReturnValue("complete")
 
-      const { result } = renderHook(() => usePostLoadExperienceSchedule())
+      const { result } = renderHook(() =>
+        usePostLoadExperienceSchedule(true),
+      )
 
       act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
       expect(result.current.shouldStartRive).toBe(true)
@@ -117,7 +141,9 @@ describe("usePostLoadExperienceSchedule", () => {
     const removeEventListener = vi.spyOn(window, "removeEventListener")
     vi.spyOn(document, "readyState", "get").mockReturnValue("loading")
 
-    const { unmount } = renderHook(() => usePostLoadExperienceSchedule())
+    const { unmount } = renderHook(() =>
+      usePostLoadExperienceSchedule(true),
+    )
 
     unmount()
     expect(removeEventListener).toHaveBeenCalledWith(
@@ -129,7 +155,9 @@ describe("usePostLoadExperienceSchedule", () => {
   it("cancels its timers and pending idle callback on unmount", () => {
     const clearTimeout = vi.spyOn(window, "clearTimeout")
     vi.spyOn(document, "readyState", "get").mockReturnValue("complete")
-    const { unmount } = renderHook(() => usePostLoadExperienceSchedule())
+    const { unmount } = renderHook(() =>
+      usePostLoadExperienceSchedule(true),
+    )
 
     act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
     unmount()

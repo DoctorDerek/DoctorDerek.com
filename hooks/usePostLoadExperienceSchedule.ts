@@ -7,30 +7,18 @@ import {
   RIVE_START_DELAY_MILLISECONDS,
 } from "@/constants/STARTUP_TIMING"
 
-export default function usePostLoadExperienceSchedule() {
+export default function usePostLoadExperienceSchedule(
+  hasTypewriterStarted: boolean,
+) {
   const [shouldLoadDeferredTypography, setShouldLoadDeferredTypography] =
+    useState(false)
+  const [hasRiveStartDelayElapsed, setHasRiveStartDelayElapsed] =
     useState(false)
   const [shouldStartRive, setShouldStartRive] = useState(false)
 
   useEffect(() => {
     let deferredTypographyTimeoutId: number | undefined
     let riveStartTimeoutId: number | undefined
-    let riveIdleCallbackId: number | undefined
-
-    const startRiveWhenBrowserIsIdle = () => {
-      if (
-        typeof window.requestIdleCallback !== "function" ||
-        typeof window.cancelIdleCallback !== "function"
-      ) {
-        setShouldStartRive(true)
-        return
-      }
-
-      riveIdleCallbackId = window.requestIdleCallback(
-        () => setShouldStartRive(true),
-        { timeout: RIVE_IDLE_CALLBACK_TIMEOUT_MILLISECONDS },
-      )
-    }
 
     const schedulePostLoadExperience = () => {
       deferredTypographyTimeoutId = window.setTimeout(
@@ -38,7 +26,7 @@ export default function usePostLoadExperienceSchedule() {
         DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
       )
       riveStartTimeoutId = window.setTimeout(
-        startRiveWhenBrowserIsIdle,
+        () => setHasRiveStartDelayElapsed(true),
         RIVE_START_DELAY_MILLISECONDS,
       )
     }
@@ -53,10 +41,27 @@ export default function usePostLoadExperienceSchedule() {
       window.removeEventListener("load", schedulePostLoadExperience)
       window.clearTimeout(deferredTypographyTimeoutId)
       window.clearTimeout(riveStartTimeoutId)
-      if (riveIdleCallbackId !== undefined)
-        window.cancelIdleCallback(riveIdleCallbackId)
     }
   }, [])
+
+  useEffect(() => {
+    if (!hasRiveStartDelayElapsed || !hasTypewriterStarted) return
+
+    if (
+      typeof window.requestIdleCallback !== "function" ||
+      typeof window.cancelIdleCallback !== "function"
+    ) {
+      setShouldStartRive(true)
+      return
+    }
+
+    const riveIdleCallbackId = window.requestIdleCallback(
+      () => setShouldStartRive(true),
+      { timeout: RIVE_IDLE_CALLBACK_TIMEOUT_MILLISECONDS },
+    )
+
+    return () => window.cancelIdleCallback(riveIdleCallbackId)
+  }, [hasRiveStartDelayElapsed, hasTypewriterStarted])
 
   return { shouldLoadDeferredTypography, shouldStartRive }
 }

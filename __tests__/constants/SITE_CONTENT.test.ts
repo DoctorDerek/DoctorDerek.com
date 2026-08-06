@@ -28,13 +28,20 @@ describe("site copy quality gates", () => {
 
   it("keeps the hiring target focused and excludes private logistics", () => {
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
-      "10× AI-native velocity",
+      "startup founders and small teams",
+    )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
+      "AI-native engineering",
+    )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain("10×")
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain(
+      "deterministic",
     )
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.subtext).toContain(
       "long-term, full-time remote role",
     )
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.subtext).toContain(
-      "Full-Stack SWE and code owner",
+      "full-stack SWE and code owner",
     )
     expect(JSON.stringify(SITE_CONTENT)).not.toMatch(PRIVATE_LOGISTICS_LANGUAGE)
   })

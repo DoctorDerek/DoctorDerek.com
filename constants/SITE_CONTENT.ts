@@ -46,10 +46,10 @@ export type AiConsultancyPitch = {
 
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   header: "What I Do Best",
-  body: "Startups need more than a fast prototype: they need a product that survives real users, real data, and real change. I help founders and small teams build deterministic, full-stack TypeScript products—including privacy-sensitive and regulated applications—at 10× AI-native velocity without the technical debt of vibe coding. I hate bugs, I love results, and I know when to move quickly and when to pay down technical debt.",
+  body: "I help startup founders and small teams build full-stack TypeScript products, including privacy-sensitive and regulated applications, using AI-native engineering without the technical debt of vibe coding.",
   ctaButtonText: "Inquire About Availability",
   subtext:
-    "Seeking a long-term, full-time remote role as a Full-Stack SWE and code owner at a US startup.",
+    "I’m actively seeking a long-term, full-time remote role as a full-stack SWE and code owner at a US startup.",
   emailSubject: "Full-Time SWE / Code Owner Inquiry",
 } as const
 

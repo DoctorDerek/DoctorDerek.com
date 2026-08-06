@@ -95,6 +95,21 @@ describe("site copy quality gates", () => {
     )
   })
 
+  it("distinguishes current self-employment from full-time product engineering", () => {
+    const [selfEmployedStage, fullTimeStage] =
+      SITE_CONTENT.ARCHITECT_EVOLUTION
+
+    expect(selfEmployedStage.company).toContain("· Self-Employed |")
+    expect(fullTimeStage.company).toContain("· Full-Time Product Engineering |")
+
+    for (const { company } of [selfEmployedStage, fullTimeStage]) {
+      const [, technologyStack] = company.split(" | ")
+
+      expect(technologyStack).toContain("Node")
+      expect(technologyStack).toContain("React Native + Expo")
+    }
+  })
+
   it("keeps testimonials in the approved evidence-first order", () => {
     expect(SITE_CONTENT.TESTIMONIALS.map(({ id }) => id)).toEqual([
       3, 2, 1, 6, 4, 5, 7,

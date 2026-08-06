@@ -69,12 +69,12 @@ export const ARCHITECT_EVOLUTION: WorkExperience[] = [
   {
     duration: "2024–Present",
     company:
-      "AI-Native Senior Full-Stack SWE · UI/UX Engineer · TypeScript Specialist",
+      "AI-Native Senior Full-Stack SWE · UI/UX Engineer · Self-Employed | TypeScript, React, Next.js, Tailwind CSS, Node, React Native + Expo",
   },
   {
     duration: "2019–2024",
     company:
-      "Senior Full-Stack SWE · UI/UX Engineer | React, Next.js, TypeScript, Tailwind CSS",
+      "Senior Full-Stack SWE · UI/UX Engineer · Full-Time Product Engineering | TypeScript, React, Next.js, Tailwind CSS, Node, React Native + Expo",
   },
   {
     duration: "2009–2019",

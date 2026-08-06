@@ -1,16 +1,13 @@
 import { fireEvent, render, screen, within } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import Navbar from "@/components/Navbar"
+import { SOCIAL_LINKS } from "@/constants/SITE_CONTENT"
 
 vi.mock("@/components/ui/Logo", () => ({
   default: () => null,
 }))
 
 vi.mock("@/components/SiteSettings", () => ({
-  default: () => null,
-}))
-
-vi.mock("@/components/ui/SocialLinks", () => ({
   default: () => null,
 }))
 
@@ -32,7 +29,7 @@ describe("Navbar", () => {
     expect(navigation).toHaveAttribute("id", "site-navigation")
     expect(navigation).not.toHaveAttribute("inert")
     expect(
-      within(navigation)
+      within(within(navigation).getByRole("list"))
         .getAllByRole("link")
         .map((link) => link.textContent),
     ).toEqual([
@@ -193,5 +190,29 @@ describe("Navbar", () => {
     expect(navigation.className).not.toContain("max-h-[calc(100dvh-7dvh)]")
     expect(navigation.className).toContain("overflow-hidden")
     expect(scrollRegion).toHaveClass("touch-pan-y")
+  })
+
+  it("presents mobile-menu social links as one accessible icon row", () => {
+    render(<Navbar />)
+
+    fireEvent.click(screen.getByRole("button", { name: "Open navigation" }))
+
+    const socialLinks = screen.getByRole("group", { name: "Social links" })
+    const socialLinkRow = socialLinks.firstElementChild
+
+    expect(socialLinkRow).toHaveClass(
+      "flex",
+      "w-full",
+      "items-center",
+      "justify-between",
+    )
+    expect(
+      within(socialLinks)
+        .getAllByRole("link")
+        .map((link) => link.textContent),
+    ).toEqual(SOCIAL_LINKS.map(({ label }) => label))
+
+    for (const { label } of SOCIAL_LINKS)
+      expect(within(socialLinks).getByText(label)).toHaveClass("sr-only")
   })
 })

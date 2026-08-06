@@ -66,11 +66,7 @@ export default function DeferredCustomCursor({
     }
   }, [shouldLoad, shouldUseCustomCursor])
 
-  if (
-    !shouldLoad ||
-    !shouldUseCustomCursor ||
-    !hasBrowserGrantedCursorLoad
-  )
+  if (!shouldLoad || !shouldUseCustomCursor || !hasBrowserGrantedCursorLoad)
     return null
 
   return <CustomCursor />

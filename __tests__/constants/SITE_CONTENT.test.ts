@@ -96,8 +96,7 @@ describe("site copy quality gates", () => {
   })
 
   it("distinguishes current self-employment from full-time product engineering", () => {
-    const [selfEmployedStage, fullTimeStage] =
-      SITE_CONTENT.ARCHITECT_EVOLUTION
+    const [selfEmployedStage, fullTimeStage] = SITE_CONTENT.ARCHITECT_EVOLUTION
 
     expect(selfEmployedStage.company).toContain("· Self-Employed |")
     expect(fullTimeStage.company).toContain("· Full-Time Product Engineering |")

@@ -49,10 +49,7 @@ describe("IntroTypewriter", () => {
   it("cycles through every positioning segment", () => {
     const onStarted = vi.fn()
     render(
-      <IntroTypewriter
-        onStarted={onStarted}
-        segments={introductionSegments}
-      />,
+      <IntroTypewriter onStarted={onStarted} segments={introductionSegments} />,
     )
 
     expect(

@@ -128,9 +128,7 @@ describe("usePostLoadExperienceSchedule", () => {
       vi.stubGlobal(unsupportedIdleCallbackApi, undefined)
       vi.spyOn(document, "readyState", "get").mockReturnValue("complete")
 
-      const { result } = renderHook(() =>
-        usePostLoadExperienceSchedule(true),
-      )
+      const { result } = renderHook(() => usePostLoadExperienceSchedule(true))
 
       act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
       expect(result.current.shouldStartRive).toBe(true)
@@ -141,9 +139,7 @@ describe("usePostLoadExperienceSchedule", () => {
     const removeEventListener = vi.spyOn(window, "removeEventListener")
     vi.spyOn(document, "readyState", "get").mockReturnValue("loading")
 
-    const { unmount } = renderHook(() =>
-      usePostLoadExperienceSchedule(true),
-    )
+    const { unmount } = renderHook(() => usePostLoadExperienceSchedule(true))
 
     unmount()
     expect(removeEventListener).toHaveBeenCalledWith(
@@ -155,9 +151,7 @@ describe("usePostLoadExperienceSchedule", () => {
   it("cancels its timers and pending idle callback on unmount", () => {
     const clearTimeout = vi.spyOn(window, "clearTimeout")
     vi.spyOn(document, "readyState", "get").mockReturnValue("complete")
-    const { unmount } = renderHook(() =>
-      usePostLoadExperienceSchedule(true),
-    )
+    const { unmount } = renderHook(() => usePostLoadExperienceSchedule(true))
 
     act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
     unmount()

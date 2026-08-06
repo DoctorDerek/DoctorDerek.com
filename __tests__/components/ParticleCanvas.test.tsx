@@ -63,9 +63,7 @@ describe("ParticleCanvas", () => {
       })
 
     const onReady = vi.fn()
-    const { container, unmount } = render(
-      <ParticleCanvas onReady={onReady} />,
-    )
+    const { container, unmount } = render(<ParticleCanvas onReady={onReady} />)
 
     const canvas = container.querySelector("canvas")
     expect(canvas).toHaveAttribute("width", "320")

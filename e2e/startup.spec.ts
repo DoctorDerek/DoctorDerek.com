@@ -24,7 +24,7 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
   const typewriter = page.locator(".Typewriter")
 
   await expect(ambientCanvases).toHaveCount(0)
-  await expect(typewriter).toHaveCount(1)
+  await expect(typewriter).toHaveCount(0)
   await expect(backgroundPattern).toHaveCount(1)
   await expect(ambientBackground).toHaveAttribute(
     "data-ambient-motion",
@@ -40,7 +40,7 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "Shift" }))
   })
 
-  await expect(typewriter).toHaveCount(1)
+  await expect(typewriter).toHaveCount(0)
   await expect(ambientCanvases).toHaveCount(0)
   await expect(backgroundPattern).toHaveCount(1)
   await expect(ambientBackground).toHaveAttribute(
@@ -49,6 +49,7 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
   )
 
   await completePostLoadBoundary(page, DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS)
+  await expect(typewriter).toHaveCount(1)
   await expect(ambientCanvases).toHaveCount(0)
 
   await completePostLoadBoundary(page, RIVE_START_DELAY_MILLISECONDS)

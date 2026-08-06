@@ -55,11 +55,12 @@ describe("ParticleCanvas", () => {
   })
 
   it("introduces deferred particles from below the viewport", () => {
-    const { cancelAnimationFrame, context } = installCanvasRuntime({
-      height: 568,
-      randomValue: 0.5,
-      width: 320,
-    })
+    const { cancelAnimationFrame, context, runNextAnimationFrame } =
+      installCanvasRuntime({
+        height: 568,
+        randomValue: 0.5,
+        width: 320,
+      })
 
     const { container, unmount } = render(<ParticleCanvas />)
 
@@ -69,6 +70,11 @@ describe("ParticleCanvas", () => {
     expect(context.arc).toHaveBeenCalled()
     for (const [, particleY] of context.arc.mock.calls)
       expect(particleY).toBeGreaterThan(568)
+
+    const firstParticleY = context.arc.mock.calls[0][1]
+    runNextAnimationFrame()
+    const nextParticleY = context.arc.mock.calls.at(-1)?.[1]
+    expect(nextParticleY).toBe(firstParticleY - 1)
 
     unmount()
     expect(cancelAnimationFrame).toHaveBeenCalledOnce()
@@ -110,6 +116,22 @@ describe("ParticleCanvas", () => {
 
     unmount()
     expect(cancelAnimationFrame).toHaveBeenCalledOnce()
+  })
+
+  it("preserves horizontal wobble without pointer input", () => {
+    const { context, runNextAnimationFrame } = installCanvasRuntime({
+      height: 100,
+      randomValue: 0.25,
+      width: 150,
+    })
+
+    render(<ParticleCanvas />)
+
+    const firstParticleX = context.arc.mock.lastCall?.[0]
+    runNextAnimationFrame()
+    const nextParticleX = context.arc.mock.lastCall?.[0]
+
+    expect(nextParticleX).toBeLessThan(firstParticleX ?? 0)
   })
 
   it("renders the vivid particle variant", () => {

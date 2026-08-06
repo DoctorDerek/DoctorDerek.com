@@ -26,8 +26,10 @@ const BACKGROUNDS = [
 ]
 
 export default function GlobalBackground({
+  onAmbientMotionReady,
   shouldRenderAmbientMotion,
 }: {
+  onAmbientMotionReady?: () => void
   shouldRenderAmbientMotion: boolean
 }) {
   const { shouldReduceMotion } = useMotionPreference()
@@ -59,7 +61,9 @@ export default function GlobalBackground({
         shouldAnimateBackgroundColor && "animate-rainbow-vivid",
       )}
     >
-      {shouldRenderDeferredAmbientMotion && <ParticleCanvas />}
+      {shouldRenderDeferredAmbientMotion && (
+        <ParticleCanvas onReady={onAmbientMotionReady} />
+      )}
       <AnimatePresence initial={false}>
         <motion.div
           key={key}

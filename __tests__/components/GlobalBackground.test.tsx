@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import GlobalBackground from "@/components/GlobalBackground"
 
@@ -60,7 +60,9 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
 }))
 
 vi.mock("@/components/ParticleCanvas", () => ({
-  default: () => <canvas aria-label="Particle field" />,
+  default: ({ onReady }: { onReady?: () => void }) => (
+    <button aria-label="Particle field" onClick={onReady} />
+  ),
 }))
 
 describe("GlobalBackground", () => {
@@ -113,6 +115,19 @@ describe("GlobalBackground", () => {
       "data-image-source",
       "/background-one.svg",
     )
+  })
+
+  it("reports when the deferred particle field has started", async () => {
+    const onAmbientMotionReady = vi.fn()
+    render(
+      <GlobalBackground
+        onAmbientMotionReady={onAmbientMotionReady}
+        shouldRenderAmbientMotion
+      />,
+    )
+
+    fireEvent.click(await screen.findByLabelText("Particle field"))
+    expect(onAmbientMotionReady).toHaveBeenCalledOnce()
   })
 
   it("starts color motion with a static pattern while particles stay dormant", () => {

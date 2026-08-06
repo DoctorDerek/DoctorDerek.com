@@ -62,12 +62,16 @@ describe("ParticleCanvas", () => {
         width: 320,
       })
 
-    const { container, unmount } = render(<ParticleCanvas />)
+    const onReady = vi.fn()
+    const { container, unmount } = render(
+      <ParticleCanvas onReady={onReady} />,
+    )
 
     const canvas = container.querySelector("canvas")
     expect(canvas).toHaveAttribute("width", "320")
     expect(canvas).toHaveAttribute("height", "568")
     expect(context.arc).toHaveBeenCalled()
+    expect(onReady).toHaveBeenCalledOnce()
     for (const [, particleY] of context.arc.mock.calls)
       expect(particleY).toBeGreaterThan(568)
 

@@ -16,14 +16,20 @@ function MotionEnabledAmbience({
   shouldStartRive: boolean
 }) {
   const [hasRiveCompleted, setHasRiveCompleted] = useState(false)
+  const [haveParticlesStarted, setHaveParticlesStarted] = useState(false)
   const handleRiveComplete = useCallback(() => setHasRiveCompleted(true), [])
+  const handleParticlesReady = useCallback(
+    () => setHaveParticlesStarted(true),
+    [],
+  )
 
   return (
     <>
       <GlobalBackground
+        onAmbientMotionReady={handleParticlesReady}
         shouldRenderAmbientMotion={shouldStartRive && hasRiveCompleted}
       />
-      <DeferredCustomCursor shouldLoad={hasRiveCompleted} />
+      <DeferredCustomCursor shouldLoad={haveParticlesStarted} />
       {shouldStartRive && <RiveAnimation onRiveComplete={handleRiveComplete} />}
     </>
   )

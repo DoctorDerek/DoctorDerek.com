@@ -125,7 +125,7 @@ class Particle {
   }
 }
 
-export default function ParticleCanvas() {
+export default function ParticleCanvas({ onReady }: { onReady?: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef<{ x: number | null; y: number | null }>({
     x: null,
@@ -181,6 +181,7 @@ export default function ParticleCanvas() {
     }
 
     render()
+    onReady?.()
 
     return () => {
       window.removeEventListener("resize", resize)
@@ -188,7 +189,7 @@ export default function ParticleCanvas() {
       document.removeEventListener("mouseleave", handleMouseLeave)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [])
+  }, [onReady])
 
   return (
     <canvas

@@ -21,11 +21,18 @@ vi.mock("@/components/RiveAnimation", () => ({
 
 vi.mock("@/components/GlobalBackground", () => ({
   default: ({
+    onAmbientMotionReady,
     shouldRenderAmbientMotion,
   }: {
+    onAmbientMotionReady?: () => void
     shouldRenderAmbientMotion: boolean
   }) => (
-    <p data-ambient-motion={shouldRenderAmbientMotion}>Global background</p>
+    <>
+      <p data-ambient-motion={shouldRenderAmbientMotion}>Global background</p>
+      {shouldRenderAmbientMotion && (
+        <button onClick={onAmbientMotionReady}>Particles ready</button>
+      )}
+    </>
   ),
 }))
 
@@ -60,6 +67,9 @@ describe("MotionAwareAmbience", () => {
       "data-ambient-motion",
       "true",
     )
+    expect(screen.queryByText("Custom cursor")).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole("button", { name: "Particles ready" }))
     expect(screen.getByText("Custom cursor")).toBeInTheDocument()
   })
 

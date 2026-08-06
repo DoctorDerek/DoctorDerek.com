@@ -78,11 +78,12 @@ export const ARCHITECT_EVOLUTION: WorkExperience[] = [
   },
   {
     duration: "2009–2019",
-    company: "Full-Stack Web Developer | HTML, CSS, JavaScript",
+    company: "Full-Stack Web Developer · Self-Employed | HTML, CSS, JavaScript",
   },
   {
     duration: "2004–2009",
-    company: "Software Engineer | C++, PHP, HTML, CSS, Ruby on Rails, SQL",
+    company:
+      "Full-Stack Web Developer · Self-Employed | C++, PHP, HTML, CSS, Ruby on Rails, SQL",
   },
 ] as const
 

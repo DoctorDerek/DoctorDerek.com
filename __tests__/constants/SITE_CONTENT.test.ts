@@ -95,13 +95,29 @@ describe("site copy quality gates", () => {
     )
   })
 
-  it("distinguishes current self-employment from full-time product engineering", () => {
-    const [selfEmployedStage, fullTimeStage] = SITE_CONTENT.ARCHITECT_EVOLUTION
+  it("represents self-employment around the full-time product engineering period", () => {
+    const [currentSelfEmployedStage, fullTimeStage] =
+      SITE_CONTENT.ARCHITECT_EVOLUTION
+    const employmentModeByDuration = Object.fromEntries(
+      SITE_CONTENT.ARCHITECT_EVOLUTION.map(({ company, duration }) => [
+        duration,
+        company.split(" | ")[0]?.split(" · ").at(-1),
+      ]),
+    )
 
-    expect(selfEmployedStage.company).toContain("· Self-Employed |")
-    expect(fullTimeStage.company).toContain("· Full-Time Product Engineering |")
+    expect(employmentModeByDuration).toEqual({
+      "2024–Present": "Self-Employed",
+      "2019–2024": "Full-Time Product Engineering",
+      "2009–2019": "Self-Employed",
+      "2004–2009": "Self-Employed",
+    })
+    expect(
+      SITE_CONTENT.ARCHITECT_EVOLUTION.slice(2).map(({ company }) =>
+        company.split(" · ").at(0),
+      ),
+    ).toEqual(["Full-Stack Web Developer", "Full-Stack Web Developer"])
 
-    for (const { company } of [selfEmployedStage, fullTimeStage]) {
+    for (const { company } of [currentSelfEmployedStage, fullTimeStage]) {
       const [, technologyStack] = company.split(" | ")
 
       expect(technologyStack).toContain("Node")

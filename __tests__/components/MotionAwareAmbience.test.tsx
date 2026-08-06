@@ -35,8 +35,9 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
   }),
 }))
 
-vi.mock("@/components/ui/CustomCursor", () => ({
-  default: () => <p>Custom cursor</p>,
+vi.mock("@/components/ui/DeferredCustomCursor", () => ({
+  default: ({ shouldLoad }: { shouldLoad: boolean }) =>
+    shouldLoad ? <p>Custom cursor</p> : null,
 }))
 
 describe("MotionAwareAmbience", () => {
@@ -51,7 +52,7 @@ describe("MotionAwareAmbience", () => {
       "data-ambient-motion",
       "false",
     )
-    expect(screen.getByText("Custom cursor")).toBeInTheDocument()
+    expect(screen.queryByText("Custom cursor")).not.toBeInTheDocument()
     expect(screen.getByText("Rive animation")).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole("button", { name: "Rive animation" }))
@@ -59,6 +60,7 @@ describe("MotionAwareAmbience", () => {
       "data-ambient-motion",
       "true",
     )
+    expect(screen.getByText("Custom cursor")).toBeInTheDocument()
   })
 
   it("waits for deferred readiness while preserving the background and cursor", () => {
@@ -68,7 +70,7 @@ describe("MotionAwareAmbience", () => {
       "data-ambient-motion",
       "false",
     )
-    expect(screen.getByText("Custom cursor")).toBeInTheDocument()
+    expect(screen.queryByText("Custom cursor")).not.toBeInTheDocument()
     expect(screen.queryByText("Rive animation")).not.toBeInTheDocument()
   })
 

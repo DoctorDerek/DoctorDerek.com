@@ -4,7 +4,7 @@ import dynamic from "next/dynamic"
 import { useCallback, useState } from "react"
 import GlobalBackground from "@/components/GlobalBackground"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
-import CustomCursor from "@/components/ui/CustomCursor"
+import DeferredCustomCursor from "@/components/ui/DeferredCustomCursor"
 
 const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
   ssr: false,
@@ -23,7 +23,7 @@ function MotionEnabledAmbience({
       <GlobalBackground
         shouldRenderAmbientMotion={shouldStartRive && hasRiveCompleted}
       />
-      <CustomCursor />
+      <DeferredCustomCursor shouldLoad={hasRiveCompleted} />
       {shouldStartRive && <RiveAnimation onRiveComplete={handleRiveComplete} />}
     </>
   )

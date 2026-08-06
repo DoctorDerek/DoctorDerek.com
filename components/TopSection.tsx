@@ -14,7 +14,11 @@ const [PRIMARY_INTRODUCTION, ...SUPPORTING_INTRODUCTION_SEGMENTS] =
   INTRO_BIO_SHORT.split(" · ")
 const SUPPORTING_INTRODUCTION = SUPPORTING_INTRODUCTION_SEGMENTS.join(" · ")
 
-export default function TopSection() {
+export default function TopSection({
+  shouldStartTypewriter,
+}: {
+  shouldStartTypewriter: boolean
+}) {
   const { shouldReduceMotion } = useMotionPreference()
 
   return (
@@ -37,7 +41,11 @@ export default function TopSection() {
                 aria-hidden="true"
                 className="mt-3 min-h-[3rem] text-base md:min-h-[4rem] md:text-xl lg:text-2xl"
               >
-                <IntroTypewriter segments={SUPPORTING_INTRODUCTION_SEGMENTS} />
+                {shouldStartTypewriter && (
+                  <IntroTypewriter
+                    segments={SUPPORTING_INTRODUCTION_SEGMENTS}
+                  />
+                )}
               </div>
             </>
           )}

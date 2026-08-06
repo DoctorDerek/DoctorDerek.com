@@ -76,7 +76,12 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
 
   const sectionsContent = [
     {
-      component: <TopSection key="top" />,
+      component: (
+        <TopSection
+          key="top"
+          shouldStartTypewriter={shouldLoadDeferredTypography}
+        />
+      ),
       anchor: "home",
     },
     { component: <IntroSection key="intro" />, anchor: "intro" },

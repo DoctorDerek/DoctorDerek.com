@@ -51,8 +51,10 @@ export default function usePostLoadExperienceSchedule(
       typeof window.requestIdleCallback !== "function" ||
       typeof window.cancelIdleCallback !== "function"
     ) {
-      setShouldStartRive(true)
-      return
+      const riveAnimationFrameId = window.requestAnimationFrame(() =>
+        setShouldStartRive(true),
+      )
+      return () => window.cancelAnimationFrame(riveAnimationFrameId)
     }
 
     const riveIdleCallbackId = window.requestIdleCallback(

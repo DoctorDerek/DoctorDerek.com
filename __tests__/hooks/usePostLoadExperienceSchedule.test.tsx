@@ -9,6 +9,7 @@ import usePostLoadExperienceSchedule from "@/hooks/usePostLoadExperienceSchedule
 
 const RIVE_IDLE_CALLBACK_ID = 17
 let scheduledRiveIdleCallback: IdleRequestCallback | undefined
+let scheduledRiveAnimationFrame: FrameRequestCallback | undefined
 const requestIdleCallbackMock = vi.fn(
   (callback: IdleRequestCallback): number => {
     scheduledRiveIdleCallback = callback
@@ -16,6 +17,13 @@ const requestIdleCallbackMock = vi.fn(
   },
 )
 const cancelIdleCallbackMock = vi.fn()
+const cancelAnimationFrameMock = vi.fn()
+const requestAnimationFrameMock = vi.fn(
+  (callback: FrameRequestCallback): number => {
+    scheduledRiveAnimationFrame = callback
+    return 23
+  },
+)
 
 const completeRiveIdleCallback = () => {
   act(() =>
@@ -30,10 +38,15 @@ describe("usePostLoadExperienceSchedule", () => {
   beforeEach(() => {
     vi.useFakeTimers()
     scheduledRiveIdleCallback = undefined
+    scheduledRiveAnimationFrame = undefined
     requestIdleCallbackMock.mockClear()
     cancelIdleCallbackMock.mockClear()
+    requestAnimationFrameMock.mockClear()
+    cancelAnimationFrameMock.mockClear()
     vi.stubGlobal("requestIdleCallback", requestIdleCallbackMock)
     vi.stubGlobal("cancelIdleCallback", cancelIdleCallbackMock)
+    vi.stubGlobal("requestAnimationFrame", requestAnimationFrameMock)
+    vi.stubGlobal("cancelAnimationFrame", cancelAnimationFrameMock)
   })
 
   afterEach(() => {
@@ -128,10 +141,16 @@ describe("usePostLoadExperienceSchedule", () => {
       vi.stubGlobal(unsupportedIdleCallbackApi, undefined)
       vi.spyOn(document, "readyState", "get").mockReturnValue("complete")
 
-      const { result } = renderHook(() => usePostLoadExperienceSchedule(true))
+      const { result, unmount } = renderHook(() =>
+        usePostLoadExperienceSchedule(true),
+      )
 
       act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
+      expect(requestAnimationFrameMock).toHaveBeenCalledOnce()
+      act(() => scheduledRiveAnimationFrame?.(0))
       expect(result.current.shouldStartRive).toBe(true)
+      unmount()
+      expect(cancelAnimationFrameMock).toHaveBeenCalledWith(23)
     },
   )
 

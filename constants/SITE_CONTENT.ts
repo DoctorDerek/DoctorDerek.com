@@ -55,7 +55,7 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
 
 export const CONTACT_BULLETS: string[] = [
   "I architect, build, and scale deterministic software systems using AI-native engineering workflows, functional specifications, persistent context, and human verification.",
-  "I ship Next.js + React Native + Expo products across web, iOS, and Android, handling EAS Build/Submit, OTA updates, iOS/Android store releases, automated testing, and manual device QA.",
+  "I ship full-stack TypeScript products across web, iOS, and Android using Next.js, React Native, and Expo, handling EAS Build/Submit, OTA updates, iOS/Android store releases, automated testing, and manual device QA.",
   "I partner with founders and early-stage startups as a full-time code owner, taking product work from specification through production with 10× velocity and full accountability for the result.",
   "I deliver MVPs in under 3 months, and I’ve improved web performance by up to 90% and page speed by 60×.",
 ] as const

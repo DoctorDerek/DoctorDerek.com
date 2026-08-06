@@ -82,7 +82,10 @@ describe("site copy quality gates", () => {
   it("keeps contact copy concise and evidence-driven", () => {
     expect(SITE_CONTENT.CONTACT_BULLETS).toHaveLength(4)
     expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain(
-      "Next.js + React Native + Expo",
+      "full-stack TypeScript products",
+    )
+    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain(
+      "Next.js, React Native, and Expo",
     )
     expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain("EAS Build/Submit")
     expect(SITE_CONTENT.CONTACT_BULLETS[2]).toContain("code owner")

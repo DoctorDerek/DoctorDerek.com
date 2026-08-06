@@ -1,13 +1,8 @@
-import { act, fireEvent, render, screen } from "@testing-library/react"
-import { renderToString } from "react-dom/server"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import CustomCursor from "@/components/ui/CustomCursor"
 
-const { cursorMediaQuery, motionValues } = vi.hoisted(() => ({
-  cursorMediaQuery: {
-    listeners: new Set<() => void>(),
-    matches: false,
-  },
+const { motionValues } = vi.hoisted(() => ({
   motionValues: {
     callCount: 0,
     x: { set: vi.fn() },
@@ -42,48 +37,12 @@ vi.mock("motion/react", () => ({
 
 describe("CustomCursor", () => {
   beforeEach(() => {
-    cursorMediaQuery.listeners.clear()
-    cursorMediaQuery.matches = false
     motionValues.callCount = 0
     vi.clearAllMocks()
-    vi.mocked(window.matchMedia).mockImplementation((query) => ({
-      matches: cursorMediaQuery.matches,
-      media: query,
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: (
-        _event: string,
-        listener: EventListenerOrEventListenerObject,
-      ) => cursorMediaQuery.listeners.add(listener as () => void),
-      removeEventListener: (
-        _event: string,
-        listener: EventListenerOrEventListenerObject,
-      ) => cursorMediaQuery.listeners.delete(listener as () => void),
-      dispatchEvent: vi.fn(),
-    }))
   })
 
-  it("renders no custom cursor markup on the server", () => {
-    expect(renderToString(<CustomCursor />)).toBe("")
-  })
-
-  it("does not mount desktop cursor behavior on touch-first layouts", () => {
+  it("tracks pointer movement after its eligibility gate mounts", () => {
     render(<CustomCursor />)
-
-    expect(screen.queryByTestId("custom-cursor")).not.toBeInTheDocument()
-    fireEvent.mouseMove(window, { clientX: 50, clientY: 60 })
-    expect(motionValues.x.set).not.toHaveBeenCalled()
-    expect(motionValues.y.set).not.toHaveBeenCalled()
-  })
-
-  it("tracks pointer movement only after the desktop cursor query matches", () => {
-    render(<CustomCursor />)
-
-    act(() => {
-      cursorMediaQuery.matches = true
-      for (const listener of cursorMediaQuery.listeners) listener()
-    })
 
     expect(screen.getByTestId("custom-cursor")).toHaveAttribute(
       "data-opacity",

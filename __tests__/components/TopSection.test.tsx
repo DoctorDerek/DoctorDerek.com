@@ -11,9 +11,16 @@ vi.mock("next/dynamic", () => ({
   default: (loadComponent: () => Promise<unknown>) => {
     void loadComponent()
 
-    return ({ segments }: { segments: readonly string[] }) => (
-      <p>{segments.at(-1)}</p>
-    )
+    return ({
+      onStarted,
+      segments,
+    }: {
+      onStarted: () => void
+      segments: readonly string[]
+    }) => {
+      onStarted()
+      return <p>{segments.at(-1)}</p>
+    }
   },
 }))
 
@@ -40,8 +47,14 @@ describe("TopSection", () => {
     reducedMotionPreference.value = false
   })
 
-  it("keeps the primary positioning visible while supporting motion runs", () => {
-    render(<TopSection />)
+  it("keeps semantic positioning visible before the Typewriter starts", () => {
+    const onTypewriterStarted = vi.fn()
+    const { rerender } = render(
+      <TopSection
+        onTypewriterStarted={onTypewriterStarted}
+        shouldStartTypewriter={false}
+      />,
+    )
 
     const primaryPositioning = screen.getByRole("heading", {
       level: 1,
@@ -52,6 +65,17 @@ describe("TopSection", () => {
     expect(primaryPositioning.closest(".opacity-0")).toBeNull()
     expect(screen.getByText(supportingIntroduction)).toHaveClass("sr-only")
     expect(
+      screen.queryByText(supportingIntroductionSegments.at(-1)!),
+    ).not.toBeInTheDocument()
+
+    rerender(
+      <TopSection
+        onTypewriterStarted={onTypewriterStarted}
+        shouldStartTypewriter
+      />,
+    )
+    expect(onTypewriterStarted).toHaveBeenCalledOnce()
+    expect(
       screen.getByText(supportingIntroductionSegments.at(-1)!).parentElement,
     ).toHaveAttribute("aria-hidden", "true")
   })
@@ -59,7 +83,12 @@ describe("TopSection", () => {
   it("renders the complete supporting introduction statically when motion is reduced", () => {
     reducedMotionPreference.value = true
 
-    render(<TopSection />)
+    render(
+      <TopSection
+        onTypewriterStarted={vi.fn()}
+        shouldStartTypewriter={false}
+      />,
+    )
 
     expect(
       screen.getByRole("heading", {

@@ -124,11 +124,16 @@ export default function Navbar() {
               </ul>
               <div className="mt-auto flex flex-col gap-6 pr-5 pb-6">
                 <SiteSettings />
-                <div className="w-10/12 md:hidden">
+                <div
+                  role="group"
+                  aria-label="Social links"
+                  className="w-full md:hidden"
+                >
                   <SocialLinks
                     fill="currentColor"
-                    containerClasses="text-site-foreground flex flex-col gap-y-4"
-                    linkClasses="mb-2 flex items-center gap-x-2 text-xl"
+                    containerClasses="text-site-foreground flex w-full items-center justify-between"
+                    linkClasses="site-focus-contrast flex items-center justify-center rounded-md p-1"
+                    labelClasses="sr-only"
                     showLabels={true}
                   />
                 </div>

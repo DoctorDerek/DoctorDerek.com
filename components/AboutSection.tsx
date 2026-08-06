@@ -88,9 +88,9 @@ export default function AboutSection() {
               </div>
             </FlipPreview>
           </div>
-          <div className="ease-spring-soft border-site-border bg-site-surface relative mt-8 translate-y-12 rounded-tl-3xl border px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 md:absolute md:right-0 md:-bottom-8 md:left-auto md:w-[65%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-[60%] lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
+          <div className="ease-spring-soft border-site-border bg-site-surface relative mt-4 translate-y-12 rounded-tl-3xl border px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 md:absolute md:right-0 md:-bottom-8 md:left-auto md:mt-8 md:w-[65%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-[60%] lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">
             <div className="flex flex-col gap-4 lg:gap-6">
-              <div className="scrollable-content text-site-foreground max-h-[45vh] overflow-y-auto overscroll-contain pr-2 text-lg leading-7 lg:text-xl lg:leading-9">
+              <div className="scrollable-content text-site-foreground max-h-[36dvh] overflow-y-auto overscroll-contain pr-2 text-lg leading-7 md:max-h-[45vh] lg:text-xl lg:leading-9">
                 {ABOUT_BIO_LONG.map((paragraph, index) => (
                   <p key={index} className="mb-4">
                     {paragraph}

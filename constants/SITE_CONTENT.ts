@@ -46,16 +46,16 @@ export type AiConsultancyPitch = {
 
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   header: "What I Do Best",
-  body: "Startups need more than a fast prototype: they need a product that survives real users, real data, and real change. I help founders and small teams build deterministic, full-stack TypeScript products—including privacy-sensitive and regulated applications—at 10× AI-native velocity without the technical debt of vibe coding. I hate bugs, I love results, and I know when to move quickly and when to pay down technical debt.",
+  body: "I help startup founders and small teams build full-stack TypeScript products, including privacy-sensitive and regulated applications, using AI-native engineering without the technical debt of vibe coding.",
   ctaButtonText: "Inquire About Availability",
   subtext:
-    "Seeking a long-term, full-time remote role as a Full-Stack SWE and code owner at a US startup.",
+    "I’m actively seeking a long-term, full-time remote role as a full-stack SWE and code owner at a US startup.",
   emailSubject: "Full-Time SWE / Code Owner Inquiry",
 } as const
 
 export const CONTACT_BULLETS: string[] = [
   "I architect, build, and scale deterministic software systems using AI-native engineering workflows, functional specifications, persistent context, and human verification.",
-  "I ship Next.js + React Native + Expo products across web, iOS, and Android, handling EAS Build/Submit, OTA updates, iOS/Android store releases, automated testing, and manual device QA.",
+  "I ship full-stack TypeScript products across web, iOS, and Android using Next.js, React Native, and Expo, handling EAS Build/Submit, OTA updates, iOS/Android store releases, automated testing, and manual device QA.",
   "I partner with founders and early-stage startups as a full-time code owner, taking product work from specification through production with 10× velocity and full accountability for the result.",
   "I deliver MVPs in under 3 months, and I’ve improved web performance by up to 90% and page speed by 60×.",
 ] as const
@@ -69,20 +69,21 @@ export const ARCHITECT_EVOLUTION: WorkExperience[] = [
   {
     duration: "2024–Present",
     company:
-      "AI-Native Senior Full-Stack SWE · UI/UX Engineer · TypeScript Specialist",
+      "AI-Native Senior Full-Stack SWE · UI/UX Engineer · Self-Employed | TypeScript, React, Next.js, Tailwind CSS, Node, React Native + Expo",
   },
   {
     duration: "2019–2024",
     company:
-      "Senior Full-Stack SWE · UI/UX Engineer | React, Next.js, TypeScript, Tailwind CSS",
+      "Senior Full-Stack SWE · UI/UX Engineer · Full-Time Product Engineering | TypeScript, React, Next.js, Tailwind CSS, Node, React Native + Expo",
   },
   {
     duration: "2009–2019",
-    company: "Full-Stack Web Developer | HTML, CSS, JavaScript",
+    company: "Full-Stack Web Developer · Self-Employed | HTML, CSS, JavaScript",
   },
   {
     duration: "2004–2009",
-    company: "Software Engineer | C++, PHP, HTML, CSS, Ruby on Rails, SQL",
+    company:
+      "Full-Stack Web Developer · Self-Employed | C++, PHP, HTML, CSS, Ruby on Rails, SQL",
   },
 ] as const
 

@@ -12,7 +12,7 @@ const PORTFOLIO_NARRATIVE = SITE_CONTENT.PORTFOLIO_PROJECTS.flatMap(
 describe("site copy quality gates", () => {
   it("uses the requested end-of-site copy and CTA wording", () => {
     expect(CONTACT_COMPLETION.toastMessage).toBe(
-      "🎊 You’ve reached the end of DoctorDerek.com. Let’s build something great. 🎉",
+      "You’ve reached the end of DoctorDerek.com. Let’s build something great.",
     )
     expect(SITE_CONTENT.CONTACT_CTA).toBe("Contact Me")
   })
@@ -28,13 +28,20 @@ describe("site copy quality gates", () => {
 
   it("keeps the hiring target focused and excludes private logistics", () => {
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
-      "10× AI-native velocity",
+      "startup founders and small teams",
+    )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
+      "AI-native engineering",
+    )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain("10×")
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain(
+      "deterministic",
     )
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.subtext).toContain(
       "long-term, full-time remote role",
     )
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.subtext).toContain(
-      "Full-Stack SWE and code owner",
+      "full-stack SWE and code owner",
     )
     expect(JSON.stringify(SITE_CONTENT)).not.toMatch(PRIVATE_LOGISTICS_LANGUAGE)
   })
@@ -75,7 +82,10 @@ describe("site copy quality gates", () => {
   it("keeps contact copy concise and evidence-driven", () => {
     expect(SITE_CONTENT.CONTACT_BULLETS).toHaveLength(4)
     expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain(
-      "Next.js + React Native + Expo",
+      "full-stack TypeScript products",
+    )
+    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain(
+      "Next.js, React Native, and Expo",
     )
     expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain("EAS Build/Submit")
     expect(SITE_CONTENT.CONTACT_BULLETS[2]).toContain("code owner")
@@ -83,6 +93,36 @@ describe("site copy quality gates", () => {
     expect(SITE_CONTENT.CONTACT_BULLETS.join(" ")).not.toContain(
       "underperforming",
     )
+  })
+
+  it("represents self-employment around the full-time product engineering period", () => {
+    const [currentSelfEmployedStage, fullTimeStage] =
+      SITE_CONTENT.ARCHITECT_EVOLUTION
+    const employmentModeByDuration = Object.fromEntries(
+      SITE_CONTENT.ARCHITECT_EVOLUTION.map(({ company, duration }) => [
+        duration,
+        company.split(" | ")[0]?.split(" · ").at(-1),
+      ]),
+    )
+
+    expect(employmentModeByDuration).toEqual({
+      "2024–Present": "Self-Employed",
+      "2019–2024": "Full-Time Product Engineering",
+      "2009–2019": "Self-Employed",
+      "2004–2009": "Self-Employed",
+    })
+    expect(
+      SITE_CONTENT.ARCHITECT_EVOLUTION.slice(2).map(({ company }) =>
+        company.split(" · ").at(0),
+      ),
+    ).toEqual(["Full-Stack Web Developer", "Full-Stack Web Developer"])
+
+    for (const { company } of [currentSelfEmployedStage, fullTimeStage]) {
+      const [, technologyStack] = company.split(" | ")
+
+      expect(technologyStack).toContain("Node")
+      expect(technologyStack).toContain("React Native + Expo")
+    }
   })
 
   it("keeps testimonials in the approved evidence-first order", () => {

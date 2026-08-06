@@ -19,12 +19,12 @@ const MAPACHITO_VIVID_COLORS = [
 ]
 
 class Particle {
-  x: number
-  y: number
-  homeX: number
-  homeY: number
-  vx: number
-  vy: number
+  baseX: number
+  baseY: number
+  interactionOffsetX: number
+  interactionOffsetY: number
+  interactionVelocityX: number
+  interactionVelocityY: number
   radius: number
   baseRadius: number
   speedY: number
@@ -34,14 +34,14 @@ class Particle {
   color: string
 
   constructor(canvasWidth: number, canvasHeight: number) {
-    this.x = Math.random() * canvasWidth
-    this.y =
+    this.baseX = Math.random() * canvasWidth
+    this.baseY =
       canvasHeight +
       Math.random() * canvasHeight * INITIAL_SPAWN_BAND_HEIGHT_RATIO
-    this.homeX = this.x
-    this.homeY = this.y
-    this.vx = 0
-    this.vy = 0
+    this.interactionOffsetX = 0
+    this.interactionOffsetY = 0
+    this.interactionVelocityX = 0
+    this.interactionVelocityY = 0
     this.baseRadius = Math.random() * 4 + 1
     this.radius = this.baseRadius
     this.speedY = Math.random() * -1 - 0.5
@@ -64,17 +64,23 @@ class Particle {
     mouseY: number | null,
   ) {
     this.wobble += 0.02
-    this.homeY += this.speedY
-    this.homeX += Math.sin(this.wobble) * this.speedX
+    this.baseY += this.speedY
+    this.baseX += Math.sin(this.wobble) * this.speedX
 
-    if (this.homeY + this.baseRadius < 0) {
-      this.homeY = canvasHeight + this.baseRadius
-      this.homeX = Math.random() * canvasWidth
+    if (this.baseY + this.baseRadius < 0) {
+      this.baseY = canvasHeight + this.baseRadius
+      this.baseX = Math.random() * canvasWidth
+      this.interactionOffsetX = 0
+      this.interactionOffsetY = 0
+      this.interactionVelocityX = 0
+      this.interactionVelocityY = 0
     }
 
     if (mouseX !== null && mouseY !== null) {
-      const dx = this.x - mouseX
-      const dy = this.y - mouseY
+      const particleX = this.baseX + this.interactionOffsetX
+      const particleY = this.baseY + this.interactionOffsetY
+      const dx = particleX - mouseX
+      const dy = particleY - mouseY
       const distance = Math.sqrt(dx * dx + dy * dy)
 
       if (distance < INFLUENCE_RADIUS && distance > 0) {
@@ -82,8 +88,8 @@ class Particle {
         const force =
           normalizedDistance * normalizedDistance * REPULSION_STRENGTH
         const angle = Math.atan2(dy, dx)
-        this.vx += Math.cos(angle) * force
-        this.vy += Math.sin(angle) * force
+        this.interactionVelocityX += Math.cos(angle) * force
+        this.interactionVelocityY += Math.sin(angle) * force
         this.radius =
           this.baseRadius +
           this.baseRadius * (GLOW_RADIUS_MULTIPLIER - 1) * normalizedDistance
@@ -94,26 +100,32 @@ class Particle {
       this.radius += (this.baseRadius - this.radius) * 0.1
     }
 
-    this.vx += (this.homeX - this.x) * SPRING_BACK
-    this.vy += (this.homeY - this.y) * SPRING_BACK
+    this.interactionVelocityX -= this.interactionOffsetX * SPRING_BACK
+    this.interactionVelocityY -= this.interactionOffsetY * SPRING_BACK
 
-    this.vx *= DAMPING
-    this.vy *= DAMPING
+    this.interactionVelocityX *= DAMPING
+    this.interactionVelocityY *= DAMPING
 
-    this.x += this.vx
-    this.y += this.vy
+    this.interactionOffsetX += this.interactionVelocityX
+    this.interactionOffsetY += this.interactionVelocityY
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath()
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+    ctx.arc(
+      this.baseX + this.interactionOffsetX,
+      this.baseY + this.interactionOffsetY,
+      this.radius,
+      0,
+      Math.PI * 2,
+    )
     ctx.fillStyle = this.color
     ctx.fill()
     ctx.closePath()
   }
 }
 
-export default function ParticleCanvas() {
+export default function ParticleCanvas({ onReady }: { onReady?: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef<{ x: number | null; y: number | null }>({
     x: null,
@@ -169,6 +181,7 @@ export default function ParticleCanvas() {
     }
 
     render()
+    onReady?.()
 
     return () => {
       window.removeEventListener("resize", resize)
@@ -176,7 +189,7 @@ export default function ParticleCanvas() {
       document.removeEventListener("mouseleave", handleMouseLeave)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [])
+  }, [onReady])
 
   return (
     <canvas

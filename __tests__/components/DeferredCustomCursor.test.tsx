@@ -4,18 +4,22 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import DeferredCustomCursor from "@/components/ui/DeferredCustomCursor"
 import { CUSTOM_CURSOR_IDLE_CALLBACK_TIMEOUT_MILLISECONDS } from "@/constants/STARTUP_TIMING"
 
-const { cursorMediaQuery } = vi.hoisted(() => ({
+const { cursorMediaQuery, loadDynamicCursorRuntime } = vi.hoisted(() => ({
   cursorMediaQuery: {
     listeners: new Set<() => void>(),
     matches: false,
   },
+  loadDynamicCursorRuntime: vi.fn<() => Promise<unknown>>(),
 }))
 
 let scheduledIdleCallback: IdleRequestCallback | undefined
 let scheduledAnimationFrame: FrameRequestCallback | undefined
 
 vi.mock("next/dynamic", () => ({
-  default: () => () => <p>Custom cursor runtime</p>,
+  default: (loader: () => Promise<unknown>) => {
+    loadDynamicCursorRuntime.mockImplementation(loader)
+    return () => <p>Custom cursor runtime</p>
+  },
 }))
 
 describe("DeferredCustomCursor", () => {
@@ -45,6 +49,10 @@ describe("DeferredCustomCursor", () => {
   afterEach(() => {
     vi.restoreAllMocks()
     vi.unstubAllGlobals()
+  })
+
+  it("resolves the deferred cursor runtime when Next requests it", async () => {
+    await expect(loadDynamicCursorRuntime()).resolves.toHaveProperty("default")
   })
 
   it("renders no cursor markup on the server or touch-only devices", () => {

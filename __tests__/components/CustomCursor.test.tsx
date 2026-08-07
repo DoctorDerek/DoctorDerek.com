@@ -2,7 +2,8 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import CustomCursor from "@/components/ui/CustomCursor"
 
-const { motionValues } = vi.hoisted(() => ({
+const { animationFeaturesLoaded, motionValues } = vi.hoisted(() => ({
+  animationFeaturesLoaded: vi.fn(),
   motionValues: {
     callCount: 0,
     x: { set: vi.fn() },
@@ -10,7 +11,21 @@ const { motionValues } = vi.hoisted(() => ({
   },
 }))
 
+vi.mock("@/utils/domAnimationFeatures", () => ({
+  default: "dom-animation-features",
+}))
+
 vi.mock("motion/react", () => ({
+  LazyMotion: ({
+    children,
+    features,
+  }: {
+    children: React.ReactNode
+    features: () => Promise<unknown>
+  }) => {
+    void features().then(animationFeaturesLoaded)
+    return children
+  },
   useMotionValue: () => {
     const motionValue =
       motionValues.callCount % 2 === 0 ? motionValues.x : motionValues.y
@@ -42,8 +57,14 @@ describe("CustomCursor", () => {
     vi.clearAllMocks()
   })
 
-  it("tracks pointer movement after its eligibility gate mounts", () => {
+  it("loads its local animation runtime and tracks pointer movement", async () => {
     render(<CustomCursor />)
+
+    await vi.waitFor(() =>
+      expect(animationFeaturesLoaded).toHaveBeenCalledWith(
+        "dom-animation-features",
+      ),
+    )
 
     expect(screen.getByTestId("custom-cursor")).toHaveAttribute(
       "data-opacity",

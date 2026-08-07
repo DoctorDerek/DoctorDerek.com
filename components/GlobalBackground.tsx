@@ -1,8 +1,7 @@
 "use client"
 
-import { AnimatePresence } from "motion/react"
-import * as m from "motion/react-m"
 import dynamic from "next/dynamic"
+import BackgroundPattern from "@/components/BackgroundPattern"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import Background1 from "@/images/Background-1.svg?url"
 import Background2 from "@/images/Background-2.svg?url"
@@ -55,39 +54,23 @@ export default function GlobalBackground({
   const useInverse = bgConfig.inverse && bgUseInverse
   const activeBackground =
     useInverse && bgConfig.inverse ? bgConfig.inverse : bgConfig.standard
-  const key = `bg-${bgIndex}-${useInverse ? "inverse" : "standard"}`
 
   return (
     <div
       data-ambient-motion={shouldRenderDeferredAmbientMotion}
       className={classNames(
-        "pointer-events-none fixed inset-0 -z-20 h-full w-full",
+        "global-background pointer-events-none fixed inset-0 -z-20 h-full w-full",
         canAnimateBackgroundColor && "animate-rainbow-vivid",
       )}
     >
+      <div
+        aria-hidden="true"
+        className="global-background-color-overlay absolute inset-0 h-full w-full"
+      />
       {shouldRenderDeferredAmbientMotion && (
         <ParticleCanvas onReady={onAmbientMotionReady} />
       )}
-      <AnimatePresence initial={false}>
-        <m.div
-          key={key}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            duration: shouldRenderDeferredAmbientMotion ? 20 : 0,
-            ease: "linear",
-          }}
-          className="absolute inset-0 h-full w-full mix-blend-overlay"
-        >
-          <m.img
-            src={activeBackground.src}
-            alt=""
-            aria-hidden="true"
-            className="h-full w-full object-cover"
-          />
-        </m.div>
-      </AnimatePresence>
+      <BackgroundPattern source={activeBackground.src} />
     </div>
   )
 }

@@ -12,11 +12,18 @@ export const FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS =
 export const FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS =
   process.env.NEXT_PUBLIC_FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS || ""
 
+/**
+ * ONE-TIME EXCEPTION TO THE NO CODE COMMENTS RULE:
+ * Disabled extension keys stay outside the live object so unused configuration
+ * is not emitted. When restoring Drag And Move with the runtime recipe in
+ * components/ClientShell.tsx, add this property without committing its value:
+ *
+ * dragAndMove:
+ *   process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_DRAG_AND_MOVE || "",
+ */
 export const FULLPAGE_ACTIVATION_KEYS = {
   cards: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CARDS || "",
   cinematic: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CINEMATIC || "",
-  dragAndMove:
-    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_DRAG_AND_MOVE || "",
   resetSliders:
     process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_RESET_SLIDERS || "",
   scrollOverflowReset:

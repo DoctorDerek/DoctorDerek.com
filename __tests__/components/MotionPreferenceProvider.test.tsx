@@ -5,42 +5,6 @@ import MotionPreferenceProvider, {
   useMotionPreference,
 } from "@/components/MotionPreferenceProvider"
 
-const { domAnimationFeaturesLoaded, reducedMotionConfiguration } = vi.hoisted(
-  () => ({
-    domAnimationFeaturesLoaded: vi.fn(),
-    reducedMotionConfiguration: vi.fn(),
-  }),
-)
-
-vi.mock("@/utils/domAnimationFeatures", () => ({
-  default: "dom-animation-features",
-}))
-
-vi.mock("motion/react", () => ({
-  LazyMotion: ({
-    children,
-    features,
-    strict,
-  }: {
-    children: React.ReactNode
-    features: () => Promise<unknown>
-    strict: boolean
-  }) => {
-    void features().then(domAnimationFeaturesLoaded)
-    return <div data-motion-strict={strict}>{children}</div>
-  },
-  MotionConfig: ({
-    children,
-    reducedMotion,
-  }: {
-    children: React.ReactNode
-    reducedMotion: string
-  }) => {
-    reducedMotionConfiguration(reducedMotion)
-    return children
-  },
-}))
-
 function MotionPreferenceHarness() {
   const { shouldReduceMotion } = useMotionPreference()
 
@@ -57,8 +21,6 @@ const renderMotionPreference = () =>
 describe("MotionPreferenceProvider", () => {
   beforeEach(() => {
     window.localStorage.clear()
-    domAnimationFeaturesLoaded.mockClear()
-    reducedMotionConfiguration.mockClear()
     vi.mocked(window.matchMedia).mockImplementation((query: string) => ({
       matches: false,
       media: query,
@@ -71,16 +33,10 @@ describe("MotionPreferenceProvider", () => {
     }))
   })
 
-  it("uses lazy strict animation features and the system preference", async () => {
+  it("exposes the system preference without loading an animation runtime", () => {
     const { unmount } = renderMotionPreference()
 
     expect(screen.getByText("false")).toBeInTheDocument()
-    expect(reducedMotionConfiguration).toHaveBeenLastCalledWith("user")
-    await vi.waitFor(() =>
-      expect(domAnimationFeaturesLoaded).toHaveBeenLastCalledWith(
-        "dom-animation-features",
-      ),
-    )
     expect(document.documentElement.dataset.motionPreference).toBeUndefined()
 
     unmount()
@@ -112,7 +68,6 @@ describe("MotionPreferenceProvider", () => {
     renderMotionPreference()
 
     expect(screen.getByText("true")).toBeInTheDocument()
-    expect(reducedMotionConfiguration).toHaveBeenLastCalledWith("user")
   })
 
   it("rejects consumers outside the canonical provider", () => {

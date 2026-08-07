@@ -10,7 +10,6 @@
   --ease-spring-soft: cubic-bezier(0.22, 0.48, 0, 1.2);
   --ease-spring-bouncy: cubic-bezier(0.51, 0.92, 0.24, 1.15);
 
-  --animate-rainbow-vivid: rainbow-vivid 30s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
 
   --color-brand-pink: #fb70aa;
@@ -34,28 +33,6 @@
   --color-site-status-foreground: var(--site-status-foreground);
   --color-site-status-surface: var(--site-status-surface);
   --color-site-status-border: var(--site-status-border);
-
-  @keyframes rainbow-vivid {
-    0%,
-    100% {
-      background-color: var(--site-background-teal);
-    }
-    16% {
-      background-color: var(--site-background-pink);
-    }
-    33% {
-      background-color: var(--site-background-blue);
-    }
-    50% {
-      background-color: var(--site-background-orange);
-    }
-    66% {
-      background-color: var(--site-background-purple);
-    }
-    83% {
-      background-color: var(--site-background-green);
-    }
-  }
 
   @keyframes float {
     0%,
@@ -133,6 +110,87 @@ html.light {
   --site-background-orange: #ffa280;
   --site-background-purple: #bc87e2;
   --site-background-green: #80cea5;
+}
+
+.global-background {
+  background-color: var(--site-background-teal);
+}
+
+.global-background-color-overlay {
+  background-color: var(--site-background-pink);
+  opacity: 0;
+}
+
+.animate-rainbow-vivid {
+  animation: rainbow-vivid-base 30s linear infinite;
+}
+
+.animate-rainbow-vivid .global-background-color-overlay {
+  animation:
+    rainbow-vivid-overlay-color 30s linear infinite,
+    rainbow-vivid-overlay-opacity 30s linear infinite;
+  will-change: opacity;
+}
+
+@keyframes rainbow-vivid-base {
+  0%,
+  15.99% {
+    background-color: var(--site-background-teal);
+  }
+  16%,
+  49.99% {
+    background-color: var(--site-background-blue);
+  }
+  50%,
+  82.99% {
+    background-color: var(--site-background-purple);
+  }
+  83%,
+  100% {
+    background-color: var(--site-background-teal);
+  }
+}
+
+@keyframes rainbow-vivid-overlay-color {
+  0%,
+  32.99% {
+    background-color: var(--site-background-pink);
+  }
+  33%,
+  65.99% {
+    background-color: var(--site-background-orange);
+  }
+  66%,
+  99.99% {
+    background-color: var(--site-background-green);
+  }
+  100% {
+    background-color: var(--site-background-pink);
+  }
+}
+
+@keyframes rainbow-vivid-overlay-opacity {
+  0% {
+    opacity: 0;
+  }
+  16% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  83% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /*

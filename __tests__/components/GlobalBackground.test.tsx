@@ -86,6 +86,9 @@ describe("GlobalBackground", () => {
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "true")
     expect(container.firstChild).toHaveClass("animate-rainbow-vivid")
     expect(
+      container.querySelector(".global-background-color-overlay"),
+    ).toHaveAttribute("aria-hidden", "true")
+    expect(
       container.querySelector('[data-transition-duration="20"]'),
     ).toBeInTheDocument()
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(

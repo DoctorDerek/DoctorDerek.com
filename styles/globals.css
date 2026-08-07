@@ -229,6 +229,10 @@ body {
   }
 }
 
+:where(a, p, h1, h2, h3, h4, button, .restoramedium, .restorabold) {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
 .restoramedium {
   font-weight: 500;
 }

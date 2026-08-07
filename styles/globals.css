@@ -13,6 +13,7 @@
   --animate-float: float 6s ease-in-out infinite;
 
   --color-brand-pink: #fb70aa;
+  --color-brand-coral: #f38b57;
   --color-site-foreground: var(--site-foreground);
   --color-site-foreground-muted: var(--site-foreground-muted);
   --color-site-foreground-faint: var(--site-foreground-faint);

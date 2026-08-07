@@ -3,19 +3,15 @@
 import ReactFullpage from "@fullpage/react-fullpage"
 import dynamic from "next/dynamic"
 import { useCallback, useRef, useState } from "react"
-import AboutSection from "@/components/AboutSection"
-import AiConsultancySection from "@/components/AiConsultancySection"
-import BlogSection from "@/components/BlogSection"
-import ContactSection from "@/components/ContactSection"
-import IntroSection from "@/components/IntroSection"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
 import MotionPreferenceProvider, {
   useMotionPreference,
 } from "@/components/MotionPreferenceProvider"
-import Portfolio from "@/components/Portfolio"
-import Testimonials from "@/components/Testimonials"
 import TopSection from "@/components/TopSection"
-import WorkExperienceSection from "@/components/WorkExperienceSection"
+import type {
+  FullPageSectionContent,
+  SecondaryFullPageSectionContent,
+} from "@/constants/FULLPAGE_SECTIONS"
 import {
   FULLPAGE_ACTIVATION_KEYS,
   FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS,
@@ -32,7 +28,6 @@ import {
 } from "@/types/MapacheFullPageProps"
 import classNames from "@/utils/classNames"
 import getFullPageMotionOptions from "@/utils/fullPageMotionOptions"
-import type { MediumPost } from "@/utils/medium"
 
 const EndOfSiteCelebration = dynamic(
   () => import("@/components/EndOfSiteCelebration"),
@@ -57,7 +52,11 @@ const pluginWrapper = () => {
 const MapacheFullPage =
   ReactFullpage as unknown as React.FC<MapacheFullPageProps>
 
-function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
+function PortfolioExperience({
+  sections,
+}: {
+  sections: readonly SecondaryFullPageSectionContent[]
+}) {
   const { shouldReduceMotion } = useMotionPreference()
   const [cinematicEffect, setCinematicEffect] = useState("zoom")
   const [hasTypewriterStarted, setHasTypewriterStarted] = useState(false)
@@ -81,7 +80,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
 
   const sectionsContent = [
     {
-      component: (
+      content: (
         <TopSection
           key="top"
           onTypewriterStarted={handleTypewriterStarted}
@@ -90,21 +89,8 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
       ),
       anchor: "home",
     },
-    { component: <IntroSection key="intro" />, anchor: "intro" },
-    { component: <AboutSection key="about" />, anchor: "about" },
-    {
-      component: <WorkExperienceSection key="experience" />,
-      anchor: "experience",
-    },
-    {
-      component: <AiConsultancySection key="consultancy" />,
-      anchor: "consultancy",
-    },
-    { component: <Testimonials key="testimonials" />, anchor: "testimonials" },
-    { component: <Portfolio key="portfolio" />, anchor: "portfolio" },
-    { component: <BlogSection key="blog" posts={posts} />, anchor: "blog" },
-    { component: <ContactSection key="contact" />, anchor: "contact" },
-  ]
+    ...sections,
+  ] satisfies readonly FullPageSectionContent[]
 
   const handleLeave = (
     origin: FullPageSection,
@@ -179,7 +165,7 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
                     section.anchor === "home" ? "fp-noscroll" : "",
                   )}
                 >
-                  {section.component}
+                  {section.content}
                   {index < sectionsContent.length - 1 && (
                     <a
                       href={`#${sectionsContent[index + 1].anchor}`}
@@ -198,10 +184,14 @@ function PortfolioExperience({ posts }: { posts: MediumPost[] }) {
   )
 }
 
-export default function ClientShell({ posts }: { posts: MediumPost[] }) {
+export default function ClientShell({
+  sections,
+}: {
+  sections: readonly SecondaryFullPageSectionContent[]
+}) {
   return (
     <MotionPreferenceProvider>
-      <PortfolioExperience posts={posts} />
+      <PortfolioExperience sections={sections} />
     </MotionPreferenceProvider>
   )
 }

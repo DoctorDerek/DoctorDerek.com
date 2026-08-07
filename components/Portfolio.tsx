@@ -1,3 +1,5 @@
+"use client"
+
 import dynamic from "next/dynamic"
 import { useState } from "react"
 import SectionHeading from "@/components/ui/SectionHeading"

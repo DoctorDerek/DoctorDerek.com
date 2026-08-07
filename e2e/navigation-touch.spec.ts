@@ -1,4 +1,56 @@
-import { expect, test } from "@playwright/test"
+import { expect, test, type Locator } from "@playwright/test"
+
+async function swipeVertically(locator: Locator, deltaY: number) {
+  const { centerX, centerY } = await locator.evaluate((target: HTMLElement) => {
+    const bounds = target.getBoundingClientRect()
+
+    return {
+      centerX: bounds.left + bounds.width / 2,
+      centerY: bounds.top + bounds.height / 2,
+    }
+  })
+  const gestureSteps = 5
+  let touches = [
+    {
+      identifier: 0,
+      clientX: centerX,
+      clientY: centerY,
+      pageX: centerX,
+      pageY: centerY,
+    },
+  ]
+
+  await locator.dispatchEvent("touchstart", {
+    touches,
+    changedTouches: touches,
+    targetTouches: touches,
+  })
+
+  for (let step = 1; step <= gestureSteps; step += 1) {
+    const pageY = centerY + (deltaY * step) / gestureSteps
+    touches = [
+      {
+        identifier: 0,
+        clientX: centerX,
+        clientY: pageY,
+        pageX: centerX,
+        pageY,
+      },
+    ]
+
+    await locator.dispatchEvent("touchmove", {
+      touches,
+      changedTouches: touches,
+      targetTouches: touches,
+    })
+  }
+
+  await locator.dispatchEvent("touchend", {
+    touches: [],
+    changedTouches: touches,
+    targetTouches: [],
+  })
+}
 
 test.use({
   hasTouch: true,
@@ -55,4 +107,20 @@ test("touch users can dismiss and navigate the open overlay", async ({
 
   await expect(page).toHaveURL(/#about$/)
   await expect(navigation).toHaveAttribute("inert")
+})
+
+test("touch users can swipe between sections without Drag And Move", async ({
+  page,
+}) => {
+  await page.goto("/")
+
+  const body = page.locator("body")
+  const activeSection = page.locator(".section.active")
+
+  await expect(body).toHaveClass(/fp-viewing-home/)
+  await expect(activeSection).toBeVisible()
+  await swipeVertically(activeSection, -300)
+
+  await expect(page).toHaveURL(/#intro$/)
+  await expect(body).toHaveClass(/fp-viewing-intro/)
 })

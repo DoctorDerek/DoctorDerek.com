@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test"
 import {
+  BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
   DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
   RIVE_START_DELAY_MILLISECONDS,
 } from "@/constants/STARTUP_TIMING"
@@ -30,7 +31,11 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
     "data-ambient-motion",
     "false",
   )
-  await expect(ambientBackground).toHaveClass(/animate-rainbow-vivid/)
+  await expect(ambientBackground).not.toHaveClass(/animate-rainbow-vivid/)
+  await waitForPostLoadBoundary(
+    page,
+    BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
+  )
   await waitForPostLoadBoundary(page, DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS)
   await waitForPostLoadBoundary(page, RIVE_START_DELAY_MILLISECONDS)
 
@@ -47,6 +52,13 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
     "data-ambient-motion",
     "false",
   )
+  await expect(ambientBackground).not.toHaveClass(/animate-rainbow-vivid/)
+
+  await completePostLoadBoundary(
+    page,
+    BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
+  )
+  await expect(ambientBackground).toHaveClass(/animate-rainbow-vivid/)
 
   await completePostLoadBoundary(page, DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS)
   await expect(typewriter).toHaveCount(1)

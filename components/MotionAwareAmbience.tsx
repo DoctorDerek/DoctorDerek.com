@@ -11,8 +11,10 @@ const RiveAnimation = dynamic(() => import("@/components/RiveAnimation"), {
 })
 
 function MotionEnabledAmbience({
+  shouldAnimateBackgroundColor,
   shouldStartRive,
 }: {
+  shouldAnimateBackgroundColor: boolean
   shouldStartRive: boolean
 }) {
   const [hasRiveCompleted, setHasRiveCompleted] = useState(false)
@@ -27,6 +29,7 @@ function MotionEnabledAmbience({
     <>
       <GlobalBackground
         onAmbientMotionReady={handleParticlesReady}
+        shouldAnimateBackgroundColor={shouldAnimateBackgroundColor}
         shouldRenderAmbientMotion={shouldStartRive && hasRiveCompleted}
       />
       <DeferredCustomCursor shouldLoad={haveParticlesStarted} />
@@ -36,14 +39,26 @@ function MotionEnabledAmbience({
 }
 
 export default function MotionAwareAmbience({
+  shouldAnimateBackgroundColor,
   shouldStartRive,
 }: {
+  shouldAnimateBackgroundColor: boolean
   shouldStartRive: boolean
 }) {
   const { shouldReduceMotion } = useMotionPreference()
 
   if (shouldReduceMotion)
-    return <GlobalBackground shouldRenderAmbientMotion={false} />
+    return (
+      <GlobalBackground
+        shouldAnimateBackgroundColor={false}
+        shouldRenderAmbientMotion={false}
+      />
+    )
 
-  return <MotionEnabledAmbience shouldStartRive={shouldStartRive} />
+  return (
+    <MotionEnabledAmbience
+      shouldAnimateBackgroundColor={shouldAnimateBackgroundColor}
+      shouldStartRive={shouldStartRive}
+    />
+  )
 }

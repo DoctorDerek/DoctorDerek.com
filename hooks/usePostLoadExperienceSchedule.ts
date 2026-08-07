@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import {
+  BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
   DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
   RIVE_IDLE_CALLBACK_TIMEOUT_MILLISECONDS,
   RIVE_START_DELAY_MILLISECONDS,
@@ -10,6 +11,8 @@ import {
 export default function usePostLoadExperienceSchedule(
   hasTypewriterStarted: boolean,
 ) {
+  const [shouldAnimateBackgroundColor, setShouldAnimateBackgroundColor] =
+    useState(false)
   const [shouldLoadDeferredTypography, setShouldLoadDeferredTypography] =
     useState(false)
   const [hasRiveStartDelayElapsed, setHasRiveStartDelayElapsed] =
@@ -17,10 +20,15 @@ export default function usePostLoadExperienceSchedule(
   const [shouldStartRive, setShouldStartRive] = useState(false)
 
   useEffect(() => {
+    let backgroundColorAnimationTimeoutId: number | undefined
     let deferredTypographyTimeoutId: number | undefined
     let riveStartTimeoutId: number | undefined
 
     const schedulePostLoadExperience = () => {
+      backgroundColorAnimationTimeoutId = window.setTimeout(
+        () => setShouldAnimateBackgroundColor(true),
+        BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
+      )
       deferredTypographyTimeoutId = window.setTimeout(
         () => setShouldLoadDeferredTypography(true),
         DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
@@ -39,6 +47,7 @@ export default function usePostLoadExperienceSchedule(
 
     return () => {
       window.removeEventListener("load", schedulePostLoadExperience)
+      window.clearTimeout(backgroundColorAnimationTimeoutId)
       window.clearTimeout(deferredTypographyTimeoutId)
       window.clearTimeout(riveStartTimeoutId)
     }
@@ -65,5 +74,9 @@ export default function usePostLoadExperienceSchedule(
     return () => window.cancelIdleCallback(riveIdleCallbackId)
   }, [hasRiveStartDelayElapsed, hasTypewriterStarted])
 
-  return { shouldLoadDeferredTypography, shouldStartRive }
+  return {
+    shouldAnimateBackgroundColor,
+    shouldLoadDeferredTypography,
+    shouldStartRive,
+  }
 }

@@ -62,8 +62,11 @@ function PortfolioExperience({
   const [hasTypewriterStarted, setHasTypewriterStarted] = useState(false)
   const fullPageApiReference = useRef<FullPageApi | null>(null)
   const fullPageMotionOptions = getFullPageMotionOptions(shouldReduceMotion)
-  const { shouldLoadDeferredTypography, shouldStartRive } =
-    usePostLoadExperienceSchedule(hasTypewriterStarted)
+  const {
+    shouldAnimateBackgroundColor,
+    shouldLoadDeferredTypography,
+    shouldStartRive,
+  } = usePostLoadExperienceSchedule(hasTypewriterStarted)
   const handleTypewriterStarted = useCallback(
     () => setHasTypewriterStarted(true),
     [],
@@ -125,7 +128,10 @@ function PortfolioExperience({
 
   return (
     <GlobalStateContext.Provider>
-      <MotionAwareAmbience shouldStartRive={shouldStartRive} />
+      <MotionAwareAmbience
+        shouldAnimateBackgroundColor={shouldAnimateBackgroundColor}
+        shouldStartRive={shouldStartRive}
+      />
       {shouldRenderCelebrationRuntime && (
         <EndOfSiteCelebration
           isConfettiActive={isConfettiActive}

@@ -28,9 +28,11 @@ const BACKGROUNDS = [
 
 export default function GlobalBackground({
   onAmbientMotionReady,
+  shouldAnimateBackgroundColor,
   shouldRenderAmbientMotion,
 }: {
   onAmbientMotionReady?: () => void
+  shouldAnimateBackgroundColor: boolean
   shouldRenderAmbientMotion: boolean
 }) {
   const { shouldReduceMotion } = useMotionPreference()
@@ -40,7 +42,8 @@ export default function GlobalBackground({
   const activeBackgroundUsesInverse = GlobalStateContext.useSelector(
     (state) => state.context.bgUseInverse,
   )
-  const shouldAnimateBackgroundColor = !shouldReduceMotion
+  const canAnimateBackgroundColor =
+    !shouldReduceMotion && shouldAnimateBackgroundColor
   const shouldRenderDeferredAmbientMotion =
     !shouldReduceMotion && shouldRenderAmbientMotion
   const bgIndex = shouldRenderDeferredAmbientMotion ? activeBackgroundIndex : 0
@@ -59,7 +62,7 @@ export default function GlobalBackground({
       data-ambient-motion={shouldRenderDeferredAmbientMotion}
       className={classNames(
         "pointer-events-none fixed inset-0 -z-20 h-full w-full",
-        shouldAnimateBackgroundColor && "animate-rainbow-vivid",
+        canAnimateBackgroundColor && "animate-rainbow-vivid",
       )}
     >
       {shouldRenderDeferredAmbientMotion && (

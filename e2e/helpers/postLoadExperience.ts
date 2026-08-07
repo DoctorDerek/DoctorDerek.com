@@ -1,10 +1,12 @@
 import { expect, type Page } from "@playwright/test"
 import {
+  BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
   DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
   RIVE_START_DELAY_MILLISECONDS,
 } from "@/constants/STARTUP_TIMING"
 
 type PostLoadBoundaryMilliseconds =
+  | typeof BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS
   | typeof DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS
   | typeof RIVE_START_DELAY_MILLISECONDS
 
@@ -19,8 +21,13 @@ declare global {
 
 export const installPostLoadExperienceController = async (page: Page) => {
   await page.addInitScript(
-    ({ deferredTypographyDelayMilliseconds, riveStartDelayMilliseconds }) => {
+    ({
+      backgroundColorAnimationDelayMilliseconds,
+      deferredTypographyDelayMilliseconds,
+      riveStartDelayMilliseconds,
+    }) => {
       const controlledPostLoadDelays = new Set([
+        backgroundColorAnimationDelayMilliseconds,
         deferredTypographyDelayMilliseconds,
         riveStartDelayMilliseconds,
       ])
@@ -123,6 +130,8 @@ export const installPostLoadExperienceController = async (page: Page) => {
       })
     },
     {
+      backgroundColorAnimationDelayMilliseconds:
+        BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
       deferredTypographyDelayMilliseconds:
         DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
       riveStartDelayMilliseconds: RIVE_START_DELAY_MILLISECONDS,

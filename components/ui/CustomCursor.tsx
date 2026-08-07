@@ -1,10 +1,13 @@
 "use client"
 
-import { useMotionValue, useSpring } from "motion/react"
+import { LazyMotion, useMotionValue, useSpring } from "motion/react"
 import * as m from "motion/react-m"
 import { useEffect, useState } from "react"
 
-export default function CustomCursor() {
+const loadDomAnimationFeatures = async () =>
+  (await import("@/utils/domAnimationFeatures")).default
+
+function AnimatedCustomCursor() {
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
   const [isVisible, setIsVisible] = useState(false)
@@ -43,5 +46,13 @@ export default function CustomCursor() {
         opacity: isVisible ? 0.8 : 0,
       }}
     />
+  )
+}
+
+export default function CustomCursor() {
+  return (
+    <LazyMotion features={loadDomAnimationFeatures} strict>
+      <AnimatedCustomCursor />
+    </LazyMotion>
   )
 }

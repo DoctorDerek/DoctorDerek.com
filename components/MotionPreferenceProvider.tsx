@@ -1,6 +1,5 @@
 "use client"
 
-import { LazyMotion, MotionConfig } from "motion/react"
 import {
   createContext,
   useContext,
@@ -9,9 +8,6 @@ import {
 } from "react"
 
 const REDUCED_MOTION_MEDIA_QUERY = "(prefers-reduced-motion: reduce)"
-
-const loadDomAnimationFeatures = async () =>
-  (await import("@/utils/domAnimationFeatures")).default
 
 type MotionPreferenceContextValue = {
   shouldReduceMotion: boolean
@@ -64,9 +60,7 @@ export default function MotionPreferenceProvider({
         shouldReduceMotion,
       }}
     >
-      <LazyMotion features={loadDomAnimationFeatures} strict>
-        <MotionConfig reducedMotion="user">{children}</MotionConfig>
-      </LazyMotion>
+      {children}
     </MotionPreferenceContext.Provider>
   )
 }

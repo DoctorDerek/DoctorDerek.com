@@ -105,7 +105,6 @@ export type MapacheFullPageProps = {
   cardsKey?: string
   cinematicKey?: string
   continuousHorizontalKey?: string
-  dragAndMoveKey?: string
   dropEffectKey?: string
   effectsKey?: string
   fadingEffectKey?: string
@@ -121,15 +120,12 @@ export type MapacheFullPageProps = {
   cards?: boolean | "slides" | "sections"
   cinematic?: boolean
   continuousHorizontal?: boolean
-  dragAndMove?:
-    boolean | "vertical" | "horizontal" | "fingersonly" | "mouseonly"
   dropEffect?: boolean
   effects?:
     | boolean
     | "cards"
     | "cinematic"
     | "continuousHorizontal"
-    | "dragAndMove"
     | "dropEffect"
     | "fadingEffect"
     | "interlockedSlides"

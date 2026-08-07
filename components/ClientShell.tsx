@@ -44,7 +44,6 @@ const pluginWrapper = () => {
   require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/shatter.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/shockwave.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/cards/fullpage.cards.min.js")
-  require("@/vendor/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/resetSliders/fullpage.resetSliders.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/scrollOverflowReset/fullpage.scrollOverflowReset.min.js")
 }
@@ -145,10 +144,8 @@ function PortfolioExperience({
         licenseKey={FULLPAGE_JS_LICENSE_FOR_REACT_FULLPAGE_JS}
         cardsKey={FULLPAGE_ACTIVATION_KEYS.cards}
         cinematicKey={FULLPAGE_ACTIVATION_KEYS.cinematic}
-        dragAndMoveKey={FULLPAGE_ACTIVATION_KEYS.dragAndMove}
         resetSlidersKey={FULLPAGE_ACTIVATION_KEYS.resetSliders}
         scrollOverflowResetKey={FULLPAGE_ACTIVATION_KEYS.scrollOverflowReset}
-        dragAndMove={true}
         scrollOverflow={true}
         scrollOverflowReset={true}
         normalScrollElements=".scrollable-content, .flip-preview-control"

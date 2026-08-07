@@ -15,8 +15,6 @@ export const FULLPAGE_JS_LICENSE_FOR_FULLPAGE_JS_EXTENSIONS =
 export const FULLPAGE_ACTIVATION_KEYS = {
   cards: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CARDS || "",
   cinematic: process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_CINEMATIC || "",
-  dragAndMove:
-    process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_DRAG_AND_MOVE || "",
   resetSliders:
     process.env.NEXT_PUBLIC_FULLPAGE_ACTIVATION_KEY_RESET_SLIDERS || "",
   scrollOverflowReset:

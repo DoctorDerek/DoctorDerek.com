@@ -22,6 +22,10 @@ vi.mock("next/dynamic", () => ({
   },
 }))
 
+vi.mock("@/components/ui/CustomCursor", () => ({
+  default: () => null,
+}))
+
 describe("DeferredCustomCursor", () => {
   beforeEach(() => {
     cursorMediaQuery.listeners.clear()

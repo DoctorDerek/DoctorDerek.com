@@ -122,11 +122,7 @@ export type MapacheFullPageProps = {
   cinematic?: boolean
   continuousHorizontal?: boolean
   dragAndMove?:
-    | boolean
-    | "vertical"
-    | "horizontal"
-    | "fingersonly"
-    | "mouseonly"
+    boolean | "vertical" | "horizontal" | "fingersonly" | "mouseonly"
   dropEffect?: boolean
   effects?:
     | boolean

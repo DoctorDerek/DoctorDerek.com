@@ -109,7 +109,7 @@ jobs:
       - name: Run Mobile Web Lighthouse Measurements
         run: pnpm lighthouse
 
-      - name: Prepare Representative Lighthouse Report
+      - name: Prepare Median-Performance Lighthouse Report
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         with:
           script: |
@@ -120,17 +120,43 @@ jobs:
             const manifest = JSON.parse(
               fs.readFileSync(path.join(resultsDirectory, "manifest.json"), "utf8"),
             );
-            const representativeRun = manifest.find(
-              run => run.isRepresentativeRun,
-            );
+            const getNumericCategoryScore = (lighthouseResult, categoryId) => {
+              const score = lighthouseResult.categories[categoryId]?.score;
 
-            if (!representativeRun) {
-              throw new Error("Lighthouse did not select a representative run.");
+              if (typeof score !== "number") {
+                throw new Error(
+                  `Lighthouse did not return a numeric ${categoryId} score.`,
+                );
+              }
+
+              return score;
+            };
+            const lighthouseRuns = manifest.map((run, manifestIndex) => {
+              const lighthouseResult = JSON.parse(
+                fs.readFileSync(run.jsonPath, "utf8"),
+              );
+
+              return {
+                lighthouseResult,
+                manifestIndex,
+                performanceScore: getNumericCategoryScore(
+                  lighthouseResult,
+                  "performance",
+                ),
+                run,
+              };
+            });
+            const medianPerformanceRun = lighthouseRuns.sort(
+              (leftRun, rightRun) =>
+                leftRun.performanceScore - rightRun.performanceScore ||
+                leftRun.manifestIndex - rightRun.manifestIndex,
+            )[Math.floor(lighthouseRuns.length / 2)];
+
+            if (!medianPerformanceRun) {
+              throw new Error("Lighthouse did not return any completed runs.");
             }
 
-            const lighthouseResult = JSON.parse(
-              fs.readFileSync(representativeRun.jsonPath, "utf8"),
-            );
+            const { lighthouseResult, run } = medianPerformanceRun;
             const categoryIds = {
               performance: "performance",
               accessibility: "accessibility",
@@ -139,13 +165,10 @@ jobs:
             };
             const scores = Object.fromEntries(
               Object.entries(categoryIds).map(([scoreName, categoryId]) => {
-                const score = lighthouseResult.categories[categoryId]?.score;
-
-                if (typeof score !== "number") {
-                  throw new Error(
-                    `Lighthouse did not return a numeric ${categoryId} score.`,
-                  );
-                }
+                const score = getNumericCategoryScore(
+                  lighthouseResult,
+                  categoryId,
+                );
 
                 return [scoreName, Math.round(score * 100)];
               }),
@@ -153,7 +176,7 @@ jobs:
 
             fs.mkdirSync(pagesDirectory, { recursive: true });
             fs.copyFileSync(
-              representativeRun.htmlPath,
+              run.htmlPath,
               path.join(pagesDirectory, "index.html"),
             );
             fs.writeFileSync(

@@ -11,13 +11,15 @@ test("publishes the professional icon and dark application manifest", async ({
 
   const activeBackground = page.locator(".background-pattern-layer-active")
   await expect(activeBackground).toHaveCount(1)
-  await expect(activeBackground).toHaveAttribute(
-    "src",
+  const activeBackgroundSource = await activeBackground.getAttribute("src")
+  expect(activeBackgroundSource).not.toBeNull()
+  const activeBackgroundUrl = new URL(activeBackgroundSource!, page.url())
+  expect(activeBackgroundUrl.pathname).toMatch(
     /^\/_next\/static\/media\/Background\.[a-f0-9]+\.svg$/,
   )
-  const activeBackgroundUrl = await activeBackground.getAttribute("src")
-  expect(activeBackgroundUrl).not.toBeNull()
-  const activeBackgroundResponse = await request.get(activeBackgroundUrl!)
+  const activeBackgroundResponse = await request.get(
+    activeBackgroundUrl.toString(),
+  )
   expect(activeBackgroundResponse.ok()).toBe(true)
   expect(activeBackgroundResponse.headers()["content-type"]).toContain(
     "image/svg+xml",

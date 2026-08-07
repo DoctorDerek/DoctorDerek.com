@@ -22,9 +22,9 @@ describe("BackgroundPattern", () => {
     rerender(<BackgroundPattern source="/background-two.svg" />)
 
     await waitFor(() =>
-      expect(screen.getAllByRole("presentation", { hidden: true })).toHaveLength(
-        2,
-      ),
+      expect(
+        screen.getAllByRole("presentation", { hidden: true }),
+      ).toHaveLength(2),
     )
 
     const [outgoingPattern, incomingPattern] = screen.getAllByRole(
@@ -39,7 +39,9 @@ describe("BackgroundPattern", () => {
 
     fireEvent.transitionEnd(incomingPattern)
 
-    expect(screen.getAllByRole("presentation", { hidden: true })).toHaveLength(1)
+    expect(screen.getAllByRole("presentation", { hidden: true })).toHaveLength(
+      1,
+    )
     expect(screen.getByRole("presentation", { hidden: true })).toHaveAttribute(
       "src",
       "/background-two.svg",
@@ -53,6 +55,8 @@ describe("BackgroundPattern", () => {
 
     rerender(<BackgroundPattern source="/background-one.svg" />)
 
-    expect(screen.getAllByRole("presentation", { hidden: true })).toHaveLength(1)
+    expect(screen.getAllByRole("presentation", { hidden: true })).toHaveLength(
+      1,
+    )
   })
 })

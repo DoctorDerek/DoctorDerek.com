@@ -9,7 +9,9 @@ export default function BackgroundPattern({ source }: { source: string }) {
   useEffect(() => {
     setPatternSources((currentPatternSources) => {
       const currentSource = currentPatternSources.at(-1)!
-      return currentSource === source ? currentPatternSources : [currentSource, source]
+      return currentSource === source
+        ? currentPatternSources
+        : [currentSource, source]
     })
   }, [source])
 

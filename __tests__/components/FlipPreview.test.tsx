@@ -22,16 +22,14 @@ type MotionDivProps = ComponentProps<"div"> & {
   transition: unknown
 }
 
-vi.mock("motion/react", () => ({
-  motion: {
-    button: ({ whileTap, ...buttonProps }: MotionButtonProps) => {
-      buttonInteractionProperties({ whileTap })
-      return <button {...buttonProps} />
-    },
-    div: ({ animate, transition, ...divProps }: MotionDivProps) => {
-      visualAnimationProperties({ animate, transition })
-      return <div {...divProps} />
-    },
+vi.mock("motion/react-m", () => ({
+  button: ({ whileTap, ...buttonProps }: MotionButtonProps) => {
+    buttonInteractionProperties({ whileTap })
+    return <button {...buttonProps} />
+  },
+  div: ({ animate, transition, ...divProps }: MotionDivProps) => {
+    visualAnimationProperties({ animate, transition })
+    return <div {...divProps} />
   },
 }))
 

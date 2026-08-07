@@ -1,6 +1,7 @@
 import { act, renderHook } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import {
+  BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
   DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
   RIVE_IDLE_CALLBACK_TIMEOUT_MILLISECONDS,
   RIVE_START_DELAY_MILLISECONDS,
@@ -64,15 +65,29 @@ describe("usePostLoadExperienceSchedule", () => {
     )
 
     act(() =>
-      vi.advanceTimersByTime(DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS - 1),
+      vi.advanceTimersByTime(BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS - 1),
     )
     expect(result.current).toEqual({
+      shouldAnimateBackgroundColor: false,
       shouldLoadDeferredTypography: false,
       shouldStartRive: false,
     })
 
     act(() => vi.advanceTimersByTime(1))
     expect(result.current).toEqual({
+      shouldAnimateBackgroundColor: true,
+      shouldLoadDeferredTypography: false,
+      shouldStartRive: false,
+    })
+
+    act(() =>
+      vi.advanceTimersByTime(
+        DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS -
+          BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
+      ),
+    )
+    expect(result.current).toEqual({
+      shouldAnimateBackgroundColor: true,
       shouldLoadDeferredTypography: true,
       shouldStartRive: false,
     })
@@ -102,6 +117,7 @@ describe("usePostLoadExperienceSchedule", () => {
     )
 
     act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
+    expect(result.current.shouldAnimateBackgroundColor).toBe(true)
     expect(result.current.shouldLoadDeferredTypography).toBe(true)
     expect(requestIdleCallbackMock).not.toHaveBeenCalled()
     expect(result.current.shouldStartRive).toBe(false)
@@ -122,11 +138,13 @@ describe("usePostLoadExperienceSchedule", () => {
     )
 
     act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
+    expect(result.current.shouldAnimateBackgroundColor).toBe(false)
     expect(result.current.shouldLoadDeferredTypography).toBe(false)
     expect(requestIdleCallbackMock).not.toHaveBeenCalled()
 
     act(() => window.dispatchEvent(new Event("load")))
     act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
+    expect(result.current.shouldAnimateBackgroundColor).toBe(true)
     expect(result.current.shouldLoadDeferredTypography).toBe(true)
     expect(requestIdleCallbackMock).toHaveBeenCalledOnce()
 
@@ -175,7 +193,7 @@ describe("usePostLoadExperienceSchedule", () => {
     act(() => vi.advanceTimersByTime(RIVE_START_DELAY_MILLISECONDS))
     unmount()
 
-    expect(clearTimeout).toHaveBeenCalledTimes(2)
+    expect(clearTimeout).toHaveBeenCalledTimes(3)
     expect(cancelIdleCallbackMock).toHaveBeenCalledWith(RIVE_IDLE_CALLBACK_ID)
   })
 })

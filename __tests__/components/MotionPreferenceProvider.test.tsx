@@ -5,11 +5,30 @@ import MotionPreferenceProvider, {
   useMotionPreference,
 } from "@/components/MotionPreferenceProvider"
 
-const { reducedMotionConfiguration } = vi.hoisted(() => ({
-  reducedMotionConfiguration: vi.fn(),
+const { domAnimationFeaturesLoaded, reducedMotionConfiguration } = vi.hoisted(
+  () => ({
+    domAnimationFeaturesLoaded: vi.fn(),
+    reducedMotionConfiguration: vi.fn(),
+  }),
+)
+
+vi.mock("@/utils/domAnimationFeatures", () => ({
+  default: "dom-animation-features",
 }))
 
 vi.mock("motion/react", () => ({
+  LazyMotion: ({
+    children,
+    features,
+    strict,
+  }: {
+    children: React.ReactNode
+    features: () => Promise<unknown>
+    strict: boolean
+  }) => {
+    void features().then(domAnimationFeaturesLoaded)
+    return <div data-motion-strict={strict}>{children}</div>
+  },
   MotionConfig: ({
     children,
     reducedMotion,
@@ -38,6 +57,7 @@ const renderMotionPreference = () =>
 describe("MotionPreferenceProvider", () => {
   beforeEach(() => {
     window.localStorage.clear()
+    domAnimationFeaturesLoaded.mockClear()
     reducedMotionConfiguration.mockClear()
     vi.mocked(window.matchMedia).mockImplementation((query: string) => ({
       matches: false,
@@ -51,11 +71,16 @@ describe("MotionPreferenceProvider", () => {
     }))
   })
 
-  it("uses the unrestricted system preference by default", () => {
+  it("uses lazy strict animation features and the system preference", async () => {
     const { unmount } = renderMotionPreference()
 
     expect(screen.getByText("false")).toBeInTheDocument()
     expect(reducedMotionConfiguration).toHaveBeenLastCalledWith("user")
+    await vi.waitFor(() =>
+      expect(domAnimationFeaturesLoaded).toHaveBeenLastCalledWith(
+        "dom-animation-features",
+      ),
+    )
     expect(document.documentElement.dataset.motionPreference).toBeUndefined()
 
     unmount()

@@ -1,3 +1,5 @@
+"use client"
+
 import { ReactNode } from "react"
 import Tilt from "react-parallax-tilt"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"

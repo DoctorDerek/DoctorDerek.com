@@ -9,16 +9,17 @@ const { backgroundState, reducedMotionPreference } = vi.hoisted(() => ({
 
 vi.mock("motion/react", () => ({
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-  motion: {
-    div: ({
-      children,
-      transition,
-    }: {
-      children: React.ReactNode
-      transition: { duration: number }
-    }) => <div data-transition-duration={transition.duration}>{children}</div>,
-    img: ({ src }: { src: string }) => <span data-image-source={src} />,
-  },
+}))
+
+vi.mock("motion/react-m", () => ({
+  div: ({
+    children,
+    transition,
+  }: {
+    children: React.ReactNode
+    transition: { duration: number }
+  }) => <div data-transition-duration={transition.duration}>{children}</div>,
+  img: ({ src }: { src: string }) => <span data-image-source={src} />,
 }))
 
 vi.mock("@/images/Background.svg?url", () => ({
@@ -73,7 +74,12 @@ describe("GlobalBackground", () => {
   })
 
   it("renders animated ambient layers when motion is allowed", async () => {
-    const { container } = render(<GlobalBackground shouldRenderAmbientMotion />)
+    const { container } = render(
+      <GlobalBackground
+        shouldAnimateBackgroundColor
+        shouldRenderAmbientMotion
+      />,
+    )
 
     const particleField = await screen.findByLabelText("Particle field")
     expect(particleField).toBeInTheDocument()
@@ -91,7 +97,12 @@ describe("GlobalBackground", () => {
   it("keeps the static pattern on the theme color when motion is reduced", () => {
     reducedMotionPreference.value = true
     backgroundState.bgUseInverse = true
-    const { container } = render(<GlobalBackground shouldRenderAmbientMotion />)
+    const { container } = render(
+      <GlobalBackground
+        shouldAnimateBackgroundColor
+        shouldRenderAmbientMotion
+      />,
+    )
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
@@ -109,7 +120,12 @@ describe("GlobalBackground", () => {
     backgroundState.bgIndex = 0
     backgroundState.bgUseInverse = true
 
-    const { container } = render(<GlobalBackground shouldRenderAmbientMotion />)
+    const { container } = render(
+      <GlobalBackground
+        shouldAnimateBackgroundColor
+        shouldRenderAmbientMotion
+      />,
+    )
 
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(
       "data-image-source",
@@ -122,6 +138,7 @@ describe("GlobalBackground", () => {
     render(
       <GlobalBackground
         onAmbientMotionReady={onAmbientMotionReady}
+        shouldAnimateBackgroundColor
         shouldRenderAmbientMotion
       />,
     )
@@ -132,7 +149,10 @@ describe("GlobalBackground", () => {
 
   it("starts color motion with a static pattern while particles stay dormant", () => {
     const { container } = render(
-      <GlobalBackground shouldRenderAmbientMotion={false} />,
+      <GlobalBackground
+        shouldAnimateBackgroundColor
+        shouldRenderAmbientMotion={false}
+      />,
     )
 
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
@@ -141,6 +161,21 @@ describe("GlobalBackground", () => {
     expect(
       container.querySelector('[data-transition-duration="0"]'),
     ).toBeInTheDocument()
+    expect(container.querySelector("[data-image-source]")).toHaveAttribute(
+      "data-image-source",
+      "/background-zero.svg",
+    )
+  })
+
+  it("keeps the initial color static before its post-load boundary", () => {
+    const { container } = render(
+      <GlobalBackground
+        shouldAnimateBackgroundColor={false}
+        shouldRenderAmbientMotion={false}
+      />,
+    )
+
+    expect(container.firstChild).not.toHaveClass("animate-rainbow-vivid")
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(
       "data-image-source",
       "/background-zero.svg",

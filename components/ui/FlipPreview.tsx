@@ -1,6 +1,7 @@
 "use client"
 
-import { motion, type Transition } from "motion/react"
+import type { Transition } from "motion/react"
+import * as m from "motion/react-m"
 import {
   useState,
   type CSSProperties,
@@ -59,7 +60,7 @@ export default function FlipPreview({
       className={classNames("perspective", containerClassName)}
       style={{ ...containerStyle, perspective: "1000px" }}
     >
-      <motion.button
+      <m.button
         type="button"
         aria-label={accessibleName}
         aria-pressed={isPressed}
@@ -76,7 +77,7 @@ export default function FlipPreview({
         onBlur={stopPreview}
         onClick={handleActivate}
       >
-        <motion.div
+        <m.div
           className="flip-preview-visual pointer-events-none h-full w-full"
           animate={{
             rotateY:
@@ -89,8 +90,8 @@ export default function FlipPreview({
           }
         >
           {children}
-        </motion.div>
-      </motion.button>
+        </m.div>
+      </m.button>
     </div>
   )
 }

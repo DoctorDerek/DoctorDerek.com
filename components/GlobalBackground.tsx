@@ -1,6 +1,7 @@
 "use client"
 
-import { AnimatePresence, motion } from "motion/react"
+import { AnimatePresence } from "motion/react"
+import * as m from "motion/react-m"
 import dynamic from "next/dynamic"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import Background1 from "@/images/Background-1.svg?url"
@@ -27,9 +28,11 @@ const BACKGROUNDS = [
 
 export default function GlobalBackground({
   onAmbientMotionReady,
+  shouldAnimateBackgroundColor,
   shouldRenderAmbientMotion,
 }: {
   onAmbientMotionReady?: () => void
+  shouldAnimateBackgroundColor: boolean
   shouldRenderAmbientMotion: boolean
 }) {
   const { shouldReduceMotion } = useMotionPreference()
@@ -39,7 +42,8 @@ export default function GlobalBackground({
   const activeBackgroundUsesInverse = GlobalStateContext.useSelector(
     (state) => state.context.bgUseInverse,
   )
-  const shouldAnimateBackgroundColor = !shouldReduceMotion
+  const canAnimateBackgroundColor =
+    !shouldReduceMotion && shouldAnimateBackgroundColor
   const shouldRenderDeferredAmbientMotion =
     !shouldReduceMotion && shouldRenderAmbientMotion
   const bgIndex = shouldRenderDeferredAmbientMotion ? activeBackgroundIndex : 0
@@ -58,14 +62,14 @@ export default function GlobalBackground({
       data-ambient-motion={shouldRenderDeferredAmbientMotion}
       className={classNames(
         "pointer-events-none fixed inset-0 -z-20 h-full w-full",
-        shouldAnimateBackgroundColor && "animate-rainbow-vivid",
+        canAnimateBackgroundColor && "animate-rainbow-vivid",
       )}
     >
       {shouldRenderDeferredAmbientMotion && (
         <ParticleCanvas onReady={onAmbientMotionReady} />
       )}
       <AnimatePresence initial={false}>
-        <motion.div
+        <m.div
           key={key}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.6 }}
@@ -76,13 +80,13 @@ export default function GlobalBackground({
           }}
           className="absolute inset-0 h-full w-full mix-blend-overlay"
         >
-          <motion.img
+          <m.img
             src={activeBackground.src}
             alt=""
             aria-hidden="true"
             className="h-full w-full object-cover"
           />
-        </motion.div>
+        </m.div>
       </AnimatePresence>
     </div>
   )

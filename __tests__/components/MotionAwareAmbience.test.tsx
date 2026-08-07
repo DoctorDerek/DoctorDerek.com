@@ -22,13 +22,20 @@ vi.mock("@/components/RiveAnimation", () => ({
 vi.mock("@/components/GlobalBackground", () => ({
   default: ({
     onAmbientMotionReady,
+    shouldAnimateBackgroundColor,
     shouldRenderAmbientMotion,
   }: {
     onAmbientMotionReady?: () => void
+    shouldAnimateBackgroundColor: boolean
     shouldRenderAmbientMotion: boolean
   }) => (
     <>
-      <p data-ambient-motion={shouldRenderAmbientMotion}>Global background</p>
+      <p
+        data-ambient-motion={shouldRenderAmbientMotion}
+        data-color-motion={shouldAnimateBackgroundColor}
+      >
+        Global background
+      </p>
       {shouldRenderAmbientMotion && (
         <button onClick={onAmbientMotionReady}>Particles ready</button>
       )}
@@ -53,11 +60,20 @@ describe("MotionAwareAmbience", () => {
   })
 
   it("reveals ambient motion only after Rive completes", () => {
-    render(<MotionAwareAmbience shouldStartRive={true} />)
+    render(
+      <MotionAwareAmbience
+        shouldAnimateBackgroundColor
+        shouldStartRive={true}
+      />,
+    )
 
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-ambient-motion",
       "false",
+    )
+    expect(screen.getByText("Global background")).toHaveAttribute(
+      "data-color-motion",
+      "true",
     )
     expect(screen.queryByText("Custom cursor")).not.toBeInTheDocument()
     expect(screen.getByText("Rive animation")).toBeInTheDocument()
@@ -74,7 +90,12 @@ describe("MotionAwareAmbience", () => {
   })
 
   it("waits for deferred readiness while preserving the background and cursor", () => {
-    render(<MotionAwareAmbience shouldStartRive={false} />)
+    render(
+      <MotionAwareAmbience
+        shouldAnimateBackgroundColor
+        shouldStartRive={false}
+      />,
+    )
 
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-ambient-motion",
@@ -86,10 +107,19 @@ describe("MotionAwareAmbience", () => {
 
   it("omits continuous visual ambience when motion is reduced", () => {
     reducedMotionPreference.value = true
-    render(<MotionAwareAmbience shouldStartRive={true} />)
+    render(
+      <MotionAwareAmbience
+        shouldAnimateBackgroundColor
+        shouldStartRive={true}
+      />,
+    )
 
     expect(screen.getByText("Global background")).toHaveAttribute(
       "data-ambient-motion",
+      "false",
+    )
+    expect(screen.getByText("Global background")).toHaveAttribute(
+      "data-color-motion",
       "false",
     )
     expect(screen.queryByText("Custom cursor")).not.toBeInTheDocument()

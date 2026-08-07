@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "url": ["https://www.doctorderek.com/"],
-      "numberOfRuns": 3,
+      "numberOfRuns": 5,
       "settings": {
         "formFactor": "mobile",
         "onlyCategories": [

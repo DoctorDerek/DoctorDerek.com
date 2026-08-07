@@ -1,12 +1,7 @@
 "use client"
 
-import {
-  animate,
-  motion,
-  useInView,
-  useMotionValue,
-  useTransform,
-} from "motion/react"
+import { animate, useInView, useMotionValue, useTransform } from "motion/react"
+import * as m from "motion/react-m"
 import { useEffect, useRef } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import classNames from "@/utils/classNames"
@@ -45,8 +40,8 @@ export default function CountUp({
   }, [inView, count, to, duration, shouldReduceMotion])
 
   return (
-    <motion.span ref={ref} className={classNames("inline-block", className)}>
+    <m.span ref={ref} className={classNames("inline-block", className)}>
       {shouldReduceMotion ? formattedTarget : rounded}
-    </motion.span>
+    </m.span>
   )
 }

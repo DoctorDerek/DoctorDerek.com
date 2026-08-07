@@ -97,6 +97,20 @@ describe("AboutSection", () => {
     }
   })
 
+  it("caps the portrait by viewport height on short desktop screens", () => {
+    render(<AboutSection />)
+
+    const portraitLayout = getPortraitControl().closest(".perspective")
+      ?.parentElement
+
+    expect(portraitLayout).toHaveClass(
+      "md:w-1/2",
+      "md:max-w-[52dvh]",
+      "lg:w-[45%]",
+      "lg:max-w-[54dvh]",
+    )
+  })
+
   it("does not start an automatic portrait loop on pointer entry", () => {
     const intervalSpy = vi.spyOn(window, "setInterval")
     render(<AboutSection />)

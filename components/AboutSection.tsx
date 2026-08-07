@@ -33,7 +33,7 @@ export default function AboutSection() {
           </SectionHeading>
         </div>
         <div className="relative pb-10 md:h-[60vh]">
-          <div className="ease-spring-bouncy w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:w-1/2 lg:w-[45%] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
+          <div className="ease-spring-bouncy w-[65%] translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:w-1/2 md:max-w-[52dvh] lg:w-[45%] lg:max-w-[54dvh] [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <FlipPreview
               accessibleName={PORTRAIT_CONTROL_ACCESSIBLE_NAMES.about}
               containerClassName="animate-float block w-full text-left"

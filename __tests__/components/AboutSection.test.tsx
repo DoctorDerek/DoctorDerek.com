@@ -97,18 +97,24 @@ describe("AboutSection", () => {
     }
   })
 
-  it("caps the portrait by viewport height on short desktop screens", () => {
+  it("lets browser zoom scale a portrait without automatic motion", () => {
     render(<AboutSection />)
 
-    const portraitLayout =
-      getPortraitControl().closest(".perspective")?.parentElement
+    const portraitControl = getPortraitControl()
+    const portraitLayout = portraitControl.closest(
+      "[data-about-portrait-layout]",
+    )
+    const portraitPerspective = portraitControl.closest(".perspective")
 
     expect(portraitLayout).toHaveClass(
+      "max-w-[22rem]",
       "md:w-1/2",
-      "md:max-w-[52dvh]",
       "lg:w-[45%]",
-      "lg:max-w-[54dvh]",
     )
+    expect(portraitLayout?.className).not.toMatch(
+      /animate-float|dvh|opacity-0|scale-90|translate-y-12|transition-all/,
+    )
+    expect(portraitPerspective).not.toHaveClass("animate-float")
   })
 
   it("does not start an automatic portrait loop on pointer entry", () => {

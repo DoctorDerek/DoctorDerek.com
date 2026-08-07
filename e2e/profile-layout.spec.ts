@@ -19,25 +19,29 @@ const getScrollGeometry = (section: ReturnType<Page["locator"]>) =>
     scrollHeight: scrollContainer.scrollHeight,
   }))
 
-test("keeps the About portrait and copy inside a zoom-equivalent desktop viewport", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 960, height: 540 })
-  const section = await openSection(page, "about")
+test("allows browser zoom to enlarge the About portrait", async ({ page }) => {
+  const zoomFactor = 1.5
+  const desktopViewport = { width: 1280, height: 720 }
+  const zoomedViewport = {
+    width: Math.floor(desktopViewport.width / zoomFactor),
+    height: Math.floor(desktopViewport.height / zoomFactor),
+  }
+
+  await page.setViewportSize(desktopViewport)
+  await openSection(page, "about")
   const portraitControl = page.getByRole("button", {
     name: PORTRAIT_CONTROL_ACCESSIBLE_NAMES.about,
   })
-  const portraitLayout = portraitControl.locator("../..")
+  const desktopPortraitBounds = await portraitControl.boundingBox()
 
-  await expect(portraitLayout).toHaveCSS("opacity", "1")
+  await page.setViewportSize(zoomedViewport)
+  await openSection(page, "about")
+  const zoomedPortraitBounds = await portraitControl.boundingBox()
 
-  const portraitBounds = await portraitControl.boundingBox()
-  const scrollGeometry = await getScrollGeometry(section)
-
-  expect(portraitBounds).not.toBeNull()
-  expect(portraitBounds!.height).toBeLessThanOrEqual(540 * 0.54)
-  expect(scrollGeometry.scrollHeight).toBeLessThanOrEqual(
-    scrollGeometry.clientHeight + 1,
+  expect(desktopPortraitBounds).not.toBeNull()
+  expect(zoomedPortraitBounds).not.toBeNull()
+  expect(zoomedPortraitBounds!.width * zoomFactor).toBeGreaterThan(
+    desktopPortraitBounds!.width * 1.25,
   )
 })
 

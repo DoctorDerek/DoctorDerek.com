@@ -3,6 +3,7 @@ import { DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS } from "@/constants/STARTUP_TIMI
 import {
   RESTORA_DISPLAY_CSS_VARIABLE,
   RESTORA_DISPLAY_FONT_WEIGHT,
+  RESTORA_FALLBACK_CSS_VARIABLE,
   RESTORA_READY_CLASSES,
   RESTORA_TEXT_CSS_VARIABLE,
   RESTORA_TEXT_FONT_WEIGHTS,
@@ -41,16 +42,21 @@ const getPrimaryHeadingFontFamily = (page: Page) =>
     .getByRole("heading", { level: 1 })
     .evaluate((heading) => getComputedStyle(heading).fontFamily)
 
+const getCssVariableValue = (page: Page, cssVariable: string) =>
+  page.evaluate(
+    (expectedCssVariable) =>
+      getComputedStyle(document.body)
+        .getPropertyValue(expectedCssVariable)
+        .trim(),
+    cssVariable,
+  )
+
+const normalizeFontFamilyList = (fontFamilyList: string) =>
+  fontFamilyList.replaceAll(/["']/g, "").replaceAll(/\s*,\s*/g, ",")
+
 const getRestoraFontFamily = (page: Page, cssVariable: string) =>
-  page
-    .evaluate(
-      (expectedCssVariable) =>
-        getComputedStyle(document.body)
-          .getPropertyValue(expectedCssVariable)
-          .split(",", 1)[0]
-          .trim(),
-      cssVariable,
-    )
+  getCssVariableValue(page, cssVariable)
+    .then((fontFamily) => fontFamily.split(",", 1)[0])
     .then((fontFamily) => fontFamily.replace(/^["']|["']$/g, ""))
 
 const hasLoadedRestoraFontWeights = async (
@@ -89,9 +95,14 @@ const verifyDeferredRestoraLoading = async (
     page,
     RESTORA_DISPLAY_CSS_VARIABLE,
   )
-  expect(await getPrimaryHeadingFontFamily(page)).not.toContain(
-    displayFontFamily,
+  const initialPrimaryHeadingFontFamily =
+    await getPrimaryHeadingFontFamily(page)
+  expect(normalizeFontFamilyList(initialPrimaryHeadingFontFamily)).toBe(
+    normalizeFontFamilyList(
+      await getCssVariableValue(page, RESTORA_FALLBACK_CSS_VARIABLE),
+    ),
   )
+  expect(initialPrimaryHeadingFontFamily).not.toContain(displayFontFamily)
   const initialWoff2AssetUrls = getBundledFontAssetUrlsByExtension(
     fontAssetUrls,
     ".woff2",

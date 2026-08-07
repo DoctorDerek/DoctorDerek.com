@@ -68,6 +68,10 @@
   }
 }
 
+:root {
+  --font-restora-fallback: Georgia, "Times New Roman", serif;
+}
+
 :root,
 html.dark {
   color-scheme: dark;
@@ -227,6 +231,10 @@ body {
     transition-duration: 0s !important;
     transition-delay: 0s !important;
   }
+}
+
+:where(a, p, h1, h2, h3, h4, button, .restoramedium, .restorabold) {
+  font-family: var(--font-restora-fallback);
 }
 
 .restoramedium {

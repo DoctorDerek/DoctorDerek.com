@@ -1,6 +1,7 @@
 "use client"
 
-import { AnimatePresence, motion } from "motion/react"
+import { AnimatePresence } from "motion/react"
+import * as m from "motion/react-m"
 import dynamic from "next/dynamic"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import Background1 from "@/images/Background-1.svg?url"
@@ -65,7 +66,7 @@ export default function GlobalBackground({
         <ParticleCanvas onReady={onAmbientMotionReady} />
       )}
       <AnimatePresence initial={false}>
-        <motion.div
+        <m.div
           key={key}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.6 }}
@@ -76,13 +77,13 @@ export default function GlobalBackground({
           }}
           className="absolute inset-0 h-full w-full mix-blend-overlay"
         >
-          <motion.img
+          <m.img
             src={activeBackground.src}
             alt=""
             aria-hidden="true"
             className="h-full w-full object-cover"
           />
-        </motion.div>
+        </m.div>
       </AnimatePresence>
     </div>
   )

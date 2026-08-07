@@ -11,21 +11,6 @@ const { motionValues } = vi.hoisted(() => ({
 }))
 
 vi.mock("motion/react", () => ({
-  motion: {
-    div: ({
-      className,
-      style,
-    }: {
-      className: string
-      style: { opacity: number }
-    }) => (
-      <div
-        className={className}
-        data-opacity={style.opacity}
-        data-testid="custom-cursor"
-      />
-    ),
-  },
   useMotionValue: () => {
     const motionValue =
       motionValues.callCount % 2 === 0 ? motionValues.x : motionValues.y
@@ -33,6 +18,22 @@ vi.mock("motion/react", () => ({
     return motionValue
   },
   useSpring: (motionValue: unknown) => motionValue,
+}))
+
+vi.mock("motion/react-m", () => ({
+  div: ({
+    className,
+    style,
+  }: {
+    className: string
+    style: { opacity: number }
+  }) => (
+    <div
+      className={className}
+      data-opacity={style.opacity}
+      data-testid="custom-cursor"
+    />
+  ),
 }))
 
 describe("CustomCursor", () => {

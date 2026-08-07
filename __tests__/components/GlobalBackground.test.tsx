@@ -9,16 +9,17 @@ const { backgroundState, reducedMotionPreference } = vi.hoisted(() => ({
 
 vi.mock("motion/react", () => ({
   AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-  motion: {
-    div: ({
-      children,
-      transition,
-    }: {
-      children: React.ReactNode
-      transition: { duration: number }
-    }) => <div data-transition-duration={transition.duration}>{children}</div>,
-    img: ({ src }: { src: string }) => <span data-image-source={src} />,
-  },
+}))
+
+vi.mock("motion/react-m", () => ({
+  div: ({
+    children,
+    transition,
+  }: {
+    children: React.ReactNode
+    transition: { duration: number }
+  }) => <div data-transition-duration={transition.duration}>{children}</div>,
+  img: ({ src }: { src: string }) => <span data-image-source={src} />,
 }))
 
 vi.mock("@/images/Background.svg?url", () => ({

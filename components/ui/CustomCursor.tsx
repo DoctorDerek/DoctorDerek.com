@@ -1,6 +1,7 @@
 "use client"
 
-import { motion, useMotionValue, useSpring } from "motion/react"
+import { useMotionValue, useSpring } from "motion/react"
+import * as m from "motion/react-m"
 import { useEffect, useState } from "react"
 
 export default function CustomCursor() {
@@ -34,7 +35,7 @@ export default function CustomCursor() {
   }, [cursorX, cursorY])
 
   return (
-    <motion.div
+    <m.div
       className="pointer-events-none fixed top-0 left-0 z-[9999] h-8 w-8 rounded-full border-2 border-[#F38B57] bg-transparent"
       style={{
         x: cursorXSpring,

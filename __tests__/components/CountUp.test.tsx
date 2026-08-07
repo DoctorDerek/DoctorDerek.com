@@ -18,13 +18,16 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
 
 vi.mock("motion/react", () => ({
   animate: animateMock,
-  motion: { span: "span" },
   useInView: useInViewMock,
   useMotionValue: (initialValue: number) => initialValue,
   useTransform: (
     motionValue: number,
     transformValue: (latestValue: number) => string,
   ) => transformValue(motionValue),
+}))
+
+vi.mock("motion/react-m", () => ({
+  span: "span",
 }))
 
 describe("CountUp", () => {

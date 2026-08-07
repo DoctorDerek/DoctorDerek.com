@@ -47,8 +47,9 @@ test("keeps every desktop career milestone inside one non-scrolling timeline", a
   await page.setViewportSize({ width: 1024, height: 600 })
   const section = await openSection(page, "experience")
   const timeline = page.getByRole("list", { name: "Career timeline" })
-  const milestoneBounds = await timeline.getByRole("listitem").evaluateAll(
-    (milestones) =>
+  const milestoneBounds = await timeline
+    .getByRole("listitem")
+    .evaluateAll((milestones) =>
       milestones.map((milestone) => {
         const bounds = milestone.getBoundingClientRect()
 
@@ -59,7 +60,7 @@ test("keeps every desktop career milestone inside one non-scrolling timeline", a
           top: bounds.top,
         }
       }),
-  )
+    )
   const scrollGeometry = await getScrollGeometry(section)
 
   await expect(timeline.getByRole("listitem")).toHaveCount(4)

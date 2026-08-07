@@ -100,8 +100,8 @@ describe("AboutSection", () => {
   it("caps the portrait by viewport height on short desktop screens", () => {
     render(<AboutSection />)
 
-    const portraitLayout = getPortraitControl().closest(".perspective")
-      ?.parentElement
+    const portraitLayout =
+      getPortraitControl().closest(".perspective")?.parentElement
 
     expect(portraitLayout).toHaveClass(
       "md:w-1/2",

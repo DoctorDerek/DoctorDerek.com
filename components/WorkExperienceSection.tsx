@@ -15,7 +15,8 @@ function MilestoneDescription({ company }: MilestoneDescriptionProps) {
   return (
     <>
       {beforeCount}
-      <CountUp to={20} />M+{afterCount}
+      <CountUp to={20} />
+      M+{afterCount}
     </>
   )
 }
@@ -33,7 +34,7 @@ export default function WorkExperienceSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-6 w-[95%] lg:mt-8 lg:w-[94%] lg:rounded-3xl lg:border lg:border-site-border lg:bg-site-surface lg:px-6 lg:py-7 lg:backdrop-blur-xl xl:px-8 xl:py-9">
+      <div className="lg:border-site-border lg:bg-site-surface mx-auto mt-6 w-[95%] lg:mt-8 lg:w-[94%] lg:rounded-3xl lg:border lg:px-6 lg:py-7 lg:backdrop-blur-xl xl:px-8 xl:py-9">
         <ol
           aria-label="Career timeline"
           className="border-brand-coral flex flex-col lg:grid lg:grid-cols-4 lg:border-t-4"

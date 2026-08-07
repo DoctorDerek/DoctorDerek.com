@@ -14,6 +14,7 @@ const showEndOfSiteToast = async () => {
   toast(CONTACT_COMPLETION.toastMessage, {
     id: END_OF_SITE_TOAST_ID,
     ariaProps: { role: "status", "aria-live": "polite" },
+    style: { textAlign: "center", whiteSpace: "pre-line" },
   })
 }
 

@@ -9,7 +9,7 @@ test("publishes the professional icon and dark application manifest", async ({
   await installPostLoadExperienceController(page)
   await page.goto("/")
 
-  const activeBackground = page.locator(".mix-blend-overlay img").first()
+  const activeBackground = page.locator(".background-pattern-layer-active")
   await expect(activeBackground).toHaveCount(1)
   await expect(activeBackground).toHaveAttribute(
     "src",

@@ -54,9 +54,6 @@ importers:
       react-obfuscate-email:
         specifier: ^2
         version: 2.0.5(react@19.2.8)
-      react-parallax-tilt:
-        specifier: ^1
-        version: 1.7.336(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       rss-parser:
         specifier: ^3
         version: 3.13.0
@@ -4091,12 +4088,6 @@ packages:
     engines: {node: '>=12'}
     peerDependencies:
       react: '>=16'
-
-  react-parallax-tilt@1.7.336:
-    resolution: {integrity: sha512-IQh3GUa3Ighds5d2QrJrWlax+yvxR1BmMKuy5j97ZTMsWGiAlTu1Xo/nuAjUywrXaTk0nAZyU9y0qjBpzztUTQ==}
-    peerDependencies:
-      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   react-stately@3.48.0:
     resolution: {integrity: sha512-ImicSAG+lTotAe5izcs1fz49Zk48w7pDusqYg04WaPhCoej8BJ24soMu3iLXIrsi273s4P1gZrYGrqReMfgEEA==}
@@ -9131,11 +9122,6 @@ snapshots:
   react-obfuscate-email@2.0.5(react@19.2.8):
     dependencies:
       react: 19.2.8
-
-  react-parallax-tilt@1.7.336(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
-    dependencies:
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
 
   react-stately@3.48.0(react@19.2.8):
     dependencies:

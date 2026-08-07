@@ -34,10 +34,13 @@ describe("WorkExperienceSection", () => {
     expect(sectionContent).not.toHaveClass("h-full")
   })
 
-  it("renders counted milestones across the mobile and desktop timelines", () => {
+  it("renders each real milestone once without placeholder grid entries", () => {
     render(<WorkExperienceSection />)
 
-    expect(screen.getAllByText("20")).toHaveLength(2)
-    expect(screen.getAllByText("Senior product engineering")).toHaveLength(2)
+    expect(screen.getByRole("list", { name: "Career timeline" })).toBeVisible()
+    expect(screen.getAllByRole("listitem")).toHaveLength(4)
+    expect(screen.getByText("20")).toBeVisible()
+    expect(screen.getByText("Senior product engineering")).toBeVisible()
+    expect(screen.queryByText(/placeholder/i)).not.toBeInTheDocument()
   })
 })

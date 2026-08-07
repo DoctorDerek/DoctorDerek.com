@@ -329,15 +329,6 @@ body {
 }
 
 /* =========================== 
-  WORK EXPERIENCE SECTION 
-============================== */
-.work-exp-grid {
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(7, 1fr);
-  grid-auto-flow: column;
-}
-
-/* =========================== 
   Media queries
 ============================== */
 /* contact section image flip effect */

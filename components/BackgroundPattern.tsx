@@ -1,26 +1,31 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import Image from "next/image"
+import { useState } from "react"
 import classNames from "@/utils/classNames"
 
 export default function BackgroundPattern({ source }: { source: string }) {
-  const [patternSources, setPatternSources] = useState([source])
+  const [patternState, setPatternState] = useState({
+    activeSource: source,
+    previousSource: null as string | null,
+  })
 
-  useEffect(() => {
-    setPatternSources((currentPatternSources) => {
-      const currentSource = currentPatternSources.at(-1)!
-      return currentSource === source
-        ? currentPatternSources
-        : [currentSource, source]
+  if (source !== patternState.activeSource) {
+    setPatternState({
+      activeSource: source,
+      previousSource: patternState.activeSource,
     })
-  }, [source])
+  }
+
+  const patternSources = patternState.previousSource
+    ? [patternState.previousSource, patternState.activeSource]
+    : [patternState.activeSource]
 
   const finishCrossfade = () => {
-    setPatternSources((currentPatternSources) =>
-      currentPatternSources.length === 1
-        ? currentPatternSources
-        : [currentPatternSources.at(-1)!],
-    )
+    setPatternState((currentPatternState) => ({
+      activeSource: currentPatternState.activeSource,
+      previousSource: null,
+    }))
   }
 
   return patternSources.map((patternSource, index) => {
@@ -28,19 +33,23 @@ export default function BackgroundPattern({ source }: { source: string }) {
     const isEnteringPattern = isActivePattern && patternSources.length > 1
 
     return (
-      <img
+      <Image
         key={patternSource}
         src={patternSource}
         alt=""
-        aria-hidden="true"
+        aria-hidden
         draggable={false}
+        fill
+        sizes="100vw"
+        unoptimized
+        loading="eager"
         className={classNames(
           "background-pattern-layer absolute inset-0 z-10 h-full w-full object-cover mix-blend-overlay transition-opacity ease-linear",
           isActivePattern && "background-pattern-layer-active",
           isEnteringPattern && "background-pattern-layer-entering",
         )}
         style={{ transitionDuration: "20s" }}
-        onTransitionEnd={finishCrossfade}
+        onTransitionEnd={isEnteringPattern ? finishCrossfade : undefined}
       />
     )
   })

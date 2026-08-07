@@ -34,6 +34,26 @@ const EndOfSiteCelebration = dynamic(
   { ssr: false },
 )
 
+/**
+ * ONE-TIME EXCEPTION TO THE NO CODE COMMENTS RULE:
+ * Disabled fullPage extensions must not be imported or passed at runtime. This
+ * copy-ready reference intentionally stays beside pluginWrapper so a licensed
+ * extension can be restored without reconstructing its wiring from Git history.
+ *
+ * To restore Drag And Move for some or all supported interactions:
+ * 1. Verify the React wrapper and bundled fullPage core versions are compatible.
+ * 2. Restore the activation-key property documented beside
+ *    FULLPAGE_ACTIVATION_KEYS in constants/SITE_CONTENT.ts.
+ * 3. Add this line to pluginWrapper:
+ *    require("@/vendor/fullPage_js_extensions_bundle/dragAndMove/fullpage.dragAndMove.min.js")
+ * 4. Add both props to MapacheFullPage:
+ *    dragAndMoveKey={FULLPAGE_ACTIVATION_KEYS.dragAndMove}
+ *    dragAndMove={true}
+ *    Replace true with "vertical", "horizontal", "fingersonly", or "mouseonly"
+ *    when only that interaction should be enabled.
+ * 5. Restore all three pieces together, then run formatting, linting, coverage,
+ *    the production build, cross-browser Playwright, and production Lighthouse.
+ */
 const pluginWrapper = () => {
   require("@/vendor/fullPage_js_extensions_bundle/cinematic/fullpage.cinematic.core.min.js")
   require("@/vendor/fullPage_js_extensions_bundle/cinematic/effects/burn.min.js")

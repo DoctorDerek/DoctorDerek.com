@@ -43,6 +43,7 @@ export default function SocialLinks({
           return (
             <GlobalEmailCTA
               key={link.id}
+              accessibleName={link.label}
               className={classNames(
                 linkClasses,
                 "[&_a]:flex [&_a]:items-center",
@@ -57,6 +58,7 @@ export default function SocialLinks({
           <a
             key={link.id}
             href={link.url}
+            aria-label={link.label}
             target="_blank"
             rel="noopener noreferrer"
             className={classNames(linkClasses)}

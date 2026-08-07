@@ -12,4 +12,12 @@ describe("GlobalEmailCTA", () => {
       }),
     ).toBeInTheDocument()
   })
+
+  it("provides an explicit accessible name for icon-only links", () => {
+    render(<GlobalEmailCTA accessibleName="Inquire">Icon</GlobalEmailCTA>)
+
+    expect(screen.getByRole("link", { name: "Inquire" })).toHaveTextContent(
+      "Icon",
+    )
+  })
 })

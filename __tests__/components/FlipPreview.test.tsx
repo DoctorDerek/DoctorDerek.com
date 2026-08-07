@@ -1,36 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { type ComponentProps } from "react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import FlipPreview from "@/components/ui/FlipPreview"
 
-const {
-  buttonInteractionProperties,
-  reducedMotionPreference,
-  visualAnimationProperties,
-} = vi.hoisted(() => ({
-  buttonInteractionProperties: vi.fn(),
+const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
-  visualAnimationProperties: vi.fn(),
-}))
-
-type MotionButtonProps = ComponentProps<"button"> & {
-  whileTap?: { scale: number }
-}
-
-type MotionDivProps = ComponentProps<"div"> & {
-  animate: { rotateY: number }
-  transition: unknown
-}
-
-vi.mock("motion/react-m", () => ({
-  button: ({ whileTap, ...buttonProps }: MotionButtonProps) => {
-    buttonInteractionProperties({ whileTap })
-    return <button {...buttonProps} />
-  },
-  div: ({ animate, transition, ...divProps }: MotionDivProps) => {
-    visualAnimationProperties({ animate, transition })
-    return <div {...divProps} />
-  },
 }))
 
 vi.mock("@/components/MotionPreferenceProvider", () => ({
@@ -39,28 +12,12 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
   }),
 }))
 
-const getLatestButtonInteractionProperties = () =>
-  buttonInteractionProperties.mock.calls.at(-1)?.[0] as {
-    whileTap?: { scale: number }
-  }
-
-const getLatestVisualAnimationProperties = () =>
-  visualAnimationProperties.mock.calls.at(-1)?.[0] as {
-    animate: { rotateY: number }
-    transition: {
-      duration?: number
-      type?: string
-    }
-  }
-
 describe("FlipPreview", () => {
   beforeEach(() => {
-    buttonInteractionProperties.mockClear()
     reducedMotionPreference.value = false
-    visualAnimationProperties.mockClear()
   })
 
-  it("renders an accessible pressed button with a spring interaction", () => {
+  it("renders an accessible pressed button with a CSS spring interaction", () => {
     render(
       <FlipPreview
         accessibleName="Flip portrait"
@@ -77,16 +34,14 @@ describe("FlipPreview", () => {
     expect(control).toHaveClass("flip-preview-control")
     expect(control.parentElement).toHaveClass("perspective")
     expect(control.parentElement).toHaveStyle({ perspective: "1000px" })
-    expect(control.querySelector(".flip-preview-visual")).toHaveClass(
+    const preview = control.querySelector(".flip-preview-visual")
+    expect(preview).toHaveClass(
       "pointer-events-none",
+      "transition-transform",
+      "ease-spring-bouncy",
     )
-    expect(getLatestVisualAnimationProperties()).toMatchObject({
-      animate: { rotateY: 0 },
-      transition: { type: "spring" },
-    })
-    expect(getLatestButtonInteractionProperties()).toMatchObject({
-      whileTap: { scale: 0.97 },
-    })
+    expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(control).toHaveClass("active:scale-[0.97]")
   })
 
   it("previews for mouse and keyboard focus, then resets on exit", () => {
@@ -97,18 +52,19 @@ describe("FlipPreview", () => {
     )
 
     const control = screen.getByRole("button", { name: "Flip portrait" })
+    const preview = control.querySelector(".flip-preview-visual")
 
     fireEvent.pointerEnter(control, { pointerType: "mouse" })
-    expect(getLatestVisualAnimationProperties().animate.rotateY).toBe(-12)
+    expect(preview).toHaveStyle({ transform: "rotateY(-12deg)" })
 
     fireEvent.pointerLeave(control)
-    expect(getLatestVisualAnimationProperties().animate.rotateY).toBe(0)
+    expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })
 
     fireEvent.focus(control)
-    expect(getLatestVisualAnimationProperties().animate.rotateY).toBe(-12)
+    expect(preview).toHaveStyle({ transform: "rotateY(-12deg)" })
 
     fireEvent.blur(control)
-    expect(getLatestVisualAnimationProperties().animate.rotateY).toBe(0)
+    expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })
   })
 
   it("does not synthesize a hover preview for touch input", () => {
@@ -122,7 +78,9 @@ describe("FlipPreview", () => {
 
     fireEvent.pointerEnter(control, { pointerType: "touch" })
 
-    expect(getLatestVisualAnimationProperties().animate.rotateY).toBe(0)
+    expect(control.querySelector(".flip-preview-visual")).toHaveStyle({
+      transform: "rotateY(0deg)",
+    })
   })
 
   it("contains pointer starts without blocking the public action", () => {
@@ -162,7 +120,9 @@ describe("FlipPreview", () => {
     fireEvent.click(control)
 
     expect(onActivate).toHaveBeenCalledOnce()
-    expect(getLatestVisualAnimationProperties().animate.rotateY).toBe(0)
+    expect(control.querySelector(".flip-preview-visual")).toHaveStyle({
+      transform: "rotateY(0deg)",
+    })
   })
 
   it("keeps preview and tap transforms instantaneous when motion is reduced", () => {
@@ -177,10 +137,12 @@ describe("FlipPreview", () => {
 
     fireEvent.focus(control)
 
-    expect(getLatestVisualAnimationProperties()).toMatchObject({
-      animate: { rotateY: 0 },
-      transition: { duration: 0 },
+    expect(control.querySelector(".flip-preview-visual")).toHaveStyle({
+      transform: "rotateY(0deg)",
     })
-    expect(getLatestButtonInteractionProperties().whileTap).toBeUndefined()
+    expect(control).toHaveClass(
+      "motion-reduce:transition-none",
+      "motion-reduce:active:scale-100",
+    )
   })
 })

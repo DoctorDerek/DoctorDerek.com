@@ -1,7 +1,5 @@
 "use client"
 
-import type { Transition } from "motion/react"
-import * as m from "motion/react-m"
 import {
   useState,
   type CSSProperties,
@@ -11,13 +9,6 @@ import {
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import { FLIP_PREVIEW_ROTATION_DEGREES } from "@/constants/INTERACTIONS"
 import classNames from "@/utils/classNames"
-
-const FLIP_PREVIEW_TRANSITION = {
-  type: "spring",
-  stiffness: 260,
-  damping: 18,
-  mass: 0.7,
-} satisfies Transition
 
 type FlipPreviewProps = {
   accessibleName: string
@@ -60,15 +51,14 @@ export default function FlipPreview({
       className={classNames("perspective", containerClassName)}
       style={{ ...containerStyle, perspective: "1000px" }}
     >
-      <m.button
+      <button
         type="button"
         aria-label={accessibleName}
         aria-pressed={isPressed}
         className={classNames(
-          "flip-preview-control focus-visible:ring-site-focus focus-visible:ring-offset-site-surface-strong block cursor-pointer rounded-xl bg-transparent p-0 text-left focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none",
+          "flip-preview-control focus-visible:ring-site-focus focus-visible:ring-offset-site-surface-strong ease-spring-soft block cursor-pointer rounded-xl bg-transparent p-0 text-left transition-transform duration-150 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none motion-reduce:transition-none motion-reduce:active:scale-100",
           className,
         )}
-        whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
         onPointerDownCapture={stopPointerPropagation}
         onPointerEnter={handlePointerEnter}
         onPointerLeave={stopPreview}
@@ -77,21 +67,19 @@ export default function FlipPreview({
         onBlur={stopPreview}
         onClick={handleActivate}
       >
-        <m.div
-          className="flip-preview-visual pointer-events-none h-full w-full"
-          animate={{
-            rotateY:
+        <div
+          className="flip-preview-visual ease-spring-bouncy pointer-events-none h-full w-full transition-transform duration-500 motion-reduce:transition-none"
+          style={{
+            transform: `rotateY(${
               shouldReduceMotion || !isPreviewing
                 ? 0
-                : FLIP_PREVIEW_ROTATION_DEGREES,
+                : FLIP_PREVIEW_ROTATION_DEGREES
+            }deg)`,
           }}
-          transition={
-            shouldReduceMotion ? { duration: 0 } : FLIP_PREVIEW_TRANSITION
-          }
         >
           {children}
-        </m.div>
-      </m.button>
+        </div>
+      </button>
     </div>
   )
 }

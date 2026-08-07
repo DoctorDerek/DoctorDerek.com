@@ -7,19 +7,10 @@ const { backgroundState, reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
 }))
 
-vi.mock("motion/react", () => ({
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-}))
-
-vi.mock("motion/react-m", () => ({
-  div: ({
-    children,
-    transition,
-  }: {
-    children: React.ReactNode
-    transition: { duration: number }
-  }) => <div data-transition-duration={transition.duration}>{children}</div>,
-  img: ({ src }: { src: string }) => <span data-image-source={src} />,
+vi.mock("@/components/BackgroundPattern", () => ({
+  default: ({ source }: { source: string }) => (
+    <span data-image-source={source} />
+  ),
 }))
 
 vi.mock("@/images/Background.svg?url", () => ({
@@ -88,9 +79,6 @@ describe("GlobalBackground", () => {
     expect(
       container.querySelector(".global-background-color-overlay"),
     ).toHaveAttribute("aria-hidden", "true")
-    expect(
-      container.querySelector('[data-transition-duration="20"]'),
-    ).toBeInTheDocument()
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(
       "data-image-source",
       "/background-three.svg",
@@ -110,9 +98,6 @@ describe("GlobalBackground", () => {
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
     expect(container.firstChild).not.toHaveClass("animate-rainbow-vivid")
-    expect(
-      container.querySelector('[data-transition-duration="0"]'),
-    ).toBeInTheDocument()
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(
       "data-image-source",
       "/background-zero.svg",
@@ -161,9 +146,6 @@ describe("GlobalBackground", () => {
     expect(screen.queryByLabelText("Particle field")).not.toBeInTheDocument()
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "false")
     expect(container.firstChild).toHaveClass("animate-rainbow-vivid")
-    expect(
-      container.querySelector('[data-transition-duration="0"]'),
-    ).toBeInTheDocument()
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(
       "data-image-source",
       "/background-zero.svg",

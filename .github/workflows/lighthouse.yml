@@ -110,79 +110,10 @@ jobs:
         run: pnpm lighthouse
 
       - name: Prepare Median-Performance Lighthouse Report
-        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
-        with:
-          script: |
-            const fs = require("node:fs");
-            const path = require("node:path");
-            const resultsDirectory = path.resolve("lighthouse-results");
-            const pagesDirectory = path.resolve("lighthouse-pages");
-            const manifest = JSON.parse(
-              fs.readFileSync(path.join(resultsDirectory, "manifest.json"), "utf8"),
-            );
-            const getNumericCategoryScore = (lighthouseResult, categoryId) => {
-              const score = lighthouseResult.categories[categoryId]?.score;
-
-              if (typeof score !== "number") {
-                throw new Error(
-                  `Lighthouse did not return a numeric ${categoryId} score.`,
-                );
-              }
-
-              return score;
-            };
-            const lighthouseRuns = manifest.map((run, manifestIndex) => {
-              const lighthouseResult = JSON.parse(
-                fs.readFileSync(run.jsonPath, "utf8"),
-              );
-
-              return {
-                lighthouseResult,
-                manifestIndex,
-                performanceScore: getNumericCategoryScore(
-                  lighthouseResult,
-                  "performance",
-                ),
-                run,
-              };
-            });
-            const medianPerformanceRun = lighthouseRuns.sort(
-              (leftRun, rightRun) =>
-                leftRun.performanceScore - rightRun.performanceScore ||
-                leftRun.manifestIndex - rightRun.manifestIndex,
-            )[Math.floor(lighthouseRuns.length / 2)];
-
-            if (!medianPerformanceRun) {
-              throw new Error("Lighthouse did not return any completed runs.");
-            }
-
-            const { lighthouseResult, run } = medianPerformanceRun;
-            const categoryIds = {
-              performance: "performance",
-              accessibility: "accessibility",
-              bestPractices: "best-practices",
-              seo: "seo",
-            };
-            const scores = Object.fromEntries(
-              Object.entries(categoryIds).map(([scoreName, categoryId]) => {
-                const score = getNumericCategoryScore(
-                  lighthouseResult,
-                  categoryId,
-                );
-
-                return [scoreName, Math.round(score * 100)];
-              }),
-            );
-
-            fs.mkdirSync(pagesDirectory, { recursive: true });
-            fs.copyFileSync(
-              run.htmlPath,
-              path.join(pagesDirectory, "index.html"),
-            );
-            fs.writeFileSync(
-              path.join(pagesDirectory, "lighthouse-results.json"),
-              `${JSON.stringify(scores, null, 2)}\n`,
-            );
+        run: pnpm lighthouse:prepare
+        env:
+          LIGHTHOUSE_RESULTS_DIRECTORY: lighthouse-results
+          LIGHTHOUSE_PUBLISHED_DIRECTORY: lighthouse-pages
 
       - name: Upload Complete Lighthouse Reports
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

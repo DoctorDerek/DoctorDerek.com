@@ -9,6 +9,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "lighthouse": "lhci autorun",
+    "lighthouse:prepare": "node --import jiti/register scripts/lighthouse/prepareLighthouseReports.cli.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest",

@@ -12,7 +12,7 @@ const PORTFOLIO_NARRATIVE = SITE_CONTENT.PORTFOLIO_PROJECTS.flatMap(
 describe("site copy quality gates", () => {
   it("uses the requested end-of-site copy and CTA wording", () => {
     expect(CONTACT_COMPLETION.toastMessage).toBe(
-      "You’ve reached the end of DoctorDerek.com. Let’s build something great.",
+      "You’ve reached the end of my website.\nLet’s build something great.",
     )
     expect(SITE_CONTENT.CONTACT_CTA).toBe("Contact Me")
   })

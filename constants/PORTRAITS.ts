@@ -24,7 +24,8 @@ type ContactCollagePortrait = Portrait & {
 }
 
 export const PORTRAIT_IMAGE_SIZES = {
-  about: "(max-width: 767px) 52vw, (max-width: 1023px) 45vw, 40.5vw",
+  about:
+    "(max-width: 767px) min(52vw, 22rem), (max-width: 1023px) min(45vw, 22rem), min(40.5vw, 22rem)",
   contactFull: "(max-width: 767px) 43vw, 488px",
   contactHalf: "(max-width: 767px) 22vw, 244px",
 } as const

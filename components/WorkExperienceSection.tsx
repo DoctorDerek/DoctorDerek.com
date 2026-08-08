@@ -2,7 +2,6 @@
 
 import { useRef, useState, type TouchEvent } from "react"
 import CountUp from "@/components/ui/CountUp"
-import SectionHeading from "@/components/ui/SectionHeading"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 import CodeIcon from "@/images/codeIcon.svg"
 import classNames from "@/utils/classNames"
@@ -57,20 +56,20 @@ export default function WorkExperienceSection() {
     <div className="relative flex min-h-full w-full flex-col items-center justify-start py-12 pb-16 lg:h-full lg:justify-center lg:py-8">
       <div className="bg-site-surface-deep rounded-bl-[3rem] px-6 py-6 backdrop-blur-md lg:ml-auto lg:w-fit lg:pr-8 lg:pb-8 lg:pl-16">
         <div className="flex flex-col items-end">
-          <SectionHeading>
+          <div className="w-max">
             <h2 className="text-site-foreground text-right text-3xl font-bold tracking-tight whitespace-nowrap drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
               Full-Stack SWE
               <br />
               since 2004
             </h2>
-          </SectionHeading>
+          </div>
         </div>
       </div>
 
       <div
         aria-label="Career timeline"
         aria-roledescription="carousel"
-        className="ease-spring-soft mx-auto mt-6 w-[92%] max-w-xl translate-y-12 opacity-0 transition-all delay-200 duration-700 lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100"
+        className="mx-auto mt-6 w-[92%] max-w-xl lg:hidden"
         role="region"
       >
         <p aria-live="polite" className="sr-only">
@@ -202,7 +201,7 @@ export default function WorkExperienceSection() {
         </div>
       </div>
 
-      <div className="ease-spring-soft mx-auto mt-7 hidden translate-y-12 opacity-0 transition-all delay-200 duration-700 lg:block lg:h-[min(28rem,52vh)] lg:w-[min(74rem,92vw)] [.active_&]:translate-y-0 [.active_&]:opacity-100">
+      <div className="mx-auto mt-7 hidden lg:block lg:h-[min(28rem,52vh)] lg:w-[min(74rem,92vw)]">
         <div className="relative h-full w-full">
           <svg
             aria-hidden="true"
@@ -225,13 +224,12 @@ export default function WorkExperienceSection() {
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
                 className={classNames(
-                  "ease-spring-soft relative translate-y-12 px-4 pt-10 opacity-0 transition-all duration-700 [.active_&]:translate-y-0 [.active_&]:opacity-100",
+                  "relative px-4 pt-10",
                   index === 0 && "col-start-1 row-start-1",
                   index === 1 && "col-start-2 row-start-1",
                   index === 2 && "col-start-2 row-start-2",
                   index === 3 && "col-start-1 row-start-2",
                 )}
-                style={{ transitionDelay: `${index * 100 + 200}ms` }}
                 key={item.duration}
               >
                 <div

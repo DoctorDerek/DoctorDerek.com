@@ -34,31 +34,10 @@ describe("WorkExperienceSection", () => {
     expect(sectionContent).not.toHaveClass("h-full")
   })
 
-  it("renders each real milestone once without placeholder grid entries", () => {
+  it("renders counted milestones across the mobile and desktop timelines", () => {
     render(<WorkExperienceSection />)
 
-    expect(screen.getByRole("list", { name: "Career timeline" })).toBeVisible()
-    expect(screen.getAllByRole("listitem")).toHaveLength(4)
-    expect(screen.getByText("20")).toBeVisible()
-    expect(screen.getByText("Senior product engineering")).toBeVisible()
-    expect(screen.queryByText(/placeholder/i)).not.toBeInTheDocument()
-  })
-
-  it("keeps the timeline visible without removing its floating icons", () => {
-    const { container } = render(<WorkExperienceSection />)
-    const renderedClassNames = [...container.querySelectorAll("[class]")]
-      .map((element) => element.className)
-      .join(" ")
-    const timeline = screen.getByRole("list", { name: "Career timeline" })
-
-    expect(renderedClassNames).not.toMatch(
-      /section-heading-entrance|opacity-0|translate-y-12|\[\.active_&\]/,
-    )
-    expect(container.querySelectorAll(".animate-float")).toHaveLength(4)
-    expect(timeline).toHaveClass("border-brand-coral")
-
-    for (const milestone of screen.getAllByRole("listitem")) {
-      expect(milestone).toHaveClass("border-brand-coral")
-    }
+    expect(screen.getAllByText("20")).toHaveLength(2)
+    expect(screen.getAllByText("Senior product engineering")).toHaveLength(2)
   })
 })

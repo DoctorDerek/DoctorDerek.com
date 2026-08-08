@@ -13,7 +13,6 @@
   --animate-float: float 6s ease-in-out infinite;
 
   --color-brand-pink: #fb70aa;
-  --color-brand-coral: #f38b57;
   --color-site-foreground: var(--site-foreground);
   --color-site-foreground-muted: var(--site-foreground-muted);
   --color-site-foreground-faint: var(--site-foreground-faint);
@@ -327,6 +326,15 @@ body {
 
 .restorabold {
   font-weight: 800;
+}
+
+/* =========================== 
+  WORK EXPERIENCE SECTION 
+============================== */
+.work-exp-grid {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-flow: column;
 }
 
 /* =========================== 

@@ -1,69 +1,144 @@
 import CountUp from "@/components/ui/CountUp"
+import SectionHeading from "@/components/ui/SectionHeading"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 import CodeIcon from "@/images/codeIcon.svg"
 import classNames from "@/utils/classNames"
 
-type MilestoneDescriptionProps = {
-  company: string
-}
-
-function MilestoneDescription({ company }: MilestoneDescriptionProps) {
-  const [beforeCount, afterCount] = company.split("20M+")
-
-  if (afterCount === undefined) return company
-
-  return (
-    <>
-      {beforeCount}
-      <CountUp to={20} />
-      M+{afterCount}
-    </>
-  )
-}
-
 export default function WorkExperienceSection() {
+  const combinedLists = [...ARCHITECT_EVOLUTION]
+
+  const getHalfNum = 3
+
+  combinedLists.splice(
+    getHalfNum,
+    0,
+    ...Array(7).fill({ duration: " ", company: "placeholder" }),
+  )
+
   return (
-    <div className="relative flex min-h-full w-full flex-col items-center justify-start py-20 pb-24 lg:h-full lg:justify-center lg:py-4">
-      <div className="bg-site-surface-deep rounded-bl-[3rem] px-6 py-6 backdrop-blur-md lg:ml-auto lg:w-fit lg:py-4 lg:pr-8 lg:pl-16 xl:py-6 xl:pb-8">
+    <div className="relative flex min-h-full w-full flex-col items-center justify-start py-20 pb-24 lg:h-full lg:justify-center">
+      <div className="bg-site-surface-deep rounded-bl-[3rem] px-6 py-6 backdrop-blur-md lg:ml-auto lg:w-fit lg:pr-8 lg:pb-8 lg:pl-16">
         <div className="flex flex-col items-end">
-          <h2 className="text-site-foreground text-right text-3xl font-bold tracking-tight whitespace-nowrap drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-7xl">
-            Full-Stack SWE
-            <br />
-            since 2004
-          </h2>
+          <SectionHeading>
+            <h2 className="text-site-foreground text-right text-3xl font-bold tracking-tight whitespace-nowrap drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
+              Full-Stack SWE
+              <br />
+              since 2004
+            </h2>
+          </SectionHeading>
         </div>
       </div>
 
-      <div className="lg:border-site-border lg:bg-site-surface mx-auto mt-6 w-[95%] lg:mt-8 lg:w-[94%] lg:rounded-3xl lg:border lg:px-6 lg:py-7 lg:backdrop-blur-xl xl:px-8 xl:py-9">
-        <ol
-          aria-label="Career timeline"
-          className="border-brand-coral flex flex-col lg:grid lg:grid-cols-4 lg:border-t-4"
-        >
+      <div className="ease-spring-soft mx-auto mt-6 w-[95%] translate-y-12 opacity-0 transition-all delay-200 duration-700 lg:hidden [.active_&]:translate-y-0 [.active_&]:opacity-100">
+        <ul className="mt-2 flex flex-col gap-y-6 pr-2 pb-8 pl-4">
           {ARCHITECT_EVOLUTION.map((item, index) => (
             <li
-              key={item.duration}
+              key={item.company}
               className={classNames(
-                "border-brand-coral relative border-l-4 pb-8 pl-6 lg:min-w-0 lg:pt-8 lg:pr-5 lg:pb-0 lg:pl-5",
+                "ease-spring-soft relative translate-x-8 border-l-4 border-[#F38B57] pb-8 pl-6 opacity-0 transition-all duration-700 [.active_&]:translate-x-0 [.active_&]:opacity-100",
                 index === ARCHITECT_EVOLUTION.length - 1
-                  ? "rounded-bl-xl border-b-4 pb-4 lg:rounded-none lg:border-b-0 lg:pb-0"
+                  ? "rounded-bl-xl border-b-4 pb-4"
                   : "",
               )}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div
-                className="animate-float absolute top-0 -left-[18px] h-8 w-8 lg:-top-[18px]"
+                className="animate-float absolute top-0 -left-[18px] h-8 w-8"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <CodeIcon className="h-full w-full" />
               </div>
-              <p className="restorabold text-site-foreground-faint text-xl font-bold lg:text-xl">
-                {item.duration}
-              </p>
-              <p className="restorabold text-site-foreground py-1 text-xl font-bold lg:py-2 lg:text-base lg:leading-6 lg:font-medium xl:text-lg xl:leading-7 2xl:text-xl">
-                <MilestoneDescription company={item.company} />
-              </p>
+              <div className="">
+                <p className="text-site-foreground-faint text-xl font-bold">
+                  {item.duration}
+                </p>
+              </div>
+              <div className="py-1">
+                <p className="restorabold text-site-foreground text-xl font-bold">
+                  {item.company.includes("20M+") ? (
+                    <>
+                      {item.company.split("20M+")[0]}
+                      <CountUp to={20} />
+                      M+{item.company.split("20M+")[1]}
+                    </>
+                  ) : (
+                    item.company
+                  )}
+                </p>
+              </div>
             </li>
           ))}
-        </ol>
+        </ul>
+      </div>
+
+      <div className="ease-spring-soft mx-auto mt-12 hidden translate-y-12 opacity-0 transition-all delay-200 duration-700 lg:block lg:h-[85%] lg:w-11/12 [.active_&]:translate-y-0 [.active_&]:opacity-100">
+        <div className="flex min-h-[40vh] w-full flex-col lg:relative lg:h-full">
+          <ul className="work-exp-grid hidden h-full w-1/2 lg:absolute lg:-top-[30%] lg:left-1/4 lg:grid">
+            {combinedLists.map((item, index) => {
+              const isPlaceholder = item.company.includes("placeholder")
+              const isLeftReal = index < getHalfNum
+              const isRightPipe = index >= getHalfNum + 6
+
+              if (isPlaceholder && !isRightPipe) {
+                return (
+                  <li
+                    key={`placeholder-${index}`}
+                    className="invisible h-full"
+                  />
+                )
+              }
+
+              return (
+                <li
+                  className={classNames(
+                    "ease-spring-soft translate-y-12 pl-4 opacity-0 transition-all duration-700 [.active_&]:translate-y-0 [.active_&]:opacity-100",
+                    isLeftReal && "border-site-border-emphasis mr-8 border-r-4",
+                    index === getHalfNum - 1 &&
+                      "border-site-border-emphasis rounded-br-3xl border-b-4",
+                    (isLeftReal || isRightPipe) &&
+                      "border-l-4 border-[#F38B57]",
+                    index === combinedLists.length - 1 &&
+                      "rounded-bl-3xl border-b-4 border-l-0 pb-4",
+                    index === 2 && "relative",
+                    isPlaceholder &&
+                      isRightPipe &&
+                      "invisible mr-8 border-l-4 border-[#F38B57]",
+                  )}
+                  style={{ transitionDelay: `${index * 100 + 200}ms` }}
+                  key={`${item.duration} ${index}`}
+                >
+                  {!isPlaceholder && (
+                    <div className="text-site-foreground relative flex flex-col">
+                      <div
+                        className="animate-float absolute top-0 -left-9 h-8 w-8"
+                        style={{ animationDelay: `${index * 0.2}s` }}
+                      >
+                        <CodeIcon className="h-full w-full" />
+                      </div>
+                      <p className="restorabold text-2xl font-bold">
+                        {item.duration}
+                      </p>
+                      <p className="restorabold max-w-sm py-2 text-xl font-medium">
+                        {item.company.includes("20M+") ? (
+                          <>
+                            {item.company.split("20M+")[0]}
+                            <CountUp to={20} />
+                            M+{item.company.split("20M+")[1]}
+                          </>
+                        ) : (
+                          item.company
+                        )}
+                      </p>
+                    </div>
+                  )}
+                  {index === 2 && (
+                    <div className="absolute top-0 -right-8 w-8 border-t-2 border-b-2 border-[#F38B57]"></div>
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   )

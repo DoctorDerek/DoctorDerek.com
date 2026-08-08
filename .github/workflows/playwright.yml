@@ -95,7 +95,7 @@ jobs:
             const cleanOutput = output.replace(/\u001b\[[0-9;]*m/g, '');
             const exitCode = Number.parseInt(process.env.PLAYWRIGHT_EXIT_CODE ?? '', 10);
             const header = '### 🎭 Playwright';
-            const qualityPosition = '**Quality check 3 of 3**';
+            const qualityPosition = '**Quality check 3 of 4**';
             const summaryLines = cleanOutput
               .split(/\r?\n/)
               .filter(line => /Running \d+ tests?|\d+ (passed|failed|flaky|skipped)|Error:/.test(line))

@@ -13,30 +13,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: Lint & Annotate PR
+  initialize-comments:
+    name: Initialize PR Review Comments
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
 
     steps:
-      - name: Initialize PR Quality Comments
+      - name: Initialize Ordered PR Review Comments
         continue-on-error: true
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         with:
           retries: 3
           script: |
-            const qualityComments = [
+            const reviewComments = [
               {
                 header: '### 🧹 ESLint',
-                body: '### 🧹 ESLint\n\n**Quality check 1 of 3**\n\n⏳ Waiting for ESLint.',
+                body: '### 🧹 ESLint\n\n**Quality check 1 of 4**\n\n⏳ Waiting for ESLint.',
               },
               {
                 header: '### 🧪 Vitest',
-                body: '### 🧪 Vitest\n\n**Quality check 2 of 3**\n\n⏳ Waiting for Vitest.',
+                body: '### 🧪 Vitest\n\n**Quality check 2 of 4**\n\n⏳ Waiting for Vitest.',
               },
               {
                 header: '### 🎭 Playwright',
-                body: '### 🎭 Playwright\n\n**Quality check 3 of 3**\n\n⏳ Waiting for a successful preview deployment.',
+                body: '### 🎭 Playwright\n\n**Quality check 3 of 4**\n\n⏳ Waiting for a successful preview deployment.',
+              },
+              {
+                header: '### 🔦 Mobile Web Lighthouse Measurements',
+                body: '### 🔦 Mobile Web Lighthouse Measurements\n\n**Quality check 4 of 4**\n\n⏳ Waiting for a successful preview deployment.',
+              },
+              {
+                header: '### 🗺️ XState v5 State Machine Diff Visualization',
+                body: '<!-- xstate-v5-change-map -->\n### 🗺️ XState v5 State Machine Diff Visualization\n\n**Architecture visualization**\n\n⏳ Waiting for static XState analysis.',
               },
             ];
 
@@ -47,9 +55,9 @@ jobs:
               per_page: 100,
             });
 
-            for (const qualityComment of qualityComments) {
+            for (const reviewComment of reviewComments) {
               const existingComment = comments.find(
-                comment => comment.user.type === 'Bot' && comment.body?.includes(qualityComment.header),
+                comment => comment.user.type === 'Bot' && comment.body?.includes(reviewComment.header),
               );
 
               if (!existingComment) {
@@ -57,11 +65,18 @@ jobs:
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  body: qualityComment.body,
+                  body: reviewComment.body,
                 });
               }
             }
 
+  lint:
+    name: Lint & Annotate PR
+    needs: initialize-comments
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
@@ -111,7 +126,7 @@ jobs:
             const exitCode = Number.parseInt(process.env.LINT_EXIT_CODE ?? '', 10);
             const runnerStatus = process.env.LINT_RUNNER_STATUS;
             const header = '### 🧹 ESLint';
-            const qualityPosition = '**Quality check 1 of 3**';
+            const qualityPosition = '**Quality check 1 of 4**';
             const hasFindings = /\d+ problems? \(\d+ errors?, \d+ warnings?\)/.test(output);
             const displayedOutput = output.length > 58000
               ? `…\n${output.slice(-58000)}`
@@ -180,7 +195,7 @@ jobs:
             const cleanOutput = output.replace(/\u001b\[[0-9;]*m/g, '');
             const exitCode = Number.parseInt(process.env.VITEST_EXIT_CODE ?? '', 10);
             const header = '### 🧪 Vitest';
-            const qualityPosition = '**Quality check 2 of 3**';
+            const qualityPosition = '**Quality check 2 of 4**';
             const summaryLines = cleanOutput
               .split(/\r?\n/)
               .filter(line => /Test Files|Tests|Duration|No test files found/.test(line))

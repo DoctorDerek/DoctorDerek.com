@@ -100,6 +100,7 @@ describe("useEndOfSiteCelebration", () => {
     expect(toast).toHaveBeenCalledWith(CONTACT_COMPLETION.toastMessage, {
       ariaProps: { "aria-live": "polite", role: "status" },
       id: "end-of-doctorderek",
+      style: { textAlign: "center", whiteSpace: "pre-line" },
     })
     expect(result.current.isConfettiActive).toBe(true)
 

@@ -97,6 +97,26 @@ describe("AboutSection", () => {
     }
   })
 
+  it("lets browser zoom scale a portrait without automatic motion", () => {
+    render(<AboutSection />)
+
+    const portraitControl = getPortraitControl()
+    const portraitLayout = portraitControl.closest(
+      "[data-about-portrait-layout]",
+    )
+    const portraitPerspective = portraitControl.closest(".perspective")
+
+    expect(portraitLayout).toHaveClass(
+      "max-w-[22rem]",
+      "md:w-1/2",
+      "lg:w-[45%]",
+    )
+    expect(portraitLayout?.className).not.toMatch(
+      /animate-float|dvh|opacity-0|scale-90|translate-y-12|transition-all/,
+    )
+    expect(portraitPerspective).not.toHaveClass("animate-float")
+  })
+
   it("does not start an automatic portrait loop on pointer entry", () => {
     const intervalSpy = vi.spyOn(window, "setInterval")
     render(<AboutSection />)

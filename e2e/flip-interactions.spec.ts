@@ -9,15 +9,6 @@ const VERCEL_TOOLBAR_STORAGE_ERROR =
 const VERCEL_TOOLBAR_SOURCE =
   "https://vercel.live/_next-live/feedback/feedback.html"
 
-async function openSectionWithTouch(page: Page, name: string, anchor: string) {
-  await page.getByRole("button", { name: "Open navigation" }).tap()
-  const navigation = page.getByRole("navigation")
-  const sectionLink = navigation.getByRole("link", { name })
-  await sectionLink.scrollIntoViewIfNeeded()
-  await sectionLink.tap()
-  await expect(page).toHaveURL(new RegExp(`#${anchor}$`))
-}
-
 const isVercelToolbarWebKitStorageError = (error: Error) =>
   error.message === VERCEL_TOOLBAR_STORAGE_ERROR &&
   error.stack?.includes(VERCEL_TOOLBAR_SOURCE) === true
@@ -144,8 +135,8 @@ test.describe("touch portrait controls", () => {
   }) => {
     const pageErrors = trackPageErrors(page)
     await page.emulateMedia({ reducedMotion: "reduce" })
-    await page.goto("/")
-    await openSectionWithTouch(page, "About", "about")
+    await page.goto("/#about")
+    await expect(page.locator("body")).toHaveClass(/fp-viewing-about/)
 
     const aboutPortraitControl = page.getByRole("button", {
       name: PORTRAIT_CONTROL_ACCESSIBLE_NAMES.about,

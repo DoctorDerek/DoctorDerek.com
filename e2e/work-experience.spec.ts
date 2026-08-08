@@ -45,6 +45,43 @@ for (const viewport of [
   })
 }
 
+test("short desktop keeps the return rail clear of both timeline rows", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1024, height: 600 })
+  await openWorkExperience(page)
+
+  const timeline = page.getByRole("list", {
+    name: "Desktop career timeline",
+  })
+  const railClearance = await timeline.evaluate((timelineElement) => {
+    const rail = timelineElement.parentElement?.querySelector("path")
+    const railEndPoint = rail?.getPointAtLength(rail.getTotalLength())
+    const railTransform = rail?.getScreenCTM()
+    if (!railEndPoint || !railTransform) return null
+
+    const returnRailY =
+      railTransform.b * railEndPoint.x +
+      railTransform.d * railEndPoint.y +
+      railTransform.f
+    const topCopyBottoms = Array.from(
+      timelineElement.querySelectorAll("li:nth-child(-n+2) p:last-child"),
+    ).map((copy) => copy.getBoundingClientRect().bottom)
+    const bottomDurationTops = Array.from(
+      timelineElement.querySelectorAll("li:nth-child(n+3) p:first-child"),
+    ).map((copy) => copy.getBoundingClientRect().top)
+
+    return {
+      above: returnRailY - Math.max(...topCopyBottoms),
+      below: Math.min(...bottomDurationTops) - returnRailY,
+    }
+  })
+
+  expect(railClearance).not.toBeNull()
+  expect(railClearance!.above).toBeGreaterThan(12)
+  expect(railClearance!.below).toBeGreaterThan(12)
+})
+
 test.describe("mobile career pagination", () => {
   test.use({
     hasTouch: true,
@@ -70,6 +107,17 @@ test.describe("mobile career pagination", () => {
     await expect(carousel).toBeVisible()
     await expect(previousButton).toBeDisabled()
     await expect(nextButton).toBeEnabled()
+    const careerEraControlSizes = await careerEraControls.evaluateAll(
+      (controls) =>
+        controls.map((control) => {
+          const bounds = control.getBoundingClientRect()
+          return { height: bounds.height, width: bounds.width }
+        }),
+    )
+    for (const controlSize of careerEraControlSizes) {
+      expect(controlSize.height).toBeGreaterThanOrEqual(24)
+      expect(controlSize.width).toBeGreaterThanOrEqual(24)
+    }
 
     await nextButton.tap()
     await expect(track).toHaveCSS("transform", /matrix\(1, 0, 0, 1, -/)

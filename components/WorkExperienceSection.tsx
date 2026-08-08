@@ -154,16 +154,20 @@ export default function WorkExperienceSection() {
                   activeCareerEraIndex === index ? "step" : undefined
                 }
                 aria-label={`Show ${item.duration}`}
-                className={classNames(
-                  "ring-site-focus h-3 w-3 rounded-full ring-offset-2 transition-all focus-visible:ring-2",
-                  activeCareerEraIndex === index
-                    ? "w-7 bg-[#F38B57]"
-                    : "bg-site-foreground-faint hover:bg-site-foreground-muted",
-                )}
+                className="group ring-site-focus flex h-8 w-8 items-center justify-center rounded-full ring-offset-2 focus-visible:ring-2"
                 key={item.duration}
                 onClick={() => showCareerEra(index)}
                 type="button"
-              />
+              >
+                <span
+                  className={classNames(
+                    "h-3 rounded-full transition-all",
+                    activeCareerEraIndex === index
+                      ? "w-7 bg-[#F38B57]"
+                      : "bg-site-foreground-faint group-hover:bg-site-foreground-muted w-3",
+                  )}
+                />
+              </button>
             ))}
           </div>
 
@@ -193,7 +197,7 @@ export default function WorkExperienceSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-7 hidden lg:block lg:h-[min(28rem,52vh)] lg:w-[min(74rem,92vw)]">
+      <div className="mx-auto mt-7 hidden lg:block lg:h-[clamp(23rem,52vh,28rem)] lg:w-[min(74rem,92vw)]">
         <div className="relative h-full w-full">
           <svg
             aria-hidden="true"
@@ -202,7 +206,7 @@ export default function WorkExperienceSection() {
             viewBox="0 0 100 100"
           >
             <path
-              d="M 2 5 H 98 V 55 H 2"
+              d="M 2 5 H 98 V 60 H 2"
               fill="none"
               stroke="#F38B57"
               strokeLinecap="round"
@@ -219,7 +223,8 @@ export default function WorkExperienceSection() {
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
                 className={classNames(
-                  "relative px-4 pt-10",
+                  "relative px-4",
+                  index < 2 ? "pt-10" : "pt-16",
                   index === 0 && "col-start-1 row-start-1",
                   index === 1 && "col-start-2 row-start-1",
                   index === 2 && "col-start-2 row-start-2",
@@ -228,7 +233,10 @@ export default function WorkExperienceSection() {
                 key={item.duration}
               >
                 <div
-                  className="animate-float absolute top-[calc(10%-1rem)] left-0 h-8 w-8"
+                  className={classNames(
+                    "animate-float absolute left-0 h-8 w-8",
+                    index < 2 ? "top-[calc(10%-1rem)]" : "top-[calc(20%-1rem)]",
+                  )}
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   <CodeIcon className="h-full w-full" />

@@ -1,43 +1,125 @@
-import { render, screen } from "@testing-library/react"
-import { describe, expect, it, vi } from "vitest"
+import { fireEvent, render, screen, within } from "@testing-library/react"
+import { describe, expect, it } from "vitest"
 import WorkExperienceSection from "@/components/WorkExperienceSection"
+import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 
-vi.mock("@/components/ui/CountUp", () => ({
-  default: ({ to }: { to: number }) => <span>{to}</span>,
-}))
+const renderCareerTimeline = () => {
+  render(<WorkExperienceSection />)
 
-vi.mock("@/components/MotionPreferenceProvider", () => ({
-  useMotionPreference: () => ({ shouldReduceMotion: false }),
-}))
+  const carousel = screen.getByRole("region", { name: "Career timeline" })
+  const track = within(carousel).getByRole("list", { name: "Career eras" })
 
-vi.mock("@/constants/SITE_CONTENT", () => ({
-  ARCHITECT_EVOLUTION: [
-    { duration: "2024–Present", company: "Serving 20M+ users" },
-    { duration: "2019–2024", company: "Senior product engineering" },
-    { duration: "2009–2019", company: "Full-stack web development" },
-    { duration: "2004–2009", company: "Software engineering" },
-  ],
-}))
+  return { carousel, track }
+}
 
 describe("WorkExperienceSection", () => {
-  it("top-anchors the mobile timeline while preserving desktop centering", () => {
-    render(<WorkExperienceSection />)
+  it("renders the canonical career eras in semantic mobile and desktop timelines", () => {
+    const { carousel } = renderCareerTimeline()
 
-    const heading = screen.getByRole("heading", {
-      name: "Full-Stack SWE since 2004",
-    })
-    const sectionContent = heading.closest("div.min-h-full")
+    expect(screen.getByRole("heading", { level: 2 })).toHaveAccessibleName(
+      "Full-Stack SWE since 2004",
+    )
+    expect(
+      screen.getByRole("list", { name: "Desktop career timeline" }).children,
+    ).toHaveLength(ARCHITECT_EVOLUTION.length)
+    expect(
+      within(carousel).getByRole("group", {
+        name: `1 of ${ARCHITECT_EVOLUTION.length}`,
+      }),
+    ).toBeVisible()
 
-    expect(sectionContent).toHaveClass("justify-start")
-    expect(sectionContent).toHaveClass("lg:h-full")
-    expect(sectionContent).toHaveClass("lg:justify-center")
-    expect(sectionContent).not.toHaveClass("h-full")
+    for (const { company, duration } of ARCHITECT_EVOLUTION) {
+      expect(screen.getAllByText(duration)).toHaveLength(2)
+      expect(screen.getAllByText(company)).toHaveLength(2)
+    }
+
+    expect(screen.queryByText(/placeholder/i)).not.toBeInTheDocument()
   })
 
-  it("renders counted milestones across the mobile and desktop timelines", () => {
-    render(<WorkExperienceSection />)
+  it("navigates career eras with arrows and direct-selection controls", () => {
+    const { carousel, track } = renderCareerTimeline()
+    const previousButton = within(carousel).getByRole("button", {
+      name: "Show previous career era",
+    })
+    const nextButton = within(carousel).getByRole("button", {
+      name: "Show next career era",
+    })
 
-    expect(screen.getAllByText("20")).toHaveLength(2)
-    expect(screen.getAllByText("Senior product engineering")).toHaveLength(2)
+    expect(previousButton).toBeDisabled()
+    expect(nextButton).toBeEnabled()
+    expect(track).toHaveStyle({ transform: "translateX(-0%)" })
+
+    fireEvent.click(nextButton)
+
+    expect(previousButton).toBeEnabled()
+    expect(track).toHaveStyle({ transform: "translateX(-100%)" })
+    expect(
+      within(carousel).getByRole("button", {
+        name: `Show ${ARCHITECT_EVOLUTION[1]?.duration}`,
+      }),
+    ).toHaveAttribute("aria-current", "step")
+
+    fireEvent.click(
+      within(carousel).getByRole("button", {
+        name: `Show ${ARCHITECT_EVOLUTION.at(-1)?.duration}`,
+      }),
+    )
+
+    expect(track).toHaveStyle({
+      transform: `translateX(-${(ARCHITECT_EVOLUTION.length - 1) * 100}%)`,
+    })
+    expect(nextButton).toBeDisabled()
+
+    fireEvent.click(previousButton)
+
+    expect(track).toHaveStyle({
+      transform: `translateX(-${(ARCHITECT_EVOLUTION.length - 2) * 100}%)`,
+    })
+  })
+
+  it("changes eras only for deliberate horizontal touch gestures", () => {
+    const { track } = renderCareerTimeline()
+    const touchSurface = track.parentElement as HTMLDivElement
+
+    fireEvent.touchStart(touchSurface, { changedTouches: [] })
+    fireEvent.touchEnd(touchSurface, {
+      changedTouches: [{ clientX: 180, clientY: 100 }],
+    })
+    fireEvent.touchStart(touchSurface, {
+      changedTouches: [{ clientX: 280, clientY: 100 }],
+    })
+    fireEvent.touchEnd(touchSurface, { changedTouches: [] })
+    fireEvent.touchStart(touchSurface, {
+      changedTouches: [{ clientX: 280, clientY: 100 }],
+    })
+    fireEvent.touchEnd(touchSurface, {
+      changedTouches: [{ clientX: 260, clientY: 100 }],
+    })
+    fireEvent.touchStart(touchSurface, {
+      changedTouches: [{ clientX: 280, clientY: 100 }],
+    })
+    fireEvent.touchEnd(touchSurface, {
+      changedTouches: [{ clientX: 220, clientY: 220 }],
+    })
+
+    expect(track).toHaveStyle({ transform: "translateX(-0%)" })
+
+    fireEvent.touchStart(touchSurface, {
+      changedTouches: [{ clientX: 280, clientY: 100 }],
+    })
+    fireEvent.touchEnd(touchSurface, {
+      changedTouches: [{ clientX: 180, clientY: 100 }],
+    })
+
+    expect(track).toHaveStyle({ transform: "translateX(-100%)" })
+
+    fireEvent.touchStart(touchSurface, {
+      changedTouches: [{ clientX: 180, clientY: 100 }],
+    })
+    fireEvent.touchEnd(touchSurface, {
+      changedTouches: [{ clientX: 280, clientY: 100 }],
+    })
+
+    expect(track).toHaveStyle({ transform: "translateX(-0%)" })
   })
 })

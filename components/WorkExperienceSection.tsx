@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef, useState, type TouchEvent } from "react"
-import CountUp from "@/components/ui/CountUp"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 import CodeIcon from "@/images/codeIcon.svg"
 import classNames from "@/utils/classNames"
@@ -82,7 +81,8 @@ export default function WorkExperienceSection() {
           onTouchEnd={handleCareerTimelineTouchEnd}
           onTouchStart={handleCareerTimelineTouchStart}
         >
-          <ul
+          <ol
+            aria-label="Career eras"
             className="flex transition-transform duration-500 ease-out"
             id="work-experience-mobile-track"
             style={{ transform: `translateX(-${activeCareerEraIndex * 100}%)` }}
@@ -110,19 +110,11 @@ export default function WorkExperienceSection() {
                   {item.duration}
                 </p>
                 <p className="restorabold text-site-foreground py-2 text-xl font-bold">
-                  {item.company.includes("20M+") ? (
-                    <>
-                      {item.company.split("20M+")[0]}
-                      <CountUp to={20} />
-                      M+{item.company.split("20M+")[1]}
-                    </>
-                  ) : (
-                    item.company
-                  )}
+                  {item.company}
                 </p>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
 
         <div className="mt-3 flex items-center justify-center gap-5">
@@ -220,7 +212,10 @@ export default function WorkExperienceSection() {
             />
           </svg>
 
-          <ul className="grid h-full grid-cols-2 grid-rows-2 gap-x-16">
+          <ol
+            aria-label="Desktop career timeline"
+            className="grid h-full grid-cols-2 grid-rows-2 gap-x-16"
+          >
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
                 className={classNames(
@@ -243,20 +238,12 @@ export default function WorkExperienceSection() {
                     {item.duration}
                   </p>
                   <p className="restorabold max-w-xl py-2 text-lg font-medium xl:text-xl">
-                    {item.company.includes("20M+") ? (
-                      <>
-                        {item.company.split("20M+")[0]}
-                        <CountUp to={20} />
-                        M+{item.company.split("20M+")[1]}
-                      </>
-                    ) : (
-                      item.company
-                    )}
+                    {item.company}
                   </p>
                 </div>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
       </div>
     </div>

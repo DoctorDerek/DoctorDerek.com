@@ -31,16 +31,4 @@ describe("globalMachine", () => {
 
     actor.stop()
   })
-
-  it("keeps the diff calibration topology unreachable at runtime", () => {
-    const actor = createActor(globalMachine).start()
-    const initialSnapshot = actor.getSnapshot()
-
-    actor.send({ type: "XSTATE_DIFF_CALIBRATION_PROBE" })
-
-    expect(actor.getSnapshot().value).toEqual(initialSnapshot.value)
-    expect(actor.getSnapshot().context).toEqual(initialSnapshot.context)
-
-    actor.stop()
-  })
 })

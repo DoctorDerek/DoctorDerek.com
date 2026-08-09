@@ -179,6 +179,21 @@ export const parseLighthouseScores = (value: unknown): LighthouseScores => {
   }
 }
 
+export const fetchPublishedLighthouseScores = async (
+  scoresUrl: string,
+  fetchScores: typeof fetch = fetch,
+) => {
+  try {
+    const response = await fetchScores(scoresUrl)
+
+    if (!response.ok) return undefined
+
+    return parseLighthouseScores((await response.json()) as unknown)
+  } catch {
+    return undefined
+  }
+}
+
 export const prepareLighthouseReports = ({
   publishedDirectory,
   resultsDirectory,

@@ -1,9 +1,10 @@
 import fs from "node:fs"
 import os from "node:os"
 import path from "node:path"
-import { afterEach, describe, expect, it } from "vitest"
+import { afterEach, describe, expect, it, vi } from "vitest"
 import {
   extractLighthouseScores,
+  fetchPublishedLighthouseScores,
   formatFailedPreviewLighthouseComment,
   formatPreviewLighthouseComment,
   parseLighthouseScores,
@@ -162,6 +163,43 @@ describe("prepareLighthouseReports", () => {
     expect(comment).toContain(
       "| Performance | 94 | Unavailable | Unavailable |",
     )
+  })
+
+  it("loads published Production scores without coupling Preview availability to the network", async () => {
+    const scores = {
+      performance: 92,
+      accessibility: 100,
+      bestPractices: 100,
+      seo: 100,
+    }
+    const successfulFetch = vi.fn<typeof fetch>().mockResolvedValue(
+      new Response(JSON.stringify(scores), { status: 200 }),
+    )
+    const unavailableFetch = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(new Response(null, { status: 503 }))
+    const rejectedFetch = vi
+      .fn<typeof fetch>()
+      .mockRejectedValue(new Error("network unavailable"))
+
+    await expect(
+      fetchPublishedLighthouseScores(
+        "https://reports.example.com/results.json",
+        successfulFetch,
+      ),
+    ).resolves.toEqual(scores)
+    await expect(
+      fetchPublishedLighthouseScores(
+        "https://reports.example.com/results.json",
+        unavailableFetch,
+      ),
+    ).resolves.toBeUndefined()
+    await expect(
+      fetchPublishedLighthouseScores(
+        "https://reports.example.com/results.json",
+        rejectedFetch,
+      ),
+    ).resolves.toBeUndefined()
   })
 
   it("reports measurement failures with bounded, ANSI-free output", () => {

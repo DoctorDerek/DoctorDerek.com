@@ -1,9 +1,9 @@
 import fs from "node:fs"
 import path from "node:path"
 import {
+  fetchPublishedLighthouseScores,
   formatFailedPreviewLighthouseComment,
   formatPreviewLighthouseComment,
-  parseLighthouseScores,
   prepareLighthouseReports,
 } from "@/scripts/lighthouse/prepareLighthouseReports"
 
@@ -45,16 +45,9 @@ if (commentFile && previewUrl && actionsRunUrl && lighthouseExitCode !== 0) {
   if (commentFile && previewUrl && actionsRunUrl) {
     const productionScoresUrl = process.env.LIGHTHOUSE_PRODUCTION_SCORES_URL
     const productionReportUrl = process.env.LIGHTHOUSE_PRODUCTION_REPORT_URL
-    let productionScores
-
-    if (productionScoresUrl) {
-      const productionScoresResponse = await fetch(productionScoresUrl)
-
-      if (productionScoresResponse.ok)
-        productionScores = parseLighthouseScores(
-          (await productionScoresResponse.json()) as unknown,
-        )
-    }
+    const productionScores = productionScoresUrl
+      ? await fetchPublishedLighthouseScores(productionScoresUrl)
+      : undefined
 
     fs.writeFileSync(
       commentFile,

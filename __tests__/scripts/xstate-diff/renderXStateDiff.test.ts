@@ -156,6 +156,66 @@ describe("renderXStateDiff", () => {
     )
   })
 
+  it("describes removed, internal, and unresolved transitions accessibly", () => {
+    const baseTopology = extractFixture(`
+      const machine = createMachine({
+        id: "recovery",
+        states: {
+          ready: {
+            on: {
+              INTERNAL: { actions: "track" },
+              LOST: "missing",
+            },
+          },
+        },
+      })
+    `)
+    const headTopology = extractFixture(`
+      const machine = createMachine({
+        id: "recovery",
+        states: { ready: {} },
+      })
+    `)
+
+    const rendered = renderComparison(baseTopology, headTopology)
+
+    expect(rendered.accessibleText).toContain(
+      "Removed INTERNAL from recovery.ready to an internal transition.",
+    )
+    expect(rendered.accessibleText).toContain(
+      "Removed LOST from recovery.ready to unresolved target missing.",
+    )
+  })
+
+  it("bounds inline diagnostics and points reviewers to the complete artifact", () => {
+    const topology = extractFixture(
+      `const machine = createMachine({ id: "stable", states: {} })`,
+    )
+    const topologyWithDiagnostics: XStateTopologyCollection = {
+      ...topology,
+      diagnostics: Array.from({ length: 23 }, (_, diagnosticIndex) => ({
+        code: `diagnostic-${diagnosticIndex}`,
+        message: `Diagnostic ${diagnosticIndex}`,
+        location: {
+          filePath: "machines/stableMachine.ts",
+          line: diagnosticIndex + 1,
+          column: 1,
+        },
+      })),
+    }
+
+    const rendered = renderComparison(
+      topologyWithDiagnostics,
+      topology,
+      false,
+    )
+
+    expect(rendered.comment).toContain(
+      "3 additional diagnostics are available in the artifact.",
+    )
+    expect(rendered.comment).not.toContain("Diagnostic 20")
+  })
+
   it("rejects diagrams and comments beyond explicit output limits", () => {
     const machineDiff: XStateMachineDiff = {
       key: "machine.ts#large",

@@ -240,6 +240,85 @@ describe("extractMachineTopologies", () => {
     ])
   })
 
+  it("unwraps TypeScript syntax and preserves named guard identities", () => {
+    const { machines, diagnostics } = extractMachineTopologies([
+      {
+        filePath: "machines/wrappedMachine.tsx",
+        sourceText: `
+          void createMachine(
+            ({
+              initial: "ready",
+              states: {
+                ready: {
+                  on: {
+                    START: {
+                      guard: canStart,
+                      target: "running",
+                    },
+                    RESUME: {
+                      guard: { type: "canResume" },
+                      target: "running",
+                    },
+                  },
+                },
+                running: {},
+              },
+            } as const) satisfies object,
+          )
+        `,
+      },
+    ])
+
+    expect(diagnostics).toEqual([])
+    expect(machines).toHaveLength(1)
+    expect(machines[0]).toMatchObject({
+      id: "machineAtLine2",
+      variableName: "machineAtLine2",
+      filePath: "machines/wrappedMachine.tsx",
+    })
+    expect(machines[0]?.transitions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ event: "START", guard: "canStart" }),
+        expect.objectContaining({ event: "RESUME", guard: "canResume" }),
+      ]),
+    )
+  })
+
+  it("reports parse errors and every unsupported dynamic transition boundary", () => {
+    const { diagnostics } = extractFixture(`
+      const broken =
+      const machine = createMachine({
+        id: "dynamic",
+        states: {
+          ready: {
+            on: transitions,
+            after: delays,
+            invoke: actorConfiguration,
+          },
+          mapped: {
+            on: {
+              ...dynamicTransitions,
+              MIXED: { target: ["ready", getTarget()] },
+              UNKNOWN_ID: "#missing.done",
+            },
+          },
+        },
+      })
+    `)
+
+    expect(diagnostics.map((diagnostic) => diagnostic.code)).toEqual(
+      expect.arrayContaining([
+        "typescript-parse-error",
+        "unsupported-on-configuration",
+        "unsupported-after-configuration",
+        "unsupported-invoke-configuration",
+        "unsupported-transition-property",
+        "unsupported-transition-target",
+        "unresolved-transition-target",
+      ]),
+    )
+  })
+
   it("rejects source collections and graphs beyond explicit analysis limits", () => {
     expect(() =>
       extractMachineTopologies(
@@ -263,5 +342,42 @@ describe("extractMachineTopologies", () => {
         `const machine = createMachine({ id: "large", states: { ${oversizedStates} } })`,
       ),
     ).toThrow("exceeds 1000 states")
+
+    expect(() =>
+      extractFixture("x".repeat(XSTATE_DIFF_LIMITS.maximumSourceBytes + 1)),
+    ).toThrow("exceeds 1000000 source bytes")
+
+    const excessiveMachines = Array.from(
+      { length: XSTATE_DIFF_LIMITS.maximumMachines + 1 },
+      (_, machineIndex) =>
+        `createMachine({ id: "machine${machineIndex}", states: {} })`,
+    ).join("\n")
+
+    expect(() => extractFixture(excessiveMachines)).toThrow(
+      "exceeds 50 machines",
+    )
+
+    const excessiveDepth = Array.from(
+      { length: XSTATE_DIFF_LIMITS.maximumStateDepth + 1 },
+      (_, stateIndex) => `state${stateIndex}: { states: {`,
+    ).join("")
+    const closingBraces = "} }".repeat(XSTATE_DIFF_LIMITS.maximumStateDepth + 1)
+
+    expect(() =>
+      extractFixture(
+        `createMachine({ id: "deep", states: { ${excessiveDepth} leaf: {} ${closingBraces} } })`,
+      ),
+    ).toThrow("exceeds 20 nested state levels")
+
+    const excessiveTransitions = Array.from(
+      { length: XSTATE_DIFF_LIMITS.maximumTransitionsPerMachine + 1 },
+      (_, transitionIndex) => `EVENT_${transitionIndex}: "ready"`,
+    ).join(",")
+
+    expect(() =>
+      extractFixture(
+        `createMachine({ id: "busy", states: { ready: { on: { ${excessiveTransitions} } } } })`,
+      ),
+    ).toThrow("exceeds 2000 transitions")
   })
 })

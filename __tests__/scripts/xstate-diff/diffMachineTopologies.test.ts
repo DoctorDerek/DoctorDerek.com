@@ -202,6 +202,43 @@ describe("diffMachineTopologies", () => {
     expect(diff.summary.statesRemoved).toBe(2)
   })
 
+  it("classifies matched state removals and type changes", () => {
+    const baseTopology = extractFixture(`
+      const recoveryMachine = createMachine({
+        id: "recovery",
+        states: {
+          ready: {},
+          retired: {},
+        },
+      })
+    `)
+    const headTopology = extractFixture(`
+      const recoveryMachine = createMachine({
+        id: "recovery",
+        states: {
+          ready: { type: "final" },
+        },
+      })
+    `)
+
+    const diff = diffMachineTopologies(baseTopology, headTopology)
+
+    expect(diff.summary).toMatchObject({
+      statesRemoved: 1,
+      statesModified: 1,
+    })
+    expect(diff.machines[0]?.nodeChanges).toEqual([
+      expect.objectContaining({
+        changeType: "modified",
+        changedFields: ["type"],
+      }),
+      expect.objectContaining({
+        changeType: "removed",
+        before: expect.objectContaining({ id: "recovery.retired" }),
+      }),
+    ])
+  })
+
   it("returns a deterministic no-op and propagates sorted diagnostics", () => {
     const topology = extractFixture(`
       const machine = createMachine({

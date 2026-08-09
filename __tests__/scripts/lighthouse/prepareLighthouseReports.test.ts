@@ -305,5 +305,12 @@ describe("prepareLighthouseReports", () => {
     expect(
       fs.readFileSync(path.join(resultsDirectory, "report.html"), "utf8"),
     ).toBe("unchanged")
+
+    expect(() =>
+      redactSensitiveLighthouseArtifacts(
+        path.join(resultsDirectory, "missing"),
+        "secret",
+      ),
+    ).not.toThrow()
   })
 })

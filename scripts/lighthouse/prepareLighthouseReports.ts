@@ -122,7 +122,7 @@ export const redactSensitiveLighthouseArtifacts = (
   resultsDirectory: string,
   sensitiveValue?: string,
 ) => {
-  if (!sensitiveValue) return
+  if (!sensitiveValue || !fs.existsSync(resultsDirectory)) return
 
   for (const directoryEntry of fs.readdirSync(resultsDirectory, {
     withFileTypes: true,

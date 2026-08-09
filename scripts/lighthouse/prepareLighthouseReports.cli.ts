@@ -5,6 +5,7 @@ import {
   formatFailedPreviewLighthouseComment,
   formatPreviewLighthouseComment,
   prepareLighthouseReports,
+  redactSensitiveLighthouseArtifacts,
 } from "@/scripts/lighthouse/prepareLighthouseReports"
 
 const resultsDirectory = path.resolve(
@@ -22,6 +23,11 @@ const lighthouseExitCode = Number.parseInt(
 )
 
 if (commentFile && previewUrl && actionsRunUrl && lighthouseExitCode !== 0) {
+  redactSensitiveLighthouseArtifacts(
+    resultsDirectory,
+    process.env.LIGHTHOUSE_VERCEL_TRUSTED_OIDC_TOKEN,
+  )
+
   const runnerOutputPath = process.env.LIGHTHOUSE_OUTPUT_FILE
   const runnerOutput = runnerOutputPath
     ? fs.readFileSync(runnerOutputPath, "utf8")

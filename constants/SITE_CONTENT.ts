@@ -61,10 +61,9 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
 } as const
 
 export const CONTACT_BULLETS: string[] = [
-  "I architect, build, and scale deterministic software systems using AI-native engineering workflows, functional specifications, persistent context, and human verification.",
-  "I ship full-stack TypeScript products across web, iOS, and Android using Next.js, React Native, and Expo, handling EAS Build/Submit, OTA updates, iOS/Android store releases, automated testing, and manual device QA.",
-  "I partner with founders and early-stage startups as a full-time code owner, taking product work from specification through production with 10× velocity and full accountability for the result.",
-  "I deliver MVPs in under 3 months, and I’ve improved web performance by up to 90% and page speed by 60×.",
+  "I build and ship full-stack TypeScript products across web, iOS, and Android with Next.js, React Native, and Expo, owning EAS Build/Submit, OTA updates, and releases to the App Store and Google Play.",
+  "As a code owner, I take products from functional specification through production using deterministic architecture and AI-native workflows grounded in persistent context, human code review, automated testing, and manual QA.",
+  "I deliver production-ready MVPs in under 3 months without sacrificing performance: I have cut network payloads by 90% and reduced a key data visualization’s load time from more than 10 minutes to under 10 seconds.",
 ] as const
 export const CONTACT_CTA = "Contact Me" as const
 export type WorkExperience = {

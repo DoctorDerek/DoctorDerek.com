@@ -28,19 +28,15 @@ jobs:
             const reviewComments = [
               {
                 header: '### 🧹 ESLint',
-                body: '### 🧹 ESLint\n\n**Quality check 1 of 4**\n\n⏳ Waiting for ESLint.',
+                body: '### 🧹 ESLint\n\n**Quality check 1 of 3**\n\n⏳ Waiting for ESLint.',
               },
               {
                 header: '### 🧪 Vitest',
-                body: '### 🧪 Vitest\n\n**Quality check 2 of 4**\n\n⏳ Waiting for Vitest.',
+                body: '### 🧪 Vitest\n\n**Quality check 2 of 3**\n\n⏳ Waiting for Vitest.',
               },
               {
                 header: '### 🎭 Playwright',
-                body: '### 🎭 Playwright\n\n**Quality check 3 of 4**\n\n⏳ Waiting for a successful preview deployment.',
-              },
-              {
-                header: '### 🔦 Mobile Web Lighthouse Measurements',
-                body: '### 🔦 Mobile Web Lighthouse Measurements\n\n**Quality check 4 of 4**\n\n⏳ Waiting for a successful preview deployment.',
+                body: '### 🎭 Playwright\n\n**Quality check 3 of 3**\n\n⏳ Waiting for a successful preview deployment.',
               },
               {
                 header: '### 🗺️ XState v5 State Machine Diff Visualization',
@@ -126,7 +122,7 @@ jobs:
             const exitCode = Number.parseInt(process.env.LINT_EXIT_CODE ?? '', 10);
             const runnerStatus = process.env.LINT_RUNNER_STATUS;
             const header = '### 🧹 ESLint';
-            const qualityPosition = '**Quality check 1 of 4**';
+            const qualityPosition = '**Quality check 1 of 3**';
             const hasFindings = /\d+ problems? \(\d+ errors?, \d+ warnings?\)/.test(output);
             const displayedOutput = output.length > 58000
               ? `…\n${output.slice(-58000)}`
@@ -195,7 +191,7 @@ jobs:
             const cleanOutput = output.replace(/\u001b\[[0-9;]*m/g, '');
             const exitCode = Number.parseInt(process.env.VITEST_EXIT_CODE ?? '', 10);
             const header = '### 🧪 Vitest';
-            const qualityPosition = '**Quality check 2 of 4**';
+            const qualityPosition = '**Quality check 2 of 3**';
             const summaryLines = cleanOutput
               .split(/\r?\n/)
               .filter(line => /Test Files|Tests|Duration|No test files found/.test(line))

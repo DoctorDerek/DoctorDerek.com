@@ -38,6 +38,7 @@ type FailedPreviewLighthouseCommentOptions = {
   actionsRunUrl: string
   previewUrl: string
   runnerOutput: string
+  sensitiveValue?: string
 }
 
 const LIGHTHOUSE_CATEGORY_IDS = {
@@ -293,8 +294,12 @@ export const formatFailedPreviewLighthouseComment = ({
   actionsRunUrl,
   previewUrl,
   runnerOutput,
+  sensitiveValue,
 }: FailedPreviewLighthouseCommentOptions) => {
-  const cleanRunnerOutput = runnerOutput
+  const redactedRunnerOutput = sensitiveValue
+    ? runnerOutput.replaceAll(sensitiveValue, "[REDACTED]")
+    : runnerOutput
+  const cleanRunnerOutput = redactedRunnerOutput
     .replace(/\u001b\[[0-9;]*m/g, "")
     .trim()
     .slice(-MAXIMUM_RUNNER_OUTPUT_CHARACTERS)

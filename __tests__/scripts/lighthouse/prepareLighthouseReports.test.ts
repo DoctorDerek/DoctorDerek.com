@@ -206,11 +206,14 @@ describe("prepareLighthouseReports", () => {
     const comment = formatFailedPreviewLighthouseComment({
       actionsRunUrl: "https://github.com/run/1",
       previewUrl: "https://preview.example.com",
-      runnerOutput: `\u001b[31m${"x".repeat(4_100)}\u001b[0m`,
+      runnerOutput: `\u001b[31m${"x".repeat(4_100)}signed-preview-token\u001b[0m`,
+      sensitiveValue: "signed-preview-token",
     })
 
     expect(comment).toContain("could not obtain a measurement")
     expect(comment).not.toContain("\u001b[31m")
+    expect(comment).not.toContain("signed-preview-token")
+    expect(comment).toContain("[REDACTED]")
     expect(comment).not.toContain("x".repeat(4_001))
 
     expect(

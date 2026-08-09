@@ -39,6 +39,7 @@ const writeFailedPreviewComment = (runnerOutput: string) => {
       actionsRunUrl,
       previewUrl,
       runnerOutput,
+      sensitiveValue: process.env.LIGHTHOUSE_VERCEL_TRUSTED_OIDC_TOKEN,
     }),
   )
 }

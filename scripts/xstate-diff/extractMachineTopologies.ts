@@ -199,12 +199,7 @@ const resolveTransitions = (context: MachineExtractionContext) => {
       compareText(leftTransition.kind, rightTransition.kind) ||
       compareText(leftTransition.event, rightTransition.event) ||
       leftTransition.priority - rightTransition.priority ||
-      leftTransition.targetIndex - rightTransition.targetIndex ||
-      compareText(
-        leftTransition.targetId ?? "",
-        rightTransition.targetId ?? "",
-      ) ||
-      compareText(leftTransition.guard ?? "", rightTransition.guard ?? ""),
+      leftTransition.targetIndex - rightTransition.targetIndex,
   )
 }
 
@@ -241,8 +236,7 @@ const extractMachine = (
     diagnostics: diagnostics.sort(
       (leftDiagnostic, rightDiagnostic) =>
         leftDiagnostic.location.line - rightDiagnostic.location.line ||
-        leftDiagnostic.location.column - rightDiagnostic.location.column ||
-        compareText(leftDiagnostic.code, rightDiagnostic.code),
+        leftDiagnostic.location.column - rightDiagnostic.location.column,
     ),
   }
 }
@@ -264,18 +258,14 @@ const extractDocumentMachines = ({
   const machines: XStateMachineTopology[] = []
   const parseDiagnostics = (
     sourceFile as ts.SourceFile & {
-      parseDiagnostics?: readonly ts.Diagnostic[]
+      parseDiagnostics: readonly ts.Diagnostic[]
     }
   ).parseDiagnostics
-  const diagnostics: XStateDiagnostic[] = (parseDiagnostics ?? []).map(
+  const diagnostics: XStateDiagnostic[] = parseDiagnostics.map(
     (diagnostic: ts.Diagnostic) => ({
       code: "typescript-parse-error",
       message: ts.flattenDiagnosticMessageText(diagnostic.messageText, " "),
-      location: getPositionLocation(
-        sourceFile,
-        filePath,
-        diagnostic.start ?? 0,
-      ),
+      location: getPositionLocation(sourceFile, filePath, diagnostic.start!),
     }),
   )
 

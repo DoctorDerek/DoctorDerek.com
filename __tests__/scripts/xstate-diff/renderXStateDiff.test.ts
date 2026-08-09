@@ -24,6 +24,7 @@ const renderComparison = (
   baseTopology: XStateTopologyCollection,
   headTopology: XStateTopologyCollection,
   implementationChanged = true,
+  artifactsUrl = ARTIFACTS_URL,
 ) =>
   renderXStateDiff({
     baseSha: BASE_SHA,
@@ -33,7 +34,7 @@ const renderComparison = (
     topologyDiff: diffMachineTopologies(baseTopology, headTopology, {
       implementationChanged,
     }),
-    artifactsUrl: ARTIFACTS_URL,
+    artifactsUrl,
   })
 
 describe("renderXStateDiff", () => {
@@ -187,6 +188,46 @@ describe("renderXStateDiff", () => {
     )
   })
 
+  it("describes modified states and guards accessibly", () => {
+    const baseTopology = extractFixture(`
+      const machine = createMachine({
+        id: "recovery",
+        states: {
+          ready: {
+            id: "readyBefore",
+            on: {
+              SUBMIT: { guard: "isValid", target: "done" },
+            },
+          },
+          done: {},
+        },
+      })
+    `)
+    const headTopology = extractFixture(`
+      const machine = createMachine({
+        id: "recovery",
+        states: {
+          ready: {
+            id: "readyAfter",
+            on: {
+              SUBMIT: { guard: "isComplete", target: "done" },
+            },
+          },
+          done: {},
+        },
+      })
+    `)
+
+    const rendered = renderComparison(baseTopology, headTopology)
+
+    expect(rendered.accessibleText).toContain(
+      "Modified state recovery.ready: explicitId.",
+    )
+    expect(rendered.accessibleText).toContain(
+      "Modified SUBMIT from recovery.ready to recovery.done guarded by isComplete: guard.",
+    )
+  })
+
   it("bounds inline diagnostics and points reviewers to the complete artifact", () => {
     const topology = extractFixture(
       `const machine = createMachine({ id: "stable", states: {} })`,
@@ -260,5 +301,16 @@ describe("renderXStateDiff", () => {
         artifactsUrl: ARTIFACTS_URL,
       }),
     ).toThrow(XStateAnalysisLimitError)
+
+    const topology = extractFixture(
+      `const machine = createMachine({ id: "stable", states: {} })`,
+    )
+    const oversizedArtifactsUrl = `https://github.com/${"x".repeat(
+      XSTATE_DIFF_LIMITS.maximumCommentCharacters,
+    )}`
+
+    expect(() =>
+      renderComparison(topology, topology, false, oversizedArtifactsUrl),
+    ).toThrow("XState diff comment exceeds its size limit")
   })
 })

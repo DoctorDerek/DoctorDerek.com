@@ -327,6 +327,57 @@ describe("extractMachineTopologies", () => {
     )
   })
 
+  it("handles sparse targets, object guards, and partial invoke arrays", () => {
+    const { machines, diagnostics } = extractFixture(`
+      const machine = createMachine({
+        id: "variants",
+        states: {
+          ready: {
+            on: {
+              UNNAMED_GUARD: { guard: {}, target: "done" },
+              DYNAMIC_OBJECT: { target: dynamicTarget },
+              DYNAMIC_DIRECT: dynamicTransition,
+              SPARSE: { target: ["done", , dynamicTarget] },
+            },
+            invoke: [
+              { src: "firstActor", onDone: "done" },
+              { src: "secondActor", onError: "done" },
+            ],
+          },
+          done: {},
+        },
+      })
+    `)
+
+    expect(diagnostics.map((diagnostic) => diagnostic.code)).toEqual(
+      expect.arrayContaining([
+        "unsupported-inline-guard",
+        "unsupported-transition-target",
+      ]),
+    )
+    expect(
+      diagnostics.filter(
+        (diagnostic) => diagnostic.code === "unsupported-transition-target",
+      ),
+    ).toHaveLength(3)
+    expect(machines[0]?.transitions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          event: "UNNAMED_GUARD",
+          guard: "<inline guard>",
+        }),
+        expect.objectContaining({
+          event: "invoke[0].onDone",
+          kind: "onDone",
+        }),
+        expect.objectContaining({
+          event: "invoke[1].onError",
+          kind: "onError",
+        }),
+      ]),
+    )
+  })
+
   it("rejects source collections and graphs beyond explicit analysis limits", () => {
     expect(() =>
       extractMachineTopologies(

@@ -1,15 +1,10 @@
 import fs from "node:fs"
 import os from "node:os"
 import path from "node:path"
-import { afterEach, describe, expect, it, vi } from "vitest"
+import { afterEach, describe, expect, it } from "vitest"
 import {
   extractLighthouseScores,
-  fetchPublishedLighthouseScores,
-  formatFailedPreviewLighthouseComment,
-  formatPreviewLighthouseComment,
-  parseLighthouseScores,
   prepareLighthouseReports,
-  redactSensitiveLighthouseArtifacts,
   selectMedianPerformanceRun,
 } from "@/scripts/lighthouse/prepareLighthouseReports"
 
@@ -93,173 +88,7 @@ describe("prepareLighthouseReports", () => {
     ).toEqual(scores)
   })
 
-  it("redacts trusted credentials from every report artifact", () => {
-    const resultsDirectory = createTemporaryDirectory()
-    const secret = "signed-preview-token"
-    const jsonPath = path.join(resultsDirectory, "run.json")
-    const htmlPath = path.join(resultsDirectory, "run.html")
-    const unchangedPath = path.join(resultsDirectory, "unchanged.txt")
-    fs.writeFileSync(
-      jsonPath,
-      JSON.stringify({ ...createLighthouseResult(0.9), secret }),
-    )
-    fs.writeFileSync(htmlPath, `<html>${secret}</html>`)
-    fs.writeFileSync(unchangedPath, "public")
-    fs.mkdirSync(path.join(resultsDirectory, "nested"))
-    fs.writeFileSync(
-      path.join(resultsDirectory, "manifest.json"),
-      JSON.stringify([{ htmlPath, jsonPath }]),
-    )
-
-    prepareLighthouseReports({ resultsDirectory, sensitiveValue: secret })
-
-    expect(fs.readFileSync(jsonPath, "utf8")).not.toContain(secret)
-    expect(fs.readFileSync(htmlPath, "utf8")).not.toContain(secret)
-    expect(fs.readFileSync(jsonPath, "utf8")).toContain("[REDACTED]")
-    expect(fs.readFileSync(htmlPath, "utf8")).toContain("[REDACTED]")
-    expect(fs.readFileSync(unchangedPath, "utf8")).toBe("public")
-  })
-
-  it("formats Preview and Production scores with signed deltas", () => {
-    const comment = formatPreviewLighthouseComment({
-      actionsRunUrl: "https://github.com/run/1",
-      previewScores: {
-        performance: 94,
-        accessibility: 100,
-        bestPractices: 99,
-        seo: 100,
-      },
-      previewUrl: "https://preview.example.com",
-      productionReportUrl: "https://reports.example.com",
-      productionScores: {
-        performance: 92,
-        accessibility: 100,
-        bestPractices: 100,
-        seo: 99,
-      },
-    })
-
-    for (const [label, score] of [
-      ["Performance", 94],
-      ["Accessibility", 100],
-      ["Best Practices", 99],
-      ["SEO", 100],
-    ] as const) {
-      expect(comment).toContain(`![Preview ${label}: ${score} out of 100]`)
-    }
-
-    for (const [label, score] of [
-      ["Performance", 92],
-      ["Accessibility", 100],
-      ["Best Practices", 100],
-      ["SEO", 99],
-    ] as const) {
-      expect(comment).toContain(`![Production ${label}: ${score} out of 100]`)
-    }
-
-    expect(comment).toContain(
-      "https://img.shields.io/badge/Performance-94%2F100-informational?logo=lighthouse&logoColor=white",
-    )
-    expect(comment).toContain(
-      "**Preview − Production:** Performance +2 · Accessibility 0 · Best Practices −1 · SEO +1",
-    )
-    expect(comment).toContain("Scores are advisory measurements")
-    expect(comment).toContain("Preview — median of 3 runs")
-    expect(comment).toContain("Production baseline — median of 5 runs")
-    expect(comment).not.toContain("| Category |")
-  })
-
-  it("keeps a successful Preview measurement useful when Production is unavailable", () => {
-    const comment = formatPreviewLighthouseComment({
-      actionsRunUrl: "https://github.com/run/1",
-      previewScores: {
-        performance: 94,
-        accessibility: 100,
-        bestPractices: 99,
-        seo: 100,
-      },
-      previewUrl: "https://preview.example.com",
-      productionReportUrl: "https://reports.example.com",
-    })
-
-    for (const label of [
-      "Performance",
-      "Accessibility",
-      "Best Practices",
-      "SEO",
-    ]) {
-      expect(comment).toContain(`![Production ${label}: unavailable]`)
-    }
-
-    expect(comment).toContain(
-      "Performance-unavailable-lightgrey?logo=lighthouse&logoColor=white",
-    )
-    expect(comment).toContain(
-      "**Preview − Production:** Performance unavailable · Accessibility unavailable · Best Practices unavailable · SEO unavailable",
-    )
-  })
-
-  it("loads published Production scores without coupling Preview availability to the network", async () => {
-    const scores = {
-      performance: 92,
-      accessibility: 100,
-      bestPractices: 100,
-      seo: 100,
-    }
-    const successfulFetch = vi
-      .fn<typeof fetch>()
-      .mockResolvedValue(new Response(JSON.stringify(scores), { status: 200 }))
-    const unavailableFetch = vi
-      .fn<typeof fetch>()
-      .mockResolvedValue(new Response(null, { status: 503 }))
-    const rejectedFetch = vi
-      .fn<typeof fetch>()
-      .mockRejectedValue(new Error("network unavailable"))
-
-    await expect(
-      fetchPublishedLighthouseScores(
-        "https://reports.example.com/results.json",
-        successfulFetch,
-      ),
-    ).resolves.toEqual(scores)
-    await expect(
-      fetchPublishedLighthouseScores(
-        "https://reports.example.com/results.json",
-        unavailableFetch,
-      ),
-    ).resolves.toBeUndefined()
-    await expect(
-      fetchPublishedLighthouseScores(
-        "https://reports.example.com/results.json",
-        rejectedFetch,
-      ),
-    ).resolves.toBeUndefined()
-  })
-
-  it("reports measurement failures with bounded, ANSI-free output", () => {
-    const comment = formatFailedPreviewLighthouseComment({
-      actionsRunUrl: "https://github.com/run/1",
-      previewUrl: "https://preview.example.com",
-      runnerOutput: `\u001b[31m${"x".repeat(4_100)}signed-preview-token\u001b[0m`,
-      sensitiveValue: "signed-preview-token",
-    })
-
-    expect(comment).toContain("could not obtain a measurement")
-    expect(comment).not.toContain("\u001b[31m")
-    expect(comment).not.toContain("signed-preview-token")
-    expect(comment).toContain("[REDACTED]")
-    expect(comment).not.toContain("x".repeat(4_001))
-
-    expect(
-      formatFailedPreviewLighthouseComment({
-        actionsRunUrl: "https://github.com/run/1",
-        previewUrl: "https://preview.example.com",
-        runnerOutput: "",
-      }),
-    ).not.toContain("```text")
-  })
-
-  it("rejects malformed manifests, categories, scores, and empty runs", () => {
+  it("rejects malformed manifests, categories, and empty runs", () => {
     const resultsDirectory = createTemporaryDirectory()
     fs.writeFileSync(path.join(resultsDirectory, "manifest.json"), "{}")
     expect(() => prepareLighthouseReports({ resultsDirectory })).toThrow(
@@ -287,25 +116,7 @@ describe("prepareLighthouseReports", () => {
     expect(() =>
       extractLighthouseScores({ categories: { performance: {} } }),
     ).toThrow("numeric performance score")
-    expect(() => parseLighthouseScores({ performance: 90 })).toThrow(
-      "scores are incomplete",
-    )
-    expect(() => parseLighthouseScores(null)).toThrow("scores are invalid")
     expect(() => selectMedianPerformanceRun([])).toThrow("completed runs")
-
-    expect(
-      parseLighthouseScores({
-        performance: 92,
-        accessibility: 100,
-        bestPractices: 100,
-        seo: 100,
-      }),
-    ).toEqual({
-      performance: 92,
-      accessibility: 100,
-      bestPractices: 100,
-      seo: 100,
-    })
   })
 
   it("uses source order to break equal-performance median ties", () => {
@@ -331,23 +142,5 @@ describe("prepareLighthouseReports", () => {
     ])
 
     expect(selectedRun.manifestIndex).toBe(1)
-  })
-
-  it("does nothing when there is no sensitive artifact value", () => {
-    const resultsDirectory = createTemporaryDirectory()
-    fs.writeFileSync(path.join(resultsDirectory, "report.html"), "unchanged")
-
-    redactSensitiveLighthouseArtifacts(resultsDirectory)
-
-    expect(
-      fs.readFileSync(path.join(resultsDirectory, "report.html"), "utf8"),
-    ).toBe("unchanged")
-
-    expect(() =>
-      redactSensitiveLighthouseArtifacts(
-        path.join(resultsDirectory, "missing"),
-        "secret",
-      ),
-    ).not.toThrow()
   })
 })

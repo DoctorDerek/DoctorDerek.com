@@ -1,0 +1,79 @@
+export const XSTATE_DIFF_ANALYZER_VERSION = "0.1.0"
+
+export const XSTATE_DIFF_LIMITS = {
+  maximumFiles: 50,
+  maximumSourceBytes: 1_000_000,
+  maximumMachines: 50,
+  maximumNodesPerMachine: 1_000,
+  maximumTransitionsPerMachine: 2_000,
+  maximumStateDepth: 20,
+  maximumLabelCharacters: 200,
+  maximumCommentCharacters: 60_000,
+} as const
+
+export type XStateSourceDocument = {
+  filePath: string
+  sourceText: string
+}
+
+export type XStateSourceLocation = {
+  filePath: string
+  line: number
+  column: number
+}
+
+export type XStateDiagnostic = {
+  code: string
+  message: string
+  location: XStateSourceLocation
+}
+
+export type XStateNodeType = "atomic" | "compound" | "parallel" | "final"
+
+export type XStateStateNode = {
+  id: string
+  name: string
+  machineId: string
+  parentId: string | null
+  type: XStateNodeType
+  initialChildId?: string
+  explicitId?: string
+  location: XStateSourceLocation
+}
+
+export type XStateTransitionKind =
+  "event" | "always" | "after" | "onDone" | "onError"
+
+export type XStateTransition = {
+  sourceId: string
+  targetId: string | null
+  unresolvedTarget?: string
+  event: string
+  kind: XStateTransitionKind
+  guard?: string
+  priority: number
+  targetIndex: number
+  location: XStateSourceLocation
+}
+
+export type XStateMachineTopology = {
+  key: string
+  id: string
+  variableName: string
+  filePath: string
+  nodes: XStateStateNode[]
+  transitions: XStateTransition[]
+  diagnostics: XStateDiagnostic[]
+}
+
+export type XStateTopologyCollection = {
+  machines: XStateMachineTopology[]
+  diagnostics: XStateDiagnostic[]
+}
+
+export class XStateAnalysisLimitError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = "XStateAnalysisLimitError"
+  }
+}

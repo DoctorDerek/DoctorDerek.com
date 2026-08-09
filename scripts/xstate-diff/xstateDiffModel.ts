@@ -71,6 +71,48 @@ export type XStateTopologyCollection = {
   diagnostics: XStateDiagnostic[]
 }
 
+export type XStateChangeType = "added" | "removed" | "modified"
+
+export type XStateNodeChange = {
+  changeType: XStateChangeType
+  before?: XStateStateNode
+  after?: XStateStateNode
+  changedFields: string[]
+}
+
+export type XStateTransitionChange = {
+  changeType: XStateChangeType
+  before?: XStateTransition
+  after?: XStateTransition
+  changedFields: string[]
+}
+
+export type XStateMachineDiff = {
+  key: string
+  id: string
+  filePath: string
+  nodeChanges: XStateNodeChange[]
+  transitionChanges: XStateTransitionChange[]
+}
+
+export type XStateDiffSummary = {
+  statesAdded: number
+  statesRemoved: number
+  statesModified: number
+  transitionsAdded: number
+  transitionsRemoved: number
+  transitionsModified: number
+  transitionsRedirected: number
+  guardsChanged: number
+}
+
+export type XStateTopologyDiff = {
+  machines: XStateMachineDiff[]
+  summary: XStateDiffSummary
+  diagnostics: XStateDiagnostic[]
+  implementationChanged: boolean
+}
+
 export class XStateAnalysisLimitError extends Error {
   constructor(message: string) {
     super(message)

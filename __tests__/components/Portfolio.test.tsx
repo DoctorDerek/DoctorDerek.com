@@ -14,7 +14,10 @@ vi.mock("next/dynamic", async () => {
     await import("@/components/PortfolioProjectDialog")
 
   return {
-    default: () => PortfolioProjectDialog,
+    default: (loadComponent: () => Promise<unknown>) => {
+      void loadComponent()
+      return PortfolioProjectDialog
+    },
   }
 })
 

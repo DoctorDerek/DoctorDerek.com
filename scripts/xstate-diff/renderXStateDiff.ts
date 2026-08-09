@@ -89,17 +89,6 @@ const assertCommentWithinLimit = (comment: string) => {
     )
 }
 
-const getNodeForChange = (
-  machineDiff: XStateMachineDiff,
-  stateNodeId: string,
-) => {
-  const nodeChange = machineDiff.nodeChanges.find(
-    (change) => (change.after ?? change.before)?.id === stateNodeId,
-  )
-
-  return nodeChange?.after ?? nodeChange?.before
-}
-
 const getMachineTopology = (
   topology: XStateTopologyCollection,
   machineKey: string,
@@ -199,11 +188,7 @@ const createFocusedMachineGraph = (
 
   return {
     nodes: [...focusedNodeIds]
-      .map(
-        (stateNodeId) =>
-          combinedNodes.get(stateNodeId) ??
-          getNodeForChange(machineDiff, stateNodeId),
-      )
+      .map((stateNodeId) => combinedNodes.get(stateNodeId))
       .filter((stateNode): stateNode is XStateStateNode => Boolean(stateNode))
       .sort((leftNode, rightNode) => compareText(leftNode.id, rightNode.id)),
     contextTransitions,
@@ -331,21 +316,20 @@ const renderAccessibleMachineChanges = (machineDiff: XStateMachineDiff) => {
       const before = transitionChange.before
       const after = transitionChange.after
 
-      if (transitionChange.changeType === "added" && after)
-        return `Added ${describeTransition(after)}.`
-      if (transitionChange.changeType === "removed" && before)
-        return `Removed ${describeTransition(before)}.`
+      if (transitionChange.changeType === "added")
+        return `Added ${describeTransition(after!)}.`
+      if (transitionChange.changeType === "removed")
+        return `Removed ${describeTransition(before!)}.`
 
-      if (before && after) {
-        if (transitionChange.changedFields.includes("targetId"))
-          return sanitizeMarkdownText(
-            `Redirected ${after.event} from ${after.sourceId}: ${getTransitionTarget(before)} → ${getTransitionTarget(after)}${after.guard ? `, guarded by ${after.guard}` : ""}.`,
-          )
+      const modifiedBefore = before!
+      const modifiedAfter = after!
 
-        return `Modified ${describeTransition(after)}: ${transitionChange.changedFields.join(", ")}.`
-      }
+      if (transitionChange.changedFields.includes("targetId"))
+        return sanitizeMarkdownText(
+          `Redirected ${modifiedAfter.event} from ${modifiedAfter.sourceId}: ${getTransitionTarget(modifiedBefore)} → ${getTransitionTarget(modifiedAfter)}${modifiedAfter.guard ? `, guarded by ${modifiedAfter.guard}` : ""}.`,
+        )
 
-      return "Modified an unresolved transition."
+      return `Modified ${describeTransition(modifiedAfter)}: ${transitionChange.changedFields.join(", ")}.`
     }),
   ]
 

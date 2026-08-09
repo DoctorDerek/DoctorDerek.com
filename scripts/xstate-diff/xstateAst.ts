@@ -98,13 +98,6 @@ export const getStaticText = (
   )
     return expression.text
 
-  if (
-    ts.isPrefixUnaryExpression(expression) &&
-    expression.operator === ts.SyntaxKind.MinusToken &&
-    ts.isNumericLiteral(expression.operand)
-  )
-    return `-${expression.operand.text}`
-
   return undefined
 }
 

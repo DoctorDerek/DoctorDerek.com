@@ -137,10 +137,8 @@ const pairUniqueTransitions = (
 
     if (baseTransitions.length !== 1 || headTransitions?.length !== 1) continue
 
-    const before = baseTransitions[0]
-    const after = headTransitions[0]
-
-    if (!before || !after) continue
+    const before = baseTransitions[0]!
+    const after = headTransitions[0]!
 
     unmatchedBaseTransitions.delete(before)
     unmatchedHeadTransitions.delete(after)

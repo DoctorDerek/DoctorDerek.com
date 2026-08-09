@@ -80,18 +80,24 @@ describe("site copy quality gates", () => {
   })
 
   it("keeps contact copy concise and evidence-driven", () => {
-    expect(SITE_CONTENT.CONTACT_BULLETS).toHaveLength(4)
-    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain(
-      "full-stack TypeScript products",
+    const contactNarrative = SITE_CONTENT.CONTACT_BULLETS.join(" ")
+
+    expect(SITE_CONTENT.CONTACT_BULLETS).toHaveLength(3)
+    expect(SITE_CONTENT.CONTACT_BULLETS[0]).toMatch(/^I build and ship/)
+    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toMatch(/^As a code owner/)
+    expect(SITE_CONTENT.CONTACT_BULLETS[2]).toMatch(
+      /^I deliver production-ready MVPs/,
     )
-    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain(
-      "Next.js, React Native, and Expo",
-    )
-    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toContain("EAS Build/Submit")
-    expect(SITE_CONTENT.CONTACT_BULLETS[2]).toContain("code owner")
-    expect(SITE_CONTENT.CONTACT_BULLETS[3]).toContain("under 3 months")
-    expect(SITE_CONTENT.CONTACT_BULLETS.join(" ")).not.toContain(
-      "underperforming",
+    expect(contactNarrative).toContain("full-stack TypeScript products")
+    expect(contactNarrative).toContain("Next.js, React Native, and Expo")
+    expect(contactNarrative).toContain("EAS Build/Submit")
+    expect(contactNarrative).toContain("App Store and Google Play")
+    expect(contactNarrative).toContain("deterministic architecture")
+    expect(contactNarrative).toContain("human code review")
+    expect(contactNarrative).toContain("under 3 months")
+    expect(contactNarrative).toContain("cut network payloads by 90%")
+    expect(contactNarrative).toContain(
+      "more than 10 minutes to under 10 seconds",
     )
   })
 

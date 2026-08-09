@@ -204,11 +204,7 @@ describe("renderXStateDiff", () => {
       })),
     }
 
-    const rendered = renderComparison(
-      topologyWithDiagnostics,
-      topology,
-      false,
-    )
+    const rendered = renderComparison(topologyWithDiagnostics, topology, false)
 
     expect(rendered.comment).toContain(
       "3 additional diagnostics are available in the artifact.",

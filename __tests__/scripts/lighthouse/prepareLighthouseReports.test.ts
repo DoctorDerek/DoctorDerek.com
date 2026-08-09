@@ -172,9 +172,9 @@ describe("prepareLighthouseReports", () => {
       bestPractices: 100,
       seo: 100,
     }
-    const successfulFetch = vi.fn<typeof fetch>().mockResolvedValue(
-      new Response(JSON.stringify(scores), { status: 200 }),
-    )
+    const successfulFetch = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(new Response(JSON.stringify(scores), { status: 200 }))
     const unavailableFetch = vi
       .fn<typeof fetch>()
       .mockResolvedValue(new Response(null, { status: 503 }))

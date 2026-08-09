@@ -7,6 +7,7 @@ export const XSTATE_DIFF_LIMITS = {
   maximumNodesPerMachine: 1_000,
   maximumTransitionsPerMachine: 2_000,
   maximumStateDepth: 20,
+  maximumFocusedNodesPerMachine: 80,
   maximumLabelCharacters: 200,
   maximumCommentCharacters: 60_000,
 } as const

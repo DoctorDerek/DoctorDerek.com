@@ -163,6 +163,7 @@ describe("renderXStateDiff", () => {
         id: "recovery",
         states: {
           ready: {
+            after: { 100: "ready" },
             on: {
               INTERNAL: { actions: "track" },
               LOST: "missing",
@@ -186,6 +187,10 @@ describe("renderXStateDiff", () => {
     expect(rendered.accessibleText).toContain(
       "Removed LOST from recovery.ready to unresolved target missing.",
     )
+    expect(rendered.accessibleText).toContain(
+      "Removed after 100 from recovery.ready to recovery.ready.",
+    )
+    expect(rendered.mermaid).toContain("after: 100")
   })
 
   it("describes modified states and guards accessibly", () => {
@@ -197,6 +202,7 @@ describe("renderXStateDiff", () => {
             id: "readyBefore",
             on: {
               SUBMIT: { guard: "isValid", target: "done" },
+              REDIRECT: "done",
             },
           },
           done: {},
@@ -211,9 +217,11 @@ describe("renderXStateDiff", () => {
             id: "readyAfter",
             on: {
               SUBMIT: { guard: "isComplete", target: "done" },
+              REDIRECT: { guard: "canRedirect", target: "other" },
             },
           },
           done: {},
+          other: {},
         },
       })
     `)
@@ -225,6 +233,9 @@ describe("renderXStateDiff", () => {
     )
     expect(rendered.accessibleText).toContain(
       "Modified SUBMIT from recovery.ready to recovery.done guarded by isComplete: guard.",
+    )
+    expect(rendered.accessibleText).toContain(
+      "Redirected REDIRECT from recovery.ready: recovery.done → recovery.other, guarded by canRedirect.",
     )
   })
 

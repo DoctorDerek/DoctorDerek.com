@@ -5,26 +5,18 @@ import {
   waitFor,
   within,
 } from "@testing-library/react"
-import type { ComponentType } from "react"
-import { beforeAll, describe, expect, it, vi } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import Portfolio from "@/components/Portfolio"
 import { PORTFOLIO_PROJECTS } from "@/constants/SITE_CONTENT"
 
 vi.mock("next/dynamic", async () => {
-  const { lazy, Suspense } =
-    await vi.importActual<typeof import("react")>("react")
+  const { default: PortfolioProjectDialog } =
+    await import("@/components/PortfolioProjectDialog")
 
   return {
-    default: <Properties extends object>(
-      loadComponent: () => Promise<{ default: ComponentType<Properties> }>,
-    ) => {
-      const LazyComponent = lazy(loadComponent)
-
-      return (properties: Properties) => (
-        <Suspense fallback={null}>
-          <LazyComponent {...properties} />
-        </Suspense>
-      )
+    default: (loadComponent: () => Promise<unknown>) => {
+      void loadComponent()
+      return PortfolioProjectDialog
     },
   }
 })
@@ -34,10 +26,6 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
 }))
 
 describe("Portfolio", () => {
-  beforeAll(async () => {
-    await import("@/components/PortfolioProjectDialog")
-  })
-
   it("renders the audited project order with semantic controls and no phase copy", () => {
     render(<Portfolio />)
 

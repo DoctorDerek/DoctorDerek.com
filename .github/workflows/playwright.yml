@@ -1,4 +1,4 @@
-name: Playwright E2E Pipeline
+name: Playwright E2E Tests and Preview Mobile Web Lighthouse Measurements
 
 on:
   deployment_status:
@@ -9,14 +9,80 @@ permissions:
   id-token: write
 
 jobs:
+  preview-context:
+    name: Resolve Trusted Preview Context
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Preview'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      preview-url: ${{ steps.context.outputs.preview-url }}
+      pull-request-number: ${{ steps.context.outputs.pull-request-number }}
+    steps:
+      - name: Resolve Preview Deployment and Pull Request
+        id: context
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        with:
+          retries: 3
+          script: |
+            const deployment = context.payload.deployment;
+            const deploymentStatus = context.payload.deployment_status;
+            const deploymentSha = deployment.sha;
+            const deploymentRef = deployment.ref;
+            const deploymentCreator = deployment.creator?.login;
+            const previewUrl = new URL(deploymentStatus.target_url);
+
+            if (deploymentCreator !== 'vercel[bot]') {
+              throw new Error(`Untrusted Preview deployment creator: ${deploymentCreator ?? 'unknown'}.`);
+            }
+
+            if (
+              previewUrl.protocol !== 'https:' ||
+              !previewUrl.hostname.endsWith('.vercel.app')
+            ) {
+              throw new Error(`Untrusted Preview deployment URL: ${previewUrl}.`);
+            }
+
+            const { data: associatedPullRequests } =
+              await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: deploymentSha,
+              });
+            let pullRequests = associatedPullRequests;
+
+            if (pullRequests.length === 0 && deploymentRef) {
+              const { data: matchingPullRequests } = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: `${context.repo.owner}:${deploymentRef}`,
+                state: 'open',
+              });
+              pullRequests = matchingPullRequests;
+            }
+
+            const pullRequest = pullRequests.find(
+              candidate => candidate.state === 'open' && candidate.head.sha === deploymentSha,
+            ) ?? pullRequests.find(candidate => candidate.state === 'open');
+
+            if (!pullRequest) {
+              core.warning(`No open pull request is associated with deployment ${deploymentSha}.`);
+              return;
+            }
+
+            core.setOutput('preview-url', previewUrl.toString());
+            core.setOutput('pull-request-number', pullRequest.number.toString());
+
   e2e:
     name: Playwright E2E Tests
-    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Preview'
+    needs: preview-context
+    if: needs.preview-context.outputs.pull-request-number != ''
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Checkout Repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ github.event.deployment.sha }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
@@ -28,7 +94,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Get Playwright Version
         id: playwright-version
@@ -51,9 +117,9 @@ jobs:
         with:
           retries: 3
           script: |
-            const token = await core.getIDToken()
-            core.setSecret(token)
-            core.setOutput("token", token)
+            const token = await core.getIDToken();
+            core.setSecret(token);
+            core.setOutput('token', token);
 
       - name: Run Playwright Tests and Capture Summary
         id: playwright
@@ -67,7 +133,7 @@ jobs:
           echo "PLAYWRIGHT_EXIT_CODE=$PLAYWRIGHT_EXIT_CODE" >> "$GITHUB_ENV"
           echo "PLAYWRIGHT_OUTPUT_FILE=$RUNNER_TEMP/playwright-output.txt" >> "$GITHUB_ENV"
         env:
-          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
+          PLAYWRIGHT_TEST_BASE_URL: ${{ needs.preview-context.outputs.preview-url }}
           PLAYWRIGHT_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
 
       - name: Upload Playwright Report
@@ -82,20 +148,22 @@ jobs:
         if: always()
         continue-on-error: true
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        env:
+          PLAYWRIGHT_PREVIEW_URL: ${{ needs.preview-context.outputs.preview-url }}
+          PULL_REQUEST_NUMBER: ${{ needs.preview-context.outputs.pull-request-number }}
         with:
           retries: 3
           script: |
             const fs = require('fs');
-            const deploymentSha = context.payload.deployment.sha;
-            const deploymentRef = context.payload.deployment.ref;
             const outputPath = process.env.PLAYWRIGHT_OUTPUT_FILE;
             const output = outputPath && fs.existsSync(outputPath)
               ? fs.readFileSync(outputPath, 'utf8')
               : '';
             const cleanOutput = output.replace(/\u001b\[[0-9;]*m/g, '');
             const exitCode = Number.parseInt(process.env.PLAYWRIGHT_EXIT_CODE ?? '', 10);
+            const pullRequestNumber = Number.parseInt(process.env.PULL_REQUEST_NUMBER, 10);
             const header = '### 🎭 Playwright';
-            const qualityPosition = '**Quality check 3 of 3**';
+            const qualityPosition = '**Quality check 3 of 4**';
             const summaryLines = cleanOutput
               .split(/\r?\n/)
               .filter(line => /Running \d+ tests?|\d+ (passed|failed|flaky|skipped)|Error:/.test(line))
@@ -108,38 +176,13 @@ jobs:
             const status = Number.isInteger(exitCode) && exitCode === 0
               ? '✅ **Playwright completed successfully.**'
               : '❌ **Playwright tests failed or the runner could not complete.**';
-            const previewUrl = context.payload.deployment_status.target_url;
-            const previewLink = previewUrl ? `\n\n[Open preview deployment](${previewUrl})` : '';
+            const previewLink = process.env.PLAYWRIGHT_PREVIEW_URL
+              ? `\n\n[Open preview deployment](${process.env.PLAYWRIGHT_PREVIEW_URL})`
+              : '';
             const body = `${header}\n\n${qualityPosition}\n\n${status}${summary ? `\n\n\`\`\`text\n${summary}\n\`\`\`` : ''}${previewLink}`;
 
-            const { data: associatedPullRequests } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              commit_sha: deploymentSha,
-            });
-            let pullRequests = associatedPullRequests;
-
-            if (pullRequests.length === 0 && deploymentRef) {
-              const { data: matchingPullRequests } = await github.rest.pulls.list({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                head: `${context.repo.owner}:${deploymentRef}`,
-                state: 'open',
-              });
-              pullRequests = matchingPullRequests;
-            }
-
-            const pullRequest = pullRequests.find(
-              candidate => candidate.state === 'open' && candidate.head.sha === deploymentSha,
-            ) ?? pullRequests.find(candidate => candidate.state === 'open') ?? pullRequests[0];
-
-            if (!pullRequest) {
-              core.warning(`No pull request is associated with deployment ${deploymentSha}.`);
-              return;
-            }
-
             const { data: comments } = await github.rest.issues.listComments({
-              issue_number: pullRequest.number,
+              issue_number: pullRequestNumber,
               owner: context.repo.owner,
               repo: context.repo.repo,
               per_page: 100,
@@ -157,7 +200,7 @@ jobs:
               });
             } else {
               await github.rest.issues.createComment({
-                issue_number: pullRequest.number,
+                issue_number: pullRequestNumber,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 body,
@@ -169,5 +212,140 @@ jobs:
         run: |
           if ! [[ "$PLAYWRIGHT_EXIT_CODE" =~ ^[0-9]+$ ]] || [ "$PLAYWRIGHT_EXIT_CODE" -ne 0 ]; then
             echo "Playwright tests failed or the runner could not complete."
+            exit 1
+          fi
+
+  lighthouse:
+    name: Preview Mobile Web Lighthouse
+    needs: preview-context
+    if: needs.preview-context.outputs.pull-request-number != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ github.event.deployment.sha }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: ".node-version"
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Get GitHub OIDC Token
+        id: github-oidc-token
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        with:
+          retries: 3
+          script: |
+            const token = await core.getIDToken();
+            core.setSecret(token);
+            core.setOutput('token', token);
+
+      - name: Run Preview Mobile Web Lighthouse
+        id: lighthouse
+        run: |
+          set +e
+          pnpm lighthouse 2>&1 | tee "$RUNNER_TEMP/lighthouse-output.txt"
+          LIGHTHOUSE_EXIT_CODE=${PIPESTATUS[0]}
+          set -e
+
+          echo "LIGHTHOUSE_EXIT_CODE=$LIGHTHOUSE_EXIT_CODE" >> "$GITHUB_ENV"
+          echo "LIGHTHOUSE_OUTPUT_FILE=$RUNNER_TEMP/lighthouse-output.txt" >> "$GITHUB_ENV"
+        env:
+          LIGHTHOUSE_NUMBER_OF_RUNS: "3"
+          LIGHTHOUSE_OUTPUT_DIRECTORY: lighthouse-preview-results
+          LIGHTHOUSE_TARGET_URL: ${{ needs.preview-context.outputs.preview-url }}
+          LIGHTHOUSE_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
+
+      - name: Prepare Preview Lighthouse Comment
+        id: lighthouse-prepare
+        if: always()
+        continue-on-error: true
+        run: pnpm lighthouse:prepare
+        env:
+          LIGHTHOUSE_ACTIONS_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          LIGHTHOUSE_COMMENT_FILE: ${{ runner.temp }}/lighthouse-comment.md
+          LIGHTHOUSE_EXIT_CODE: ${{ env.LIGHTHOUSE_EXIT_CODE }}
+          LIGHTHOUSE_OUTPUT_FILE: ${{ env.LIGHTHOUSE_OUTPUT_FILE }}
+          LIGHTHOUSE_PRODUCTION_REPORT_URL: https://doctorderek.github.io/DoctorDerek.com/
+          LIGHTHOUSE_PRODUCTION_SCORES_URL: https://doctorderek.github.io/DoctorDerek.com/lighthouse-results.json
+          LIGHTHOUSE_RESULTS_DIRECTORY: lighthouse-preview-results
+          LIGHTHOUSE_TARGET_URL: ${{ needs.preview-context.outputs.preview-url }}
+          LIGHTHOUSE_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
+
+      - name: Upload Complete Preview Lighthouse Reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: preview-mobile-web-lighthouse-reports
+          path: lighthouse-preview-results/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Post Preview Lighthouse PR Comment
+        if: always()
+        continue-on-error: true
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        env:
+          LIGHTHOUSE_COMMENT_FILE: ${{ runner.temp }}/lighthouse-comment.md
+          LIGHTHOUSE_PREVIEW_URL: ${{ needs.preview-context.outputs.preview-url }}
+          PULL_REQUEST_NUMBER: ${{ needs.preview-context.outputs.pull-request-number }}
+        with:
+          retries: 3
+          script: |
+            const fs = require('fs');
+            const header = '### 🔦 Mobile Web Lighthouse Measurements';
+            const commentFile = process.env.LIGHTHOUSE_COMMENT_FILE;
+            const pullRequestNumber = Number.parseInt(process.env.PULL_REQUEST_NUMBER, 10);
+            const body = commentFile && fs.existsSync(commentFile)
+              ? fs.readFileSync(commentFile, 'utf8')
+              : `${header}\n\n**Quality check 4 of 4**\n\n❌ **Mobile Web Lighthouse could not obtain a measurement.**\n\n[Open preview deployment](${process.env.LIGHTHOUSE_PREVIEW_URL})`;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: pullRequestNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100,
+            });
+            const botComment = comments.find(
+              comment => comment.user.type === 'Bot' && comment.body?.includes(header),
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                comment_id: botComment.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: pullRequestNumber,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            }
+
+      - name: Enforce Lighthouse Measurement Availability
+        if: always()
+        env:
+          LIGHTHOUSE_PREPARE_OUTCOME: ${{ steps.lighthouse-prepare.outcome }}
+        run: |
+          if ! [[ "$LIGHTHOUSE_EXIT_CODE" =~ ^[0-9]+$ ]] || [ "$LIGHTHOUSE_EXIT_CODE" -ne 0 ]; then
+            echo "Preview Mobile Web Lighthouse could not obtain a measurement."
+            exit 1
+          fi
+
+          if [ "$LIGHTHOUSE_PREPARE_OUTCOME" != "success" ]; then
+            echo "Preview Lighthouse reports could not be prepared."
             exit 1
           fi

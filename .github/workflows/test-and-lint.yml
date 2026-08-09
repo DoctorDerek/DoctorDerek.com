@@ -1,4 +1,4 @@
-name: Lint & Test Pipeline
+name: ESLint, Vitest, and XState Pipeline
 
 on:
   pull_request:
@@ -13,30 +13,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: Lint & Annotate PR
+  initialize-comments:
+    name: Initialize PR Review Comments
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
 
     steps:
-      - name: Initialize PR Quality Comments
+      - name: Initialize Ordered PR Review Comments
         continue-on-error: true
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         with:
           retries: 3
           script: |
-            const qualityComments = [
+            const reviewComments = [
               {
                 header: '### 🧹 ESLint',
-                body: '### 🧹 ESLint\n\n**Quality check 1 of 3**\n\n⏳ Waiting for ESLint.',
+                body: '### 🧹 ESLint\n\n**Quality check 1 of 4**\n\n⏳ Waiting for ESLint.',
               },
               {
                 header: '### 🧪 Vitest',
-                body: '### 🧪 Vitest\n\n**Quality check 2 of 3**\n\n⏳ Waiting for Vitest.',
+                body: '### 🧪 Vitest\n\n**Quality check 2 of 4**\n\n⏳ Waiting for Vitest.',
               },
               {
                 header: '### 🎭 Playwright',
-                body: '### 🎭 Playwright\n\n**Quality check 3 of 3**\n\n⏳ Waiting for a successful preview deployment.',
+                body: '### 🎭 Playwright\n\n**Quality check 3 of 4**\n\n⏳ Waiting for a successful preview deployment.',
+              },
+              {
+                header: '### 🔦 Mobile Web Lighthouse Measurements',
+                body: '### 🔦 Mobile Web Lighthouse Measurements\n\n**Quality check 4 of 4**\n\n⏳ Waiting for a successful preview deployment.',
+              },
+              {
+                header: '### 🗺️ XState v5 State Machine Diff Visualization',
+                body: '<!-- xstate-v5-change-map -->\n### 🗺️ XState v5 State Machine Diff Visualization\n\n**Architecture visualization**\n\n⏳ Waiting for static XState analysis.',
               },
             ];
 
@@ -47,9 +55,9 @@ jobs:
               per_page: 100,
             });
 
-            for (const qualityComment of qualityComments) {
+            for (const reviewComment of reviewComments) {
               const existingComment = comments.find(
-                comment => comment.user.type === 'Bot' && comment.body?.includes(qualityComment.header),
+                comment => comment.user.type === 'Bot' && comment.body?.includes(reviewComment.header),
               );
 
               if (!existingComment) {
@@ -57,11 +65,18 @@ jobs:
                   issue_number: context.issue.number,
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  body: qualityComment.body,
+                  body: reviewComment.body,
                 });
               }
             }
 
+  lint:
+    name: Lint & Annotate PR
+    needs: initialize-comments
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
@@ -111,7 +126,7 @@ jobs:
             const exitCode = Number.parseInt(process.env.LINT_EXIT_CODE ?? '', 10);
             const runnerStatus = process.env.LINT_RUNNER_STATUS;
             const header = '### 🧹 ESLint';
-            const qualityPosition = '**Quality check 1 of 3**';
+            const qualityPosition = '**Quality check 1 of 4**';
             const hasFindings = /\d+ problems? \(\d+ errors?, \d+ warnings?\)/.test(output);
             const displayedOutput = output.length > 58000
               ? `…\n${output.slice(-58000)}`
@@ -180,7 +195,7 @@ jobs:
             const cleanOutput = output.replace(/\u001b\[[0-9;]*m/g, '');
             const exitCode = Number.parseInt(process.env.VITEST_EXIT_CODE ?? '', 10);
             const header = '### 🧪 Vitest';
-            const qualityPosition = '**Quality check 2 of 3**';
+            const qualityPosition = '**Quality check 2 of 4**';
             const summaryLines = cleanOutput
               .split(/\r?\n/)
               .filter(line => /Test Files|Tests|Duration|No test files found/.test(line))
@@ -225,6 +240,8 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@04b047e8bb82a0c002c8312c1c880fbc6a999d45 # v5
         with:
+          disable_search: true
+          files: ./coverage/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: vitest
 
@@ -244,3 +261,122 @@ jobs:
           fi
 
           exit "$FAILED"
+
+  xstate-analysis:
+    name: Analyze XState v5 Topology
+    needs: initialize-comments
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Pull Request History
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: ".node-version"
+          cache: "pnpm"
+
+      - name: Install Analysis Dependencies Without Lifecycle Scripts
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Generate Static XState v5 Diff
+        id: xstate-analysis
+        continue-on-error: true
+        run: pnpm xstate:diff
+        env:
+          XSTATE_DIFF_ACTIONS_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          XSTATE_DIFF_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          XSTATE_DIFF_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          XSTATE_DIFF_OUTPUT_DIRECTORY: xstate-diff-artifacts
+
+      - name: Upload XState Diff Artifacts
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: xstate-v5-state-machine-diff
+          path: xstate-diff-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
+
+  xstate-publish:
+    name: Publish XState v5 Diff Visualization
+    needs:
+      - initialize-comments
+      - xstate-analysis
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+      pull-requests: write
+    steps:
+      - name: Download XState Diff Artifacts
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: xstate-v5-state-machine-diff
+          path: xstate-diff-artifacts
+
+      - name: Publish Stable XState Diff Comment
+        continue-on-error: true
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        with:
+          retries: 3
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- xstate-v5-change-map -->';
+            const header = '### 🗺️ XState v5 State Machine Diff Visualization';
+            const commentPath = 'xstate-diff-artifacts/comment.md';
+            const maximumCommentBytes = 60_000;
+            const runUrl = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+            const fallbackBody = `${marker}\n${header}\n\n**Architecture visualization**\n\n⚠️ **Static XState analysis is unavailable.**\n\n[Inspect workflow run](${runUrl})`;
+            let body = fallbackBody;
+
+            if (fs.existsSync(commentPath)) {
+              const candidateBody = fs.readFileSync(commentPath, 'utf8').trim();
+              const isValid =
+                Buffer.byteLength(candidateBody, 'utf8') <= maximumCommentBytes &&
+                candidateBody.startsWith(marker) &&
+                candidateBody.includes(header);
+
+              if (isValid) {
+                body = candidateBody;
+              } else {
+                core.warning('Rejected an invalid or oversized XState diff comment artifact.');
+              }
+            }
+
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100,
+            });
+            const botComment = comments.find(
+              comment => comment.user.type === 'Bot' && comment.body?.includes(marker),
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                comment_id: botComment.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              });
+            }

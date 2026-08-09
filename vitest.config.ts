@@ -10,6 +10,9 @@ export default defineConfig({
     },
   },
   test: {
+    coverage: {
+      reporter: ["text", "html", "json", "lcov"],
+    },
     environment: "happy-dom",
     include: ["**/*.test.tsx", "**/*.test.ts"],
     setupFiles: ["./vitest.setup.ts"],

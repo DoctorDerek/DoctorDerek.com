@@ -188,18 +188,34 @@ describe("diffMachineTopologies", () => {
   })
 
   it("reports added and removed machines as complete topology changes", () => {
-    const removedMachine = extractFixture(
-      `const oldMachine = createMachine({ id: "old", states: { ready: {} } })`,
-    )
-    const addedMachine = extractFixture(
-      `const newMachine = createMachine({ id: "new", states: { waiting: {} } })`,
-    )
+    const removedMachine = extractFixture(`
+      const oldMachine = createMachine({
+        id: "old",
+        states: {
+          ready: { on: { RETIRE: "done" } },
+          done: {},
+        },
+      })
+    `)
+    const addedMachine = extractFixture(`
+      const newMachine = createMachine({
+        id: "new",
+        states: {
+          waiting: { on: { START: "complete" } },
+          complete: {},
+        },
+      })
+    `)
 
     const diff = diffMachineTopologies(removedMachine, addedMachine)
 
     expect(diff.machines.map((machine) => machine.id)).toEqual(["new", "old"])
-    expect(diff.summary.statesAdded).toBe(2)
-    expect(diff.summary.statesRemoved).toBe(2)
+    expect(diff.summary).toMatchObject({
+      statesAdded: 3,
+      statesRemoved: 3,
+      transitionsAdded: 1,
+      transitionsRemoved: 1,
+    })
   })
 
   it("classifies matched state removals and type changes", () => {

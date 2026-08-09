@@ -179,6 +179,10 @@ describe("extractMachineTopologies", () => {
   it("reports unsupported dynamic topology and unresolved targets without guessing", () => {
     const { machines, diagnostics } = extractFixture(`
       const dynamicMachine = createMachine(buildConfiguration())
+      const dynamicStatesMachine = createMachine({
+        id: "dynamicStates",
+        states: dynamicStates,
+      })
       const analyzableMachine = createMachine({
         id: "analyzable",
         states: {
@@ -194,10 +198,14 @@ describe("extractMachineTopologies", () => {
       })
     `)
 
-    expect(machines.map((machine) => machine.id)).toEqual(["analyzable"])
+    expect(machines.map((machine) => machine.id)).toEqual([
+      "analyzable",
+      "dynamicStates",
+    ])
     expect(diagnostics.map((diagnostic) => diagnostic.code)).toEqual(
       expect.arrayContaining([
         "unsupported-machine-configuration",
+        "unsupported-states-configuration",
         "unsupported-state-property",
         "unsupported-state-configuration",
         "unsupported-transition-event",

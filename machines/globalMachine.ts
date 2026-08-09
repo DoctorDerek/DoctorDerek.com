@@ -10,7 +10,13 @@ export const globalMachine = setup({
       bgUseInverse: boolean
       logoFlipCount: number
     },
-    events: {} as { type: "TOGGLE_LOGO" } | { type: "CYCLE_BACKGROUND" },
+    events: {} as
+      | { type: "TOGGLE_LOGO" }
+      | { type: "CYCLE_BACKGROUND" }
+      | { type: "XSTATE_DIFF_CALIBRATION_PROBE" },
+  },
+  guards: {
+    calibrationProbeEnabled: () => false,
   },
   actions: {
     cycleBackground: assign(({ context }) => {
@@ -43,7 +49,14 @@ export const globalMachine = setup({
               actions: "incrementLogoFlipCount",
               target: "cropped",
             },
+            XSTATE_DIFF_CALIBRATION_PROBE: {
+              guard: "calibrationProbeEnabled",
+              target: "calibrationProbeComplete",
+            },
           },
+        },
+        calibrationProbeComplete: {
+          type: "final",
         },
         cropped: {
           on: {

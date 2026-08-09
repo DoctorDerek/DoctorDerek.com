@@ -2,7 +2,6 @@ import fs from "node:fs"
 import path from "node:path"
 import type { RenderedXStateDiff } from "@/scripts/xstate-diff/renderXStateDiff"
 import {
-  XSTATE_DIFF_ANALYZER_VERSION,
   type XStateTopologyCollection,
   type XStateTopologyDiff,
 } from "@/scripts/xstate-diff/xstateDiffModel"
@@ -42,7 +41,6 @@ export const writeXStateDiffArtifacts = ({
   writeJsonArtifact(outputDirectory, "head-graph.json", headTopology)
   writeJsonArtifact(outputDirectory, "xstate-diff.json", topologyDiff)
   writeJsonArtifact(outputDirectory, "diagnostics.json", {
-    analyzerVersion: XSTATE_DIFF_ANALYZER_VERSION,
     baseSha,
     headSha,
     diagnostics: topologyDiff.diagnostics,

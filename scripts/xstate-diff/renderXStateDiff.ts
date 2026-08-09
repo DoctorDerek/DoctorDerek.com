@@ -1,5 +1,4 @@
 import {
-  XSTATE_DIFF_ANALYZER_VERSION,
   XSTATE_DIFF_LIMITS,
   XStateAnalysisLimitError,
   type XStateChangeType,
@@ -404,7 +403,7 @@ export const renderXStateDiff = ({
   artifactsUrl,
 }: RenderXStateDiffOptions): RenderedXStateDiff => {
   const comparison = `Base \`${baseSha.slice(0, 12)}\` → Head \`${headSha.slice(0, 12)}\``
-  const footer = `[Download canonical graphs, structured diff, Mermaid, and diagnostics](${artifactsUrl})\n\nAnalyzer \`${XSTATE_DIFF_ANALYZER_VERSION}\``
+  const footer = `[Download canonical graphs, structured diff, Mermaid, and diagnostics](${artifactsUrl})`
 
   if (topologyDiff.machines.length === 0) {
     const implementationNote = topologyDiff.implementationChanged

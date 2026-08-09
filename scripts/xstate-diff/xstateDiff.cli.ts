@@ -4,10 +4,7 @@ import { diffMachineTopologies } from "@/scripts/xstate-diff/diffMachineTopologi
 import { readGitMachineComparison } from "@/scripts/xstate-diff/readGitMachineComparison"
 import { renderXStateDiff } from "@/scripts/xstate-diff/renderXStateDiff"
 import { writeXStateDiffArtifacts } from "@/scripts/xstate-diff/writeXStateDiffArtifacts"
-import {
-  XSTATE_DIFF_ANALYZER_VERSION,
-  XSTATE_DIFF_LIMITS,
-} from "@/scripts/xstate-diff/xstateDiffModel"
+import { XSTATE_DIFF_LIMITS } from "@/scripts/xstate-diff/xstateDiffModel"
 
 const outputDirectory = path.resolve(
   process.env.XSTATE_DIFF_OUTPUT_DIRECTORY ?? "xstate-diff-artifacts",
@@ -93,9 +90,7 @@ try {
 
 ${errorMessage}
 
-[Inspect workflow run](${getFailureRunUrl()})
-
-Analyzer \`${XSTATE_DIFF_ANALYZER_VERSION}\``
+[Inspect workflow run](${getFailureRunUrl()})`
 
   fs.mkdirSync(outputDirectory, { recursive: true })
   fs.writeFileSync(
@@ -104,7 +99,7 @@ Analyzer \`${XSTATE_DIFF_ANALYZER_VERSION}\``
   )
   fs.writeFileSync(
     path.join(outputDirectory, "diagnostics.json"),
-    `${JSON.stringify({ analyzerVersion: XSTATE_DIFF_ANALYZER_VERSION, error: errorMessage }, null, 2)}\n`,
+    `${JSON.stringify({ error: errorMessage }, null, 2)}\n`,
   )
   process.stderr.write(`${errorMessage}\n`)
   process.exitCode = 1

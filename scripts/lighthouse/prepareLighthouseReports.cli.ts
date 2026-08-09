@@ -22,16 +22,16 @@ const lighthouseExitCode = Number.parseInt(
   10,
 )
 
-if (commentFile && previewUrl && actionsRunUrl && lighthouseExitCode !== 0) {
-  redactSensitiveLighthouseArtifacts(
-    resultsDirectory,
-    process.env.LIGHTHOUSE_VERCEL_TRUSTED_OIDC_TOKEN,
-  )
-
+const readRunnerOutput = () => {
   const runnerOutputPath = process.env.LIGHTHOUSE_OUTPUT_FILE
-  const runnerOutput = runnerOutputPath
+
+  return runnerOutputPath && fs.existsSync(runnerOutputPath)
     ? fs.readFileSync(runnerOutputPath, "utf8")
     : ""
+}
+
+const writeFailedPreviewComment = (runnerOutput: string) => {
+  if (!commentFile || !previewUrl || !actionsRunUrl) return
 
   fs.writeFileSync(
     commentFile,
@@ -41,30 +41,53 @@ if (commentFile && previewUrl && actionsRunUrl && lighthouseExitCode !== 0) {
       runnerOutput,
     }),
   )
-} else {
-  const previewScores = prepareLighthouseReports({
-    publishedDirectory,
+}
+
+const redactPreviewArtifacts = () =>
+  redactSensitiveLighthouseArtifacts(
     resultsDirectory,
-    sensitiveValue: process.env.LIGHTHOUSE_VERCEL_TRUSTED_OIDC_TOKEN,
-  })
+    process.env.LIGHTHOUSE_VERCEL_TRUSTED_OIDC_TOKEN,
+  )
 
-  if (commentFile && previewUrl && actionsRunUrl) {
-    const productionScoresUrl = process.env.LIGHTHOUSE_PRODUCTION_SCORES_URL
-    const productionReportUrl = process.env.LIGHTHOUSE_PRODUCTION_REPORT_URL
-    const productionScores = productionScoresUrl
-      ? await fetchPublishedLighthouseScores(productionScoresUrl)
-      : undefined
+try {
+  if (commentFile && previewUrl && actionsRunUrl && lighthouseExitCode !== 0) {
+    redactPreviewArtifacts()
+    writeFailedPreviewComment(readRunnerOutput())
+  } else {
+    const previewScores = prepareLighthouseReports({
+      publishedDirectory,
+      resultsDirectory,
+      sensitiveValue: process.env.LIGHTHOUSE_VERCEL_TRUSTED_OIDC_TOKEN,
+    })
 
-    fs.writeFileSync(
-      commentFile,
-      formatPreviewLighthouseComment({
-        actionsRunUrl,
-        previewScores,
-        previewUrl,
-        productionReportUrl:
-          productionReportUrl ?? productionScoresUrl ?? actionsRunUrl,
-        productionScores,
-      }),
-    )
+    if (commentFile && previewUrl && actionsRunUrl) {
+      const productionScoresUrl = process.env.LIGHTHOUSE_PRODUCTION_SCORES_URL
+      const productionReportUrl = process.env.LIGHTHOUSE_PRODUCTION_REPORT_URL
+      const productionScores = productionScoresUrl
+        ? await fetchPublishedLighthouseScores(productionScoresUrl)
+        : undefined
+
+      fs.writeFileSync(
+        commentFile,
+        formatPreviewLighthouseComment({
+          actionsRunUrl,
+          previewScores,
+          previewUrl,
+          productionReportUrl:
+            productionReportUrl ?? productionScoresUrl ?? actionsRunUrl,
+          productionScores,
+        }),
+      )
+    }
   }
+} catch (error: unknown) {
+  const errorMessage = error instanceof Error ? error.message : String(error)
+  const runnerOutput = [readRunnerOutput(), errorMessage]
+    .filter(Boolean)
+    .join("\n")
+
+  redactPreviewArtifacts()
+  writeFailedPreviewComment(runnerOutput)
+  process.stderr.write(`${errorMessage}\n`)
+  process.exitCode = 1
 }

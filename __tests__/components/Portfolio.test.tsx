@@ -6,7 +6,7 @@ import {
   within,
 } from "@testing-library/react"
 import type { ComponentType } from "react"
-import { beforeAll, describe, expect, it, vi } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import Portfolio from "@/components/Portfolio"
 import { PORTFOLIO_PROJECTS } from "@/constants/SITE_CONTENT"
 
@@ -34,10 +34,6 @@ vi.mock("@/components/MotionPreferenceProvider", () => ({
 }))
 
 describe("Portfolio", () => {
-  beforeAll(async () => {
-    await import("@/components/PortfolioProjectDialog")
-  })
-
   it("renders the audited project order with semantic controls and no phase copy", () => {
     render(<Portfolio />)
 

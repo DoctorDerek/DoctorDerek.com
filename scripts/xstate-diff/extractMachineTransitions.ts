@@ -62,9 +62,7 @@ const readTargetDescriptors = (
 
     if (ts.isArrayLiteralExpression(targetExpression)) {
       const targets = targetExpression.elements.map((element) =>
-        ts.isExpression(element)
-          ? getStaticText(unwrapExpression(element))
-          : undefined,
+        getStaticText(unwrapExpression(element)),
       )
 
       if (targets.every((target): target is string => target !== undefined))

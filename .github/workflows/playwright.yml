@@ -1,4 +1,4 @@
-name: Preview Quality Pipeline
+name: Playwright E2E Tests and Preview Mobile Web Lighthouse Measurements
 
 on:
   deployment_status:

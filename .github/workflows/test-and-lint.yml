@@ -1,4 +1,4 @@
-name: PR Quality Pipeline
+name: ESLint, Vitest, and XState Pipeline
 
 on:
   pull_request:

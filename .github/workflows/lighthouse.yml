@@ -1,4 +1,4 @@
-name: Mobile Web Lighthouse Measurements
+name: Production Mobile Web Lighthouse Measurements
 
 on:
   push:

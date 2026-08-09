@@ -82,6 +82,13 @@ const sanitizeMarkdownText = (value: string) =>
     .trim()
     .slice(0, XSTATE_DIFF_LIMITS.maximumLabelCharacters)
 
+const assertCommentWithinLimit = (comment: string) => {
+  if (comment.length > XSTATE_DIFF_LIMITS.maximumCommentCharacters)
+    throw new XStateAnalysisLimitError(
+      "XState diff comment exceeds its size limit.",
+    )
+}
+
 const getNodeForChange = (
   machineDiff: XStateMachineDiff,
   stateNodeId: string,
@@ -411,10 +418,7 @@ export const renderXStateDiff = ({
       : ""
     const comment = `${COMMENT_MARKER}\n${COMMENT_HEADER}\n\n**Architecture visualization**\n\n${comparison}\n\n${NO_TOPOLOGY_CHANGES}${implementationNote}${renderDiagnostics(topologyDiff)}\n\n${footer}`
 
-    if (comment.length > XSTATE_DIFF_LIMITS.maximumCommentCharacters)
-      throw new XStateAnalysisLimitError(
-        "XState diff comment exceeds its size limit.",
-      )
+    assertCommentWithinLimit(comment)
 
     return { comment, mermaid: "", accessibleText: NO_TOPOLOGY_CHANGES }
   }
@@ -439,10 +443,7 @@ export const renderXStateDiff = ({
     .join(", ")
   const comment = `${COMMENT_MARKER}\n${COMMENT_HEADER}\n\n**Architecture visualization**\n\n${comparison}\n\nMachines: ${machineNames}\n\n**${formatSummary(topologyDiff)}**\n\n${renderedMachines.map(({ section }) => section).join("\n\n")}${renderDiagnostics(topologyDiff)}\n\n${footer}`
 
-  if (comment.length > XSTATE_DIFF_LIMITS.maximumCommentCharacters)
-    throw new XStateAnalysisLimitError(
-      "XState diff comment exceeds its size limit.",
-    )
+  assertCommentWithinLimit(comment)
 
   return {
     comment,

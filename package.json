@@ -10,6 +10,7 @@
     "start": "next start",
     "lighthouse": "lhci autorun",
     "lighthouse:prepare": "node --import jiti/register scripts/lighthouse/prepareLighthouseReports.cli.ts",
+    "xstate:diff": "node --import jiti/register scripts/xstate-diff/xstateDiff.cli.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest",

@@ -41,12 +41,24 @@ type FailedPreviewLighthouseCommentOptions = {
   sensitiveValue?: string
 }
 
-const LIGHTHOUSE_CATEGORY_IDS = {
-  performance: "performance",
-  accessibility: "accessibility",
-  bestPractices: "best-practices",
-  seo: "seo",
-} as const
+const LIGHTHOUSE_CATEGORIES = [
+  {
+    categoryId: "performance",
+    label: "Performance",
+    scoreName: "performance",
+  },
+  {
+    categoryId: "accessibility",
+    label: "Accessibility",
+    scoreName: "accessibility",
+  },
+  {
+    categoryId: "best-practices",
+    label: "Best Practices",
+    scoreName: "bestPractices",
+  },
+  { categoryId: "seo", label: "SEO", scoreName: "seo" },
+] as const
 
 const PREVIEW_LIGHTHOUSE_HEADER = "### 🔦 Mobile Web Lighthouse Measurements"
 const PREVIEW_LIGHTHOUSE_QUALITY_POSITION = "**Quality check 4 of 4**"
@@ -155,7 +167,7 @@ export const extractLighthouseScores = (
   lighthouseResult: unknown,
 ): LighthouseScores =>
   Object.fromEntries(
-    Object.entries(LIGHTHOUSE_CATEGORY_IDS).map(([scoreName, categoryId]) => [
+    LIGHTHOUSE_CATEGORIES.map(({ categoryId, scoreName }) => [
       scoreName,
       Math.round(getNumericCategoryScore(lighthouseResult, categoryId) * 100),
     ]),
@@ -165,8 +177,8 @@ export const parseLighthouseScores = (value: unknown): LighthouseScores => {
   if (!isUnknownRecord(value))
     throw new Error("Published Lighthouse scores are invalid.")
 
-  const scores = Object.keys(LIGHTHOUSE_CATEGORY_IDS).map(
-    (scoreName) => value[scoreName],
+  const scores = LIGHTHOUSE_CATEGORIES.map(
+    ({ scoreName }) => value[scoreName],
   )
 
   if (scores.some((score) => typeof score !== "number"))

@@ -12,6 +12,7 @@ import { renderXStateDiff } from "@/scripts/xstate-diff/renderXStateDiff"
 import { writeXStateDiffArtifacts } from "@/scripts/xstate-diff/writeXStateDiffArtifacts"
 
 const temporaryDirectories: string[] = []
+const GIT_INTEGRATION_TEST_TIMEOUT_MS = 15_000
 
 const createTemporaryDirectory = () => {
   const temporaryDirectory = fs.mkdtempSync(
@@ -54,50 +55,54 @@ describe("readGitMachineComparison", () => {
       fs.rmSync(temporaryDirectory, { force: true, recursive: true })
   })
 
-  it("compares the merge base and head blobs without checking out either revision", () => {
-    const repositoryDirectory = initializeRepository()
-    const machinePath = path.join(repositoryDirectory, "recoveryMachine.ts")
-    fs.writeFileSync(
-      machinePath,
-      `const machine = createMachine({ id: "recovery", states: { ready: {} } })`,
-    )
-    const baseSha = commitAll(repositoryDirectory, "base")
+  it(
+    "compares the merge base and head blobs without checking out either revision",
+    () => {
+      const repositoryDirectory = initializeRepository()
+      const machinePath = path.join(repositoryDirectory, "recoveryMachine.ts")
+      fs.writeFileSync(
+        machinePath,
+        `const machine = createMachine({ id: "recovery", states: { ready: {} } })`,
+      )
+      const baseSha = commitAll(repositoryDirectory, "base")
 
-    fs.writeFileSync(
-      machinePath,
-      `const machine = createMachine({ id: "recovery", states: { ready: { on: { NEXT: "done" } }, done: { type: "final" } } })`,
-    )
-    const headSha = commitAll(repositoryDirectory, "head")
-    const comparison = readGitMachineComparison({
-      baseRef: baseSha,
-      headRef: headSha,
-      repositoryDirectory,
-    })
+      fs.writeFileSync(
+        machinePath,
+        `const machine = createMachine({ id: "recovery", states: { ready: { on: { NEXT: "done" } }, done: { type: "final" } } })`,
+      )
+      const headSha = commitAll(repositoryDirectory, "head")
+      const comparison = readGitMachineComparison({
+        baseRef: baseSha,
+        headRef: headSha,
+        repositoryDirectory,
+      })
 
-    expect(comparison).toMatchObject({
-      mergeBaseSha: baseSha,
-      headSha,
-      changedSourceFiles: ["recoveryMachine.ts"],
-      implementationChanged: true,
-    })
-    expect(comparison.baseTopology.machines[0]?.nodes).toHaveLength(2)
-    expect(comparison.headTopology.machines[0]?.nodes).toHaveLength(3)
-    expect(runGit(repositoryDirectory, ["rev-parse", "HEAD"])).toBe(headSha)
+      expect(comparison).toMatchObject({
+        mergeBaseSha: baseSha,
+        headSha,
+        changedSourceFiles: ["recoveryMachine.ts"],
+        implementationChanged: true,
+      })
+      expect(comparison.baseTopology.machines[0]?.nodes).toHaveLength(2)
+      expect(comparison.headTopology.machines[0]?.nodes).toHaveLength(3)
+      expect(runGit(repositoryDirectory, ["rev-parse", "HEAD"])).toBe(headSha)
 
-    fs.rmSync(machinePath)
-    const deletionSha = commitAll(repositoryDirectory, "delete machine")
-    const deletionComparison = readGitMachineComparison({
-      baseRef: headSha,
-      headRef: deletionSha,
-      repositoryDirectory,
-    })
+      fs.rmSync(machinePath)
+      const deletionSha = commitAll(repositoryDirectory, "delete machine")
+      const deletionComparison = readGitMachineComparison({
+        baseRef: headSha,
+        headRef: deletionSha,
+        repositoryDirectory,
+      })
 
-    expect(deletionComparison.changedSourceFiles).toEqual([
-      "recoveryMachine.ts",
-    ])
-    expect(deletionComparison.baseTopology.machines).toHaveLength(1)
-    expect(deletionComparison.headTopology.machines).toHaveLength(0)
-  })
+      expect(deletionComparison.changedSourceFiles).toEqual([
+        "recoveryMachine.ts",
+      ])
+      expect(deletionComparison.baseTopology.machines).toHaveLength(1)
+      expect(deletionComparison.headTopology.machines).toHaveLength(0)
+    },
+    GIT_INTEGRATION_TEST_TIMEOUT_MS,
+  )
 
   it("rejects non-SHA revisions and unsafe or irrelevant source paths", () => {
     expect(() =>

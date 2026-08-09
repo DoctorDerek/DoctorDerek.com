@@ -10,6 +10,7 @@ import {
 } from "@/scripts/xstate-diff/readGitMachineComparison"
 import { renderXStateDiff } from "@/scripts/xstate-diff/renderXStateDiff"
 import { writeXStateDiffArtifacts } from "@/scripts/xstate-diff/writeXStateDiffArtifacts"
+import { XSTATE_DIFF_LIMITS } from "@/scripts/xstate-diff/xstateDiffModel"
 
 const temporaryDirectories: string[] = []
 const GIT_INTEGRATION_TEST_TIMEOUT_MS = 15_000
@@ -100,6 +101,63 @@ describe("readGitMachineComparison", () => {
       ])
       expect(deletionComparison.baseTopology.machines).toHaveLength(1)
       expect(deletionComparison.headTopology.machines).toHaveLength(0)
+    },
+    GIT_INTEGRATION_TEST_TIMEOUT_MS,
+  )
+
+  it(
+    "sorts non-machine TypeScript changes without claiming an implementation diff",
+    () => {
+      const repositoryDirectory = initializeRepository()
+      const firstPath = path.join(repositoryDirectory, "zeta.ts")
+      const secondPath = path.join(repositoryDirectory, "alpha.tsx")
+      fs.writeFileSync(firstPath, "export const zeta = 1")
+      fs.writeFileSync(secondPath, "export const alpha = 1")
+      const baseSha = commitAll(repositoryDirectory, "base")
+
+      fs.writeFileSync(firstPath, "export const zeta = 2")
+      fs.writeFileSync(secondPath, "export const alpha = 2")
+      const headSha = commitAll(repositoryDirectory, "head")
+      const comparison = readGitMachineComparison({
+        baseRef: baseSha,
+        headRef: headSha,
+        repositoryDirectory,
+      })
+
+      expect(comparison.changedSourceFiles).toEqual(["alpha.tsx", "zeta.ts"])
+      expect(comparison.implementationChanged).toBe(false)
+      expect(comparison.baseTopology.machines).toEqual([])
+      expect(comparison.headTopology.machines).toEqual([])
+    },
+    GIT_INTEGRATION_TEST_TIMEOUT_MS,
+  )
+
+  it(
+    "rejects changed TypeScript collections beyond the analysis limit",
+    () => {
+      const repositoryDirectory = initializeRepository()
+      const sourcePaths = Array.from(
+        { length: XSTATE_DIFF_LIMITS.maximumFiles + 1 },
+        (_, fileIndex) =>
+          path.join(repositoryDirectory, `file-${fileIndex}.ts`),
+      )
+
+      sourcePaths.forEach((sourcePath) =>
+        fs.writeFileSync(sourcePath, "export const value = 1"),
+      )
+      const baseSha = commitAll(repositoryDirectory, "base")
+      sourcePaths.forEach((sourcePath) =>
+        fs.writeFileSync(sourcePath, "export const value = 2"),
+      )
+      const headSha = commitAll(repositoryDirectory, "head")
+
+      expect(() =>
+        readGitMachineComparison({
+          baseRef: baseSha,
+          headRef: headSha,
+          repositoryDirectory,
+        }),
+      ).toThrow("exceeds 50 changed TypeScript files")
     },
     GIT_INTEGRATION_TEST_TIMEOUT_MS,
   )

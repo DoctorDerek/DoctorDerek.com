@@ -72,19 +72,41 @@ export type XStateTopologyCollection = {
 
 export type XStateChangeType = "added" | "removed" | "modified"
 
-export type XStateNodeChange = {
-  changeType: XStateChangeType
-  before?: XStateStateNode
-  after?: XStateStateNode
-  changedFields: string[]
-}
+export type XStateNodeChange =
+  | {
+      changeType: "added"
+      after: XStateStateNode
+      changedFields: string[]
+    }
+  | {
+      changeType: "removed"
+      before: XStateStateNode
+      changedFields: string[]
+    }
+  | {
+      changeType: "modified"
+      before: XStateStateNode
+      after: XStateStateNode
+      changedFields: string[]
+    }
 
-export type XStateTransitionChange = {
-  changeType: XStateChangeType
-  before?: XStateTransition
-  after?: XStateTransition
-  changedFields: string[]
-}
+export type XStateTransitionChange =
+  | {
+      changeType: "added"
+      after: XStateTransition
+      changedFields: string[]
+    }
+  | {
+      changeType: "removed"
+      before: XStateTransition
+      changedFields: string[]
+    }
+  | {
+      changeType: "modified"
+      before: XStateTransition
+      after: XStateTransition
+      changedFields: string[]
+    }
 
 export type XStateMachineDiff = {
   key: string

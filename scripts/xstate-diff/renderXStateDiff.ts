@@ -41,6 +41,12 @@ const compareText = (leftValue: string, rightValue: string) =>
 const getTransitionTarget = (transition: XStateTransition) =>
   transition.targetId ?? transition.unresolvedTarget ?? transition.sourceId
 
+const getTransitionChangeVersions = (change: XStateTransitionChange) => {
+  if (change.changeType === "added") return [change.after]
+  if (change.changeType === "removed") return [change.before]
+  return [change.before, change.after]
+}
+
 const getTransitionIdentity = (transition: XStateTransition) =>
   JSON.stringify({
     sourceId: transition.sourceId,
@@ -126,22 +132,22 @@ const createFocusedMachineGraph = (
     combinedTransitions.set(getTransitionIdentity(transition), transition)
 
   for (const nodeChange of machineDiff.nodeChanges) {
-    const stateNode = nodeChange.after ?? nodeChange.before
-    if (stateNode) combinedNodes.set(stateNode.id, stateNode)
+    const stateNode =
+      nodeChange.changeType === "removed" ? nodeChange.before : nodeChange.after
+    combinedNodes.set(stateNode.id, stateNode)
   }
 
   const changedNodeIds = new Set(
-    machineDiff.nodeChanges
-      .map((change) => change.after?.id ?? change.before?.id)
-      .filter((stateNodeId): stateNodeId is string => Boolean(stateNodeId)),
+    machineDiff.nodeChanges.map((change) =>
+      change.changeType === "removed" ? change.before.id : change.after.id,
+    ),
   )
 
   for (const transitionChange of machineDiff.transitionChanges)
-    for (const transition of [transitionChange.before, transitionChange.after])
-      if (transition) {
-        changedNodeIds.add(transition.sourceId)
-        changedNodeIds.add(getTransitionTarget(transition))
-      }
+    for (const transition of getTransitionChangeVersions(transitionChange)) {
+      changedNodeIds.add(transition.sourceId)
+      changedNodeIds.add(getTransitionTarget(transition))
+    }
 
   const focusedNodeIds = new Set(changedNodeIds)
 
@@ -163,11 +169,7 @@ const createFocusedMachineGraph = (
 
   const changedTransitionIds = new Set(
     machineDiff.transitionChanges.flatMap((change) =>
-      [change.before, change.after]
-        .filter((transition): transition is XStateTransition =>
-          Boolean(transition),
-        )
-        .map(getTransitionIdentity),
+      getTransitionChangeVersions(change).map(getTransitionIdentity),
     ),
   )
   const contextTransitions = [...combinedTransitions.values()]
@@ -231,7 +233,7 @@ const renderMachineMermaid = (
   )
   const nodeChangeTypes = new Map(
     machineDiff.nodeChanges.map((change) => [
-      (change.after ?? change.before)?.id,
+      change.changeType === "removed" ? change.before.id : change.after.id,
       change.changeType,
     ]),
   )
@@ -264,13 +266,15 @@ const renderMachineMermaid = (
     renderTransition(transition)
 
   for (const transitionChange of machineDiff.transitionChanges) {
-    const transition = transitionChange.after ?? transitionChange.before
-    if (transition)
-      renderTransition(
-        transition,
-        transitionChange.changeType,
-        transitionChange.changedFields,
-      )
+    const transition =
+      transitionChange.changeType === "removed"
+        ? transitionChange.before
+        : transitionChange.after
+    renderTransition(
+      transition,
+      transitionChange.changeType,
+      transitionChange.changedFields,
+    )
   }
 
   lines.push(
@@ -280,8 +284,8 @@ const renderMachineMermaid = (
   )
 
   for (const [stateNodeId, changeType] of nodeChangeTypes) {
-    const nodeAlias = stateNodeId ? nodeAliases.get(stateNodeId) : undefined
-    if (nodeAlias) lines.push(`  class ${nodeAlias} ${changeType}`)
+    const nodeAlias = nodeAliases.get(stateNodeId)!
+    lines.push(`  class ${nodeAlias} ${changeType}`)
   }
 
   return lines.join("\n")
@@ -302,9 +306,12 @@ const describeTransition = (transition: XStateTransition) => {
 const renderAccessibleMachineChanges = (machineDiff: XStateMachineDiff) => {
   const descriptions = [
     ...machineDiff.nodeChanges.map((nodeChange) => {
-      const stateNode = nodeChange.after ?? nodeChange.before
+      const stateNode =
+        nodeChange.changeType === "removed"
+          ? nodeChange.before
+          : nodeChange.after
       const changedFields = nodeChange.changedFields.join(", ")
-      const stateNodeId = sanitizeMarkdownText(stateNode?.id ?? "unknown")
+      const stateNodeId = sanitizeMarkdownText(stateNode.id)
 
       if (nodeChange.changeType === "added")
         return `Added state ${stateNodeId}.`
@@ -313,16 +320,13 @@ const renderAccessibleMachineChanges = (machineDiff: XStateMachineDiff) => {
       return `Modified state ${stateNodeId}: ${changedFields}.`
     }),
     ...machineDiff.transitionChanges.map((transitionChange) => {
-      const before = transitionChange.before
-      const after = transitionChange.after
-
       if (transitionChange.changeType === "added")
-        return `Added ${describeTransition(after!)}.`
+        return `Added ${describeTransition(transitionChange.after)}.`
       if (transitionChange.changeType === "removed")
-        return `Removed ${describeTransition(before!)}.`
+        return `Removed ${describeTransition(transitionChange.before)}.`
 
-      const modifiedBefore = before!
-      const modifiedAfter = after!
+      const modifiedBefore = transitionChange.before
+      const modifiedAfter = transitionChange.after
 
       if (transitionChange.changedFields.includes("targetId"))
         return sanitizeMarkdownText(

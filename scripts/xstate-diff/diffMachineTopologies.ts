@@ -66,33 +66,31 @@ const getChangedTransitionFields = (
       after[fieldName as keyof XStateTransition],
   )
 
+const getChangedNode = (change: XStateNodeChange) =>
+  change.changeType === "removed" ? change.before : change.after
+
+const getChangedTransition = (change: XStateTransitionChange) =>
+  change.changeType === "removed" ? change.before : change.after
+
 const sortNodeChanges = (nodeChanges: XStateNodeChange[]) =>
   nodeChanges.sort((leftChange, rightChange) => {
-    const leftNode = leftChange.after ?? leftChange.before
-    const rightNode = rightChange.after ?? rightChange.before
+    const leftNode = getChangedNode(leftChange)
+    const rightNode = getChangedNode(rightChange)
 
-    return (
-      compareText(leftNode?.id ?? "", rightNode?.id ?? "") ||
-      compareText(leftChange.changeType, rightChange.changeType)
-    )
+    return compareText(leftNode.id, rightNode.id)
   })
 
 const sortTransitionChanges = (transitionChanges: XStateTransitionChange[]) =>
   transitionChanges.sort((leftChange, rightChange) => {
-    const leftTransition = leftChange.after ?? leftChange.before
-    const rightTransition = rightChange.after ?? rightChange.before
+    const leftTransition = getChangedTransition(leftChange)
+    const rightTransition = getChangedTransition(rightChange)
 
     return (
-      compareText(
-        leftTransition?.sourceId ?? "",
-        rightTransition?.sourceId ?? "",
-      ) ||
-      compareText(leftTransition?.kind ?? "", rightTransition?.kind ?? "") ||
-      compareText(leftTransition?.event ?? "", rightTransition?.event ?? "") ||
-      (leftTransition?.priority ?? 0) - (rightTransition?.priority ?? 0) ||
-      (leftTransition?.targetIndex ?? 0) -
-        (rightTransition?.targetIndex ?? 0) ||
-      compareText(leftChange.changeType, rightChange.changeType)
+      compareText(leftTransition.sourceId, rightTransition.sourceId) ||
+      compareText(leftTransition.kind, rightTransition.kind) ||
+      compareText(leftTransition.event, rightTransition.event) ||
+      leftTransition.priority - rightTransition.priority ||
+      leftTransition.targetIndex - rightTransition.targetIndex
     )
   })
 
@@ -103,18 +101,30 @@ const createWholeMachineChanges = (
   key: machine.key,
   id: machine.id,
   filePath: machine.filePath,
-  nodeChanges: machine.nodes.map((stateNode) => ({
-    changeType,
-    ...(changeType === "added" ? { after: stateNode } : { before: stateNode }),
-    changedFields: [],
-  })),
-  transitionChanges: machine.transitions.map((transition) => ({
-    changeType,
-    ...(changeType === "added"
-      ? { after: transition }
-      : { before: transition }),
-    changedFields: [],
-  })),
+  nodeChanges:
+    changeType === "added"
+      ? machine.nodes.map((after) => ({
+          changeType,
+          after,
+          changedFields: [],
+        }))
+      : machine.nodes.map((before) => ({
+          changeType,
+          before,
+          changedFields: [],
+        })),
+  transitionChanges:
+    changeType === "added"
+      ? machine.transitions.map((after) => ({
+          changeType,
+          after,
+          changedFields: [],
+        }))
+      : machine.transitions.map((before) => ({
+          changeType,
+          before,
+          changedFields: [],
+        })),
 })
 
 const pairUniqueTransitions = (

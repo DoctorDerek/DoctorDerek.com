@@ -63,6 +63,8 @@ const LIGHTHOUSE_CATEGORIES = [
 const PREVIEW_LIGHTHOUSE_HEADER = "### 🔦 Mobile Web Lighthouse Measurements"
 const PREVIEW_LIGHTHOUSE_QUALITY_POSITION = "**Quality check 4 of 4**"
 const MAXIMUM_RUNNER_OUTPUT_CHARACTERS = 4_000
+const LIGHTHOUSE_BADGE_BASE_URL = "https://img.shields.io/badge"
+const LIGHTHOUSE_BADGE_QUERY = "logo=lighthouse&logoColor=white"
 
 const isUnknownRecord = (
   value: unknown,
@@ -177,9 +179,7 @@ export const parseLighthouseScores = (value: unknown): LighthouseScores => {
   if (!isUnknownRecord(value))
     throw new Error("Published Lighthouse scores are invalid.")
 
-  const scores = LIGHTHOUSE_CATEGORIES.map(
-    ({ scoreName }) => value[scoreName],
-  )
+  const scores = LIGHTHOUSE_CATEGORIES.map(({ scoreName }) => value[scoreName])
 
   if (scores.some((score) => typeof score !== "number"))
     throw new Error("Published Lighthouse scores are incomplete.")
@@ -261,26 +261,46 @@ const formatScoreDelta = (previewScore: number, productionScore: number) => {
   return "0"
 }
 
-const formatScoreRows = (
+const encodeShieldsPathSegment = (value: string) =>
+  encodeURIComponent(value.replaceAll("_", "__").replaceAll("-", "--"))
+
+const formatScoreBadge = (
+  environment: "Preview" | "Production",
+  label: string,
+  reportUrl: string,
+  score?: number,
+) => {
+  const badgeMessage = score === undefined ? "unavailable" : `${score}/100`
+  const badgeColor = score === undefined ? "lightgrey" : "informational"
+  const badgeUrl = `${LIGHTHOUSE_BADGE_BASE_URL}/${encodeShieldsPathSegment(label)}-${encodeShieldsPathSegment(badgeMessage)}-${badgeColor}?${LIGHTHOUSE_BADGE_QUERY}`
+  const alternativeText =
+    score === undefined
+      ? `${environment} ${label}: unavailable`
+      : `${environment} ${label}: ${score} out of 100`
+
+  return `[![${alternativeText}](${badgeUrl})](${reportUrl})`
+}
+
+const formatScoreBadges = (
+  environment: "Preview" | "Production",
+  reportUrl: string,
+  scores?: LighthouseScores,
+) =>
+  LIGHTHOUSE_CATEGORIES.map(({ label, scoreName }) =>
+    formatScoreBadge(environment, label, reportUrl, scores?.[scoreName]),
+  ).join(" ")
+
+const formatScoreDeltas = (
   previewScores: LighthouseScores,
   productionScores?: LighthouseScores,
 ) =>
-  [
-    ["Performance", "performance"],
-    ["Accessibility", "accessibility"],
-    ["Best Practices", "bestPractices"],
-    ["SEO", "seo"],
-  ]
-    .map(([label, scoreName]) => {
-      const typedScoreName = scoreName as keyof LighthouseScores
-      const previewScore = previewScores[typedScoreName]
-      const productionScore = productionScores?.[typedScoreName]
+  LIGHTHOUSE_CATEGORIES.map(({ label, scoreName }) => {
+    const productionScore = productionScores?.[scoreName]
 
-      return productionScore === undefined
-        ? `| ${label} | ${previewScore} | Unavailable | Unavailable |`
-        : `| ${label} | ${previewScore} | ${productionScore} | ${formatScoreDelta(previewScore, productionScore)} |`
-    })
-    .join("\n")
+    return productionScore === undefined
+      ? `${label} unavailable`
+      : `${label} ${formatScoreDelta(previewScores[scoreName], productionScore)}`
+  }).join(" · ")
 
 export const formatPreviewLighthouseComment = ({
   actionsRunUrl,
@@ -294,9 +314,15 @@ ${PREVIEW_LIGHTHOUSE_QUALITY_POSITION}
 
 ✅ **Mobile Web Lighthouse completed successfully.**
 
-| Category | Preview median (3 runs) | Production median (5 runs) | Δ |
-| --- | ---: | ---: | ---: |
-${formatScoreRows(previewScores, productionScores)}
+**Preview — median of 3 runs**
+
+${formatScoreBadges("Preview", `${actionsRunUrl}#artifacts`, previewScores)}
+
+**Production baseline — median of 5 runs**
+
+${formatScoreBadges("Production", productionReportUrl, productionScores)}
+
+**Preview − Production:** ${formatScoreDeltas(previewScores, productionScores)}
 
 Scores are advisory measurements, not merge thresholds.
 

@@ -139,12 +139,34 @@ describe("prepareLighthouseReports", () => {
       },
     })
 
-    expect(comment).toContain("| Performance | 94 | 92 | +2 |")
-    expect(comment).toContain("| Accessibility | 100 | 100 | 0 |")
-    expect(comment).toContain("| Best Practices | 99 | 100 | −1 |")
+    for (const [label, score] of [
+      ["Performance", 94],
+      ["Accessibility", 100],
+      ["Best Practices", 99],
+      ["SEO", 100],
+    ] as const) {
+      expect(comment).toContain(`![Preview ${label}: ${score} out of 100]`)
+    }
+
+    for (const [label, score] of [
+      ["Performance", 92],
+      ["Accessibility", 100],
+      ["Best Practices", 100],
+      ["SEO", 99],
+    ] as const) {
+      expect(comment).toContain(`![Production ${label}: ${score} out of 100]`)
+    }
+
+    expect(comment).toContain(
+      "https://img.shields.io/badge/Performance-94%2F100-informational?logo=lighthouse&logoColor=white",
+    )
+    expect(comment).toContain(
+      "**Preview − Production:** Performance +2 · Accessibility 0 · Best Practices −1 · SEO +1",
+    )
     expect(comment).toContain("Scores are advisory measurements")
-    expect(comment).toContain("Preview median (3 runs)")
-    expect(comment).toContain("Production median (5 runs)")
+    expect(comment).toContain("Preview — median of 3 runs")
+    expect(comment).toContain("Production baseline — median of 5 runs")
+    expect(comment).not.toContain("| Category |")
   })
 
   it("keeps a successful Preview measurement useful when Production is unavailable", () => {
@@ -160,8 +182,20 @@ describe("prepareLighthouseReports", () => {
       productionReportUrl: "https://reports.example.com",
     })
 
+    for (const label of [
+      "Performance",
+      "Accessibility",
+      "Best Practices",
+      "SEO",
+    ]) {
+      expect(comment).toContain(`![Production ${label}: unavailable]`)
+    }
+
     expect(comment).toContain(
-      "| Performance | 94 | Unavailable | Unavailable |",
+      "Performance-unavailable-lightgrey?logo=lighthouse&logoColor=white",
+    )
+    expect(comment).toContain(
+      "**Preview − Production:** Performance unavailable · Accessibility unavailable · Best Practices unavailable · SEO unavailable",
     )
   })
 

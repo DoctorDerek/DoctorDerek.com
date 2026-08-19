@@ -1,8 +1,9 @@
 "use client"
 
 import { useRef, useState, type TouchEvent } from "react"
+import SpinningCodeMarker from "@/components/ui/SpinningCodeMarker"
+import { getCareerCodeMarkerAccessibleName } from "@/constants/INTERACTIONS"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
-import CodeIcon from "@/images/codeIcon.svg"
 import classNames from "@/utils/classNames"
 
 const MINIMUM_HORIZONTAL_SWIPE_DISTANCE = 48
@@ -114,12 +115,14 @@ export default function WorkExperienceSection() {
                 key={item.duration}
                 role="group"
               >
-                <div
-                  className="animate-float absolute top-0 left-[calc(9%-1rem)] h-8 w-8"
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <CodeIcon className="h-full w-full" />
-                </div>
+                <SpinningCodeMarker
+                  accessibleName={getCareerCodeMarkerAccessibleName(
+                    item.duration,
+                  )}
+                  animationDelay={`${index * 0.2}s`}
+                  className="top-0 left-[calc(9%-1.375rem)]"
+                  isInteractive={activeCareerEraIndex === index}
+                />
                 <p className="text-site-foreground-faint text-xl font-bold">
                   {item.duration}
                 </p>
@@ -249,17 +252,18 @@ export default function WorkExperienceSection() {
                 )}
                 key={item.duration}
               >
-                <div
-                  className={classNames(
-                    "animate-float absolute left-0 h-8 w-8",
-                    index === 0 && "top-[calc(10%-1rem)]",
-                    (index === 1 || index === 3) && "top-[calc(20%-1rem)]",
-                    index === 2 && "top-[calc(50%-1rem)]",
+                <SpinningCodeMarker
+                  accessibleName={getCareerCodeMarkerAccessibleName(
+                    item.duration,
                   )}
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <CodeIcon className="h-full w-full" />
-                </div>
+                  animationDelay={`${index * 0.2}s`}
+                  className={classNames(
+                    "left-0",
+                    index === 0 && "top-[calc(10%-1.375rem)]",
+                    (index === 1 || index === 3) && "top-[calc(20%-1.375rem)]",
+                    index === 2 && "top-[calc(50%-1.375rem)]",
+                  )}
+                />
                 <div className="text-site-foreground flex flex-col">
                   <p className="restorabold text-2xl font-bold">
                     {item.duration}

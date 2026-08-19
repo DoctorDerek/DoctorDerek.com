@@ -1,7 +1,17 @@
 import { fireEvent, render, screen, within } from "@testing-library/react"
-import { describe, expect, it } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import WorkExperienceSection from "@/components/WorkExperienceSection"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
+
+const { reducedMotionPreference } = vi.hoisted(() => ({
+  reducedMotionPreference: { value: false },
+}))
+
+vi.mock("@/components/MotionPreferenceProvider", () => ({
+  useMotionPreference: () => ({
+    shouldReduceMotion: reducedMotionPreference.value,
+  }),
+}))
 
 const renderCareerTimeline = () => {
   render(<WorkExperienceSection />)
@@ -13,6 +23,10 @@ const renderCareerTimeline = () => {
 }
 
 describe("WorkExperienceSection", () => {
+  beforeEach(() => {
+    reducedMotionPreference.value = false
+  })
+
   it("renders the canonical career eras in semantic mobile and desktop timelines", () => {
     const { carousel } = renderCareerTimeline()
 

@@ -77,13 +77,31 @@ export default function WorkExperienceSection() {
         </p>
 
         <div
-          className="[touch-action:pan-y] overflow-hidden"
+          className="relative [touch-action:pan-y] overflow-hidden"
           onTouchEnd={handleCareerTimelineTouchEnd}
           onTouchStart={handleCareerTimelineTouchStart}
         >
+          <svg
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full"
+            data-career-rail="mobile"
+            preserveAspectRatio="none"
+            viewBox="0 0 100 100"
+          >
+            <path
+              d="M 9 0 V 78 Q 9 83 14 83 H 100"
+              fill="none"
+              stroke="#F38B57"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="3"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+
           <ol
             aria-label="Career eras"
-            className="flex transition-transform duration-500 ease-out"
+            className="relative flex transition-transform duration-500 ease-out"
             id="work-experience-mobile-track"
             style={{ transform: `translateX(-${activeCareerEraIndex * 100}%)` }}
           >
@@ -97,11 +115,7 @@ export default function WorkExperienceSection() {
                 role="group"
               >
                 <div
-                  aria-hidden="true"
-                  className="absolute top-4 right-4 left-4 border-t-4 border-[#F38B57]"
-                />
-                <div
-                  className="animate-float absolute top-0 left-4 h-8 w-8"
+                  className="animate-float absolute top-0 left-[calc(9%-1rem)] h-8 w-8"
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   <CodeIcon className="h-full w-full" />

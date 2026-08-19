@@ -1,5 +1,5 @@
-import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
+import SpringRotation from "@/components/ui/SpringRotation"
 import {
   FLIP_ACTIVATION_ROTATION_DEGREES,
   LOGO_CONTROL_ACCESSIBLE_NAMES,
@@ -14,7 +14,6 @@ type LogoProps = {
 }
 
 export default function Logo({ className }: LogoProps) {
-  const { shouldReduceMotion } = useMotionPreference()
   const isAlternative = GlobalStateContext.useSelector((state) =>
     state.matches({ logo: "alternative" }),
   )
@@ -35,13 +34,9 @@ export default function Logo({ className }: LogoProps) {
       isPressed={!isAlternative}
       onActivate={() => send({ type: "TOGGLE_LOGO" })}
     >
-      <div
+      <SpringRotation
         className="wrapper relative h-full w-full"
-        style={{
-          transform: `rotateY(${logoFlipCount * FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
-          transition: shouldReduceMotion ? "none" : "transform 0.8s ease-out",
-          transformStyle: "preserve-3d",
-        }}
+        rotationDegrees={logoFlipCount * FLIP_ACTIVATION_ROTATION_DEGREES}
       >
         <div
           className="front h-full w-full"
@@ -62,7 +57,7 @@ export default function Logo({ className }: LogoProps) {
         >
           <LogoSecondary className="h-full w-full object-contain" />
         </div>
-      </div>
+      </SpringRotation>
     </FlipPreview>
   )
 }

@@ -2,10 +2,10 @@
 
 import Image from "next/image"
 import { useState } from "react"
-import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
+import SpringRotation from "@/components/ui/SpringRotation"
 import {
   FLIP_ACTIVATION_ROTATION_DEGREES,
   PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
@@ -19,7 +19,6 @@ import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
 
 export default function ContactSection() {
-  const { shouldReduceMotion } = useMotionPreference()
   const [flipCount, setFlipCount] = useState(0)
   const isFlipped = flipCount % 2 === 1
 
@@ -46,15 +45,9 @@ export default function ContactSection() {
                 setFlipCount((currentFlipCount) => currentFlipCount + 1)
               }
             >
-              <div
+              <SpringRotation
                 className="wrapper relative aspect-square w-full max-w-[488px]"
-                style={{
-                  transform: `rotateY(${flipCount * FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
-                  transition: shouldReduceMotion
-                    ? "none"
-                    : "transform 0.8s ease-out",
-                  transformStyle: "preserve-3d",
-                }}
+                rotationDegrees={flipCount * FLIP_ACTIVATION_ROTATION_DEGREES}
               >
                 <div
                   className="front absolute inset-0 h-full w-full"
@@ -107,7 +100,7 @@ export default function ContactSection() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </SpringRotation>
             </FlipPreview>
           </div>
         </div>

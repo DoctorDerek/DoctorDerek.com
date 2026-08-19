@@ -2,9 +2,9 @@
 
 import Image from "next/image"
 import { useState } from "react"
-import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
 import SectionHeading from "@/components/ui/SectionHeading"
+import SpringRotation from "@/components/ui/SpringRotation"
 import {
   FLIP_ACTIVATION_ROTATION_DEGREES,
   PORTRAIT_CONTROL_ACCESSIBLE_NAMES,
@@ -13,7 +13,6 @@ import { ABOUT_PORTRAITS, PORTRAIT_IMAGE_SIZES } from "@/constants/PORTRAITS"
 import { ABOUT_BIO_LONG } from "@/constants/SITE_CONTENT"
 
 export default function AboutSection() {
-  const { shouldReduceMotion } = useMotionPreference()
   const [flipCount, setFlipCount] = useState(0)
 
   const currentPortrait = ABOUT_PORTRAITS[flipCount % ABOUT_PORTRAITS.length]
@@ -45,15 +44,9 @@ export default function AboutSection() {
                 setFlipCount((currentFlipCount) => currentFlipCount + 1)
               }
             >
-              <div
+              <SpringRotation
                 className="relative aspect-square w-full cursor-pointer"
-                style={{
-                  transform: `rotateY(${flipCount * FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
-                  transition: shouldReduceMotion
-                    ? "none"
-                    : "transform 0.8s ease-out",
-                  transformStyle: "preserve-3d",
-                }}
+                rotationDegrees={flipCount * FLIP_ACTIVATION_ROTATION_DEGREES}
               >
                 <div
                   className="absolute inset-0 overflow-hidden rounded-tr-[6rem] md:rounded-tr-[4.5rem]"
@@ -89,7 +82,7 @@ export default function AboutSection() {
                     style={{ objectPosition: backPortrait.objectPosition }}
                   />
                 </div>
-              </div>
+              </SpringRotation>
             </FlipPreview>
           </div>
           <div className="ease-spring-soft border-site-border bg-site-surface relative mt-4 translate-y-12 rounded-tl-3xl border px-6 py-5 opacity-0 backdrop-blur-xl transition-all delay-300 duration-700 md:absolute md:right-0 md:-bottom-8 md:left-auto md:mt-8 md:w-[65%] lg:right-36 lg:bottom-12 lg:left-auto lg:w-[60%] lg:px-10 lg:py-7 [.active_&]:translate-y-0 [.active_&]:opacity-100">

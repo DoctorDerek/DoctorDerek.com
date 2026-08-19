@@ -132,7 +132,7 @@ test("desktop code markers focus opposite their repeated forward spin", async ({
     new RegExp(`rotateY\\(${SPRING_ROTATION_PRELOAD_DEGREES}deg\\)`),
   )
 
-  await markerControl.click({ force: true })
+  await markerControl.press("Enter")
   await expect(rotationLayer).toHaveAttribute(
     "style",
     new RegExp(`rotateY\\(${CODE_MARKER_ACTIVATION_ROTATION_DEGREES}deg\\)`),

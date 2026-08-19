@@ -1,6 +1,10 @@
 import { fireEvent, render, screen, within } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import WorkExperienceSection from "@/components/WorkExperienceSection"
+import {
+  CAREER_RAIL_PATHS,
+  CAREER_RAIL_STROKE_WIDTH,
+} from "@/constants/CAREER_TIMELINE"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
@@ -48,6 +52,34 @@ describe("WorkExperienceSection", () => {
     }
 
     expect(screen.queryByText(/placeholder/i)).not.toBeInTheDocument()
+  })
+
+  it("renders the approved rounded rail topology and chronological desktop columns", () => {
+    renderCareerTimeline()
+
+    for (const [viewport, pathDefinition] of Object.entries(
+      CAREER_RAIL_PATHS,
+    )) {
+      const rail = document.querySelector(`[data-career-rail="${viewport}"]`)
+      const path = rail?.querySelector("path")
+
+      expect(path).toHaveAttribute("d", pathDefinition)
+      expect(path).toHaveAttribute(
+        "stroke-width",
+        String(CAREER_RAIL_STROKE_WIDTH),
+      )
+      expect(path).toHaveAttribute("stroke-linecap", "round")
+      expect(path).toHaveAttribute("stroke-linejoin", "round")
+    }
+
+    const desktopCareerEras = Array.from(
+      screen.getByRole("list", { name: "Desktop career timeline" }).children,
+    )
+
+    expect(desktopCareerEras[0]).toHaveClass("col-start-1", "row-start-1")
+    expect(desktopCareerEras[1]).toHaveClass("col-start-1", "row-start-2")
+    expect(desktopCareerEras[2]).toHaveClass("col-start-2", "row-start-1")
+    expect(desktopCareerEras[3]).toHaveClass("col-start-2", "row-start-2")
   })
 
   it("navigates career eras with arrows and direct-selection controls", () => {

@@ -1,4 +1,8 @@
 import { expect, test, type Page } from "@playwright/test"
+import {
+  CAREER_RAIL_PATHS,
+  CAREER_RAIL_STROKE_WIDTH,
+} from "@/constants/CAREER_TIMELINE"
 
 const CAREER_ERA_COUNT = 4
 
@@ -45,7 +49,7 @@ for (const viewport of [
   })
 }
 
-test("short desktop keeps the return rail clear of both timeline rows", async ({
+test("short desktop preserves the chronological columns and Figma rail", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1024, height: 600 })
@@ -54,32 +58,50 @@ test("short desktop keeps the return rail clear of both timeline rows", async ({
   const timeline = page.getByRole("list", {
     name: "Desktop career timeline",
   })
-  const railClearance = await timeline.evaluate((timelineElement) => {
-    const rail = timelineElement.parentElement?.querySelector("path")
-    const railEndPoint = rail?.getPointAtLength(rail.getTotalLength())
-    const railTransform = rail?.getScreenCTM()
-    if (!railEndPoint || !railTransform) return null
-
-    const returnRailY =
-      railTransform.b * railEndPoint.x +
-      railTransform.d * railEndPoint.y +
-      railTransform.f
-    const topCopyBottoms = Array.from(
-      timelineElement.querySelectorAll("li:nth-child(-n+2) p:last-child"),
-    ).map((copy) => copy.getBoundingClientRect().bottom)
-    const bottomDurationTops = Array.from(
-      timelineElement.querySelectorAll("li:nth-child(n+3) p:first-child"),
-    ).map((copy) => copy.getBoundingClientRect().top)
+  const geometry = await timeline.evaluate((timelineElement) => {
+    const careerEras = Array.from(
+      timelineElement.querySelectorAll<HTMLElement>(":scope > li"),
+    )
+    const railPath = timelineElement.parentElement?.querySelector(
+      '[data-career-rail="desktop"] path',
+    )
 
     return {
-      above: returnRailY - Math.max(...topCopyBottoms),
-      below: Math.min(...bottomDurationTops) - returnRailY,
+      durationBounds: careerEras.map((careerEra) => {
+        const bounds = careerEra
+          .querySelector("p:first-of-type")!
+          .getBoundingClientRect()
+        return { left: bounds.left, top: bounds.top }
+      }),
+      markerCenters: careerEras.map((careerEra) => {
+        const bounds = careerEra
+          .querySelector(".flip-preview-control")!
+          .getBoundingClientRect()
+        return {
+          x: bounds.left + bounds.width / 2,
+          y: bounds.top + bounds.height / 2,
+        }
+      }),
+      railPath: railPath?.getAttribute("d"),
+      railStrokeWidth: railPath?.getAttribute("stroke-width"),
     }
   })
 
-  expect(railClearance).not.toBeNull()
-  expect(railClearance!.above).toBeGreaterThan(12)
-  expect(railClearance!.below).toBeGreaterThan(12)
+  const [currentEra, priorEra, olderEra, earliestEra] = geometry.durationBounds
+  expect(geometry.railPath).toBe(CAREER_RAIL_PATHS.desktop)
+  expect(geometry.railStrokeWidth).toBe(String(CAREER_RAIL_STROKE_WIDTH))
+  expect(Math.abs(currentEra!.left - priorEra!.left)).toBeLessThan(2)
+  expect(Math.abs(olderEra!.left - earliestEra!.left)).toBeLessThan(2)
+  expect(olderEra!.left).toBeGreaterThan(currentEra!.left + 200)
+  expect(priorEra!.top).toBeGreaterThan(currentEra!.top + 80)
+  expect(olderEra!.top).toBeGreaterThan(currentEra!.top + 40)
+  expect(earliestEra!.top).toBeGreaterThan(olderEra!.top + 80)
+
+  const [currentMarker, priorMarker, olderMarker, earliestMarker] =
+    geometry.markerCenters
+  expect(Math.abs(currentMarker!.x - priorMarker!.x)).toBeLessThan(2)
+  expect(Math.abs(olderMarker!.x - earliestMarker!.x)).toBeLessThan(2)
+  expect(olderMarker!.x).toBeGreaterThan(currentMarker!.x + 200)
 })
 
 test.describe("mobile career pagination", () => {
@@ -105,6 +127,9 @@ test.describe("mobile career pagination", () => {
       name: "Show next career era",
     })
     await expect(carousel).toBeVisible()
+    await expect(
+      carousel.locator('[data-career-rail="mobile"] path'),
+    ).toHaveAttribute("d", CAREER_RAIL_PATHS.mobile)
     await expect(previousButton).toBeDisabled()
     await expect(nextButton).toBeEnabled()
     const careerEraControlSizes = await careerEraControls.evaluateAll(
@@ -118,6 +143,14 @@ test.describe("mobile career pagination", () => {
       expect(controlSize.height).toBeGreaterThanOrEqual(24)
       expect(controlSize.width).toBeGreaterThanOrEqual(24)
     }
+
+    const horizontalOverflow = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }))
+    expect(horizontalOverflow.scrollWidth).toBeLessThanOrEqual(
+      horizontalOverflow.clientWidth,
+    )
 
     await nextButton.tap()
     await expect(track).toHaveCSS("transform", /matrix\(1, 0, 0, 1, -/)

@@ -40,7 +40,7 @@ export const ABOUT_BIO_LONG: string[] = [
   "Inside that loop, my Five-Step Forge is the execution protocol: 1PLAN → 2CHECK → 3WRITE → 4CHECK → 5RUN. The loop describes how I work; the forge defines the checkpoints that keep agentic work reliable. Before the forge, 0LIST audits canonical ownership and impacted files.",
   "I maintain language-specific coding standards and 40 anti-slop engineering pillars so architecture, accessibility, performance, testing, and maintainability are explicit requirements instead of last-minute cleanup.",
   "This approach lets me own products end-to-end across four product surfaces: desktop web, mobile web, iOS, and Android. On every surface, I make deliberate decisions about state, UI, testing, and releases.",
-  "Contact me if you need a high-autonomy code owner who can take a product from functional specification through production release.",
+  "Contact me if you need a high-autonomy code owner who can define, architect, build, verify, release, observe, and iterate a product in production.",
 ] as const
 
 export type AiConsultancyPitch = {

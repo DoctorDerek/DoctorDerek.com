@@ -26,6 +26,12 @@ describe("site copy quality gates", () => {
     )
   })
 
+  it("keeps the About CTA aligned with the complete code-owner lifecycle", () => {
+    expect(SITE_CONTENT.ABOUT_BIO_LONG.at(-1)).toBe(
+      "Contact me if you need a high-autonomy code owner who can define, architect, build, verify, release, observe, and iterate a product in production.",
+    )
+  })
+
   it("keeps the hiring target focused and excludes private logistics", () => {
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
       "startup founders and small teams",

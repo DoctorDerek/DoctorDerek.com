@@ -202,40 +202,45 @@ export default function WorkExperienceSection() {
           <svg
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+            data-career-rail="desktop"
             preserveAspectRatio="none"
             viewBox="0 0 100 100"
           >
             <path
-              d="M 2 5 H 98 V 60 H 2"
+              d="M 2 5 V 92 Q 2 96 6 96 H 44 Q 48 96 48 92 V 29 Q 48 25 52 25 V 95"
               fill="none"
               stroke="#F38B57"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="4"
+              strokeWidth="3"
               vectorEffect="non-scaling-stroke"
             />
           </svg>
 
           <ol
             aria-label="Desktop career timeline"
-            className="grid h-full grid-cols-2 grid-rows-2 gap-x-16"
+            className="grid h-full grid-cols-2 grid-rows-2"
           >
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
                 className={classNames(
                   "relative px-4",
-                  index < 2 ? "pt-10" : "pt-16",
+                  index === 0 && "pt-10",
+                  (index === 1 || index === 3) && "pt-16",
+                  index === 2 && "pt-[calc(50%+1.25rem)]",
                   index === 0 && "col-start-1 row-start-1",
-                  index === 1 && "col-start-2 row-start-1",
-                  index === 2 && "col-start-2 row-start-2",
-                  index === 3 && "col-start-1 row-start-2",
+                  index === 1 && "col-start-1 row-start-2",
+                  index === 2 && "col-start-2 row-start-1",
+                  index === 3 && "col-start-2 row-start-2",
                 )}
                 key={item.duration}
               >
                 <div
                   className={classNames(
                     "animate-float absolute left-0 h-8 w-8",
-                    index < 2 ? "top-[calc(10%-1rem)]" : "top-[calc(20%-1rem)]",
+                    index === 0 && "top-[calc(10%-1rem)]",
+                    (index === 1 || index === 3) && "top-[calc(20%-1rem)]",
+                    index === 2 && "top-[calc(50%-1rem)]",
                   )}
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >

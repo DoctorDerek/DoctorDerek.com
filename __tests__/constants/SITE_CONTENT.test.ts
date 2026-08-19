@@ -132,7 +132,7 @@ describe("site copy quality gates", () => {
     for (const { company } of [currentSelfEmployedStage, fullTimeStage]) {
       const [, technologyStack] = company.split(" | ")
 
-      expect(technologyStack).toContain("Node")
+      expect(technologyStack).toContain("Node.js")
       expect(technologyStack).toContain("React Native + Expo")
     }
   })

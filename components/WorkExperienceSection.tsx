@@ -244,7 +244,7 @@ export default function WorkExperienceSection() {
                   "relative px-4",
                   index === 0 && "pt-10",
                   (index === 1 || index === 3) && "pt-16",
-                  index === 2 && "pt-[calc(50%+1.25rem)]",
+                  index === 2 && "pt-32",
                   index === 0 && "col-start-1 row-start-1",
                   index === 1 && "col-start-1 row-start-2",
                   index === 2 && "col-start-2 row-start-1",

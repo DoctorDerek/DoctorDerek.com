@@ -2,6 +2,10 @@
 
 import { useRef, useState, type TouchEvent } from "react"
 import SpinningCodeMarker from "@/components/ui/SpinningCodeMarker"
+import {
+  CAREER_RAIL_PATHS,
+  CAREER_RAIL_STROKE_WIDTH,
+} from "@/constants/CAREER_TIMELINE"
 import { getCareerCodeMarkerAccessibleName } from "@/constants/INTERACTIONS"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 import classNames from "@/utils/classNames"
@@ -90,12 +94,12 @@ export default function WorkExperienceSection() {
             viewBox="0 0 100 100"
           >
             <path
-              d="M 9 0 V 78 Q 9 83 14 83 H 100"
+              d={CAREER_RAIL_PATHS.mobile}
               fill="none"
               stroke="#F38B57"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="3"
+              strokeWidth={CAREER_RAIL_STROKE_WIDTH}
               vectorEffect="non-scaling-stroke"
             />
           </svg>
@@ -224,12 +228,12 @@ export default function WorkExperienceSection() {
             viewBox="0 0 100 100"
           >
             <path
-              d="M 2 5 V 92 Q 2 96 6 96 H 44 Q 48 96 48 92 V 29 Q 48 25 52 25 V 95"
+              d={CAREER_RAIL_PATHS.desktop}
               fill="none"
               stroke="#F38B57"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="3"
+              strokeWidth={CAREER_RAIL_STROKE_WIDTH}
               vectorEffect="non-scaling-stroke"
             />
           </svg>

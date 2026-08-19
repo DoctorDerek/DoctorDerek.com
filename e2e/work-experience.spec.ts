@@ -3,6 +3,10 @@ import {
   CAREER_RAIL_PATHS,
   CAREER_RAIL_STROKE_WIDTH,
 } from "@/constants/CAREER_TIMELINE"
+import {
+  CODE_MARKER_ACTIVATION_ROTATION_DEGREES,
+  SPRING_ROTATION_PRELOAD_DEGREES,
+} from "@/constants/INTERACTIONS"
 
 const CAREER_ERA_COUNT = 4
 
@@ -104,6 +108,45 @@ test("short desktop preserves the chronological columns and Figma rail", async (
   expect(olderMarker!.x).toBeGreaterThan(currentMarker!.x + 200)
 })
 
+test("desktop code markers focus opposite their repeated forward spin", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 800 })
+  await openWorkExperience(page)
+
+  const markerControl = page
+    .getByRole("list", { name: "Desktop career timeline" })
+    .locator(".flip-preview-control")
+    .first()
+  const previewLayer = markerControl.locator(".flip-preview-visual")
+  const rotationLayer = previewLayer.locator(":scope > .ease-spring-rotation")
+  const markerBounds = await markerControl.boundingBox()
+
+  expect(markerBounds).not.toBeNull()
+  expect(markerBounds!.height).toBeGreaterThanOrEqual(44)
+  expect(markerBounds!.width).toBeGreaterThanOrEqual(44)
+
+  await markerControl.focus()
+  await expect(previewLayer).toHaveAttribute(
+    "style",
+    new RegExp(`rotateY\\(${SPRING_ROTATION_PRELOAD_DEGREES}deg\\)`),
+  )
+
+  await markerControl.click({ force: true })
+  await expect(rotationLayer).toHaveAttribute(
+    "style",
+    new RegExp(`rotateY\\(${CODE_MARKER_ACTIVATION_ROTATION_DEGREES}deg\\)`),
+  )
+
+  await markerControl.press("Enter")
+  await expect(rotationLayer).toHaveAttribute(
+    "style",
+    new RegExp(
+      `rotateY\\(${CODE_MARKER_ACTIVATION_ROTATION_DEGREES * 2}deg\\)`,
+    ),
+  )
+})
+
 test.describe("mobile career pagination", () => {
   test.use({
     hasTouch: true,
@@ -132,6 +175,13 @@ test.describe("mobile career pagination", () => {
     ).toHaveAttribute("d", CAREER_RAIL_PATHS.mobile)
     await expect(previousButton).toBeDisabled()
     await expect(nextButton).toBeEnabled()
+    const markerControls = carousel.locator(".flip-preview-control")
+    const firstMarkerControl = markerControls.first()
+    const firstMarkerAccessibleName =
+      await firstMarkerControl.getAttribute("aria-label")
+    expect(firstMarkerAccessibleName).toBeTruthy()
+    await expect(firstMarkerControl).toBeVisible()
+    await expect(markerControls).toHaveCount(1)
     const careerEraControlSizes = await careerEraControls.evaluateAll(
       (controls) =>
         controls.map((control) => {
@@ -160,6 +210,11 @@ test.describe("mobile career pagination", () => {
     await expect(careerEraControls.nth(1)).toHaveAttribute(
       "aria-current",
       "step",
+    )
+    await expect(markerControls).toHaveCount(1)
+    await expect(markerControls.first()).not.toHaveAttribute(
+      "aria-label",
+      firstMarkerAccessibleName!,
     )
 
     await careerEraControls.last().tap()
@@ -212,5 +267,6 @@ test.describe("mobile career pagination", () => {
 
     await expect(track).toHaveCSS("transition-duration", "0s")
     await expect(codeIcon).toHaveCSS("animation-name", "none")
+    await expect(carousel.locator(".flip-preview-control")).toHaveCount(0)
   })
 })

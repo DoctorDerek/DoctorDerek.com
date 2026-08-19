@@ -5,6 +5,7 @@ import {
   CAREER_RAIL_PATHS,
   CAREER_RAIL_STROKE_WIDTH,
 } from "@/constants/CAREER_TIMELINE"
+import { getCareerCodeMarkerAccessibleName } from "@/constants/INTERACTIONS"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
@@ -121,6 +122,53 @@ describe("WorkExperienceSection", () => {
     expect(track).toHaveStyle({
       transform: `translateX(-${(ARCHITECT_EVOLUTION.length - 2) * 100}%)`,
     })
+  })
+
+  it("exposes a code-marker control only for the active mobile era", () => {
+    const { carousel } = renderCareerTimeline()
+    const firstCareerEra = ARCHITECT_EVOLUTION[0]!
+    const secondCareerEra = ARCHITECT_EVOLUTION[1]!
+
+    expect(
+      within(carousel).getByRole("button", {
+        name: getCareerCodeMarkerAccessibleName(firstCareerEra.duration),
+      }),
+    ).toBeInTheDocument()
+    expect(
+      within(carousel).queryByRole("button", {
+        name: getCareerCodeMarkerAccessibleName(secondCareerEra.duration),
+      }),
+    ).not.toBeInTheDocument()
+
+    fireEvent.click(
+      within(carousel).getByRole("button", {
+        name: "Show next career era",
+      }),
+    )
+
+    expect(
+      within(carousel).queryByRole("button", {
+        name: getCareerCodeMarkerAccessibleName(firstCareerEra.duration),
+      }),
+    ).not.toBeInTheDocument()
+    expect(
+      within(carousel).getByRole("button", {
+        name: getCareerCodeMarkerAccessibleName(secondCareerEra.duration),
+      }),
+    ).toBeInTheDocument()
+  })
+
+  it("keeps every code marker decorative under reduced motion", () => {
+    reducedMotionPreference.value = true
+    renderCareerTimeline()
+
+    for (const { duration } of ARCHITECT_EVOLUTION) {
+      expect(
+        screen.queryByRole("button", {
+          name: getCareerCodeMarkerAccessibleName(duration),
+        }),
+      ).not.toBeInTheDocument()
+    }
   })
 
   it("changes eras only for deliberate horizontal touch gestures", () => {

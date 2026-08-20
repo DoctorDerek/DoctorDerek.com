@@ -54,7 +54,7 @@ export type AiConsultancyPitch = {
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   header: "What I Do Best",
   body: "I help startup founders and small teams build full-stack TypeScript products, including privacy-sensitive and regulated applications, using AI-native engineering without the technical debt of vibe coding.",
-  ctaButtonText: "Inquire About Availability",
+  ctaButtonText: "Contact",
   subtext:
     "I’m actively seeking a long-term, full-time remote role as a full-stack SWE and code owner at a US startup.",
   emailSubject: "Full-Time SWE / Code Owner Inquiry",
@@ -65,7 +65,7 @@ export const CONTACT_BULLETS: string[] = [
   "As a code owner, I take products from functional specification through production using deterministic architecture and AI-native workflows grounded in persistent context, human code review, automated testing, and manual QA.",
   "I deliver production-ready MVPs in under 3 months without sacrificing performance: I have cut network payloads by 90% and reduced a key data visualization’s load time from more than 10 minutes to under 10 seconds.",
 ] as const
-export const CONTACT_CTA = "Contact Me" as const
+export const CONTACT_CTA = "Email Me" as const
 export type WorkExperience = {
   duration: string
   company: string
@@ -153,7 +153,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     id: "email",
-    label: "Inquire",
+    label: "Email",
   },
   {
     id: "linkedin",

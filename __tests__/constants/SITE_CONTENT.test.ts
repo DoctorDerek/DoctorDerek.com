@@ -14,7 +14,7 @@ describe("site copy quality gates", () => {
     expect(CONTACT_COMPLETION.toastMessage).toBe(
       "You’ve reached the end of my website.\nLet’s build something great.",
     )
-    expect(SITE_CONTENT.CONTACT_CTA).toBe("Contact Me")
+    expect(SITE_CONTENT.CONTACT_CTA).toBe("Email Me")
   })
 
   it("keeps the flagship bio on-point and concise", () => {
@@ -50,6 +50,15 @@ describe("site copy quality gates", () => {
       "full-stack SWE and code owner",
     )
     expect(JSON.stringify(SITE_CONTENT)).not.toMatch(PRIVATE_LOGISTICS_LANGUAGE)
+  })
+
+  it("distinguishes contact navigation from direct email actions", () => {
+    const emailSocialLink = SITE_CONTENT.SOCIAL_LINKS.find(
+      ({ id }) => id === "email",
+    )
+
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.ctaButtonText).toBe("Contact")
+    expect(emailSocialLink?.label).toBe("Email")
   })
 
   it("locks key proof-point metrics", () => {

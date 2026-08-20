@@ -63,6 +63,11 @@ describe("BlogSection", () => {
     expect(
       screen.getByText(BLOG_METRICS.totalPosts.toString()),
     ).toBeInTheDocument()
+    expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent(
+      new RegExp(
+        `Join\\s*${BLOG_METRICS.emailSubscribers}\\+ email subscribers and\\s*${BLOG_METRICS.mediumFollowers}\\+ Medium followers\\.`,
+      ),
+    )
   })
 
   it("keeps every article card linked to its canonical Medium URL", () => {

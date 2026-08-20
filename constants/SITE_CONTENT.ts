@@ -53,7 +53,7 @@ export type AiConsultancyPitch = {
 
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   header: "What I Do Best",
-  body: "I help startup founders and small teams build full-stack TypeScript products, including privacy-sensitive and regulated applications, using AI-native engineering without the technical debt of vibe coding.",
+  body: "I help startup founders and small teams build full-stack TypeScript products, including privacy-sensitive and regulated applications, using AI-native engineering without the tech debt of vibe coding.",
   ctaButtonText: "Contact",
   subtext:
     "I’m actively seeking a long-term, full-time remote role as a full-stack SWE and code owner at a US startup.",
@@ -92,18 +92,6 @@ export const ARCHITECT_EVOLUTION: WorkExperience[] = [
       "Full-Stack Web Developer · Self-Employed | C++, PHP, HTML, CSS, Ruby on Rails, SQL",
   },
 ] as const
-
-export type SocialProofCta = {
-  heading: string
-  buttonText: string
-  targetUrl: string
-}
-
-export const SOCIAL_PROOF_CTA: SocialProofCta = {
-  heading: "Join 749+ email subscribers and 21,936+ followers.",
-  buttonText: "Follow me on Medium to subscribe to my email newsletter",
-  targetUrl: "https://doctorderek.medium.com/",
-} as const
 
 export type BlogMetrics = {
   totalPosts: number

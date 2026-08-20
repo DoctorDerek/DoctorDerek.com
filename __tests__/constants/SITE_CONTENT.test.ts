@@ -39,6 +39,12 @@ describe("site copy quality gates", () => {
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
       "AI-native engineering",
     )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
+      "tech debt of vibe coding",
+    )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain(
+      "technical debt",
+    )
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain("10×")
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain(
       "deterministic",

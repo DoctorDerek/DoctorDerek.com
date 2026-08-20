@@ -46,16 +46,15 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               </div>
             </div>
             <h3 className="text-site-foreground-muted mb-8 text-center text-lg leading-snug font-bold md:text-2xl">
-              Tired of generic tech industry noise? Join{" "}
+              Join{" "}
               <span className="text-[#F38B57] tabular-nums">
                 <CountUp to={BLOG_METRICS.emailSubscribers} />
-              </span>{" "}
-              insider subscribers and{" "}
+              </span>
+              + email subscribers and{" "}
               <span className="text-[#008EC1] tabular-nums">
                 <CountUp to={BLOG_METRICS.mediumFollowers} duration={2.5} />
-              </span>{" "}
-              followers reading my battle-tested systems analyses and survival
-              manuals for your SWE career.
+              </span>
+              + Medium followers.
             </h3>
             <div className="flex flex-col justify-center gap-4 md:flex-row">
               <a

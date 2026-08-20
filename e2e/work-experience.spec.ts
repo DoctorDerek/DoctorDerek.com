@@ -185,38 +185,95 @@ for (const viewport of [
     await openWorkExperience(page)
 
     const carousel = page.getByRole("region", { name: "Career timeline" })
-    const geometry = await carousel.evaluate((carouselElement) => {
-      const railBounds = carouselElement
-        .querySelector('[data-career-rail="mobile"]')!
-        .getBoundingClientRect()
-      const railPath = carouselElement.querySelector<SVGPathElement>(
-        '[data-career-rail="mobile"] path',
-      )!
-      const railEndPoint = railPath.getPointAtLength(railPath.getTotalLength())
-      const railEndPointInViewport = new DOMPoint(
-        railEndPoint.x,
-        railEndPoint.y,
-      ).matrixTransform(railPath.getScreenCTM()!)
-      const activeCareerEra = carouselElement.querySelector<HTMLElement>(
+    const careerEraControls = carousel
+      .getByRole("group", { name: "Choose career era" })
+      .getByRole("button")
+
+    for (
+      let careerEraIndex = 0;
+      careerEraIndex < CAREER_ERA_COUNT;
+      careerEraIndex++
+    ) {
+      await careerEraControls.nth(careerEraIndex).click()
+      await expect(careerEraControls.nth(careerEraIndex)).toHaveAttribute(
+        "aria-current",
+        "step",
+      )
+
+      const activeCareerEra = carousel.locator(
         '[aria-roledescription="slide"][aria-hidden="false"]',
-      )!
-      const activeCareerEraBounds = activeCareerEra.getBoundingClientRect()
-      const contentBounds = activeCareerEra
-        .querySelector("p")!
-        .getBoundingClientRect()
+      )
+      await expect
+        .poll(() =>
+          activeCareerEra.evaluate((careerEraElement) => {
+            const careerEraBounds = careerEraElement.getBoundingClientRect()
+            const trackViewportBounds =
+              careerEraElement.parentElement!.parentElement!.getBoundingClientRect()
 
-      return {
-        contentRightInset: activeCareerEraBounds.right - contentBounds.right,
-        horizontalRailClearance:
-          railEndPointInViewport.y - contentBounds.bottom,
-        railToContentGap:
-          contentBounds.left - (railBounds.left + railBounds.width * 0.09),
-      }
-    })
+            return Math.abs(careerEraBounds.left - trackViewportBounds.left)
+          }),
+        )
+        .toBeLessThan(1)
 
-    expect(geometry.railToContentGap).toBeGreaterThan(12)
-    expect(geometry.contentRightInset).toBeGreaterThanOrEqual(15)
-    expect(geometry.horizontalRailClearance).toBeGreaterThan(2)
+      const geometry = await carousel.evaluate((carouselElement) => {
+        const railBounds = carouselElement
+          .querySelector('[data-career-rail="mobile"]')!
+          .getBoundingClientRect()
+        const railPath = carouselElement.querySelector<SVGPathElement>(
+          '[data-career-rail="mobile"] path',
+        )!
+        const railEndPoint = railPath.getPointAtLength(
+          railPath.getTotalLength(),
+        )
+        const railEndPointInViewport = new DOMPoint(
+          railEndPoint.x,
+          railEndPoint.y,
+        ).matrixTransform(railPath.getScreenCTM()!)
+        const activeCareerEraElement =
+          carouselElement.querySelector<HTMLElement>(
+            '[aria-roledescription="slide"][aria-hidden="false"]',
+          )!
+        const activeCareerEraBounds =
+          activeCareerEraElement.getBoundingClientRect()
+        const markerBounds = activeCareerEraElement
+          .querySelector(".animate-float")!
+          .getBoundingClientRect()
+        const paragraphBounds = Array.from(
+          activeCareerEraElement.querySelectorAll("p"),
+          (paragraph) => paragraph.getBoundingClientRect(),
+        )
+        const contentBounds = {
+          bottom: Math.max(...paragraphBounds.map(({ bottom }) => bottom)),
+          left: Math.min(...paragraphBounds.map(({ left }) => left)),
+          right: Math.max(...paragraphBounds.map(({ right }) => right)),
+        }
+
+        return {
+          contentRightInset: activeCareerEraBounds.right - contentBounds.right,
+          horizontalRailClearance:
+            railEndPointInViewport.y - contentBounds.bottom,
+          markerToContentGap: contentBounds.left - markerBounds.right,
+          railToContentGap:
+            contentBounds.left - (railBounds.left + railBounds.width * 0.09),
+        }
+      })
+
+      expect(geometry.railToContentGap).toBeGreaterThan(24)
+      expect(geometry.markerToContentGap).toBeGreaterThanOrEqual(8)
+      expect(geometry.contentRightInset).toBeGreaterThanOrEqual(15)
+      expect(
+        geometry.horizontalRailClearance,
+        `${viewport.name} career era ${careerEraIndex + 1} horizontal rail clearance`,
+      ).toBeGreaterThan(2)
+    }
+
+    const horizontalOverflow = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }))
+    expect(horizontalOverflow.scrollWidth).toBeLessThanOrEqual(
+      horizontalOverflow.clientWidth,
+    )
   })
 }
 

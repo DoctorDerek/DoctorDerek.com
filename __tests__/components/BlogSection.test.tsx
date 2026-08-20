@@ -29,7 +29,7 @@ const POSTS: MediumPost[] = [
     pubDate: "2026-07-18T12:00:00",
     thumbnail: "https://cdn.example.com/deterministic-engineering.jpg",
     description: "Build reliable product systems without brittle guesswork.",
-    topic: "Software Engineering",
+    topics: ["Software Engineering"],
   },
   {
     title: "Designing interfaces that feel right",
@@ -37,7 +37,7 @@ const POSTS: MediumPost[] = [
     pubDate: "2026-07-17T12:00:00",
     thumbnail: "",
     description: "Treat UI and UX quality as product functionality.",
-    topic: "UI",
+    topics: ["UI"],
   },
 ]
 

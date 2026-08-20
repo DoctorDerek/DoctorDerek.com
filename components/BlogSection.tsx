@@ -2,7 +2,7 @@ import Image from "next/image"
 import CountUp from "@/components/ui/CountUp"
 import SectionHeading from "@/components/ui/SectionHeading"
 import { BLOG_METRICS } from "@/constants/SITE_CONTENT"
-import { MediumPost } from "@/utils/medium"
+import type { MediumPost } from "@/utils/medium"
 
 export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   return (
@@ -89,7 +89,7 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
             >
               <div className="border-site-border relative h-1/2 w-full shrink-0 border-b bg-[#1E1E1E]">
                 <p className="border-site-border bg-site-surface-deep text-site-foreground absolute top-3 left-4 z-10 rounded-tr-xl border px-3 py-1 text-xs font-bold backdrop-blur-md">
-                  {post.topic}
+                  {post.topics[0]}
                 </p>
                 {post.thumbnail && (
                   <Image

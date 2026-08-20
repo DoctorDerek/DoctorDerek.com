@@ -36,7 +36,7 @@ describe("WorkExperienceSection", () => {
     const { carousel } = renderCareerTimeline()
 
     expect(screen.getByRole("heading", { level: 2 })).toHaveAccessibleName(
-      "Full-Stack SWE since 2004",
+      "Full-Stack SWE Since 2004",
     )
     expect(
       screen.getByRole("list", { name: "Desktop career timeline" }).children,
@@ -77,10 +77,22 @@ describe("WorkExperienceSection", () => {
       screen.getByRole("list", { name: "Desktop career timeline" }).children,
     )
 
+    for (const careerEra of desktopCareerEras) {
+      expect(careerEra).toHaveClass("pl-16", "pr-8")
+    }
+
     expect(desktopCareerEras[0]).toHaveClass("col-start-1", "row-start-1")
     expect(desktopCareerEras[1]).toHaveClass("col-start-1", "row-start-2")
     expect(desktopCareerEras[2]).toHaveClass("col-start-2", "row-start-1")
     expect(desktopCareerEras[3]).toHaveClass("col-start-2", "row-start-2")
+
+    const mobileCareerTrack = screen.getByRole("list", {
+      name: "Career eras",
+    })
+    expect(mobileCareerTrack.parentElement).toHaveClass(
+      "overflow-hidden",
+      "pt-5",
+    )
   })
 
   it("navigates career eras with arrows and direct-selection controls", () => {

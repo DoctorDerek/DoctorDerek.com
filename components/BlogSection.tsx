@@ -2,14 +2,14 @@ import Image from "next/image"
 import CountUp from "@/components/ui/CountUp"
 import SectionHeading from "@/components/ui/SectionHeading"
 import { BLOG_METRICS } from "@/constants/SITE_CONTENT"
-import { MediumPost } from "@/utils/medium"
+import type { MediumPost } from "@/utils/medium"
 
 export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   return (
     <>
-      <div className="pointer-events-none absolute top-10 left-10 z-10 md:top-20 md:left-20">
+      <div className="pointer-events-none absolute top-10 left-10 z-10 md:top-20 md:left-20 [@media(max-height:640px)]:top-10 [@media(max-height:640px)]:left-10">
         <SectionHeading>
-          <h2 className="text-site-foreground text-5xl drop-shadow-md md:text-8xl lg:text-9xl">
+          <h2 className="text-site-foreground text-5xl drop-shadow-md md:text-8xl lg:text-9xl [@media(max-height:640px)]:text-5xl">
             Blog
           </h2>
         </SectionHeading>
@@ -46,16 +46,15 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               </div>
             </div>
             <h3 className="text-site-foreground-muted mb-8 text-center text-lg leading-snug font-bold md:text-2xl">
-              Tired of generic tech industry noise? Join{" "}
+              Join{" "}
               <span className="text-[#F38B57] tabular-nums">
                 <CountUp to={BLOG_METRICS.emailSubscribers} />
-              </span>{" "}
-              insider subscribers and{" "}
+              </span>
+              + email subscribers and{" "}
               <span className="text-[#008EC1] tabular-nums">
                 <CountUp to={BLOG_METRICS.mediumFollowers} duration={2.5} />
-              </span>{" "}
-              followers reading my battle-tested systems analyses and survival
-              manuals for your SWE career.
+              </span>
+              + Medium followers.
             </h3>
             <div className="flex flex-col justify-center gap-4 md:flex-row">
               <a
@@ -89,9 +88,22 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               className="group ease-spring-bouncy border-site-border bg-site-surface mx-auto flex h-[65vh] w-full max-w-2xl scale-95 flex-col overflow-hidden rounded-2xl border opacity-0 shadow-2xl backdrop-blur-md transition-transform duration-300 hover:-translate-y-2 hover:scale-[1.02] [.active_&]:scale-100 [.active_&]:opacity-100"
             >
               <div className="border-site-border relative h-1/2 w-full shrink-0 border-b bg-[#1E1E1E]">
-                <p className="border-site-border bg-site-surface-deep text-site-foreground absolute top-3 left-4 z-10 rounded-tr-xl border px-3 py-1 text-xs font-bold backdrop-blur-md">
-                  {post.topic}
-                </p>
+                <div className="absolute top-3 right-4 left-4 z-10 flex flex-wrap gap-2">
+                  {post.publication && (
+                    <p className="border-site-border rounded-tr-xl border bg-[#FFE366] px-3 py-1 text-[10px] font-bold text-[#311B4D] min-[375px]:text-xs">
+                      <span className="sr-only">Published in </span>
+                      <span>{post.publication}</span>
+                    </p>
+                  )}
+                  {post.topics.map((topic) => (
+                    <p
+                      className="border-site-border bg-site-surface-deep text-site-foreground rounded-tr-xl border px-3 py-1 text-[10px] font-bold backdrop-blur-md min-[375px]:text-xs"
+                      key={topic}
+                    >
+                      {topic}
+                    </p>
+                  ))}
+                </div>
                 {post.thumbnail && (
                   <Image
                     src={post.thumbnail}
@@ -102,20 +114,23 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                   />
                 )}
               </div>
-              <div className="flex flex-1 flex-col p-6 lg:p-8">
-                <h4 className="text-site-foreground mb-3 line-clamp-3 text-xl leading-tight font-bold md:text-2xl lg:text-3xl">
+              <div className="flex flex-1 flex-col p-6 pt-10 md:pt-6 lg:p-8 [@media(max-height:640px)]:p-4 [@media(max-height:640px)]:pt-10">
+                <h4 className="text-site-foreground mb-3 line-clamp-3 text-xl leading-tight font-bold md:text-2xl lg:text-3xl [@media(max-height:640px)]:mb-2 [@media(max-height:640px)]:line-clamp-2 [@media(max-height:640px)]:text-lg">
                   {post.title}
                 </h4>
-                <p className="text-site-foreground-faint mb-auto line-clamp-4 text-sm md:text-base lg:text-lg">
+                <p className="text-site-foreground-faint mb-auto line-clamp-4 text-sm md:text-base lg:text-lg [@media(max-height:640px)]:line-clamp-2">
                   {post.description}
                 </p>
-                <p className="text-site-foreground mt-4 text-xs font-bold tracking-wider uppercase opacity-70 lg:text-sm">
-                  {new Date(post.pubDate).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </p>
+                <div className="text-site-foreground mt-4 flex items-center justify-between gap-4 text-xs font-bold lg:text-sm [@media(max-height:640px)]:mt-2">
+                  <p className="tracking-wider uppercase opacity-70">
+                    {new Date(post.pubDate).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <p className="whitespace-nowrap">Read on Medium →</p>
+                </div>
               </div>
             </a>
           </div>

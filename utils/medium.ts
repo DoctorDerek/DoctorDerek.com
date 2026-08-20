@@ -1,18 +1,20 @@
 import Parser from "rss-parser"
 
-export interface MediumPost {
+export type MediumPost = {
   title: string
   link: string
   pubDate: string
   thumbnail: string
   description: string
-  topic: string
+  publication?: string
+  topics: string[]
 }
 
 const UPPERCASE_MEDIUM_TOPIC_WORDS = ["ai", "ui", "ux"]
+const MEDIUM_PUBLICATION_SUFFIX = /\s*Continue reading on (.+?) »\s*$/
 
-const formatMediumTopic = (topic: string | undefined) =>
-  (topic || "article")
+const formatMediumTopic = (topic: string) =>
+  topic
     .split("-")
     .map((word) => {
       const lowercaseWord = word.toLowerCase()
@@ -70,13 +72,18 @@ export default async function getMediumPosts(): Promise<MediumPost[]> {
     )
     const thumbnail = validImage ? validImage[1] : ""
 
-    const description =
-      decodeEntities(
-        content
-          .replace(/<[^>]*>?/gm, "")
-          .replace(/&nbsp;/g, " ")
-          .trim(),
-      ).substring(0, 180) + "..."
+    const decodedTextContent = decodeEntities(
+      content.replace(/<[^>]*>?/gm, " "),
+    )
+      .replace(/\s+/g, " ")
+      .trim()
+    const publicationName = decodedTextContent.match(
+      MEDIUM_PUBLICATION_SUFFIX,
+    )?.[1]
+    const description = `${decodedTextContent
+      .replace(MEDIUM_PUBLICATION_SUFFIX, "")
+      .trim()
+      .substring(0, 180)}...`
 
     return {
       title: decodeEntities(item.title || ""),
@@ -84,7 +91,10 @@ export default async function getMediumPosts(): Promise<MediumPost[]> {
       pubDate: item.pubDate || "",
       thumbnail,
       description,
-      topic: formatMediumTopic(item.categories?.[0]),
+      ...(publicationName && publicationName !== "Medium"
+        ? { publication: publicationName }
+        : {}),
+      topics: (item.categories || []).map(formatMediumTopic),
     }
   })
 }

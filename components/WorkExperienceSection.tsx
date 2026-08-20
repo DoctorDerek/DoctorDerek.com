@@ -64,7 +64,7 @@ export default function WorkExperienceSection() {
             <h2 className="text-site-foreground text-right text-3xl font-bold tracking-tight whitespace-nowrap drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
               Full-Stack SWE
               <br />
-              since 2004
+              Since 2004
             </h2>
           </div>
         </div>
@@ -82,7 +82,7 @@ export default function WorkExperienceSection() {
         </p>
 
         <div
-          className="relative [touch-action:pan-y] overflow-hidden"
+          className="relative [touch-action:pan-y] overflow-hidden pt-5"
           onTouchEnd={handleCareerTimelineTouchEnd}
           onTouchStart={handleCareerTimelineTouchStart}
         >
@@ -245,7 +245,7 @@ export default function WorkExperienceSection() {
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
                 className={classNames(
-                  "relative px-4",
+                  "relative pr-8 pl-16",
                   index === 0 && "pt-10",
                   (index === 1 || index === 3) && "pt-16",
                   index === 2 && "pt-32",
@@ -272,7 +272,7 @@ export default function WorkExperienceSection() {
                   <p className="restorabold text-2xl font-bold">
                     {item.duration}
                   </p>
-                  <p className="restorabold max-w-xl py-2 text-lg font-medium xl:text-xl">
+                  <p className="restorabold max-w-xl py-2 text-lg font-medium 2xl:text-xl">
                     {item.company}
                   </p>
                 </div>

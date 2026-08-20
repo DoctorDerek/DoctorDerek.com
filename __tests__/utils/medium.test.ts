@@ -24,9 +24,15 @@ describe("getMediumPosts", () => {
             "&#x1F99D; &#129437; &quot;quoted&quot; &apos;apostrophe&apos; &amp; &lt;tag&gt; &rsquo;right &lsquo;left &rdquo;close &ldquo;open &mdash; &ndash; &hellip; &nbsp;space",
           link: "https://medium.com/article",
           pubDate: "2026-07-18",
-          categories: ["web-development"],
+          categories: [
+            "web-development",
+            "software-engineering",
+            "programming",
+            "ui",
+            "ux",
+          ],
           "content:encoded":
-            '<p>Primary &amp; text</p><img src="https://cdn.example.com/article.jpg">',
+            '<p>Primary &amp; text</p><img src="https://cdn.example.com/article.jpg"><p>Continue reading on Career Programming »</p>',
         },
         {
           title: "Interface design",
@@ -49,14 +55,21 @@ describe("getMediumPosts", () => {
       pubDate: "2026-07-18",
       thumbnail: "https://cdn.example.com/article.jpg",
       description: "Primary & text...",
-      topic: "Web Development",
+      publication: "Career Programming",
+      topics: [
+        "Web Development",
+        "Software Engineering",
+        "Programming",
+        "UI",
+        "UX",
+      ],
     })
     expect(posts[0].title).toContain("🦝 🦝 ”quoted” ’apostrophe’")
     expect(posts[0].title).toContain("& <tag> ’right ‘left ”close “open — – …")
     expect(posts[1]).toMatchObject({
       thumbnail: "",
       description: "Secondary text...",
-      topic: "UI",
+      topics: ["UI"],
     })
   })
 
@@ -67,6 +80,11 @@ describe("getMediumPosts", () => {
           title: "AI systems",
           categories: ["AI-native"],
           description: "Fallback &hellip;",
+        },
+        {
+          title: "Self-published article",
+          description:
+            "Self-published description Continue reading on Medium »",
         },
         {},
       ],
@@ -79,15 +97,23 @@ describe("getMediumPosts", () => {
       pubDate: "",
       thumbnail: "",
       description: "Fallback …...",
-      topic: "AI Native",
+      topics: ["AI Native"],
     })
     expect(posts[1]).toEqual({
+      title: "Self-published article",
+      link: "",
+      pubDate: "",
+      thumbnail: "",
+      description: "Self-published description...",
+      topics: [],
+    })
+    expect(posts[2]).toEqual({
       title: "",
       link: "",
       pubDate: "",
       thumbnail: "",
       description: "...",
-      topic: "Article",
+      topics: [],
     })
   })
 })

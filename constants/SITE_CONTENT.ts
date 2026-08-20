@@ -53,8 +53,8 @@ export type AiConsultancyPitch = {
 
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   header: "What I Do Best",
-  body: "I help startup founders and small teams build full-stack TypeScript products, including privacy-sensitive and regulated applications, using AI-native engineering without the technical debt of vibe coding.",
-  ctaButtonText: "Inquire About Availability",
+  body: "I help startup founders and small teams build full-stack TypeScript products, including privacy-sensitive and regulated applications, using AI-native engineering without the tech debt of vibe coding.",
+  ctaButtonText: "Contact",
   subtext:
     "I’m actively seeking a long-term, full-time remote role as a full-stack SWE and code owner at a US startup.",
   emailSubject: "Full-Time SWE / Code Owner Inquiry",
@@ -65,7 +65,7 @@ export const CONTACT_BULLETS: string[] = [
   "As a code owner, I take products from functional specification through production using deterministic architecture and AI-native workflows grounded in persistent context, human code review, automated testing, and manual QA.",
   "I deliver production-ready MVPs in under 3 months without sacrificing performance: I have cut network payloads by 90% and reduced a key data visualization’s load time from more than 10 minutes to under 10 seconds.",
 ] as const
-export const CONTACT_CTA = "Contact Me" as const
+export const CONTACT_CTA = "Email Me" as const
 export type WorkExperience = {
   duration: string
   company: string
@@ -89,21 +89,9 @@ export const ARCHITECT_EVOLUTION: WorkExperience[] = [
   {
     duration: "2004–2009",
     company:
-      "Full-Stack Web Developer · Self-Employed | C++, PHP, HTML, CSS, Ruby on Rails, SQL",
+      "Full-Stack Web Developer · Self-Employed | C++, PHP, HTML, CSS, JavaScript, Ruby on Rails, SQL",
   },
 ] as const
-
-export type SocialProofCta = {
-  heading: string
-  buttonText: string
-  targetUrl: string
-}
-
-export const SOCIAL_PROOF_CTA: SocialProofCta = {
-  heading: "Join 749+ email subscribers and 21,936+ followers.",
-  buttonText: "Follow me on Medium to subscribe to my email newsletter",
-  targetUrl: "https://doctorderek.medium.com/",
-} as const
 
 export type BlogMetrics = {
   totalPosts: number
@@ -153,7 +141,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     id: "email",
-    label: "Inquire",
+    label: "Email",
   },
   {
     id: "linkedin",
@@ -234,9 +222,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "What Are Your Values, Mapache?",
     summary:
-      "A values game that helps teams and individuals make clearer decisions under pressure.",
+      "A private, offline values-clarification autobattler that ranks 100 included values plus any Custom Values you add.",
     details:
-      "A TypeScript monorepo powers the live web game. XState actors keep matchups, input, queueing, and offline saves deterministic, with Expo mobile support on the roadmap.",
+      "The live Next.js game uses XState to schedule one pair at a time and IndexedDB to store rankings, Custom Values, undo/redo history, achievements, and JSON backups. The Expo apps await signed native releases.",
     tech: [
       "Next.js",
       "TypeScript",
@@ -251,9 +239,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "CRM",
     summary:
-      "A local-first contact system with deterministic CRUD, age filtering, favorites, and no account required.",
+      "A local-first contact manager with search, age filters, favorites, sorting, and no account.",
     details:
-      "XState manages lifecycle transitions while localStorage preserves data across reloads. React Hook Form, Headless UI, and themed motion controls produce accessible edit, delete, and reset flows.",
+      "XState owns contact creation, editing, deletion, reset, and localStorage persistence. React Hook Form, Zod, and Headless UI handle validation and accessible modal dialogs.",
     tech: ["Next.js", "TypeScript", "XState", "Tailwind CSS"],
     liveUrl: "https://portfolio-crm.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-crm",
@@ -261,9 +249,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "Calendar",
     summary:
-      "A responsive calendar for scheduling, color-coding, and reviewing time-ordered reminders.",
+      "A responsive monthly calendar for creating, color-coding, reviewing, and deleting reminders.",
     details:
-      "Redux Toolkit separates reminder, agenda, dialog, and display state while Material UI and Day.js power date-time entry, month navigation, chronological ordering, and accessible day-level review.",
+      "Redux Toolkit stores reminders, selected dates, dialogs, and display settings. Material UI and Day.js handle date-time entry, month navigation, daily agendas, and icon or appointment-time views.",
     tech: ["Next.js", "TypeScript", "Redux Toolkit", "Material UI"],
     liveUrl: "https://portfolio-calendar.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-calendar",
@@ -271,9 +259,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "Weather",
     summary:
-      "An accessible city weather search with explicit loading, success, and failure states.",
+      "A responsive current-weather search by city or optional browser location.",
     details:
-      "The Next.js App Router keeps the OpenWeather API key server-side, validates upstream payloads, and turns geolocation, missing-city, or upstream-failure paths into readable feedback for all users.",
+      "Next.js keeps OpenWeatherMap requests and the API key on the server. Runtime validation rejects malformed responses. Accessible toasts report location-permission, missing-city, and service errors.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "OpenWeather API"],
     liveUrl: "https://portfolio-weather.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-weather",
@@ -281,9 +269,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "Pokédex",
     summary:
-      "A statically generated field guide for all 1,025 Pokémon in the current Pokédex data.",
+      "An unofficial GraphQL Pokédex with 1,025 statically generated detail pages.",
     details:
-      "Next.js prebuilds 1,025 Pokémon detail routes from generated GraphQL data, with ten-entry catalog pages and touch-first detail panels for classification, size, combat, weaknesses, and resistances.",
+      "Next.js builds every route from checked-in data. The app adds GraphQL search, a progressively expanding catalog, and touch-friendly dossiers with types, dimensions, abilities, and six base stats.",
     tech: ["Next.js", "TypeScript", "GraphQL", "TanStack Query"],
     liveUrl: "https://portfolio-pokedex.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",
@@ -291,9 +279,9 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "DoctorDerek.com",
     summary:
-      "The current portfolio site itself: a cinematic, accessibility-minded experience that surfaces real production work with high signal and low noise.",
+      "My public website and engineering portfolio, with six live projects, work history, testimonials, and a live Medium feed.",
     details:
-      "XState coordinates global UI timing while fullPage.js, Motion, Rive, and Canvas render the visual system; the Next.js server reads and cleans the live Medium feed.",
+      "An XState parallel machine owns logo and background transitions, and fullPage.js handles section navigation. Motion animates interface elements, Rive renders the splash, Canvas draws particles, and Next.js fetches and cleans the Medium RSS feed.",
     tech: ["Next.js", "TypeScript", "XState", "Motion", "Rive"],
     liveUrl: "https://www.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/DoctorDerek.com",

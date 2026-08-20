@@ -24,7 +24,7 @@ describe("AiConsultancySection", () => {
       screen.getByRole("link", {
         name: AI_CONSULTANCY_PITCH.ctaButtonText,
       }),
-    ).toBeInTheDocument()
+    ).toHaveAttribute("href", "#contact")
     expect(screen.getByText(AI_CONSULTANCY_PITCH.body)).toBeInTheDocument()
     expect(screen.getByText(AI_CONSULTANCY_PITCH.subtext)).toBeInTheDocument()
   })

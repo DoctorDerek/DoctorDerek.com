@@ -14,7 +14,7 @@ describe("site copy quality gates", () => {
     expect(CONTACT_COMPLETION.toastMessage).toBe(
       "You’ve reached the end of my website.\nLet’s build something great.",
     )
-    expect(SITE_CONTENT.CONTACT_CTA).toBe("Contact Me")
+    expect(SITE_CONTENT.CONTACT_CTA).toBe("Email Me")
   })
 
   it("keeps the flagship bio on-point and concise", () => {
@@ -39,6 +39,12 @@ describe("site copy quality gates", () => {
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
       "AI-native engineering",
     )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
+      "tech debt of vibe coding",
+    )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain(
+      "technical debt",
+    )
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain("10×")
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).not.toContain(
       "deterministic",
@@ -52,6 +58,15 @@ describe("site copy quality gates", () => {
     expect(JSON.stringify(SITE_CONTENT)).not.toMatch(PRIVATE_LOGISTICS_LANGUAGE)
   })
 
+  it("distinguishes contact navigation from direct email actions", () => {
+    const emailSocialLink = SITE_CONTENT.SOCIAL_LINKS.find(
+      ({ id }) => id === "email",
+    )
+
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.ctaButtonText).toBe("Contact")
+    expect(emailSocialLink?.label).toBe("Email")
+  })
+
   it("locks key proof-point metrics", () => {
     expect(SITE_CONTENT.BLOG_METRICS.totalPosts).toBe(589)
     expect(SITE_CONTENT.BLOG_METRICS.emailSubscribers).toBeGreaterThan(700)
@@ -62,16 +77,17 @@ describe("site copy quality gates", () => {
     const doctorDerekProject = SITE_CONTENT.PORTFOLIO_PROJECTS.at(-1)
 
     expect(firstProject.projectTitle).toBe("What Are Your Values, Mapache?")
-    expect(firstProject.summary).toMatch(/values game/i)
-    expect(firstProject.details).toContain("Expo mobile support")
+    expect(firstProject.summary).toContain("values-clarification autobattler")
+    expect(firstProject.details).toContain("IndexedDB")
+    expect(firstProject.details).toContain("signed native releases")
     expect(firstProject.liveUrl).toBe(
       "https://www.whatareyourvaluesmapache.com/",
     )
 
     expect(doctorDerekProject?.projectTitle).toBe("DoctorDerek.com")
-    expect(doctorDerekProject?.summary).toContain(
-      "cinematic, accessibility-minded experience",
-    )
+    expect(doctorDerekProject?.summary).toContain("six live projects")
+    expect(doctorDerekProject?.details).toContain("XState parallel machine")
+    expect(doctorDerekProject?.details).toContain("Medium RSS feed")
 
     const pokedexProject = SITE_CONTENT.PORTFOLIO_PROJECTS.find(
       (project) => project.projectTitle === "Pokédex",
@@ -128,6 +144,12 @@ describe("site copy quality gates", () => {
         company.split(" · ").at(0),
       ),
     ).toEqual(["Full-Stack Web Developer", "Full-Stack Web Developer"])
+
+    const earliestTechnologyStack = SITE_CONTENT.ARCHITECT_EVOLUTION.find(
+      ({ duration }) => duration === "2004–2009",
+    )?.company.split(" | ")[1]
+
+    expect(earliestTechnologyStack).toContain("JavaScript")
 
     for (const { company } of [currentSelfEmployedStage, fullTimeStage]) {
       const [, technologyStack] = company.split(" | ")

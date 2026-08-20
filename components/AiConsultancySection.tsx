@@ -1,4 +1,3 @@
-import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
 import { AI_CONSULTANCY_PITCH } from "@/constants/SITE_CONTENT"
 
@@ -14,9 +13,12 @@ export default function AiConsultancySection() {
         <p className="mb-10 text-xl leading-relaxed md:text-2xl">
           {AI_CONSULTANCY_PITCH.body}
         </p>
-        <GlobalEmailCTA className="ease-spring-bouncy site-focus-contrast inline-block w-full rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-center text-xl font-bold text-[#311B4D] shadow-xl transition-transform duration-300 hover:scale-105 active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
+        <a
+          className="ease-spring-bouncy site-focus-contrast inline-block w-full rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-center text-xl font-bold text-[#311B4D] shadow-xl transition-transform duration-300 hover:scale-105 active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl"
+          href="#contact"
+        >
           {AI_CONSULTANCY_PITCH.ctaButtonText}
-        </GlobalEmailCTA>
+        </a>
         <p className="mt-6 text-lg opacity-90 md:text-xl">
           {AI_CONSULTANCY_PITCH.subtext}
         </p>

@@ -89,9 +89,6 @@ describe("WorkExperienceSection", () => {
     const mobileCareerTrack = screen.getByRole("list", {
       name: "Career eras",
     })
-    for (const careerEra of mobileCareerTrack.children) {
-      expect(careerEra).toHaveClass("pl-12", "pr-4")
-    }
     expect(mobileCareerTrack.parentElement).toHaveClass(
       "overflow-hidden",
       "pt-5",

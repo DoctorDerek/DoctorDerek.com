@@ -7,9 +7,9 @@ import type { MediumPost } from "@/utils/medium"
 export default function BlogSection({ posts }: { posts: MediumPost[] }) {
   return (
     <>
-      <div className="pointer-events-none absolute top-10 left-10 z-10 md:top-20 md:left-20">
+      <div className="pointer-events-none absolute top-10 left-10 z-10 md:top-20 md:left-20 [@media(max-height:640px)]:top-10 [@media(max-height:640px)]:left-10">
         <SectionHeading>
-          <h2 className="text-site-foreground text-5xl drop-shadow-md md:text-8xl lg:text-9xl">
+          <h2 className="text-site-foreground text-5xl drop-shadow-md md:text-8xl lg:text-9xl [@media(max-height:640px)]:text-5xl">
             Blog
           </h2>
         </SectionHeading>
@@ -114,14 +114,14 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                   />
                 )}
               </div>
-              <div className="flex flex-1 flex-col p-6 lg:p-8">
-                <h4 className="text-site-foreground mb-3 line-clamp-3 text-xl leading-tight font-bold md:text-2xl lg:text-3xl">
+              <div className="flex flex-1 flex-col p-6 pt-10 md:pt-6 lg:p-8 [@media(max-height:640px)]:p-4 [@media(max-height:640px)]:pt-10">
+                <h4 className="text-site-foreground mb-3 line-clamp-3 text-xl leading-tight font-bold md:text-2xl lg:text-3xl [@media(max-height:640px)]:mb-2 [@media(max-height:640px)]:line-clamp-2 [@media(max-height:640px)]:text-lg">
                   {post.title}
                 </h4>
-                <p className="text-site-foreground-faint mb-auto line-clamp-4 text-sm md:text-base lg:text-lg">
+                <p className="text-site-foreground-faint mb-auto line-clamp-4 text-sm md:text-base lg:text-lg [@media(max-height:640px)]:line-clamp-2">
                   {post.description}
                 </p>
-                <div className="text-site-foreground mt-4 flex items-center justify-between gap-4 text-xs font-bold lg:text-sm">
+                <div className="text-site-foreground mt-4 flex items-center justify-between gap-4 text-xs font-bold lg:text-sm [@media(max-height:640px)]:mt-2">
                   <p className="tracking-wider uppercase opacity-70">
                     {new Date(post.pubDate).toLocaleDateString("en-US", {
                       month: "short",

@@ -88,9 +88,22 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
               className="group ease-spring-bouncy border-site-border bg-site-surface mx-auto flex h-[65vh] w-full max-w-2xl scale-95 flex-col overflow-hidden rounded-2xl border opacity-0 shadow-2xl backdrop-blur-md transition-transform duration-300 hover:-translate-y-2 hover:scale-[1.02] [.active_&]:scale-100 [.active_&]:opacity-100"
             >
               <div className="border-site-border relative h-1/2 w-full shrink-0 border-b bg-[#1E1E1E]">
-                <p className="border-site-border bg-site-surface-deep text-site-foreground absolute top-3 left-4 z-10 rounded-tr-xl border px-3 py-1 text-xs font-bold backdrop-blur-md">
-                  {post.topics[0]}
-                </p>
+                <div className="absolute top-3 right-4 left-4 z-10 flex flex-wrap gap-2">
+                  {post.publication && (
+                    <p className="border-site-border rounded-tr-xl border bg-[#FFE366] px-3 py-1 text-[10px] font-bold text-[#311B4D] min-[375px]:text-xs">
+                      <span className="sr-only">Published in </span>
+                      <span>{post.publication}</span>
+                    </p>
+                  )}
+                  {post.topics.map((topic) => (
+                    <p
+                      className="border-site-border bg-site-surface-deep text-site-foreground rounded-tr-xl border px-3 py-1 text-[10px] font-bold backdrop-blur-md min-[375px]:text-xs"
+                      key={topic}
+                    >
+                      {topic}
+                    </p>
+                  ))}
+                </div>
                 {post.thumbnail && (
                   <Image
                     src={post.thumbnail}
@@ -108,13 +121,16 @@ export default function BlogSection({ posts }: { posts: MediumPost[] }) {
                 <p className="text-site-foreground-faint mb-auto line-clamp-4 text-sm md:text-base lg:text-lg">
                   {post.description}
                 </p>
-                <p className="text-site-foreground mt-4 text-xs font-bold tracking-wider uppercase opacity-70 lg:text-sm">
-                  {new Date(post.pubDate).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </p>
+                <div className="text-site-foreground mt-4 flex items-center justify-between gap-4 text-xs font-bold lg:text-sm">
+                  <p className="tracking-wider uppercase opacity-70">
+                    {new Date(post.pubDate).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <p className="whitespace-nowrap">Read on Medium →</p>
+                </div>
               </div>
             </a>
           </div>

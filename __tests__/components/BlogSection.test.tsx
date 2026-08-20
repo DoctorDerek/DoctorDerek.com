@@ -29,7 +29,14 @@ const POSTS: MediumPost[] = [
     pubDate: "2026-07-18T12:00:00",
     thumbnail: "https://cdn.example.com/deterministic-engineering.jpg",
     description: "Build reliable product systems without brittle guesswork.",
-    topics: ["Software Engineering"],
+    publication: "Career Programming",
+    topics: [
+      "Software Engineering",
+      "TypeScript",
+      "React",
+      "UI",
+      "Accessibility",
+    ],
   },
   {
     title: "Designing interfaces that feel right",
@@ -37,17 +44,24 @@ const POSTS: MediumPost[] = [
     pubDate: "2026-07-17T12:00:00",
     thumbnail: "",
     description: "Treat UI and UX quality as product functionality.",
-    topics: ["UI"],
+    topics: ["Product Design"],
   },
 ]
 
 describe("BlogSection", () => {
-  it("renders RSS topics and only shows thumbnails supplied by the feed", () => {
+  it("renders RSS publication and topic metadata without inventing thumbnails", () => {
     render(<BlogSection posts={POSTS} />)
 
     expect(screen.getByRole("heading", { name: "Blog" })).toBeInTheDocument()
-    expect(screen.getByText("Software Engineering")).toBeInTheDocument()
-    expect(screen.getByText("UI")).toBeInTheDocument()
+    const publicationBadge = screen.getByText("Career Programming").closest("p")
+    expect(publicationBadge).toHaveTextContent(
+      "Published in Career Programming",
+    )
+    for (const topic of POSTS[0].topics) {
+      expect(screen.getByText(topic)).toBeInTheDocument()
+    }
+    expect(screen.getByText(POSTS[1].topics[0])).toBeInTheDocument()
+    expect(screen.getAllByText("Read on Medium →")).toHaveLength(POSTS.length)
     expect(
       screen.getByRole("img", {
         name: "Deterministic product engineering",

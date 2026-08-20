@@ -272,7 +272,7 @@ export default function WorkExperienceSection() {
                   <p className="restorabold text-2xl font-bold">
                     {item.duration}
                   </p>
-                  <p className="restorabold max-w-xl py-2 text-lg font-medium xl:text-xl">
+                  <p className="restorabold max-w-xl py-2 text-lg font-medium 2xl:text-xl">
                     {item.company}
                   </p>
                 </div>

@@ -82,7 +82,7 @@ export default function WorkExperienceSection() {
         </p>
 
         <div
-          className="relative [touch-action:pan-y] overflow-hidden"
+          className="relative [touch-action:pan-y] overflow-hidden pt-5"
           onTouchEnd={handleCareerTimelineTouchEnd}
           onTouchStart={handleCareerTimelineTouchStart}
         >
@@ -245,7 +245,7 @@ export default function WorkExperienceSection() {
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
                 className={classNames(
-                  "relative px-4",
+                  "relative pr-8 pl-16",
                   index === 0 && "pt-10",
                   (index === 1 || index === 3) && "pt-16",
                   index === 2 && "pt-32",

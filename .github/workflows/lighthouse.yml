@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 concurrency:
   group: mobile-web-lighthouse-production
@@ -20,7 +19,6 @@ jobs:
       deployments: read
     steps:
       - name: Wait for Matching Vercel Production Deployment
-        if: github.event_name == 'push'
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         with:
           retries: 3
@@ -131,7 +129,6 @@ jobs:
   deploy:
     name: Publish Mobile Web Lighthouse
     needs: measure
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

@@ -174,6 +174,41 @@ test("desktop code markers focus opposite their repeated forward spin", async ({
   )
 })
 
+for (const viewport of [
+  { name: "compact mobile", width: 320, height: 568 },
+  { name: "standard mobile", width: 390, height: 844 },
+]) {
+  test(`${viewport.name} keeps career copy clear of the rail`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport)
+    await openWorkExperience(page)
+
+    const carousel = page.getByRole("region", { name: "Career timeline" })
+    const geometry = await carousel.evaluate((carouselElement) => {
+      const railBounds = carouselElement
+        .querySelector('[data-career-rail="mobile"]')!
+        .getBoundingClientRect()
+      const activeCareerEra = carouselElement.querySelector<HTMLElement>(
+        '[aria-roledescription="slide"][aria-hidden="false"]',
+      )!
+      const activeCareerEraBounds = activeCareerEra.getBoundingClientRect()
+      const contentBounds = activeCareerEra
+        .querySelector("p")!
+        .getBoundingClientRect()
+
+      return {
+        contentRightInset: activeCareerEraBounds.right - contentBounds.right,
+        railToContentGap:
+          contentBounds.left - (railBounds.left + railBounds.width * 0.09),
+      }
+    })
+
+    expect(geometry.railToContentGap).toBeGreaterThan(12)
+    expect(geometry.contentRightInset).toBeGreaterThanOrEqual(15)
+  })
+}
+
 test.describe("mobile career pagination", () => {
   test.use({
     hasTouch: true,

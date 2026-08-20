@@ -115,7 +115,7 @@ export default function WorkExperienceSection() {
                 aria-hidden={activeCareerEraIndex !== index}
                 aria-label={`${index + 1} of ${ARCHITECT_EVOLUTION.length}`}
                 aria-roledescription="slide"
-                className="relative min-h-60 w-full shrink-0 px-8 pt-12"
+                className="relative min-h-60 w-full shrink-0 pt-12 pr-4 pl-12"
                 key={item.duration}
                 role="group"
               >

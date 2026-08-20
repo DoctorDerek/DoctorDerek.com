@@ -36,7 +36,7 @@ describe("WorkExperienceSection", () => {
     const { carousel } = renderCareerTimeline()
 
     expect(screen.getByRole("heading", { level: 2 })).toHaveAccessibleName(
-      "Full-Stack SWE since 2004",
+      "Full-Stack SWE Since 2004",
     )
     expect(
       screen.getByRole("list", { name: "Desktop career timeline" }).children,

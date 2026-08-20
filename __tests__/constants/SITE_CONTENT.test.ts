@@ -144,6 +144,12 @@ describe("site copy quality gates", () => {
       ),
     ).toEqual(["Full-Stack Web Developer", "Full-Stack Web Developer"])
 
+    const earliestTechnologyStack = SITE_CONTENT.ARCHITECT_EVOLUTION.find(
+      ({ duration }) => duration === "2004–2009",
+    )?.company.split(" | ")[1]
+
+    expect(earliestTechnologyStack).toContain("JavaScript")
+
     for (const { company } of [currentSelfEmployedStage, fullTimeStage]) {
       const [, technologyStack] = company.split(" | ")
 

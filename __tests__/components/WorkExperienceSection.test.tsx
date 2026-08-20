@@ -1,7 +1,22 @@
 import { fireEvent, render, screen, within } from "@testing-library/react"
-import { describe, expect, it } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import WorkExperienceSection from "@/components/WorkExperienceSection"
+import {
+  CAREER_RAIL_PATHS,
+  CAREER_RAIL_STROKE_WIDTH,
+} from "@/constants/CAREER_TIMELINE"
+import { getCareerCodeMarkerAccessibleName } from "@/constants/INTERACTIONS"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
+
+const { reducedMotionPreference } = vi.hoisted(() => ({
+  reducedMotionPreference: { value: false },
+}))
+
+vi.mock("@/components/MotionPreferenceProvider", () => ({
+  useMotionPreference: () => ({
+    shouldReduceMotion: reducedMotionPreference.value,
+  }),
+}))
 
 const renderCareerTimeline = () => {
   render(<WorkExperienceSection />)
@@ -13,6 +28,10 @@ const renderCareerTimeline = () => {
 }
 
 describe("WorkExperienceSection", () => {
+  beforeEach(() => {
+    reducedMotionPreference.value = false
+  })
+
   it("renders the canonical career eras in semantic mobile and desktop timelines", () => {
     const { carousel } = renderCareerTimeline()
 
@@ -34,6 +53,34 @@ describe("WorkExperienceSection", () => {
     }
 
     expect(screen.queryByText(/placeholder/i)).not.toBeInTheDocument()
+  })
+
+  it("renders the approved rounded rail topology and chronological desktop columns", () => {
+    renderCareerTimeline()
+
+    for (const [viewport, pathDefinition] of Object.entries(
+      CAREER_RAIL_PATHS,
+    )) {
+      const rail = document.querySelector(`[data-career-rail="${viewport}"]`)
+      const path = rail?.querySelector("path")
+
+      expect(path).toHaveAttribute("d", pathDefinition)
+      expect(path).toHaveAttribute(
+        "stroke-width",
+        String(CAREER_RAIL_STROKE_WIDTH),
+      )
+      expect(path).toHaveAttribute("stroke-linecap", "round")
+      expect(path).toHaveAttribute("stroke-linejoin", "round")
+    }
+
+    const desktopCareerEras = Array.from(
+      screen.getByRole("list", { name: "Desktop career timeline" }).children,
+    )
+
+    expect(desktopCareerEras[0]).toHaveClass("col-start-1", "row-start-1")
+    expect(desktopCareerEras[1]).toHaveClass("col-start-1", "row-start-2")
+    expect(desktopCareerEras[2]).toHaveClass("col-start-2", "row-start-1")
+    expect(desktopCareerEras[3]).toHaveClass("col-start-2", "row-start-2")
   })
 
   it("navigates career eras with arrows and direct-selection controls", () => {
@@ -75,6 +122,53 @@ describe("WorkExperienceSection", () => {
     expect(track).toHaveStyle({
       transform: `translateX(-${(ARCHITECT_EVOLUTION.length - 2) * 100}%)`,
     })
+  })
+
+  it("exposes a code-marker control only for the active mobile era", () => {
+    const { carousel } = renderCareerTimeline()
+    const firstCareerEra = ARCHITECT_EVOLUTION[0]!
+    const secondCareerEra = ARCHITECT_EVOLUTION[1]!
+
+    expect(
+      within(carousel).getByRole("button", {
+        name: getCareerCodeMarkerAccessibleName(firstCareerEra.duration),
+      }),
+    ).toBeInTheDocument()
+    expect(
+      within(carousel).queryByRole("button", {
+        name: getCareerCodeMarkerAccessibleName(secondCareerEra.duration),
+      }),
+    ).not.toBeInTheDocument()
+
+    fireEvent.click(
+      within(carousel).getByRole("button", {
+        name: "Show next career era",
+      }),
+    )
+
+    expect(
+      within(carousel).queryByRole("button", {
+        name: getCareerCodeMarkerAccessibleName(firstCareerEra.duration),
+      }),
+    ).not.toBeInTheDocument()
+    expect(
+      within(carousel).getByRole("button", {
+        name: getCareerCodeMarkerAccessibleName(secondCareerEra.duration),
+      }),
+    ).toBeInTheDocument()
+  })
+
+  it("keeps every code marker decorative under reduced motion", () => {
+    reducedMotionPreference.value = true
+    renderCareerTimeline()
+
+    for (const { duration } of ARCHITECT_EVOLUTION) {
+      expect(
+        screen.queryByRole("button", {
+          name: getCareerCodeMarkerAccessibleName(duration),
+        }),
+      ).not.toBeInTheDocument()
+    }
   })
 
   it("changes eras only for deliberate horizontal touch gestures", () => {

@@ -1,10 +1,13 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import FlipPreview from "@/components/ui/FlipPreview"
+import { SPRING_ROTATION_PRELOAD_DEGREES } from "@/constants/INTERACTIONS"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
 }))
+
+const springPreloadTransform = `rotateY(${SPRING_ROTATION_PRELOAD_DEGREES}deg)`
 
 vi.mock("@/components/MotionPreferenceProvider", () => ({
   useMotionPreference: () => ({
@@ -38,7 +41,8 @@ describe("FlipPreview", () => {
     expect(preview).toHaveClass(
       "pointer-events-none",
       "transition-transform",
-      "ease-spring-bouncy",
+      "ease-spring-rotation",
+      "duration-[700ms]",
     )
     expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })
     expect(control).toHaveClass("active:scale-[0.97]")
@@ -55,13 +59,13 @@ describe("FlipPreview", () => {
     const preview = control.querySelector(".flip-preview-visual")
 
     fireEvent.pointerEnter(control, { pointerType: "mouse" })
-    expect(preview).toHaveStyle({ transform: "rotateY(-12deg)" })
+    expect(preview).toHaveStyle({ transform: springPreloadTransform })
 
     fireEvent.pointerLeave(control)
     expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })
 
     fireEvent.focus(control)
-    expect(preview).toHaveStyle({ transform: "rotateY(-12deg)" })
+    expect(preview).toHaveStyle({ transform: springPreloadTransform })
 
     fireEvent.blur(control)
     expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })

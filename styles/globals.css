@@ -9,6 +9,21 @@
 
   --ease-spring-soft: cubic-bezier(0.22, 0.48, 0, 1.2);
   --ease-spring-bouncy: cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  --ease-spring-rotation: linear(
+    0,
+    0.08,
+    0.28,
+    0.6,
+    0.92,
+    1.12,
+    1.16,
+    1.1,
+    1.02,
+    0.97,
+    0.98,
+    1.01,
+    1
+  );
 
   --animate-float: float 6s ease-in-out infinite;
 

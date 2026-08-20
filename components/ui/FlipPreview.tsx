@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
-import { FLIP_PREVIEW_ROTATION_DEGREES } from "@/constants/INTERACTIONS"
+import { SPRING_ROTATION_PRELOAD_DEGREES } from "@/constants/INTERACTIONS"
 import classNames from "@/utils/classNames"
 
 type FlipPreviewProps = {
@@ -68,12 +68,12 @@ export default function FlipPreview({
         onClick={handleActivate}
       >
         <div
-          className="flip-preview-visual ease-spring-bouncy pointer-events-none h-full w-full transition-transform duration-500 motion-reduce:transition-none"
+          className="flip-preview-visual ease-spring-rotation pointer-events-none h-full w-full transition-transform duration-[700ms] motion-reduce:transition-none"
           style={{
             transform: `rotateY(${
               shouldReduceMotion || !isPreviewing
                 ? 0
-                : FLIP_PREVIEW_ROTATION_DEGREES
+                : SPRING_ROTATION_PRELOAD_DEGREES
             }deg)`,
           }}
         >

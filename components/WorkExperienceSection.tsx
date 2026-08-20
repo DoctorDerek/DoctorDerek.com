@@ -1,8 +1,13 @@
 "use client"
 
 import { useRef, useState, type TouchEvent } from "react"
+import SpinningCodeMarker from "@/components/ui/SpinningCodeMarker"
+import {
+  CAREER_RAIL_PATHS,
+  CAREER_RAIL_STROKE_WIDTH,
+} from "@/constants/CAREER_TIMELINE"
+import { getCareerCodeMarkerAccessibleName } from "@/constants/INTERACTIONS"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
-import CodeIcon from "@/images/codeIcon.svg"
 import classNames from "@/utils/classNames"
 
 const MINIMUM_HORIZONTAL_SWIPE_DISTANCE = 48
@@ -77,13 +82,31 @@ export default function WorkExperienceSection() {
         </p>
 
         <div
-          className="[touch-action:pan-y] overflow-hidden"
+          className="relative [touch-action:pan-y] overflow-hidden"
           onTouchEnd={handleCareerTimelineTouchEnd}
           onTouchStart={handleCareerTimelineTouchStart}
         >
+          <svg
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full"
+            data-career-rail="mobile"
+            preserveAspectRatio="none"
+            viewBox="0 0 100 100"
+          >
+            <path
+              d={CAREER_RAIL_PATHS.mobile}
+              fill="none"
+              stroke="#F38B57"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={CAREER_RAIL_STROKE_WIDTH}
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+
           <ol
             aria-label="Career eras"
-            className="flex transition-transform duration-500 ease-out"
+            className="relative flex transition-transform duration-500 ease-out"
             id="work-experience-mobile-track"
             style={{ transform: `translateX(-${activeCareerEraIndex * 100}%)` }}
           >
@@ -96,16 +119,14 @@ export default function WorkExperienceSection() {
                 key={item.duration}
                 role="group"
               >
-                <div
-                  aria-hidden="true"
-                  className="absolute top-4 right-4 left-4 border-t-4 border-[#F38B57]"
+                <SpinningCodeMarker
+                  accessibleName={getCareerCodeMarkerAccessibleName(
+                    item.duration,
+                  )}
+                  animationDelay={`${index * 0.2}s`}
+                  className="top-0 left-[calc(9%-1.375rem)]"
+                  isInteractive={activeCareerEraIndex === index}
                 />
-                <div
-                  className="animate-float absolute top-0 left-4 h-8 w-8"
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <CodeIcon className="h-full w-full" />
-                </div>
                 <p className="text-site-foreground-faint text-xl font-bold">
                   {item.duration}
                 </p>
@@ -202,45 +223,51 @@ export default function WorkExperienceSection() {
           <svg
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+            data-career-rail="desktop"
             preserveAspectRatio="none"
             viewBox="0 0 100 100"
           >
             <path
-              d="M 2 5 H 98 V 60 H 2"
+              d={CAREER_RAIL_PATHS.desktop}
               fill="none"
               stroke="#F38B57"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="4"
+              strokeWidth={CAREER_RAIL_STROKE_WIDTH}
               vectorEffect="non-scaling-stroke"
             />
           </svg>
 
           <ol
             aria-label="Desktop career timeline"
-            className="grid h-full grid-cols-2 grid-rows-2 gap-x-16"
+            className="grid h-full grid-cols-2 grid-rows-2"
           >
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
                 className={classNames(
                   "relative px-4",
-                  index < 2 ? "pt-10" : "pt-16",
+                  index === 0 && "pt-10",
+                  (index === 1 || index === 3) && "pt-16",
+                  index === 2 && "pt-32",
                   index === 0 && "col-start-1 row-start-1",
-                  index === 1 && "col-start-2 row-start-1",
-                  index === 2 && "col-start-2 row-start-2",
-                  index === 3 && "col-start-1 row-start-2",
+                  index === 1 && "col-start-1 row-start-2",
+                  index === 2 && "col-start-2 row-start-1",
+                  index === 3 && "col-start-2 row-start-2",
                 )}
                 key={item.duration}
               >
-                <div
-                  className={classNames(
-                    "animate-float absolute left-0 h-8 w-8",
-                    index < 2 ? "top-[calc(10%-1rem)]" : "top-[calc(20%-1rem)]",
+                <SpinningCodeMarker
+                  accessibleName={getCareerCodeMarkerAccessibleName(
+                    item.duration,
                   )}
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <CodeIcon className="h-full w-full" />
-                </div>
+                  animationDelay={`${index * 0.2}s`}
+                  className={classNames(
+                    "left-0",
+                    index === 0 && "top-[calc(10%-1.375rem)]",
+                    (index === 1 || index === 3) && "top-[calc(20%-1.375rem)]",
+                    index === 2 && "top-[calc(50%-1.375rem)]",
+                  )}
+                />
                 <div className="text-site-foreground flex flex-col">
                   <p className="restorabold text-2xl font-bold">
                     {item.duration}

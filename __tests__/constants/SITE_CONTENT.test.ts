@@ -77,16 +77,17 @@ describe("site copy quality gates", () => {
     const doctorDerekProject = SITE_CONTENT.PORTFOLIO_PROJECTS.at(-1)
 
     expect(firstProject.projectTitle).toBe("What Are Your Values, Mapache?")
-    expect(firstProject.summary).toMatch(/values game/i)
-    expect(firstProject.details).toContain("Expo mobile support")
+    expect(firstProject.summary).toContain("values-clarification autobattler")
+    expect(firstProject.details).toContain("IndexedDB")
+    expect(firstProject.details).toContain("signed native releases")
     expect(firstProject.liveUrl).toBe(
       "https://www.whatareyourvaluesmapache.com/",
     )
 
     expect(doctorDerekProject?.projectTitle).toBe("DoctorDerek.com")
-    expect(doctorDerekProject?.summary).toContain(
-      "cinematic, accessibility-minded experience",
-    )
+    expect(doctorDerekProject?.summary).toContain("six live projects")
+    expect(doctorDerekProject?.details).toContain("XState parallel machine")
+    expect(doctorDerekProject?.details).toContain("Medium RSS feed")
 
     const pokedexProject = SITE_CONTENT.PORTFOLIO_PROJECTS.find(
       (project) => project.projectTitle === "Pokédex",

@@ -50,6 +50,33 @@ for (const viewport of [
     expect(layout.sectionScrollWidth).toBeLessThanOrEqual(
       layout.sectionClientWidth,
     )
+
+    const careerEraSpacing = await timeline
+      .locator(":scope > li")
+      .evaluateAll((careerEras) =>
+        careerEras.map((careerEra) => {
+          const careerEraBounds = careerEra.getBoundingClientRect()
+          const markerBounds = careerEra
+            .querySelector(".flip-preview-control")!
+            .getBoundingClientRect()
+          const contentBounds = careerEra
+            .querySelector(".text-site-foreground")!
+            .getBoundingClientRect()
+
+          return {
+            contentRightInset: careerEraBounds.right - contentBounds.right,
+            railToContentGap:
+              contentBounds.left - (markerBounds.left + markerBounds.width / 2),
+          }
+        }),
+      )
+
+    for (const spacing of careerEraSpacing) {
+      expect(spacing.railToContentGap).toBeGreaterThan(24)
+      expect(
+        Math.abs(spacing.railToContentGap - spacing.contentRightInset),
+      ).toBeLessThanOrEqual(12)
+    }
   })
 }
 

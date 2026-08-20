@@ -245,7 +245,7 @@ export default function WorkExperienceSection() {
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
                 className={classNames(
-                  "relative pr-8 pl-16",
+                  "relative pr-10 pl-14",
                   index === 0 && "pt-10",
                   (index === 1 || index === 3) && "pt-16",
                   index === 2 && "pt-32",

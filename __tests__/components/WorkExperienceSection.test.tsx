@@ -78,7 +78,7 @@ describe("WorkExperienceSection", () => {
     )
 
     for (const careerEra of desktopCareerEras) {
-      expect(careerEra).toHaveClass("pl-16", "pr-8")
+      expect(careerEra).toHaveClass("pl-14", "pr-10")
     }
 
     expect(desktopCareerEras[0]).toHaveClass("col-start-1", "row-start-1")

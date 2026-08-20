@@ -131,6 +131,7 @@ jobs:
   deploy:
     name: Publish Mobile Web Lighthouse
     needs: measure
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

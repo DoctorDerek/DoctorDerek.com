@@ -151,7 +151,7 @@ describe("useEndOfSiteCelebration", () => {
     await waitFor(() => expect(toast).toHaveBeenCalledOnce())
   })
 
-  it("rearms per Contact visit and cancels completed or abandoned confetti", async () => {
+  it("rearms after each completed burst and cancels abandoned confetti", async () => {
     const { fullPageApiReference, scrollContainer } = createContactBoundary()
     scrollContainer.scrollTop = 600
     const { result } = renderHook(() =>
@@ -161,17 +161,22 @@ describe("useEndOfSiteCelebration", () => {
     act(() => result.current.beginContactVisit())
     expect(result.current.shouldRenderCelebrationRuntime).toBe(true)
     fireEvent.wheel(scrollContainer, { deltaY: 120 })
+    await waitFor(() => expect(toast).toHaveBeenCalledOnce())
     expect(result.current.isConfettiActive).toBe(true)
+
+    fireEvent.wheel(scrollContainer, { deltaY: 120 })
+    expect(toast).toHaveBeenCalledOnce()
 
     act(() => result.current.completeConfetti())
     expect(result.current.isConfettiActive).toBe(false)
     fireEvent.wheel(scrollContainer, { deltaY: 120 })
-    await waitFor(() => expect(toast).toHaveBeenCalledOnce())
+    await waitFor(() => expect(toast).toHaveBeenCalledTimes(2))
+    expect(result.current.isConfettiActive).toBe(true)
 
     act(() => result.current.endContactVisit())
     act(() => result.current.beginContactVisit())
     fireEvent.wheel(scrollContainer, { deltaY: 120 })
-    await waitFor(() => expect(toast).toHaveBeenCalledTimes(2))
+    await waitFor(() => expect(toast).toHaveBeenCalledTimes(3))
     expect(result.current.isConfettiActive).toBe(true)
 
     act(() => result.current.endContactVisit())
@@ -189,6 +194,16 @@ describe("useEndOfSiteCelebration", () => {
     fireEvent.wheel(scrollContainer, { deltaY: 120 })
 
     await waitFor(() => expect(toast).toHaveBeenCalledOnce())
+    expect(result.current.isConfettiActive).toBe(false)
+
+    fireEvent.wheel(scrollContainer, { deltaY: 120 })
+    expect(toast).toHaveBeenCalledOnce()
+
+    act(() => result.current.endContactVisit())
+    act(() => result.current.beginContactVisit())
+    fireEvent.wheel(scrollContainer, { deltaY: 120 })
+
+    await waitFor(() => expect(toast).toHaveBeenCalledTimes(2))
     expect(result.current.isConfettiActive).toBe(false)
   })
 })

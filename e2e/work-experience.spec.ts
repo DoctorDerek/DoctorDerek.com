@@ -50,6 +50,33 @@ for (const viewport of [
     expect(layout.sectionScrollWidth).toBeLessThanOrEqual(
       layout.sectionClientWidth,
     )
+
+    const careerEraSpacing = await timeline
+      .locator(":scope > li")
+      .evaluateAll((careerEras) =>
+        careerEras.map((careerEra) => {
+          const careerEraBounds = careerEra.getBoundingClientRect()
+          const markerBounds = careerEra
+            .querySelector(".flip-preview-control")!
+            .getBoundingClientRect()
+          const contentBounds = careerEra
+            .querySelector(".text-site-foreground")!
+            .getBoundingClientRect()
+
+          return {
+            contentRightInset: careerEraBounds.right - contentBounds.right,
+            railToContentGap:
+              contentBounds.left - (markerBounds.left + markerBounds.width / 2),
+          }
+        }),
+      )
+
+    for (const spacing of careerEraSpacing) {
+      expect(spacing.railToContentGap).toBeGreaterThan(24)
+      expect(
+        Math.abs(spacing.railToContentGap - spacing.contentRightInset),
+      ).toBeLessThanOrEqual(12)
+    }
   })
 }
 
@@ -146,6 +173,52 @@ test("desktop code markers focus opposite their repeated forward spin", async ({
     ),
   )
 })
+
+for (const viewport of [
+  { name: "compact mobile", width: 320, height: 568 },
+  { name: "standard mobile", width: 390, height: 844 },
+]) {
+  test(`${viewport.name} keeps career copy clear of the rail`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport)
+    await openWorkExperience(page)
+
+    const carousel = page.getByRole("region", { name: "Career timeline" })
+    const geometry = await carousel.evaluate((carouselElement) => {
+      const railBounds = carouselElement
+        .querySelector('[data-career-rail="mobile"]')!
+        .getBoundingClientRect()
+      const railPath = carouselElement.querySelector<SVGPathElement>(
+        '[data-career-rail="mobile"] path',
+      )!
+      const railEndPoint = railPath.getPointAtLength(railPath.getTotalLength())
+      const railEndPointInViewport = new DOMPoint(
+        railEndPoint.x,
+        railEndPoint.y,
+      ).matrixTransform(railPath.getScreenCTM()!)
+      const activeCareerEra = carouselElement.querySelector<HTMLElement>(
+        '[aria-roledescription="slide"][aria-hidden="false"]',
+      )!
+      const activeCareerEraBounds = activeCareerEra.getBoundingClientRect()
+      const contentBounds = activeCareerEra
+        .querySelector("p")!
+        .getBoundingClientRect()
+
+      return {
+        contentRightInset: activeCareerEraBounds.right - contentBounds.right,
+        horizontalRailClearance:
+          railEndPointInViewport.y - contentBounds.bottom,
+        railToContentGap:
+          contentBounds.left - (railBounds.left + railBounds.width * 0.09),
+      }
+    })
+
+    expect(geometry.railToContentGap).toBeGreaterThan(12)
+    expect(geometry.contentRightInset).toBeGreaterThanOrEqual(15)
+    expect(geometry.horizontalRailClearance).toBeGreaterThan(2)
+  })
+}
 
 test.describe("mobile career pagination", () => {
   test.use({

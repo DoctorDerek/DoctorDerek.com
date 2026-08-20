@@ -115,7 +115,7 @@ export default function WorkExperienceSection() {
                 aria-hidden={activeCareerEraIndex !== index}
                 aria-label={`${index + 1} of ${ARCHITECT_EVOLUTION.length}`}
                 aria-roledescription="slide"
-                className="relative min-h-60 w-full shrink-0 px-8 pt-12"
+                className="relative min-h-60 w-full shrink-0 pt-12 pr-4 pl-12"
                 key={item.duration}
                 role="group"
               >
@@ -245,7 +245,7 @@ export default function WorkExperienceSection() {
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
                 className={classNames(
-                  "relative pr-8 pl-16",
+                  "relative pr-10 pl-14",
                   index === 0 && "pt-10",
                   (index === 1 || index === 3) && "pt-16",
                   index === 2 && "pt-32",

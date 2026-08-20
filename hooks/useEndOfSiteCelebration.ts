@@ -57,7 +57,8 @@ export default function useEndOfSiteCelebration(
   shouldReduceMotion: boolean,
 ) {
   const contactVisitIsActive = useRef(false)
-  const hasCelebratedThisVisit = useRef(false)
+  const confettiCycleIsActive = useRef(false)
+  const hasAnnouncedReducedMotionThisVisit = useRef(false)
   const touchStartY = useRef<number | null>(null)
   const [isConfettiActive, setIsConfettiActive] = useState(false)
   const [shouldRenderCelebrationRuntime, setShouldRenderCelebrationRuntime] =
@@ -65,17 +66,22 @@ export default function useEndOfSiteCelebration(
 
   const beginContactVisit = useCallback(() => {
     contactVisitIsActive.current = true
-    hasCelebratedThisVisit.current = false
+    confettiCycleIsActive.current = false
+    hasAnnouncedReducedMotionThisVisit.current = false
     setIsConfettiActive(false)
     setShouldRenderCelebrationRuntime(true)
   }, [])
 
   const endContactVisit = useCallback(() => {
     contactVisitIsActive.current = false
+    confettiCycleIsActive.current = false
     setIsConfettiActive(false)
   }, [])
 
-  const completeConfetti = useCallback(() => setIsConfettiActive(false), [])
+  const completeConfetti = useCallback(() => {
+    confettiCycleIsActive.current = false
+    setIsConfettiActive(false)
+  }, [])
 
   useEffect(() => {
     const celebrateContactEnd = (eventTarget: EventTarget | null) => {
@@ -83,14 +89,23 @@ export default function useEndOfSiteCelebration(
 
       if (
         !contactVisitIsActive.current ||
-        hasCelebratedThisVisit.current ||
         activeSection?.anchor !== CONTACT_ANCHOR ||
         !hasReachedContactEnd(activeSection.item, eventTarget)
       )
         return
 
-      hasCelebratedThisVisit.current = true
-      setIsConfettiActive(!shouldReduceMotion)
+      if (shouldReduceMotion) {
+        if (hasAnnouncedReducedMotionThisVisit.current) return
+
+        hasAnnouncedReducedMotionThisVisit.current = true
+        void showEndOfSiteToast()
+        return
+      }
+
+      if (confettiCycleIsActive.current) return
+
+      confettiCycleIsActive.current = true
+      setIsConfettiActive(true)
       void showEndOfSiteToast()
     }
 

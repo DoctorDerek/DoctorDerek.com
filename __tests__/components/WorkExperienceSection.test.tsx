@@ -78,7 +78,7 @@ describe("WorkExperienceSection", () => {
     )
 
     for (const careerEra of desktopCareerEras) {
-      expect(careerEra).toHaveClass("pl-16", "pr-8")
+      expect(careerEra).toHaveClass("pl-14", "pr-10")
     }
 
     expect(desktopCareerEras[0]).toHaveClass("col-start-1", "row-start-1")
@@ -89,6 +89,9 @@ describe("WorkExperienceSection", () => {
     const mobileCareerTrack = screen.getByRole("list", {
       name: "Career eras",
     })
+    for (const careerEra of mobileCareerTrack.children) {
+      expect(careerEra).toHaveClass("pl-12", "pr-4")
+    }
     expect(mobileCareerTrack.parentElement).toHaveClass(
       "overflow-hidden",
       "pt-5",

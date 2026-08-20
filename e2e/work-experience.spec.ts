@@ -189,6 +189,14 @@ for (const viewport of [
       const railBounds = carouselElement
         .querySelector('[data-career-rail="mobile"]')!
         .getBoundingClientRect()
+      const railPath = carouselElement.querySelector<SVGPathElement>(
+        '[data-career-rail="mobile"] path',
+      )!
+      const railEndPoint = railPath.getPointAtLength(railPath.getTotalLength())
+      const railEndPointInViewport = new DOMPoint(
+        railEndPoint.x,
+        railEndPoint.y,
+      ).matrixTransform(railPath.getScreenCTM()!)
       const activeCareerEra = carouselElement.querySelector<HTMLElement>(
         '[aria-roledescription="slide"][aria-hidden="false"]',
       )!
@@ -199,6 +207,8 @@ for (const viewport of [
 
       return {
         contentRightInset: activeCareerEraBounds.right - contentBounds.right,
+        horizontalRailClearance:
+          railEndPointInViewport.y - contentBounds.bottom,
         railToContentGap:
           contentBounds.left - (railBounds.left + railBounds.width * 0.09),
       }
@@ -206,6 +216,7 @@ for (const viewport of [
 
     expect(geometry.railToContentGap).toBeGreaterThan(12)
     expect(geometry.contentRightInset).toBeGreaterThanOrEqual(15)
+    expect(geometry.horizontalRailClearance).toBeGreaterThan(2)
   })
 }
 

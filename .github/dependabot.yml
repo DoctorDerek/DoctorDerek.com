@@ -5,8 +5,8 @@ updates:
     directory: "/"
     schedule:
       interval: "cron"
-      cronjob: "0 10 23 * *"
-      timezone: "America/Mexico_City"
+      cronjob: "0 9 23 * *"
+      timezone: "America/Los_Angeles"
     cooldown:
       default-days: 7
     open-pull-requests-limit: 2
@@ -44,8 +44,8 @@ updates:
     directory: "/"
     schedule:
       interval: "cron"
-      cronjob: "0 10 23 * *"
-      timezone: "America/Mexico_City"
+      cronjob: "0 9 23 * *"
+      timezone: "America/Los_Angeles"
     cooldown:
       default-days: 7
     open-pull-requests-limit: 2

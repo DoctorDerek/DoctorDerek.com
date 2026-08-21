@@ -8,6 +8,7 @@ export type DependabotMergeCandidate = {
   authorLogin: string
   baseBranch: string
   changedFiles: readonly string[]
+  hasSafeUpdateLabel: boolean
   headBranch: string
   isDraft: boolean
   mergeableState: string
@@ -26,6 +27,7 @@ export type DependabotMergeDecisionReason =
   | "unexpected-base-branch"
   | "unexpected-file-change"
   | "unsafe-dependabot-group"
+  | "unsafe-dependabot-update"
 
 const npmDependencyPaths = new Set([
   "package.json",
@@ -33,8 +35,7 @@ const npmDependencyPaths = new Set([
   "pnpm-workspace.yaml",
 ])
 const githubActionsWorkflowPattern = /^\.github\/workflows\/[^/]+\.ya?ml$/
-const safeDependabotGroupPattern =
-  /^dependabot\/(npm_and_yarn|github_actions)\/safe-(?:version|security)-updates(?:-[a-z0-9]+)?$/
+const dependabotBranchPattern = /^dependabot\/(npm_and_yarn|github_actions)\//
 
 const denyDependabotMerge = (
   reason: Exclude<DependabotMergeDecisionReason, "eligible">,
@@ -42,11 +43,11 @@ const denyDependabotMerge = (
 ) => ({ details, eligible: false as const, reason })
 
 const getDependabotDependencySurface = (headBranch: string) => {
-  const groupMatch = safeDependabotGroupPattern.exec(headBranch)
+  const branchMatch = dependabotBranchPattern.exec(headBranch)
 
-  if (!groupMatch) return undefined
+  if (!branchMatch) return undefined
 
-  return groupMatch[1] === "npm_and_yarn" ? "npm" : "github-actions"
+  return branchMatch[1] === "npm_and_yarn" ? "npm" : "github-actions"
 }
 
 const getUnexpectedChangedFiles = (
@@ -79,6 +80,11 @@ export const evaluateDependabotMergeCandidate = (
 
   if (!dependencySurface)
     return denyDependabotMerge("unsafe-dependabot-group", [
+      candidate.headBranch,
+    ])
+
+  if (!candidate.hasSafeUpdateLabel)
+    return denyDependabotMerge("unsafe-dependabot-update", [
       candidate.headBranch,
     ])
 

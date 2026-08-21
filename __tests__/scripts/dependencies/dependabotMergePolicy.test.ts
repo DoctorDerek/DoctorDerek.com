@@ -9,6 +9,7 @@ const defaultCandidate = {
   authorLogin: "dependabot[bot]",
   baseBranch: "main",
   changedFiles: ["package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml"],
+  hasSafeUpdateLabel: true,
   headBranch: "dependabot/npm_and_yarn/safe-version-updates-a1b2c3d4",
   isDraft: false,
   mergeableState: "clean",
@@ -47,6 +48,19 @@ describe("evaluateDependabotMergeCandidate", () => {
     })
   })
 
+  it("allows a verified individual pinned GitHub Action update", () => {
+    const candidate = createCandidate({
+      changedFiles: [".github/workflows/test-and-lint.yml"],
+      headBranch:
+        "dependabot/github_actions/actions/github-script-3a2844b7e9c422d3c10d287c895573f7108da1b3",
+    })
+
+    expect(evaluateDependabotMergeCandidate(candidate)).toMatchObject({
+      eligible: true,
+      reason: "eligible",
+    })
+  })
+
   it.each([
     {
       expectedDetails: ["DoctorDerek"],
@@ -72,9 +86,17 @@ describe("evaluateDependabotMergeCandidate", () => {
       expectedDetails: [
         "dependabot/npm_and_yarn/major-version-updates-a1b2c3d4",
       ],
+      expectedReason: "unsafe-dependabot-update",
+      overrides: {
+        hasSafeUpdateLabel: false,
+        headBranch: "dependabot/npm_and_yarn/major-version-updates-a1b2c3d4",
+      },
+    },
+    {
+      expectedDetails: ["dependabot/pip/requests-3.0.0"],
       expectedReason: "unsafe-dependabot-group",
       overrides: {
-        headBranch: "dependabot/npm_and_yarn/major-version-updates-a1b2c3d4",
+        headBranch: "dependabot/pip/requests-3.0.0",
       },
     },
     {

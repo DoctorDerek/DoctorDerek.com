@@ -41,6 +41,9 @@ const candidate: DependabotMergeCandidate = {
   changedFiles: parseStringArrayEnvironmentVariable(
     "DEPENDABOT_CHANGED_FILES_JSON",
   ),
+  hasSafeUpdateLabel: parseBooleanEnvironmentVariable(
+    "DEPENDABOT_HAS_SAFE_UPDATE_LABEL",
+  ),
   headBranch: getRequiredEnvironmentVariable("DEPENDABOT_HEAD_BRANCH"),
   isDraft: parseBooleanEnvironmentVariable("DEPENDABOT_IS_DRAFT"),
   mergeableState: getRequiredEnvironmentVariable("DEPENDABOT_MERGEABLE_STATE"),

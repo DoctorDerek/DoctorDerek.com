@@ -1,6 +1,8 @@
 name: ESLint, Vitest, and XState Pipeline
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
@@ -20,6 +22,7 @@ jobs:
 
     steps:
       - name: Initialize Ordered PR Review Comments
+        if: github.event_name == 'pull_request'
         continue-on-error: true
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         with:
@@ -108,7 +111,7 @@ jobs:
           echo "LINT_OUTPUT_FILE=$RUNNER_TEMP/lint-output.txt" >> "$GITHUB_ENV"
 
       - name: Post Lint PR Comment
-        if: always()
+        if: always() && github.event_name == 'pull_request'
         continue-on-error: true
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         with:
@@ -177,7 +180,7 @@ jobs:
           echo "VITEST_OUTPUT_FILE=$RUNNER_TEMP/vitest-output.txt" >> "$GITHUB_ENV"
 
       - name: Post Vitest PR Comment
-        if: always()
+        if: always() && github.event_name == 'pull_request'
         continue-on-error: true
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         with:
@@ -261,6 +264,7 @@ jobs:
   xstate-analysis:
     name: Analyze XState v5 Topology
     needs: initialize-comments
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -308,7 +312,7 @@ jobs:
     needs:
       - initialize-comments
       - xstate-analysis
-    if: always()
+    if: always() && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:

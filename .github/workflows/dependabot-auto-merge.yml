@@ -1,0 +1,200 @@
+name: Dependabot Safe Update Merge
+
+on:
+  workflow_run:
+    workflows:
+      - ESLint, Vitest, and XState Pipeline
+      - Dependency Security Review
+      - Playwright E2E Tests
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dependabot-safe-merge-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: false
+
+jobs:
+  evaluate-and-merge:
+    name: Evaluate and Merge Verified Dependency Update
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Collect Dependabot Pull Request Evidence
+        id: evidence
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        with:
+          retries: 3
+          script: |
+            const headSha = context.payload.workflow_run.head_sha;
+            const { data: associatedPullRequests } =
+              await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: headSha,
+              });
+            const associatedPullRequest = associatedPullRequests.find(
+              pullRequest =>
+                pullRequest.state === 'open' && pullRequest.head.sha === headSha,
+            );
+
+            if (!associatedPullRequest) {
+              core.info(`No open pull request is associated with ${headSha}.`);
+              core.setOutput('candidate-found', 'false');
+              return;
+            }
+
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: associatedPullRequest.number,
+            });
+
+            if (pullRequest.user?.login !== 'dependabot[bot]') {
+              core.info(`Pull request #${pullRequest.number} is not a Dependabot update.`);
+              core.setOutput('candidate-found', 'false');
+              return;
+            }
+
+            const changedFileResponses = await github.paginate(
+              github.rest.pulls.listFiles,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pullRequest.number,
+                per_page: 100,
+              },
+            );
+            const changedFiles = changedFileResponses.map(
+              changedFile => changedFile.filename,
+            );
+            const { data: workflowRunsResponse } =
+              await github.rest.actions.listWorkflowRunsForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head_sha: headSha,
+                per_page: 100,
+              });
+            const workflowRuns = workflowRunsResponse.workflow_runs;
+            const playwrightSucceeded = workflowRuns.some(
+              workflowRun =>
+                workflowRun.name === 'Playwright E2E Tests' &&
+                workflowRun.conclusion === 'success',
+            );
+            const latestWorkflowConclusions = new Map();
+
+            for (const workflowRun of workflowRuns) {
+              if (!latestWorkflowConclusions.has(workflowRun.name)) {
+                latestWorkflowConclusions.set(
+                  workflowRun.name,
+                  workflowRun.conclusion,
+                );
+              }
+            }
+
+            const successfulWorkflowNames = Array.from(
+              latestWorkflowConclusions.entries(),
+            )
+              .filter(([, conclusion]) => conclusion === 'success')
+              .map(([workflowName]) => workflowName);
+
+            if (
+              playwrightSucceeded &&
+              !successfulWorkflowNames.includes('Playwright E2E Tests')
+            ) {
+              successfulWorkflowNames.push('Playwright E2E Tests');
+            }
+
+            core.setOutput('candidate-found', 'true');
+            core.setOutput('author-login', pullRequest.user.login);
+            core.setOutput('base-branch', pullRequest.base.ref);
+            core.setOutput('changed-files-json', JSON.stringify(changedFiles));
+            core.setOutput('head-branch', pullRequest.head.ref);
+            core.setOutput('head-sha', pullRequest.head.sha);
+            core.setOutput('is-draft', pullRequest.draft.toString());
+            core.setOutput('mergeable-state', pullRequest.mergeable_state);
+            core.setOutput('pull-request-number', pullRequest.number.toString());
+            core.setOutput('pull-request-state', pullRequest.state);
+            core.setOutput(
+              'successful-workflows-json',
+              JSON.stringify(successfulWorkflowNames),
+            );
+
+      - name: Checkout Trusted Default Branch
+        if: steps.evidence.outputs.candidate-found == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup pnpm
+        if: steps.evidence.outputs.candidate-found == 'true'
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
+      - name: Setup Node
+        if: steps.evidence.outputs.candidate-found == 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: ".node-version"
+          cache: "pnpm"
+
+      - name: Install Trusted Policy Dependencies
+        if: steps.evidence.outputs.candidate-found == 'true'
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Evaluate Safe Merge Policy
+        id: policy
+        if: steps.evidence.outputs.candidate-found == 'true'
+        run: node scripts/runTypeScript.mjs scripts/dependencies/dependabotMergePolicy.cli.ts
+        env:
+          DEPENDABOT_AUTHOR_LOGIN: ${{ steps.evidence.outputs.author-login }}
+          DEPENDABOT_BASE_BRANCH: ${{ steps.evidence.outputs.base-branch }}
+          DEPENDABOT_CHANGED_FILES_JSON: ${{ steps.evidence.outputs.changed-files-json }}
+          DEPENDABOT_HEAD_BRANCH: ${{ steps.evidence.outputs.head-branch }}
+          DEPENDABOT_IS_DRAFT: ${{ steps.evidence.outputs.is-draft }}
+          DEPENDABOT_MERGEABLE_STATE: ${{ steps.evidence.outputs.mergeable-state }}
+          DEPENDABOT_PULL_REQUEST_STATE: ${{ steps.evidence.outputs.pull-request-state }}
+          DEPENDABOT_SUCCESSFUL_WORKFLOWS_JSON: ${{ steps.evidence.outputs.successful-workflows-json }}
+
+      - name: Merge Verified Safe Dependency Update
+        if: steps.policy.outputs.eligible == 'true'
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        env:
+          DEPENDABOT_HEAD_SHA: ${{ steps.evidence.outputs.head-sha }}
+          DEPENDABOT_PULL_REQUEST_NUMBER: ${{ steps.evidence.outputs.pull-request-number }}
+        with:
+          retries: 3
+          script: |
+            const pullRequestNumber = Number.parseInt(
+              process.env.DEPENDABOT_PULL_REQUEST_NUMBER,
+              10,
+            );
+            const expectedHeadSha = process.env.DEPENDABOT_HEAD_SHA;
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pullRequestNumber,
+            });
+
+            if (pullRequest.head.sha !== expectedHeadSha) {
+              throw new Error(
+                `Pull request #${pullRequestNumber} changed after verification.`,
+              );
+            }
+
+            const { data: mergeResult } = await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pullRequestNumber,
+              merge_method: 'merge',
+              sha: expectedHeadSha,
+            });
+
+            if (!mergeResult.merged) {
+              throw new Error(
+                mergeResult.message ||
+                  `GitHub declined to merge pull request #${pullRequestNumber}.`,
+              );
+            }
+
+            core.info(`Merged verified dependency update #${pullRequestNumber}.`);

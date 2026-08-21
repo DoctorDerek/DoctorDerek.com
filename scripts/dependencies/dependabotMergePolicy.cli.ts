@@ -47,8 +47,8 @@ const candidate: DependabotMergeCandidate = {
   pullRequestState: getRequiredEnvironmentVariable(
     "DEPENDABOT_PULL_REQUEST_STATE",
   ),
-  successfulWorkflowNames: parseStringArrayEnvironmentVariable(
-    "DEPENDABOT_SUCCESSFUL_WORKFLOWS_JSON",
+  successfulCheckNames: parseStringArrayEnvironmentVariable(
+    "DEPENDABOT_SUCCESSFUL_CHECKS_JSON",
   ),
 }
 const decision = evaluateDependabotMergeCandidate(candidate)

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import {
-  DEPENDENCY_MERGE_REQUIRED_WORKFLOWS,
+  DEPENDENCY_MERGE_REQUIRED_CHECKS,
   evaluateDependabotMergeCandidate,
   type DependabotMergeCandidate,
 } from "@/scripts/dependencies/dependabotMergePolicy"
@@ -13,7 +13,7 @@ const defaultCandidate = {
   isDraft: false,
   mergeableState: "clean",
   pullRequestState: "open",
-  successfulWorkflowNames: [...DEPENDENCY_MERGE_REQUIRED_WORKFLOWS],
+  successfulCheckNames: [...DEPENDENCY_MERGE_REQUIRED_CHECKS],
 } satisfies DependabotMergeCandidate
 
 const createCandidate = (
@@ -93,10 +93,13 @@ describe("evaluateDependabotMergeCandidate", () => {
       overrides: { changedFiles: ["pnpm-lock.yaml", "app/page.tsx"] },
     },
     {
-      expectedDetails: ["Dependency Security Review", "Playwright E2E Tests"],
-      expectedReason: "missing-required-workflow",
+      expectedDetails: [
+        "Reject Newly Vulnerable Dependencies",
+        "Playwright E2E Tests",
+      ],
+      expectedReason: "missing-required-check",
       overrides: {
-        successfulWorkflowNames: ["ESLint, Vitest, and XState Pipeline"],
+        successfulCheckNames: ["Lint & Annotate PR"],
       },
     },
   ] as const)(

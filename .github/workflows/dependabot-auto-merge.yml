@@ -10,6 +10,7 @@ on:
 
 permissions:
   actions: read
+  checks: read
   contents: write
   pull-requests: write
 
@@ -71,42 +72,17 @@ jobs:
             const changedFiles = changedFileResponses.map(
               changedFile => changedFile.filename,
             );
-            const { data: workflowRunsResponse } =
-              await github.rest.actions.listWorkflowRunsForRepo({
+            const { data: checkRunsResponse } =
+              await github.rest.checks.listForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                head_sha: headSha,
+                ref: headSha,
+                filter: 'latest',
                 per_page: 100,
               });
-            const workflowRuns = workflowRunsResponse.workflow_runs;
-            const playwrightSucceeded = workflowRuns.some(
-              workflowRun =>
-                workflowRun.name === 'Playwright E2E Tests' &&
-                workflowRun.conclusion === 'success',
-            );
-            const latestWorkflowConclusions = new Map();
-
-            for (const workflowRun of workflowRuns) {
-              if (!latestWorkflowConclusions.has(workflowRun.name)) {
-                latestWorkflowConclusions.set(
-                  workflowRun.name,
-                  workflowRun.conclusion,
-                );
-              }
-            }
-
-            const successfulWorkflowNames = Array.from(
-              latestWorkflowConclusions.entries(),
-            )
-              .filter(([, conclusion]) => conclusion === 'success')
-              .map(([workflowName]) => workflowName);
-
-            if (
-              playwrightSucceeded &&
-              !successfulWorkflowNames.includes('Playwright E2E Tests')
-            ) {
-              successfulWorkflowNames.push('Playwright E2E Tests');
-            }
+            const successfulCheckNames = checkRunsResponse.check_runs
+              .filter(checkRun => checkRun.conclusion === 'success')
+              .map(checkRun => checkRun.name);
 
             core.setOutput('candidate-found', 'true');
             core.setOutput('author-login', pullRequest.user.login);
@@ -119,8 +95,8 @@ jobs:
             core.setOutput('pull-request-number', pullRequest.number.toString());
             core.setOutput('pull-request-state', pullRequest.state);
             core.setOutput(
-              'successful-workflows-json',
-              JSON.stringify(successfulWorkflowNames),
+              'successful-checks-json',
+              JSON.stringify(successfulCheckNames),
             );
 
       - name: Checkout Trusted Default Branch
@@ -154,7 +130,7 @@ jobs:
           DEPENDABOT_IS_DRAFT: ${{ steps.evidence.outputs.is-draft }}
           DEPENDABOT_MERGEABLE_STATE: ${{ steps.evidence.outputs.mergeable-state }}
           DEPENDABOT_PULL_REQUEST_STATE: ${{ steps.evidence.outputs.pull-request-state }}
-          DEPENDABOT_SUCCESSFUL_WORKFLOWS_JSON: ${{ steps.evidence.outputs.successful-workflows-json }}
+          DEPENDABOT_SUCCESSFUL_CHECKS_JSON: ${{ steps.evidence.outputs.successful-checks-json }}
 
       - name: Merge Verified Safe Dependency Update
         if: steps.policy.outputs.eligible == 'true'

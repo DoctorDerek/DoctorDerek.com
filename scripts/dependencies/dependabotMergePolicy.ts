@@ -1,6 +1,6 @@
-export const DEPENDENCY_MERGE_REQUIRED_WORKFLOWS = [
-  "ESLint, Vitest, and XState Pipeline",
-  "Dependency Security Review",
+export const DEPENDENCY_MERGE_REQUIRED_CHECKS = [
+  "Lint & Annotate PR",
+  "Reject Newly Vulnerable Dependencies",
   "Playwright E2E Tests",
 ] as const
 
@@ -12,13 +12,13 @@ export type DependabotMergeCandidate = {
   isDraft: boolean
   mergeableState: string
   pullRequestState: string
-  successfulWorkflowNames: readonly string[]
+  successfulCheckNames: readonly string[]
 }
 
 export type DependabotMergeDecisionReason =
   | "eligible"
   | "draft-pull-request"
-  | "missing-required-workflow"
+  | "missing-required-check"
   | "no-changed-files"
   | "non-dependabot-author"
   | "pull-request-not-clean"
@@ -98,16 +98,13 @@ export const evaluateDependabotMergeCandidate = (
   if (unexpectedChangedFiles.length > 0)
     return denyDependabotMerge("unexpected-file-change", unexpectedChangedFiles)
 
-  const successfulWorkflowNames = new Set(candidate.successfulWorkflowNames)
-  const missingRequiredWorkflows = DEPENDENCY_MERGE_REQUIRED_WORKFLOWS.filter(
-    (requiredWorkflow) => !successfulWorkflowNames.has(requiredWorkflow),
+  const successfulCheckNames = new Set(candidate.successfulCheckNames)
+  const missingRequiredChecks = DEPENDENCY_MERGE_REQUIRED_CHECKS.filter(
+    (requiredCheck) => !successfulCheckNames.has(requiredCheck),
   )
 
-  if (missingRequiredWorkflows.length > 0)
-    return denyDependabotMerge(
-      "missing-required-workflow",
-      missingRequiredWorkflows,
-    )
+  if (missingRequiredChecks.length > 0)
+    return denyDependabotMerge("missing-required-check", missingRequiredChecks)
 
   return {
     details: [] as const,

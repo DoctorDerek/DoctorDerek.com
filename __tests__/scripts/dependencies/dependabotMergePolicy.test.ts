@@ -1,3 +1,5 @@
+import fs from "node:fs"
+import path from "node:path"
 import { describe, expect, it } from "vitest"
 import {
   DEPENDENCY_MERGE_REQUIRED_CHECKS,
@@ -148,5 +150,28 @@ describe("evaluateDependabotMergeCandidate", () => {
       eligible: false,
       reason: "unexpected-file-change",
     })
+  })
+})
+
+describe("Dependabot Safe Update Merge workflow", () => {
+  it("classifies updates only from trusted completed workflow runs", () => {
+    const workflow = fs.readFileSync(
+      path.resolve(".github/workflows/dependabot-auto-merge.yml"),
+      "utf8",
+    )
+    const classifyJob = workflow.slice(
+      workflow.indexOf("  classify-update:"),
+      workflow.indexOf("  evaluate-and-merge:"),
+    )
+
+    expect(workflow).toContain("  workflow_run:")
+    expect(workflow).not.toContain("  pull_request_target:")
+    expect(classifyJob).toContain("      issues: write")
+    expect(classifyJob).toContain(
+      "const headSha = context.payload.workflow_run?.head_sha;",
+    )
+    expect(classifyJob).toContain(
+      "candidatePullRequest.user?.login === 'dependabot[bot]'",
+    )
   })
 })

@@ -5,7 +5,7 @@ updates:
     directory: "/"
     schedule:
       interval: "cron"
-      cronjob: "0 9 23 * *"
+      cronjob: "37 2 23 1,4,7,10 *"
       timezone: "America/Los_Angeles"
     cooldown:
       default-days: 7
@@ -44,7 +44,7 @@ updates:
     directory: "/"
     schedule:
       interval: "cron"
-      cronjob: "0 9 23 * *"
+      cronjob: "37 2 23 1,4,7,10 *"
       timezone: "America/Los_Angeles"
     cooldown:
       default-days: 7

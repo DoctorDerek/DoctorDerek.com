@@ -1,9 +1,6 @@
 name: Dependabot Safe Update Merge
 
 on:
-  pull_request_target:
-    branches: [main]
-    types: [opened, reopened, synchronize]
   workflow_run:
     workflows:
       - ESLint, Vitest, and XState Pipeline
@@ -18,13 +15,12 @@ env:
   DEPENDABOT_SAFE_UPDATE_LABEL: "dependencies:safe-to-auto-merge"
 
 concurrency:
-  group: dependabot-safe-merge-${{ github.event.workflow_run.head_sha || github.event.pull_request.head.sha }}
-  cancel-in-progress: false
+  group: dependabot-safe-merge-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: true
 
 jobs:
   classify-update:
     name: Classify Dependabot Update
-    if: github.event_name == 'pull_request_target' && github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -32,48 +28,56 @@ jobs:
       issues: write
       pull-requests: read
     steps:
-      - name: Clear Previous Safe Classification
+      - name: Classify Dependabot Update in Trusted Run
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         with:
           retries: 3
           script: |
+            const headSha = context.payload.workflow_run?.head_sha;
+
+            if (!headSha) {
+              core.setFailed('No completed workflow head SHA was available.');
+              return;
+            }
+
+            const { data: associatedPullRequests } =
+              await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: headSha,
+              });
+            const pullRequest = associatedPullRequests.find(
+              candidatePullRequest =>
+                candidatePullRequest.state === 'open' &&
+                candidatePullRequest.head.sha === headSha &&
+                candidatePullRequest.user?.login === 'dependabot[bot]',
+            );
+
+            if (!pullRequest) {
+              core.info(`No open Dependabot pull request is associated with ${headSha}.`);
+              return;
+            }
+
             try {
               await github.rest.issues.removeLabel({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: context.issue.number,
+                issue_number: pullRequest.number,
                 name: process.env.DEPENDABOT_SAFE_UPDATE_LABEL,
               });
             } catch (error) {
               if (error.status !== 404) throw error;
             }
 
-      - name: Read Verified Dependabot Metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+            const safeGroupPattern =
+              /^dependabot\/(npm_and_yarn|github_actions)\/safe-(?:version|security)-updates(?:-[A-Za-z0-9]+)?$/;
+            const safeGroupMatch = safeGroupPattern.exec(pullRequest.head.ref);
+            let isSafeUpdate = safeGroupMatch?.[1] === 'npm_and_yarn';
+            const requiresActionPinVerification =
+              safeGroupMatch?.[1] === 'github_actions' ||
+              pullRequest.head.ref.startsWith('dependabot/github_actions/');
 
-      - name: Apply Safe Update Classification
-        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
-        env:
-          DEPENDABOT_PACKAGE_ECOSYSTEM: ${{ steps.metadata.outputs.package-ecosystem }}
-          DEPENDABOT_UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
-        with:
-          retries: 3
-          script: |
-            const safeUpdateTypes = new Set([
-              'version-update:semver-minor',
-              'version-update:semver-patch',
-            ]);
-            const updateType = process.env.DEPENDABOT_UPDATE_TYPE;
-            let isSafeUpdate = safeUpdateTypes.has(updateType);
-
-            if (
-              !isSafeUpdate &&
-              !updateType &&
-              process.env.DEPENDABOT_PACKAGE_ECOSYSTEM === 'github-actions'
-            ) {
+            if (!isSafeUpdate && requiresActionPinVerification) {
               const actionPinPattern = /^(\s*)uses:\s+([A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)*)@([0-9a-f]{40})\s+#\s+(v\d+(?:\.\d+){0,2})\s*$/;
               const workflowPathPattern = /^\.github\/workflows\/[^/]+\.ya?ml$/;
               const changedFiles = await github.paginate(
@@ -81,7 +85,7 @@ jobs:
                 {
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  pull_number: context.issue.number,
+                  pull_number: pullRequest.number,
                   per_page: 100,
                 },
               );
@@ -205,7 +209,7 @@ jobs:
 
             if (!isSafeUpdate) {
               core.info(
-                `Dependabot update remains manual: ${updateType || 'unclassified'}.`,
+                `Dependabot update remains manual: ${pullRequest.head.ref}.`,
               );
               return;
             }
@@ -231,15 +235,14 @@ jobs:
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number,
+              issue_number: pullRequest.number,
               labels: [process.env.DEPENDABOT_SAFE_UPDATE_LABEL],
             });
-            core.info(`Classified Dependabot update as safe: ${updateType || 'verified action pin'}.`);
+            core.info(`Classified Dependabot update as safe: ${pullRequest.head.ref}.`);
 
   evaluate-and-merge:
     name: Evaluate and Merge Verified Dependency Update
     needs: classify-update
-    if: always() && (github.event_name == 'workflow_run' || needs.classify-update.result == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

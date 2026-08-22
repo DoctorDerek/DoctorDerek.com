@@ -1,6 +1,6 @@
-export const DEPENDENCY_MERGE_REQUIRED_WORKFLOWS = [
-  "ESLint, Vitest, and XState Pipeline",
-  "Dependency Security Review",
+export const DEPENDENCY_MERGE_REQUIRED_CHECKS = [
+  "Lint & Annotate PR",
+  "Reject Newly Vulnerable Dependencies",
   "Playwright E2E Tests",
 ] as const
 
@@ -8,17 +8,18 @@ export type DependabotMergeCandidate = {
   authorLogin: string
   baseBranch: string
   changedFiles: readonly string[]
+  hasSafeUpdateLabel: boolean
   headBranch: string
   isDraft: boolean
   mergeableState: string
   pullRequestState: string
-  successfulWorkflowNames: readonly string[]
+  successfulCheckNames: readonly string[]
 }
 
 export type DependabotMergeDecisionReason =
   | "eligible"
   | "draft-pull-request"
-  | "missing-required-workflow"
+  | "missing-required-check"
   | "no-changed-files"
   | "non-dependabot-author"
   | "pull-request-not-clean"
@@ -26,6 +27,7 @@ export type DependabotMergeDecisionReason =
   | "unexpected-base-branch"
   | "unexpected-file-change"
   | "unsafe-dependabot-group"
+  | "unsafe-dependabot-update"
 
 const npmDependencyPaths = new Set([
   "package.json",
@@ -33,8 +35,7 @@ const npmDependencyPaths = new Set([
   "pnpm-workspace.yaml",
 ])
 const githubActionsWorkflowPattern = /^\.github\/workflows\/[^/]+\.ya?ml$/
-const safeDependabotGroupPattern =
-  /^dependabot\/(npm_and_yarn|github_actions)\/safe-(?:version|security)-updates(?:-[a-z0-9]+)?$/
+const dependabotBranchPattern = /^dependabot\/(npm_and_yarn|github_actions)\//
 
 const denyDependabotMerge = (
   reason: Exclude<DependabotMergeDecisionReason, "eligible">,
@@ -42,11 +43,11 @@ const denyDependabotMerge = (
 ) => ({ details, eligible: false as const, reason })
 
 const getDependabotDependencySurface = (headBranch: string) => {
-  const groupMatch = safeDependabotGroupPattern.exec(headBranch)
+  const branchMatch = dependabotBranchPattern.exec(headBranch)
 
-  if (!groupMatch) return undefined
+  if (!branchMatch) return undefined
 
-  return groupMatch[1] === "npm_and_yarn" ? "npm" : "github-actions"
+  return branchMatch[1] === "npm_and_yarn" ? "npm" : "github-actions"
 }
 
 const getUnexpectedChangedFiles = (
@@ -82,6 +83,11 @@ export const evaluateDependabotMergeCandidate = (
       candidate.headBranch,
     ])
 
+  if (!candidate.hasSafeUpdateLabel)
+    return denyDependabotMerge("unsafe-dependabot-update", [
+      candidate.headBranch,
+    ])
+
   if (candidate.mergeableState !== "clean")
     return denyDependabotMerge("pull-request-not-clean", [
       candidate.mergeableState,
@@ -98,16 +104,13 @@ export const evaluateDependabotMergeCandidate = (
   if (unexpectedChangedFiles.length > 0)
     return denyDependabotMerge("unexpected-file-change", unexpectedChangedFiles)
 
-  const successfulWorkflowNames = new Set(candidate.successfulWorkflowNames)
-  const missingRequiredWorkflows = DEPENDENCY_MERGE_REQUIRED_WORKFLOWS.filter(
-    (requiredWorkflow) => !successfulWorkflowNames.has(requiredWorkflow),
+  const successfulCheckNames = new Set(candidate.successfulCheckNames)
+  const missingRequiredChecks = DEPENDENCY_MERGE_REQUIRED_CHECKS.filter(
+    (requiredCheck) => !successfulCheckNames.has(requiredCheck),
   )
 
-  if (missingRequiredWorkflows.length > 0)
-    return denyDependabotMerge(
-      "missing-required-workflow",
-      missingRequiredWorkflows,
-    )
+  if (missingRequiredChecks.length > 0)
+    return denyDependabotMerge("missing-required-check", missingRequiredChecks)
 
   return {
     details: [] as const,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 import {
-  DEPENDENCY_MERGE_REQUIRED_WORKFLOWS,
+  DEPENDENCY_MERGE_REQUIRED_CHECKS,
   evaluateDependabotMergeCandidate,
   type DependabotMergeCandidate,
 } from "@/scripts/dependencies/dependabotMergePolicy"
@@ -9,11 +9,12 @@ const defaultCandidate = {
   authorLogin: "dependabot[bot]",
   baseBranch: "main",
   changedFiles: ["package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml"],
+  hasSafeUpdateLabel: true,
   headBranch: "dependabot/npm_and_yarn/safe-version-updates-a1b2c3d4",
   isDraft: false,
   mergeableState: "clean",
   pullRequestState: "open",
-  successfulWorkflowNames: [...DEPENDENCY_MERGE_REQUIRED_WORKFLOWS],
+  successfulCheckNames: [...DEPENDENCY_MERGE_REQUIRED_CHECKS],
 } satisfies DependabotMergeCandidate
 
 const createCandidate = (
@@ -47,6 +48,19 @@ describe("evaluateDependabotMergeCandidate", () => {
     })
   })
 
+  it("allows a verified individual pinned GitHub Action update", () => {
+    const candidate = createCandidate({
+      changedFiles: [".github/workflows/test-and-lint.yml"],
+      headBranch:
+        "dependabot/github_actions/actions/github-script-3a2844b7e9c422d3c10d287c895573f7108da1b3",
+    })
+
+    expect(evaluateDependabotMergeCandidate(candidate)).toMatchObject({
+      eligible: true,
+      reason: "eligible",
+    })
+  })
+
   it.each([
     {
       expectedDetails: ["DoctorDerek"],
@@ -72,9 +86,17 @@ describe("evaluateDependabotMergeCandidate", () => {
       expectedDetails: [
         "dependabot/npm_and_yarn/major-version-updates-a1b2c3d4",
       ],
+      expectedReason: "unsafe-dependabot-update",
+      overrides: {
+        hasSafeUpdateLabel: false,
+        headBranch: "dependabot/npm_and_yarn/major-version-updates-a1b2c3d4",
+      },
+    },
+    {
+      expectedDetails: ["dependabot/pip/requests-3.0.0"],
       expectedReason: "unsafe-dependabot-group",
       overrides: {
-        headBranch: "dependabot/npm_and_yarn/major-version-updates-a1b2c3d4",
+        headBranch: "dependabot/pip/requests-3.0.0",
       },
     },
     {
@@ -93,10 +115,13 @@ describe("evaluateDependabotMergeCandidate", () => {
       overrides: { changedFiles: ["pnpm-lock.yaml", "app/page.tsx"] },
     },
     {
-      expectedDetails: ["Dependency Security Review", "Playwright E2E Tests"],
-      expectedReason: "missing-required-workflow",
+      expectedDetails: [
+        "Reject Newly Vulnerable Dependencies",
+        "Playwright E2E Tests",
+      ],
+      expectedReason: "missing-required-check",
       overrides: {
-        successfulWorkflowNames: ["ESLint, Vitest, and XState Pipeline"],
+        successfulCheckNames: ["Lint & Annotate PR"],
       },
     },
   ] as const)(

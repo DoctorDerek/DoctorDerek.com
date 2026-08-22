@@ -11,9 +11,9 @@ const defaultCandidate = {
   authorLogin: "dependabot[bot]",
   baseBranch: "main",
   changedFiles: ["package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml"],
-  hasSafeUpdateLabel: true,
   headBranch: "dependabot/npm_and_yarn/safe-version-updates-a1b2c3d4",
   isDraft: false,
+  isSafeUpdate: true,
   mergeableState: "clean",
   pullRequestState: "open",
   successfulCheckNames: [...DEPENDENCY_MERGE_REQUIRED_CHECKS],
@@ -90,8 +90,8 @@ describe("evaluateDependabotMergeCandidate", () => {
       ],
       expectedReason: "unsafe-dependabot-update",
       overrides: {
-        hasSafeUpdateLabel: false,
         headBranch: "dependabot/npm_and_yarn/major-version-updates-a1b2c3d4",
+        isSafeUpdate: false,
       },
     },
     {
@@ -154,24 +154,59 @@ describe("evaluateDependabotMergeCandidate", () => {
 })
 
 describe("Dependabot Safe Update Merge workflow", () => {
-  it("classifies updates only from trusted completed workflow runs", () => {
-    const workflow = fs.readFileSync(
-      path.resolve(".github/workflows/dependabot-auto-merge.yml"),
+  const workflow = fs.readFileSync(
+    path.resolve(".github/workflows/dependabot-auto-merge.yml"),
+    "utf8",
+  )
+
+  it("evaluates updates from a quiet trusted default-branch schedule", () => {
+    expect(workflow).toContain('    - cron: "37 2 * * *"')
+    expect(workflow).toContain('      timezone: "America/Los_Angeles"')
+    expect(workflow).toContain("  workflow_dispatch:")
+    expect(workflow).not.toContain("  workflow_run:")
+    expect(workflow).not.toContain("  pull_request_target:")
+    expect(workflow).not.toContain("      issues: write")
+    expect(workflow).not.toContain("dependencies:safe-to-auto-merge")
+    expect(workflow).toContain(
+      ".filter(pullRequest => pullRequest.user?.login === 'dependabot[bot]')",
+    )
+    expect(workflow).toContain(
+      "          ref: ${{ github.event.repository.default_branch }}",
+    )
+  })
+
+  it("serializes candidates behind the complete verified merge policy", () => {
+    expect(workflow).toContain("      max-parallel: 1")
+    expect(workflow).toContain("          DEPENDABOT_IS_SAFE_UPDATE:")
+    expect(workflow).not.toContain("DEPENDABOT_HAS_SAFE_UPDATE_LABEL")
+    expect(workflow).toContain(
+      "            if (pullRequest.head.sha !== expectedHeadSha) {",
+    )
+    expect(workflow).toContain(
+      "            if (pullRequest.base.sha !== expectedBaseSha) {",
+    )
+    expect(workflow).toContain("              merge_method: 'merge',")
+
+    for (const requiredCheck of DEPENDENCY_MERGE_REQUIRED_CHECKS) {
+      expect(workflow).toContain(requiredCheck)
+    }
+  })
+})
+
+describe("Dependabot update campaign schedule", () => {
+  it("opens npm and GitHub Actions campaigns quarterly at 2:37 AM Pacific", () => {
+    const dependabotConfiguration = fs.readFileSync(
+      path.resolve(".github/dependabot.yml"),
       "utf8",
     )
-    const classifyJob = workflow.slice(
-      workflow.indexOf("  classify-update:"),
-      workflow.indexOf("  evaluate-and-merge:"),
+    const quarterlyCronOccurrences = dependabotConfiguration.match(
+      /cronjob: "37 2 23 1,4,7,10 \*"/g,
+    )
+    const pacificTimezoneOccurrences = dependabotConfiguration.match(
+      /timezone: "America\/Los_Angeles"/g,
     )
 
-    expect(workflow).toContain("  workflow_run:")
-    expect(workflow).not.toContain("  pull_request_target:")
-    expect(classifyJob).toContain("      issues: write")
-    expect(classifyJob).toContain(
-      "const headSha = context.payload.workflow_run?.head_sha;",
-    )
-    expect(classifyJob).toContain(
-      "candidatePullRequest.user?.login === 'dependabot[bot]'",
-    )
+    expect(quarterlyCronOccurrences).toHaveLength(2)
+    expect(pacificTimezoneOccurrences).toHaveLength(2)
   })
 })

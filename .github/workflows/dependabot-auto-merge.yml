@@ -59,6 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
+      actions: write
       checks: read
       contents: write
       pull-requests: write
@@ -364,4 +365,20 @@ jobs:
               );
             }
 
-            core.info(`Merged verified dependency update #${pullRequestNumber}.`);
+            const downstreamWorkflowIds = [
+              'test-and-lint.yml',
+              'lighthouse.yml',
+            ];
+
+            for (const workflowId of downstreamWorkflowIds) {
+              await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: workflowId,
+                ref: context.payload.repository.default_branch,
+              });
+            }
+
+            core.info(
+              `Merged verified dependency update #${pullRequestNumber} and dispatched main workflows.`,
+            );

@@ -191,6 +191,39 @@ describe("Dependabot Safe Update Merge workflow", () => {
       expect(workflow).toContain(requiredCheck)
     }
   })
+
+  it("dispatches the complete main workflow handoff after a verified merge", () => {
+    const mergeCallIndex = workflow.indexOf(
+      "const { data: mergeResult } = await github.rest.pulls.merge",
+    )
+    const mergeRejectionIndex = workflow.indexOf("if (!mergeResult.merged)")
+    const workflowDispatchIndex = workflow.indexOf(
+      "await github.rest.actions.createWorkflowDispatch",
+    )
+
+    expect(workflow).toContain("      actions: write")
+    expect(workflow).toContain("              'test-and-lint.yml',")
+    expect(workflow).toContain("              'lighthouse.yml',")
+    expect(workflow).toContain(
+      "                ref: context.payload.repository.default_branch,",
+    )
+    expect(mergeCallIndex).toBeGreaterThan(-1)
+    expect(mergeRejectionIndex).toBeGreaterThan(mergeCallIndex)
+    expect(workflowDispatchIndex).toBeGreaterThan(mergeRejectionIndex)
+  })
+
+  it.each(["test-and-lint.yml", "lighthouse.yml"])(
+    "keeps %s available to push and explicit dispatch",
+    (workflowFileName) => {
+      const downstreamWorkflow = fs.readFileSync(
+        path.resolve(".github/workflows", workflowFileName),
+        "utf8",
+      )
+
+      expect(downstreamWorkflow).toContain("  push:")
+      expect(downstreamWorkflow).toContain("  workflow_dispatch:")
+    },
+  )
 })
 
 describe("Dependabot update campaign schedule", () => {

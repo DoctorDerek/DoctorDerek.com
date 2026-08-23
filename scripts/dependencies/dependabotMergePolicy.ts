@@ -8,7 +8,7 @@ export type DependabotMergeCandidate = {
   authorLogin: string
   baseBranch: string
   changedFiles: readonly string[]
-  hasSafeUpdateLabel: boolean
+  isSafeUpdate: boolean
   headBranch: string
   isDraft: boolean
   mergeableState: string
@@ -83,7 +83,7 @@ export const evaluateDependabotMergeCandidate = (
       candidate.headBranch,
     ])
 
-  if (!candidate.hasSafeUpdateLabel)
+  if (!candidate.isSafeUpdate)
     return denyDependabotMerge("unsafe-dependabot-update", [
       candidate.headBranch,
     ])

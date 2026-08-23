@@ -1,98 +1,144 @@
 name: Dependabot Safe Update Merge
 
 on:
-  workflow_run:
-    workflows:
-      - ESLint, Vitest, and XState Pipeline
-      - Dependency Security Review
-      - Playwright E2E Tests
-    types: [completed]
+  schedule:
+    - cron: "37 2 * * *"
+      timezone: "America/Los_Angeles"
+  workflow_dispatch:
 
 permissions: {}
 
 env:
   DEPENDABOT_REQUIRED_CHECKS_JSON: '["Lint & Annotate PR","Reject Newly Vulnerable Dependencies","Playwright E2E Tests"]'
-  DEPENDABOT_SAFE_UPDATE_LABEL: "dependencies:safe-to-auto-merge"
 
 concurrency:
-  group: dependabot-safe-merge-${{ github.event.workflow_run.head_sha }}
-  cancel-in-progress: true
+  group: dependabot-safe-merge
+  cancel-in-progress: false
 
 jobs:
-  classify-update:
-    name: Classify Dependabot Update
+  discover-updates:
+    name: Discover Open Dependabot Updates
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: read
-      issues: write
       pull-requests: read
+    outputs:
+      candidate-count: ${{ steps.candidates.outputs.candidate-count }}
+      candidate-numbers-json: ${{ steps.candidates.outputs.candidate-numbers-json }}
     steps:
-      - name: Classify Dependabot Update in Trusted Run
+      - name: Find Open Dependabot Pull Requests
+        id: candidates
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         with:
           retries: 3
           script: |
-            const headSha = context.payload.workflow_run?.head_sha;
+            const pullRequests = await github.paginate(github.rest.pulls.list, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              base: context.payload.repository.default_branch,
+              per_page: 100,
+            });
+            const candidateNumbers = pullRequests
+              .filter(pullRequest => pullRequest.user?.login === 'dependabot[bot]')
+              .map(pullRequest => pullRequest.number)
+              .sort((firstNumber, secondNumber) => firstNumber - secondNumber);
 
-            if (!headSha) {
-              core.setFailed('No completed workflow head SHA was available.');
-              return;
-            }
-
-            const { data: associatedPullRequests } =
-              await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                commit_sha: headSha,
-              });
-            const pullRequest = associatedPullRequests.find(
-              candidatePullRequest =>
-                candidatePullRequest.state === 'open' &&
-                candidatePullRequest.head.sha === headSha &&
-                candidatePullRequest.user?.login === 'dependabot[bot]',
+            core.setOutput('candidate-count', candidateNumbers.length.toString());
+            core.setOutput('candidate-numbers-json', JSON.stringify(candidateNumbers));
+            core.info(
+              candidateNumbers.length === 0
+                ? 'No open Dependabot pull requests require evaluation.'
+                : `Found Dependabot pull requests: ${candidateNumbers.join(', ')}.`,
             );
 
-            if (!pullRequest) {
-              core.info(`No open Dependabot pull request is associated with ${headSha}.`);
+  evaluate-and-merge:
+    name: Evaluate and Merge Verified Dependency Update
+    needs: discover-updates
+    if: needs.discover-updates.outputs.candidate-count != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      checks: read
+      contents: write
+      pull-requests: write
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        pull_request_number: ${{ fromJSON(needs.discover-updates.outputs.candidate-numbers-json) }}
+    steps:
+      - name: Collect Dependabot Pull Request Evidence
+        id: evidence
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        env:
+          DEPENDABOT_PULL_REQUEST_NUMBER: ${{ matrix.pull_request_number }}
+        with:
+          retries: 3
+          script: |
+            const pullRequestNumber = Number.parseInt(
+              process.env.DEPENDABOT_PULL_REQUEST_NUMBER,
+              10,
+            );
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pullRequestNumber,
+            });
+
+            if (
+              pullRequest.state !== 'open' ||
+              pullRequest.user?.login !== 'dependabot[bot]'
+            ) {
+              core.info(
+                `Pull request #${pullRequest.number} is no longer an open Dependabot update.`,
+              );
+              core.setOutput('is-ready-for-policy', 'false');
               return;
             }
 
-            try {
-              await github.rest.issues.removeLabel({
+            const changedFileResponses = await github.paginate(
+              github.rest.pulls.listFiles,
+              {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: pullRequest.number,
-                name: process.env.DEPENDABOT_SAFE_UPDATE_LABEL,
+                pull_number: pullRequest.number,
+                per_page: 100,
+              },
+            );
+            const changedFiles = changedFileResponses.map(
+              changedFile => changedFile.filename,
+            );
+            const { data: checkRunsResponse } =
+              await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: pullRequest.head.sha,
+                filter: 'latest',
+                per_page: 100,
               });
-            } catch (error) {
-              if (error.status !== 404) throw error;
-            }
-
+            const successfulCheckNames = checkRunsResponse.check_runs
+              .filter(checkRun => checkRun.conclusion === 'success')
+              .map(checkRun => checkRun.name);
+            const successfulCheckNameSet = new Set(successfulCheckNames);
+            const requiredCheckNames = JSON.parse(
+              process.env.DEPENDABOT_REQUIRED_CHECKS_JSON,
+            );
             const safeGroupPattern =
               /^dependabot\/(npm_and_yarn|github_actions)\/safe-(?:version|security)-updates(?:-[A-Za-z0-9]+)?$/;
             const safeGroupMatch = safeGroupPattern.exec(pullRequest.head.ref);
-            let isSafeUpdate = safeGroupMatch?.[1] === 'npm_and_yarn';
+            let isSafeUpdate = Boolean(safeGroupMatch);
             const requiresActionPinVerification =
-              safeGroupMatch?.[1] === 'github_actions' ||
+              !isSafeUpdate &&
               pullRequest.head.ref.startsWith('dependabot/github_actions/');
 
-            if (!isSafeUpdate && requiresActionPinVerification) {
+            if (requiresActionPinVerification) {
               const actionPinPattern = /^(\s*)uses:\s+([A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)*)@([0-9a-f]{40})\s+#\s+(v\d+(?:\.\d+){0,2})\s*$/;
               const workflowPathPattern = /^\.github\/workflows\/[^/]+\.ya?ml$/;
-              const changedFiles = await github.paginate(
-                github.rest.pulls.listFiles,
-                {
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: pullRequest.number,
-                  per_page: 100,
-                },
-              );
               const actionPinPairs = [];
-              let hasOnlyActionPinChanges = changedFiles.length > 0;
+              let hasOnlyActionPinChanges = changedFileResponses.length > 0;
 
-              for (const changedFile of changedFiles) {
+              for (const changedFile of changedFileResponses) {
                 if (
                   changedFile.status !== 'modified' ||
                   !workflowPathPattern.test(changedFile.filename) ||
@@ -190,9 +236,7 @@ jobs:
                     tagCommitSha = tagObject.sha;
                     resolvedTags.set(tagKey, tagCommitSha);
                   } catch (error) {
-                    core.warning(
-                      `Could not verify ${tagKey}: ${error.message}`,
-                    );
+                    core.warning(`Could not verify ${tagKey}: ${error.message}`);
                     hasOnlyActionPinChanges = false;
                     break;
                   }
@@ -207,152 +251,21 @@ jobs:
                 hasOnlyActionPinChanges && actionPinPairs.length > 0;
             }
 
-            if (!isSafeUpdate) {
-              core.info(
-                `Dependabot update remains manual: ${pullRequest.head.ref}.`,
-              );
-              return;
-            }
-
-            try {
-              await github.rest.issues.getLabel({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                name: process.env.DEPENDABOT_SAFE_UPDATE_LABEL,
-              });
-            } catch (error) {
-              if (error.status !== 404) throw error;
-
-              await github.rest.issues.createLabel({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                name: process.env.DEPENDABOT_SAFE_UPDATE_LABEL,
-                color: '0e8a16',
-                description: 'Eligible after every dependency quality gate passes.',
-              });
-            }
-
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: pullRequest.number,
-              labels: [process.env.DEPENDABOT_SAFE_UPDATE_LABEL],
-            });
-            core.info(`Classified Dependabot update as safe: ${pullRequest.head.ref}.`);
-
-  evaluate-and-merge:
-    name: Evaluate and Merge Verified Dependency Update
-    needs: classify-update
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      checks: read
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Collect Dependabot Pull Request Evidence
-        id: evidence
-        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
-        with:
-          retries: 3
-          script: |
-            const headSha =
-              context.payload.pull_request?.head.sha ??
-              context.payload.workflow_run?.head_sha;
-            let pullRequestNumber = context.payload.pull_request?.number;
-
-            if (!headSha) {
-              core.setFailed('No pull request head SHA was available.');
-              return;
-            }
-
-            if (!pullRequestNumber) {
-              const { data: associatedPullRequests } =
-                await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  commit_sha: headSha,
-                });
-              const associatedPullRequest = associatedPullRequests.find(
-                pullRequest =>
-                  pullRequest.state === 'open' && pullRequest.head.sha === headSha,
-              );
-              pullRequestNumber = associatedPullRequest?.number;
-            }
-
-            if (!pullRequestNumber) {
-              core.info(`No open pull request is associated with ${headSha}.`);
-              core.setOutput('candidate-found', 'false');
-              return;
-            }
-
-            const { data: pullRequest } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pullRequestNumber,
-            });
-
-            if (
-              pullRequest.state !== 'open' ||
-              pullRequest.head.sha !== headSha ||
-              pullRequest.user?.login !== 'dependabot[bot]'
-            ) {
-              core.info(`Pull request #${pullRequest.number} is not a Dependabot update.`);
-              core.setOutput('candidate-found', 'false');
-              return;
-            }
-
-            const changedFileResponses = await github.paginate(
-              github.rest.pulls.listFiles,
-              {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pullRequest.number,
-                per_page: 100,
-              },
-            );
-            const changedFiles = changedFileResponses.map(
-              changedFile => changedFile.filename,
-            );
-            const { data: checkRunsResponse } =
-              await github.rest.checks.listForRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: headSha,
-                filter: 'latest',
-                per_page: 100,
-              });
-            const successfulCheckNames = checkRunsResponse.check_runs
-              .filter(checkRun => checkRun.conclusion === 'success')
-              .map(checkRun => checkRun.name);
-            const successfulCheckNameSet = new Set(successfulCheckNames);
-            const requiredCheckNames = JSON.parse(
-              process.env.DEPENDABOT_REQUIRED_CHECKS_JSON,
-            );
-            const labelNames = pullRequest.labels
-              .map(label => typeof label === 'string' ? label : label.name)
-              .filter(Boolean);
-            const hasSafeUpdateLabel = labelNames.includes(
-              process.env.DEPENDABOT_SAFE_UPDATE_LABEL,
-            );
             const isReadyForPolicy =
-              hasSafeUpdateLabel &&
+              isSafeUpdate &&
               requiredCheckNames.every(requiredCheckName =>
                 successfulCheckNameSet.has(requiredCheckName),
               );
 
-            core.setOutput('candidate-found', 'true');
             core.setOutput('author-login', pullRequest.user.login);
             core.setOutput('base-branch', pullRequest.base.ref);
+            core.setOutput('base-sha', pullRequest.base.sha);
             core.setOutput('changed-files-json', JSON.stringify(changedFiles));
-            core.setOutput(
-              'has-safe-update-label',
-              hasSafeUpdateLabel.toString(),
-            );
             core.setOutput('head-branch', pullRequest.head.ref);
             core.setOutput('head-sha', pullRequest.head.sha);
             core.setOutput('is-draft', pullRequest.draft.toString());
             core.setOutput('is-ready-for-policy', isReadyForPolicy.toString());
+            core.setOutput('is-safe-update', isSafeUpdate.toString());
             core.setOutput('mergeable-state', pullRequest.mergeable_state);
             core.setOutput('pull-request-number', pullRequest.number.toString());
             core.setOutput('pull-request-state', pullRequest.state);
@@ -360,10 +273,17 @@ jobs:
               'successful-checks-json',
               JSON.stringify(successfulCheckNames),
             );
+            core.info(
+              isSafeUpdate
+                ? `Classified #${pullRequest.number} as a safe dependency update.`
+                : `Left #${pullRequest.number} for manual review: ${pullRequest.head.ref}.`,
+            );
 
       - name: Checkout Trusted Default Branch
         if: steps.evidence.outputs.is-ready-for-policy == 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
 
       - name: Setup pnpm
         if: steps.evidence.outputs.is-ready-for-policy == 'true'
@@ -388,9 +308,9 @@ jobs:
           DEPENDABOT_AUTHOR_LOGIN: ${{ steps.evidence.outputs.author-login }}
           DEPENDABOT_BASE_BRANCH: ${{ steps.evidence.outputs.base-branch }}
           DEPENDABOT_CHANGED_FILES_JSON: ${{ steps.evidence.outputs.changed-files-json }}
-          DEPENDABOT_HAS_SAFE_UPDATE_LABEL: ${{ steps.evidence.outputs.has-safe-update-label }}
           DEPENDABOT_HEAD_BRANCH: ${{ steps.evidence.outputs.head-branch }}
           DEPENDABOT_IS_DRAFT: ${{ steps.evidence.outputs.is-draft }}
+          DEPENDABOT_IS_SAFE_UPDATE: ${{ steps.evidence.outputs.is-safe-update }}
           DEPENDABOT_MERGEABLE_STATE: ${{ steps.evidence.outputs.mergeable-state }}
           DEPENDABOT_PULL_REQUEST_STATE: ${{ steps.evidence.outputs.pull-request-state }}
           DEPENDABOT_SUCCESSFUL_CHECKS_JSON: ${{ steps.evidence.outputs.successful-checks-json }}
@@ -399,6 +319,7 @@ jobs:
         if: steps.policy.outputs.eligible == 'true'
         uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
         env:
+          DEPENDABOT_BASE_SHA: ${{ steps.evidence.outputs.base-sha }}
           DEPENDABOT_HEAD_SHA: ${{ steps.evidence.outputs.head-sha }}
           DEPENDABOT_PULL_REQUEST_NUMBER: ${{ steps.evidence.outputs.pull-request-number }}
         with:
@@ -408,6 +329,7 @@ jobs:
               process.env.DEPENDABOT_PULL_REQUEST_NUMBER,
               10,
             );
+            const expectedBaseSha = process.env.DEPENDABOT_BASE_SHA;
             const expectedHeadSha = process.env.DEPENDABOT_HEAD_SHA;
             const { data: pullRequest } = await github.rest.pulls.get({
               owner: context.repo.owner,
@@ -418,6 +340,12 @@ jobs:
             if (pullRequest.head.sha !== expectedHeadSha) {
               throw new Error(
                 `Pull request #${pullRequestNumber} changed after verification.`,
+              );
+            }
+
+            if (pullRequest.base.sha !== expectedBaseSha) {
+              throw new Error(
+                `The base branch changed after pull request #${pullRequestNumber} was verified.`,
               );
             }
 

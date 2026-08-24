@@ -52,7 +52,7 @@ describe("evaluateDependabotMergeCandidate", () => {
 
   it("allows a verified individual pinned GitHub Action update", () => {
     const candidate = createCandidate({
-      changedFiles: [".github/workflows/test-and-lint.yml"],
+      changedFiles: [".github/workflows/eslint-vitest-xstate.yml"],
       headBranch:
         "dependabot/github_actions/actions/github-script-3a2844b7e9c422d3c10d287c895573f7108da1b3",
     })
@@ -202,7 +202,7 @@ describe("Dependabot Safe Update Merge workflow", () => {
     )
 
     expect(workflow).toContain("      actions: write")
-    expect(workflow).toContain("              'test-and-lint.yml',")
+    expect(workflow).toContain("              'eslint-vitest-xstate.yml',")
     expect(workflow).toContain("              'lighthouse.yml',")
     expect(workflow).toContain(
       "                ref: context.payload.repository.default_branch,",
@@ -212,7 +212,7 @@ describe("Dependabot Safe Update Merge workflow", () => {
     expect(workflowDispatchIndex).toBeGreaterThan(mergeRejectionIndex)
   })
 
-  it.each(["test-and-lint.yml", "lighthouse.yml"])(
+  it.each(["eslint-vitest-xstate.yml", "lighthouse.yml"])(
     "keeps %s available to push and explicit dispatch",
     (workflowFileName) => {
       const downstreamWorkflow = fs.readFileSync(

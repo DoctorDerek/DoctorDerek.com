@@ -366,7 +366,7 @@ jobs:
             }
 
             const downstreamWorkflowIds = [
-              'test-and-lint.yml',
+              'eslint-vitest-xstate.yml',
               'lighthouse.yml',
             ];
 

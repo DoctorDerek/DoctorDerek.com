@@ -38,6 +38,47 @@ type LighthouseCollectorDependencies = {
   ) => Promise<LighthouseRunnerResult | undefined>
 }
 
+const isUnknownRecord = (
+  value: unknown,
+): value is { [propertyName: string]: unknown } =>
+  typeof value === "object" && value !== null && !Array.isArray(value)
+
+const parseLighthouseUrl = (url: unknown, invalidUrlMessage: string): URL => {
+  if (typeof url !== "string") throw new Error(invalidUrlMessage)
+
+  try {
+    return new URL(url)
+  } catch {
+    throw new Error(invalidUrlMessage)
+  }
+}
+
+const assertLighthouseResultOrigin = (
+  lighthouseResult: unknown,
+  targetUrl: string,
+  runNumber: number,
+) => {
+  const target = parseLighthouseUrl(
+    targetUrl,
+    `Lighthouse run ${runNumber} received an invalid target URL.`,
+  )
+
+  if (!isUnknownRecord(lighthouseResult))
+    throw new Error(
+      `Lighthouse run ${runNumber} did not return a valid final URL.`,
+    )
+
+  const finalUrl = parseLighthouseUrl(
+    lighthouseResult.finalDisplayedUrl,
+    `Lighthouse run ${runNumber} did not return a valid final URL.`,
+  )
+
+  if (finalUrl.origin !== target.origin)
+    throw new Error(
+      `Lighthouse run ${runNumber} left the target origin: expected ${target.origin}, received ${finalUrl.origin}.`,
+    )
+}
+
 const isTemporaryDirectoryCleanupError = (error: unknown) =>
   typeof error === "object" &&
   error !== null &&
@@ -111,6 +152,12 @@ export const collectLighthouseReports = async (
           throw new Error(
             `Lighthouse run ${runNumber} did not return a result.`,
           )
+
+        assertLighthouseResultOrigin(
+          runnerResult.lighthouseResult,
+          configuration.targetUrl,
+          runNumber,
+        )
 
         const reportFileName = `lighthouse-run-${runNumber}`
         const htmlPath = path.join(

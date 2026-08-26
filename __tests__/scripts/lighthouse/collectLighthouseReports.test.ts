@@ -38,7 +38,10 @@ describe("collectLighthouseReports", () => {
 
     launchChromeAdapter.mockResolvedValue({ kill: killChrome, port: 9222 })
     runLighthouseAdapter.mockResolvedValue({
-      lhr: { categories: {} },
+      lhr: {
+        categories: {},
+        finalDisplayedUrl: "https://www.doctorderek.com/ready",
+      },
       report: "adapter-report",
     })
 
@@ -104,11 +107,17 @@ describe("collectLighthouseReports", () => {
     const runLighthouse = vi
       .fn()
       .mockResolvedValueOnce({
-        lighthouseResult: { run: 1 },
+        lighthouseResult: {
+          finalDisplayedUrl: "https://target.example.com/first",
+          run: 1,
+        },
         report: "first-report",
       })
       .mockResolvedValueOnce({
-        lighthouseResult: { run: 2 },
+        lighthouseResult: {
+          finalDisplayedUrl: "https://target.example.com/second",
+          run: 2,
+        },
         report: "second-report",
       })
 
@@ -154,8 +163,62 @@ describe("collectLighthouseReports", () => {
     )
     expect(
       JSON.parse(fs.readFileSync(manifest[1]?.jsonPath ?? "", "utf8")),
-    ).toEqual({ run: 2 })
+    ).toEqual({
+      finalDisplayedUrl: "https://target.example.com/second",
+      run: 2,
+    })
   })
+
+  it("rejects a Lighthouse run that leaves the requested origin", async () => {
+    const killChrome = vi.fn(async () => undefined)
+
+    await expect(
+      collectLighthouseReports(
+        {
+          numberOfRuns: 1,
+          outputDirectory: createTemporaryDirectory(),
+          targetUrl: "https://www.doctorderek.com/",
+        },
+        {
+          launchChrome: async () => ({ kill: killChrome, port: 9222 }),
+          runLighthouse: async () => ({
+            lighthouseResult: {
+              finalDisplayedUrl: "https://vercel.com/login",
+            },
+            report: "authentication-report",
+          }),
+        },
+      ),
+    ).rejects.toThrow(
+      "left the target origin: expected https://www.doctorderek.com, received https://vercel.com",
+    )
+    expect(killChrome).toHaveBeenCalledOnce()
+  })
+
+  it.each([undefined, "not a URL"])(
+    "rejects the invalid final URL %s",
+    async (finalDisplayedUrl) => {
+      const killChrome = vi.fn(async () => undefined)
+
+      await expect(
+        collectLighthouseReports(
+          {
+            numberOfRuns: 1,
+            outputDirectory: createTemporaryDirectory(),
+            targetUrl: "https://www.doctorderek.com/",
+          },
+          {
+            launchChrome: async () => ({ kill: killChrome, port: 9222 }),
+            runLighthouse: async () => ({
+              lighthouseResult: { finalDisplayedUrl },
+              report: "invalid-destination-report",
+            }),
+          },
+        ),
+      ).rejects.toThrow("did not return a valid final URL")
+      expect(killChrome).toHaveBeenCalledOnce()
+    },
+  )
 
   it("always closes Chrome when a run fails", async () => {
     const killChrome = vi.fn(async () => undefined)
@@ -198,7 +261,10 @@ describe("collectLighthouseReports", () => {
         {
           launchChrome: async () => ({ kill: killChrome, port: 9222 }),
           runLighthouse: async () => ({
-            lighthouseResult: { categories: {} },
+            lighthouseResult: {
+              categories: {},
+              finalDisplayedUrl: "https://www.doctorderek.com/",
+            },
             report: "completed-report",
           }),
         },
@@ -233,7 +299,10 @@ describe("collectLighthouseReports", () => {
         {
           launchChrome: async () => ({ kill: killChrome, port: 9222 }),
           runLighthouse: async () => ({
-            lighthouseResult: { categories: {} },
+            lighthouseResult: {
+              categories: {},
+              finalDisplayedUrl: "https://www.doctorderek.com/",
+            },
             report: "completed-report",
           }),
         },

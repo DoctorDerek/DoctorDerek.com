@@ -29,7 +29,6 @@ type LighthouseCollectorDependencies = {
   runLighthouse: (
     targetUrl: string,
     options: {
-      extraHeaders?: Record<string, string>
       formFactor: "mobile"
       logLevel: "info"
       onlyCategories: string[]
@@ -105,9 +104,6 @@ export const collectLighthouseReports = async (
             onlyCategories: [...LIGHTHOUSE_CATEGORIES],
             output: "html",
             port: chrome.port,
-            ...(configuration.extraHeaders
-              ? { extraHeaders: configuration.extraHeaders }
-              : {}),
           },
         )
 

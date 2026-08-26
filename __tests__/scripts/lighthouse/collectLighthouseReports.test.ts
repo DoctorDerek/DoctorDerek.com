@@ -114,10 +114,9 @@ describe("collectLighthouseReports", () => {
 
     const manifest = await collectLighthouseReports(
       {
-        extraHeaders: { "x-vercel-trusted-oidc-idp-token": "token" },
         numberOfRuns: 2,
         outputDirectory,
-        targetUrl: "https://preview.example.com",
+        targetUrl: "https://target.example.com",
       },
       { launchChrome, runLighthouse },
     )
@@ -129,9 +128,8 @@ describe("collectLighthouseReports", () => {
     expect(runLighthouse).toHaveBeenCalledTimes(2)
     expect(runLighthouse).toHaveBeenNthCalledWith(
       1,
-      "https://preview.example.com",
+      "https://target.example.com",
       {
-        extraHeaders: { "x-vercel-trusted-oidc-idp-token": "token" },
         formFactor: "mobile",
         logLevel: "info",
         onlyCategories: [

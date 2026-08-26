@@ -195,9 +195,13 @@ describe("collectLighthouseReports", () => {
     expect(killChrome).toHaveBeenCalledOnce()
   })
 
-  it.each([undefined, "not a URL"])(
-    "rejects the invalid final URL %s",
-    async (finalDisplayedUrl) => {
+  it.each([
+    undefined,
+    { finalDisplayedUrl: undefined },
+    { finalDisplayedUrl: "not a URL" },
+  ])(
+    "rejects malformed final navigation result %#",
+    async (lighthouseResult) => {
       const killChrome = vi.fn(async () => undefined)
 
       await expect(
@@ -210,7 +214,7 @@ describe("collectLighthouseReports", () => {
           {
             launchChrome: async () => ({ kill: killChrome, port: 9222 }),
             runLighthouse: async () => ({
-              lighthouseResult: { finalDisplayedUrl },
+              lighthouseResult,
               report: "invalid-destination-report",
             }),
           },

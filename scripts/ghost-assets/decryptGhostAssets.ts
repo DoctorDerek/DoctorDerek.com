@@ -1,7 +1,6 @@
-import { execSync } from "node:child_process"
 import { existsSync, mkdirSync } from "node:fs"
 import { join } from "node:path"
-import { getErrorMessage } from "../../utils/errors"
+import { extractEncryptedZipArchive } from "./extractEncryptedZipArchive"
 
 export type GhostArchive = {
   name: string
@@ -58,19 +57,11 @@ export const GHOST_ARCHIVES: readonly GhostArchive[] = [
   },
 ]
 
-const extractArchiveWithUnzip = (archive: GhostArchive, assetKey: string) => {
-  const junkFlag = archive.junkPaths ? "-j " : ""
-  execSync(
-    `unzip -o -q ${junkFlag}-P "${assetKey}" "${archive.zipPath}" -d "${archive.targetDir}"`,
-    { stdio: "inherit" },
-  )
-}
-
 const defaultDependencies: GhostAssetPipelineDependencies = {
   archiveExists: existsSync,
   createDirectory: (path) => mkdirSync(path, { recursive: true }),
   directoryExists: existsSync,
-  extractArchive: extractArchiveWithUnzip,
+  extractArchive: extractEncryptedZipArchive,
   logger: console,
 }
 
@@ -121,12 +112,10 @@ export const runGhostAssetDecryption = async ({
     dependencies.logger.log("[$̲̅(̲̅ιοο̲̅)̲̅$̲̅] Proceeding with Vercel build...")
     dependencies.logger.log("=========================================")
     return 0
-  } catch (error) {
-    const message = getErrorMessage(error)
+  } catch {
     dependencies.logger.error("❌ FATAL ERROR: Decryption failed.")
-    dependencies.logger.error(message)
     dependencies.logger.error(
-      "Possible causes: Wrong GHOST_ASSET_KEY_DOCTORDEREK_COM or missing unzip utility.",
+      "Possible causes: Wrong GHOST_ASSET_KEY_DOCTORDEREK_COM or invalid encrypted archive.",
     )
     dependencies.logger.log("=========================================")
     return 1

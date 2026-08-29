@@ -176,4 +176,99 @@ describe("ghost asset decryption", () => {
       "cards",
     )
   })
+
+  it("handles shell-sensitive passwords as literal archive data", async () => {
+    const temporaryDirectory = createTemporaryDirectory()
+    const archivePath = path.join(temporaryDirectory, "literal-password.zip")
+    const targetDirectory = path.join(temporaryDirectory, "extracted")
+    const shellSensitivePassword =
+      "literal \"quotes\" 'apostrophes' $HOME $(touch owned) `ticks` ; & | < > %PATH% !"
+
+    await createEncryptedArchive(archivePath, shellSensitivePassword)
+    await extractEncryptedZipArchive(
+      {
+        name: "Literal password",
+        zipPath: archivePath,
+        targetDir: targetDirectory,
+        junkPaths: true,
+      },
+      shellSensitivePassword,
+    )
+
+    expect(
+      fs.readFileSync(path.join(targetDirectory, "effect.js"), "utf8"),
+    ).toBe("cinematic")
+  })
+
+  it("redacts extraction errors and returns a deterministic failure", async () => {
+    const secret = 'never expose $(this) ; & | "secret"'
+    const logger = createLogger()
+    const archive = {
+      name: "Failing archive",
+      zipPath: "failing.zip",
+      targetDir: "destination",
+      junkPaths: false,
+    }
+
+    const exitCode = await runGhostAssetDecryption({
+      archives: [archive],
+      assetKey: secret,
+      dependencies: {
+        archiveExists: () => true,
+        directoryExists: () => true,
+        extractArchive: () => {
+          throw new Error(`Library failure included ${secret}`)
+        },
+        logger,
+      },
+    })
+    const emittedMessages = [
+      ...logger.error.mock.calls,
+      ...logger.log.mock.calls,
+      ...logger.warn.mock.calls,
+    ]
+      .map(([message]) => String(message))
+      .join("\n")
+
+    expect(exitCode).toBe(1)
+    expect(logger.error.mock.calls).toEqual([
+      ["❌ FATAL ERROR: Decryption failed."],
+      [
+        "Possible causes: Wrong GHOST_ASSET_KEY_DOCTORDEREK_COM or invalid encrypted archive.",
+      ],
+    ])
+    expect(emittedMessages).not.toContain(secret)
+    expect(emittedMessages).not.toContain("Library failure included")
+  })
+
+  it("converts a wrong archive password into the same fixed failure", async () => {
+    const temporaryDirectory = createTemporaryDirectory()
+    const archivePath = path.join(temporaryDirectory, "wrong-password.zip")
+    const targetDirectory = path.join(temporaryDirectory, "extracted")
+    const logger = createLogger()
+
+    await createEncryptedArchive(archivePath, "correct-password")
+
+    const exitCode = await runGhostAssetDecryption({
+      archives: [
+        {
+          name: "Wrong password",
+          zipPath: archivePath,
+          targetDir: targetDirectory,
+          junkPaths: true,
+        },
+      ],
+      assetKey: "wrong-password",
+      dependencies: { logger },
+    })
+
+    expect(exitCode).toBe(1)
+    expect(logger.error.mock.calls).toEqual([
+      ["❌ FATAL ERROR: Decryption failed."],
+      [
+        "Possible causes: Wrong GHOST_ASSET_KEY_DOCTORDEREK_COM or invalid encrypted archive.",
+      ],
+    ])
+    expect(fs.existsSync(path.join(targetDirectory, "effect.js"))).toBe(false)
+  })
 })

@@ -15,6 +15,35 @@ import { extractEncryptedZipArchive } from "@/scripts/ghost-assets/extractEncryp
 
 const temporaryDirectories: string[] = []
 
+type EncryptedArchiveEntry = {
+  content?: string
+  directory?: boolean
+  filename: string
+}
+
+const DEFAULT_ENCRYPTED_ARCHIVE_ENTRIES: readonly EncryptedArchiveEntry[] = [
+  {
+    directory: true,
+    filename: "fullPage_js_extensions_bundle/",
+  },
+  {
+    directory: true,
+    filename: "fullPage_js_extensions_bundle/cinematic/",
+  },
+  {
+    content: "cinematic",
+    filename: "fullPage_js_extensions_bundle/cinematic/effect.js",
+  },
+  {
+    directory: true,
+    filename: "fullPage_js_extensions_bundle/cards/",
+  },
+  {
+    content: "cards",
+    filename: "fullPage_js_extensions_bundle/cards/card.js",
+  },
+]
+
 const createTemporaryDirectory = () => {
   const temporaryDirectory = fs.mkdtempSync(
     path.join(os.tmpdir(), "doctor-derek-ghost-assets-"),
@@ -26,6 +55,7 @@ const createTemporaryDirectory = () => {
 const createEncryptedArchive = async (
   archivePath: string,
   password: string,
+  entries: readonly EncryptedArchiveEntry[] = DEFAULT_ENCRYPTED_ARCHIVE_ENTRIES,
 ) => {
   const archiveWriter = new ZipWriter(new Uint8ArrayWriter(), {
     password,
@@ -33,14 +63,12 @@ const createEncryptedArchive = async (
     zipCrypto: true,
   })
 
-  await archiveWriter.add(
-    "fullPage_js_extensions_bundle/cinematic/effect.js",
-    new TextReader("cinematic"),
-  )
-  await archiveWriter.add(
-    "fullPage_js_extensions_bundle/cards/card.js",
-    new TextReader("cards"),
-  )
+  for (const entry of entries)
+    await archiveWriter.add(
+      entry.filename,
+      entry.content === undefined ? undefined : new TextReader(entry.content),
+      { directory: entry.directory },
+    )
 
   fs.writeFileSync(archivePath, await archiveWriter.close())
 }
@@ -125,6 +153,34 @@ describe("ghost asset decryption", () => {
     )
   })
 
+  it("warns for a missing archive while extracting available archives", async () => {
+    const logger = createLogger()
+    const extractArchive = vi.fn()
+    const missingArchive = GHOST_ARCHIVES[0]
+    const availableArchive = GHOST_ARCHIVES[1]
+
+    const exitCode = await runGhostAssetDecryption({
+      archives: [missingArchive, availableArchive],
+      assetKey: "test-password",
+      dependencies: {
+        archiveExists: (archivePath) =>
+          archivePath === availableArchive.zipPath,
+        directoryExists: () => true,
+        extractArchive,
+        logger,
+      },
+    })
+
+    expect(exitCode).toBe(0)
+    expect(logger.warn).toHaveBeenCalledExactlyOnceWith(
+      `⚠️ Warning: Archive not found at ${missingArchive.zipPath}`,
+    )
+    expect(extractArchive).toHaveBeenCalledExactlyOnceWith(
+      availableArchive,
+      "test-password",
+    )
+  })
+
   it("preserves or flattens paths according to each archive contract", async () => {
     const temporaryDirectory = createTemporaryDirectory()
     const archivePath = path.join(temporaryDirectory, "assets.zip")
@@ -198,6 +254,30 @@ describe("ghost asset decryption", () => {
     expect(
       fs.readFileSync(path.join(targetDirectory, "effect.js"), "utf8"),
     ).toBe("cinematic")
+  })
+
+  it("rejects archive entries that resolve outside the destination", async () => {
+    const temporaryDirectory = createTemporaryDirectory()
+    const archivePath = path.join(temporaryDirectory, "unsafe-path.zip")
+    const targetDirectory = path.join(temporaryDirectory, "extracted")
+    const escapedPath = path.join(temporaryDirectory, "escaped.txt")
+
+    await createEncryptedArchive(archivePath, "test-password", [
+      { content: "unsafe", filename: "..\\escaped.txt" },
+    ])
+
+    await expect(
+      extractEncryptedZipArchive(
+        {
+          name: "Unsafe path",
+          zipPath: archivePath,
+          targetDir: targetDirectory,
+          junkPaths: false,
+        },
+        "test-password",
+      ),
+    ).rejects.toThrow("Archive entry resolves outside its destination.")
+    expect(fs.existsSync(escapedPath)).toBe(false)
   })
 
   it("redacts extraction errors and returns a deterministic failure", async () => {

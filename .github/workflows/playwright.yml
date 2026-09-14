@@ -62,10 +62,10 @@ jobs:
 
             const pullRequest = pullRequests.find(
               candidate => candidate.state === 'open' && candidate.head.sha === deploymentSha,
-            ) ?? pullRequests.find(candidate => candidate.state === 'open');
+            );
 
             if (!pullRequest) {
-              core.warning(`No open pull request is associated with deployment ${deploymentSha}.`);
+              core.warning(`No current open pull request matches deployment ${deploymentSha}.`);
               return;
             }
 
@@ -82,6 +82,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           ref: ${{ github.event.deployment.sha }}
 
       - name: Setup pnpm
@@ -136,70 +137,46 @@ jobs:
           PLAYWRIGHT_TEST_BASE_URL: ${{ needs.preview-context.outputs.preview-url }}
           PLAYWRIGHT_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
 
-      - name: Inspect Playwright Evidence
+      - name: Protect Playwright Evidence
         id: playwright-evidence
+        if: ${{ !cancelled() && steps.github-oidc-token.outcome == 'success' }}
+        shell: pwsh
+        run: ./scripts/ci/protectPlaywrightEvidence.ps1
+        env:
+          PLAYWRIGHT_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
+
+      - name: Inspect Playwright Evidence
         if: ${{ !cancelled() }}
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        with:
-          script: |
-            const fs = require('node:fs');
-            const path = require('node:path');
-            const { execFileSync } = require('node:child_process');
-            const commit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-            const reportPaths = ['playwright-report/index.html', 'test-results/playwright.json'];
-            const missingReports = reportPaths.filter(file => !fs.existsSync(file) || fs.statSync(file).size === 0);
-            let missingContributors = ['chromium', 'firefox', 'webkit'];
-            let incompleteTests = [];
-            let reportError = '';
-            try {
-              const report = JSON.parse(fs.readFileSync(reportPaths[1], 'utf8'));
-              const tests = [];
-              const visit = suites => {
-                for (const suite of suites) {
-                  for (const spec of suite.specs ?? []) {
-                    for (const test of spec.tests) tests.push({ ...test, title: spec.title });
-                  }
-                  visit(suite.suites ?? []);
-                }
-              };
-              visit(report.suites);
-              missingContributors = report.config.projects.map(project => project.name).filter(name => !tests.some(test => test.projectName === name));
-              incompleteTests = tests.filter(test => test.results.length === 0 || test.results.some(result => ['interrupted', 'skipped'].includes(result.status))).map(test => `${test.projectName}: ${test.title}`);
-              if (tests.length === 0 || report.errors.length > 0) reportError = 'No tests completed or the runner reported global errors.';
-            } catch {
-              reportError = 'The Playwright JSON report is missing, unreadable, or invalid.';
-            }
-            const commitMatchesDeployment = commit === context.payload.deployment.sha;
-            const complete = /^\d+$/.test(process.env.PLAYWRIGHT_EXIT_CODE ?? '') && commitMatchesDeployment && missingReports.length === 0 && missingContributors.length === 0 && incompleteTests.length === 0 && !reportError;
-            const evidence = {
-              commit, deploymentCommit: context.payload.deployment.sha, commitMatchesDeployment,
-              runnerExitCode: process.env.PLAYWRIGHT_EXIT_CODE ?? 'unavailable',
-              status: complete ? 'complete' : 'unavailable-or-partial',
-              missingReports, missingContributors, incompleteTests, reportError,
-              browserCodeCoverage: 'Not instrumented. These files are test results, not application code coverage.',
-            };
-            fs.mkdirSync('test-results', { recursive: true });
-            const manifest = path.join('test-results', 'playwright-evidence.json');
-            fs.writeFileSync(manifest, JSON.stringify(evidence, null, 2));
-            core.setOutput('manifest', manifest);
-            core.exportVariable('PLAYWRIGHT_EVIDENCE_STATUS', evidence.status);
-            if (!complete) core.warning('Playwright evidence is unavailable or partial; inspect missing contributors in the report inventory.');
-            await core.summary.addHeading('Playwright evidence').addCodeBlock(JSON.stringify(evidence, null, 2), 'json').write();
+        run: |
+          echo "### Playwright evidence" >> "$GITHUB_STEP_SUMMARY"
+          echo "Deployment: $DEPLOYMENT_SHA. Checkout: $(git rev-parse HEAD). Runner exit: ${PLAYWRIGHT_EXIT_CODE:-unavailable}." >> "$GITHUB_STEP_SUMMARY"
+          echo "Configured projects: chromium, firefox, webkit; no shards. Reports and traces are test results, not application code coverage." >> "$GITHUB_STEP_SUMMARY"
+          for REPORT in playwright-report/index.html test-results/.last-run.json; do
+            if [ -s "$REPORT" ]; then
+              echo "Available: $REPORT" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "::warning::Unavailable Playwright evidence: $REPORT. Available artifacts may be partial."
+              echo "Missing: $REPORT" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
+          if [ -s test-results/.last-run.json ]; then
+            cp test-results/.last-run.json test-results/run-result.json
+          fi
+        env:
+          DEPLOYMENT_SHA: ${{ github.event.deployment.sha }}
 
       - name: Upload Playwright Report
-        if: ${{ !cancelled() && steps.playwright.outcome != 'skipped' }}
+        if: ${{ !cancelled() && steps.playwright-evidence.outcome == 'success' && (hashFiles('playwright-report/**') != '' || hashFiles('test-results/**') != '') }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: playwright-report
           path: |
             playwright-report/
             test-results/
-            ${{ steps.playwright-evidence.outputs.manifest }}
-          if-no-files-found: error
           retention-days: 14
 
       - name: Post Playwright PR Comment
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.playwright-evidence.outcome == 'success' }}
         continue-on-error: true
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
@@ -233,9 +210,7 @@ jobs:
             const previewLink = process.env.PLAYWRIGHT_PREVIEW_URL
               ? `\n\n[Open preview deployment](${process.env.PLAYWRIGHT_PREVIEW_URL})`
               : '';
-            const evidenceStatus = process.env.PLAYWRIGHT_EVIDENCE_STATUS ?? 'unavailable';
-            const runUrl = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
-            const body = `${header}\n\n${qualityPosition}\n\n${status}\n\nTest evidence: **${evidenceStatus}**. [Report inventory and artifacts](${runUrl}). Browser code coverage is not configured.${summary ? `\n\n\`\`\`text\n${summary}\n\`\`\`` : ''}${previewLink}`;
+            const body = `${header}\n\n${qualityPosition}\n\n${status}${summary ? `\n\n\`\`\`text\n${summary}\n\`\`\`` : ''}${previewLink}`;
 
             const { data: comments } = await github.rest.issues.listComments({
               issue_number: pullRequestNumber,

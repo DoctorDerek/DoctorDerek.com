@@ -8,7 +8,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
-  reporter: "html",
+  reporter: [
+    ["html"],
+    ["json", { outputFile: "test-results/playwright.json" }],
+  ],
   use: {
     baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || "http://localhost:3000",
     extraHTTPHeaders: vercelTrustedOidcToken

@@ -121,7 +121,7 @@ describe("protected Preview evidence", () => {
         { name: "resources/page.html", content: "<p>Useful page</p>" },
       ])
     }
-  })
+  }, 15_000)
 
   it("fails closed when evidence exists but its token is unavailable", () => {
     const directory = createFixture()

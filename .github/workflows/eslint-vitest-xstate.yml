@@ -90,11 +90,12 @@ jobs:
           cache: "pnpm"
 
       - name: Install Dependencies
-        run: pnpm install
+        id: dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Run Lint and Capture Output
         id: lint
-        if: always()
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           set +e
           pnpm lint 2>&1 | tee "$RUNNER_TEMP/lint-output.txt"
@@ -112,7 +113,7 @@ jobs:
           echo "LINT_OUTPUT_FILE=$RUNNER_TEMP/lint-output.txt" >> "$GITHUB_ENV"
 
       - name: Post Lint PR Comment
-        if: always() && github.event_name == 'pull_request'
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
         continue-on-error: true
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
@@ -170,7 +171,7 @@ jobs:
 
       - name: Run Vitest and Capture Summary
         id: vitest
-        if: always()
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           set +e
           pnpm vitest run --coverage --passWithNoTests 2>&1 | tee "$RUNNER_TEMP/vitest-output.txt"
@@ -179,9 +180,78 @@ jobs:
 
           echo "VITEST_EXIT_CODE=$VITEST_EXIT_CODE" >> "$GITHUB_ENV"
           echo "VITEST_OUTPUT_FILE=$RUNNER_TEMP/vitest-output.txt" >> "$GITHUB_ENV"
+          exit "$VITEST_EXIT_CODE"
+
+      - name: Inspect Vitest Evidence
+        id: vitest-evidence
+        if: ${{ !cancelled() }}
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          script: |
+            const fs = require('node:fs');
+            const path = require('node:path');
+            const { execFileSync } = require('node:child_process');
+            const commit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+            const tracked = execFileSync('git', ['ls-files', '-z'], { encoding: 'utf8' }).split('\0').filter(Boolean);
+            const expectedFiles = tracked.filter(file => /\.test\.tsx?$/.test(file));
+            const reportPaths = ['test-results/vitest.json', 'coverage/lcov.info', 'coverage/coverage-final.json', 'coverage/index.html'];
+            const missingReports = reportPaths.filter(file => !fs.existsSync(file) || fs.statSync(file).size === 0);
+            let missingContributors = [...expectedFiles];
+            let incompleteContributors = [];
+            let validCoverage = false;
+            let reportError = '';
+            try {
+              const results = JSON.parse(fs.readFileSync(reportPaths[0], 'utf8'));
+              const contributors = results.testResults.map(result => ({
+                file: path.relative(process.cwd(), result.name).split(path.sep).join('/'),
+                complete: result.assertionResults.length > 0 && result.assertionResults.every(assertion => ['passed', 'failed'].includes(assertion.status)),
+              }));
+              missingContributors = expectedFiles.filter(file => !contributors.some(result => result.file === file));
+              incompleteContributors = contributors.filter(result => !result.complete).map(result => result.file);
+              const lcov = fs.readFileSync(reportPaths[1], 'utf8');
+              const records = lcov.split('end_of_record').map(record => record.trim()).filter(Boolean);
+              validCoverage = records.length > 0 && /^DA:\d+,\d+/m.test(lcov) && lcov.trimEnd().endsWith('end_of_record') && records.every(record => {
+                const source = record.match(/^SF:(.+)$/m)?.[1].trim().replaceAll('\\', '/');
+                if (!source || !tracked.includes(source)) return false;
+                const lines = [...record.matchAll(/^DA:(\d+),(\d+)/gm)];
+                if (lines.length === 0) return /^LF:0\r?$/m.test(record);
+                const lineCount = fs.readFileSync(source, 'utf8').split(/\r?\n/).length;
+                return lines.every(([, line]) => Number(line) > 0 && Number(line) <= lineCount);
+              });
+              JSON.parse(fs.readFileSync(reportPaths[2], 'utf8'));
+            } catch {
+              reportError = 'A runner or coverage report is missing, unreadable, or invalid.';
+            }
+            const complete = /^\d+$/.test(process.env.VITEST_EXIT_CODE ?? '') && expectedFiles.length > 0 && missingReports.length === 0 && missingContributors.length === 0 && incompleteContributors.length === 0 && validCoverage && !reportError;
+            const evidence = {
+              commit, runnerExitCode: process.env.VITEST_EXIT_CODE ?? 'unavailable',
+              scope: 'Single root package; imported-source V8 coverage; no shards; Codecov flag vitest.',
+              status: complete ? 'complete' : 'unavailable-or-partial',
+              missingReports, missingContributors, incompleteContributors, validCoverage, reportError,
+            };
+            fs.mkdirSync('test-results', { recursive: true });
+            const manifest = path.join('test-results', 'vitest-evidence.json');
+            fs.writeFileSync(manifest, JSON.stringify(evidence, null, 2));
+            core.setOutput('complete', String(complete));
+            core.setOutput('manifest', manifest);
+            core.exportVariable('VITEST_EVIDENCE_STATUS', evidence.status);
+            if (!complete) core.warning('Vitest evidence is unavailable or partial; retain artifacts, but do not publish a comparable Codecov measurement.');
+            await core.summary.addHeading('Vitest evidence').addCodeBlock(JSON.stringify(evidence, null, 2), 'json').write();
+
+      - name: Upload Vitest Evidence
+        if: ${{ !cancelled() && steps.vitest.outcome != 'skipped' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: vitest-evidence
+          path: |
+            coverage/
+            test-results/vitest.json
+            ${{ steps.vitest-evidence.outputs.manifest }}
+          if-no-files-found: error
+          retention-days: 14
 
       - name: Post Vitest PR Comment
-        if: always() && github.event_name == 'pull_request'
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
         continue-on-error: true
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
@@ -208,7 +278,9 @@ jobs:
             const status = Number.isInteger(exitCode) && exitCode === 0
               ? '✅ **Vitest completed successfully.**'
               : '❌ **Vitest tests failed or the runner could not complete.**';
-            const body = `${header}\n\n${qualityPosition}\n\n${status}${summary ? `\n\n\`\`\`text\n${summary}\n\`\`\`` : ''}`;
+            const evidenceStatus = process.env.VITEST_EVIDENCE_STATUS ?? 'unavailable';
+            const runUrl = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+            const body = `${header}\n\n${qualityPosition}\n\n${status}\n\nCoverage evidence: **${evidenceStatus}**. [Report inventory and artifacts](${runUrl}). Missing evidence is not zero coverage.${summary ? `\n\n\`\`\`text\n${summary}\n\`\`\`` : ''}`;
 
             const { data: comments } = await github.rest.issues.listComments({
               issue_number: context.issue.number,
@@ -238,6 +310,7 @@ jobs:
             }
 
       - name: Upload coverage to Codecov
+        if: ${{ !cancelled() && steps.vitest-evidence.outputs.complete == 'true' }}
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           disable_search: true
@@ -246,7 +319,7 @@ jobs:
           flags: vitest
 
       - name: Enforce Test and Tooling Results
-        if: always()
+        if: ${{ !cancelled() }}
         run: |
           FAILED=0
 

@@ -10,10 +10,6 @@ export default defineConfig({
     },
   },
   test: {
-    reporters: process.env.CI ? ["default", "json"] : ["default"],
-    outputFile: {
-      json: "test-results/vitest.json",
-    },
     coverage: {
       reportOnFailure: true,
       reporter: ["text", "html", "json", "lcov"],

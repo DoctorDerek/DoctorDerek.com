@@ -6,11 +6,10 @@ on:
 permissions:
   pull-requests: write
   contents: read
-  id-token: write
 
 jobs:
   preview-context:
-    name: Resolve Trusted Preview Context
+    name: Resolve Preview Context
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Preview'
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -97,36 +96,14 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright Browsers with Bounded Retries
-        run: |
-          maximum_attempts=3
-
-          for ((attempt = 1; attempt <= maximum_attempts; attempt++)); do
-            if timeout --kill-after=30s 7m pnpm exec playwright install --with-deps --only-shell; then
-              exit 0
-            fi
-
-            echo "Playwright browser installation attempt $attempt of $maximum_attempts failed."
-          done
-
-          echo "Playwright browser installation failed after $maximum_attempts attempts."
-          exit 1
-
-      - name: Get GitHub OIDC Token
-        id: github-oidc-token
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        with:
-          retries: 3
-          script: |
-            const token = await core.getIDToken();
-            core.setSecret(token);
-            core.setOutput('token', token);
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
 
       - name: Run Playwright Tests and Capture Summary
         id: playwright
         run: |
           set +e
-          pnpm exec playwright test --pass-with-no-tests 2>&1 | tee "$RUNNER_TEMP/playwright-output.txt"
+          pnpm exec playwright test 2>&1 | tee "$RUNNER_TEMP/playwright-output.txt"
           PLAYWRIGHT_EXIT_CODE=${PIPESTATUS[0]}
           set -e
 
@@ -135,38 +112,9 @@ jobs:
           exit "$PLAYWRIGHT_EXIT_CODE"
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ needs.preview-context.outputs.preview-url }}
-          PLAYWRIGHT_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
-
-      - name: Protect Playwright Evidence
-        id: playwright-evidence
-        if: ${{ !cancelled() && steps.github-oidc-token.outcome == 'success' }}
-        shell: pwsh
-        run: ./scripts/ci/protectPlaywrightEvidence.ps1
-        env:
-          PLAYWRIGHT_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
-
-      - name: Inspect Playwright Evidence
-        if: ${{ !cancelled() }}
-        run: |
-          echo "### Playwright evidence" >> "$GITHUB_STEP_SUMMARY"
-          echo "Deployment: $DEPLOYMENT_SHA. Checkout: $(git rev-parse HEAD). Runner exit: ${PLAYWRIGHT_EXIT_CODE:-unavailable}." >> "$GITHUB_STEP_SUMMARY"
-          echo "Configured projects: chromium, firefox, webkit; no shards. Reports and traces are test results, not application code coverage." >> "$GITHUB_STEP_SUMMARY"
-          for REPORT in playwright-report/index.html test-results/.last-run.json; do
-            if [ -s "$REPORT" ]; then
-              echo "Available: $REPORT" >> "$GITHUB_STEP_SUMMARY"
-            else
-              echo "::warning::Unavailable Playwright evidence: $REPORT. Available artifacts may be partial."
-              echo "Missing: $REPORT" >> "$GITHUB_STEP_SUMMARY"
-            fi
-          done
-          if [ -s test-results/.last-run.json ]; then
-            cp test-results/.last-run.json test-results/run-result.json
-          fi
-        env:
-          DEPLOYMENT_SHA: ${{ github.event.deployment.sha }}
 
       - name: Upload Playwright Report
-        if: ${{ !cancelled() && steps.playwright-evidence.outcome == 'success' && (hashFiles('playwright-report/**') != '' || hashFiles('test-results/**') != '') }}
+        if: ${{ !cancelled() && (hashFiles('playwright-report/**') != '' || hashFiles('test-results/**') != '') }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: playwright-report
@@ -176,7 +124,7 @@ jobs:
           retention-days: 14
 
       - name: Post Playwright PR Comment
-        if: ${{ !cancelled() && steps.playwright-evidence.outcome == 'success' }}
+        if: ${{ !cancelled() }}
         continue-on-error: true
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
@@ -204,9 +152,11 @@ jobs:
               .filter(Boolean)
               .slice(-12);
             const summary = (summaryLines.length > 0 ? summaryLines : fallbackLines).join('\n');
-            const status = Number.isInteger(exitCode) && exitCode === 0
-              ? '✅ **Playwright completed successfully.**'
-              : '❌ **Playwright tests failed or the runner could not complete.**';
+            const status = !Number.isInteger(exitCode)
+              ? '❌ **Playwright did not run; setup or browser installation failed.**'
+              : exitCode === 0
+                ? '✅ **Playwright completed successfully.**'
+                : '❌ **Playwright failed; inspect the retained report.**';
             const previewLink = process.env.PLAYWRIGHT_PREVIEW_URL
               ? `\n\n[Open preview deployment](${process.env.PLAYWRIGHT_PREVIEW_URL})`
               : '';

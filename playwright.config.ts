@@ -2,7 +2,6 @@ import { defineConfig, devices } from "@playwright/test"
 
 const localPlaywrightPort = 3000
 const localPlaywrightBaseUrl = `http://127.0.0.1:${localPlaywrightPort}`
-const vercelTrustedOidcToken = process.env.PLAYWRIGHT_VERCEL_TRUSTED_OIDC_TOKEN
 
 export default defineConfig({
   testDir: "./e2e",
@@ -13,9 +12,6 @@ export default defineConfig({
   reporter: "html",
   use: {
     baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || localPlaywrightBaseUrl,
-    extraHTTPHeaders: vercelTrustedOidcToken
-      ? { "x-vercel-trusted-oidc-idp-token": vercelTrustedOidcToken }
-      : undefined,
     trace: "on-first-retry",
   },
   projects: [

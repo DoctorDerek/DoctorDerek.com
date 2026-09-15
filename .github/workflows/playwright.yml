@@ -6,6 +6,7 @@ on:
 permissions:
   pull-requests: write
   contents: read
+  id-token: write
 
 jobs:
   preview-context:
@@ -99,6 +100,16 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 
+      - name: Get GitHub OIDC Token
+        id: github-oidc-token
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          retries: 3
+          script: |
+            const token = await core.getIDToken();
+            core.setSecret(token);
+            core.setOutput('token', token);
+
       - name: Run Playwright Tests and Capture Summary
         id: playwright
         run: |
@@ -112,6 +123,7 @@ jobs:
           exit "$PLAYWRIGHT_EXIT_CODE"
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ needs.preview-context.outputs.preview-url }}
+          PLAYWRIGHT_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
 
       - name: Upload Playwright Report
         if: ${{ !cancelled() && (hashFiles('playwright-report/**') != '' || hashFiles('test-results/**') != '') }}

@@ -308,6 +308,7 @@ describe("extractMachineTopologies", () => {
               ...dynamicTransitions,
               MIXED: { target: ["ready", getTarget()] },
               UNKNOWN_ID: "#missing.done",
+              EMPTY_ID: "#",
             },
           },
         },

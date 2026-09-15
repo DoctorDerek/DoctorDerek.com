@@ -132,6 +132,7 @@ const resolveTransitionTarget = (
 
   if (targetDescriptor.startsWith("#")) {
     const [explicitId, ...descendantPath] = targetDescriptor.slice(1).split(".")
+    if (!explicitId) return undefined
     const explicitTargetId = context.explicitStateIds.get(explicitId)
     if (!explicitTargetId) return undefined
     candidateTargetId = [explicitTargetId, ...descendantPath].join(".")

@@ -7,4 +7,7 @@ const resultsDirectory = path.resolve(
 const publishedDirectory = process.env.LIGHTHOUSE_PUBLISHED_DIRECTORY
   ? path.resolve(process.env.LIGHTHOUSE_PUBLISHED_DIRECTORY)
   : undefined
-prepareLighthouseReports({ publishedDirectory, resultsDirectory })
+prepareLighthouseReports({
+  resultsDirectory,
+  ...(publishedDirectory ? { publishedDirectory } : {}),
+})

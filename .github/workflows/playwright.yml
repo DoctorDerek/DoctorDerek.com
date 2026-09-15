@@ -62,10 +62,10 @@ jobs:
 
             const pullRequest = pullRequests.find(
               candidate => candidate.state === 'open' && candidate.head.sha === deploymentSha,
-            ) ?? pullRequests.find(candidate => candidate.state === 'open');
+            );
 
             if (!pullRequest) {
-              core.warning(`No open pull request is associated with deployment ${deploymentSha}.`);
+              core.warning(`No current open pull request matches deployment ${deploymentSha}.`);
               return;
             }
 
@@ -82,6 +82,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           ref: ${{ github.event.deployment.sha }}
 
       - name: Setup pnpm
@@ -123,7 +124,6 @@ jobs:
 
       - name: Run Playwright Tests and Capture Summary
         id: playwright
-        if: always()
         run: |
           set +e
           pnpm exec playwright test --pass-with-no-tests 2>&1 | tee "$RUNNER_TEMP/playwright-output.txt"
@@ -132,20 +132,51 @@ jobs:
 
           echo "PLAYWRIGHT_EXIT_CODE=$PLAYWRIGHT_EXIT_CODE" >> "$GITHUB_ENV"
           echo "PLAYWRIGHT_OUTPUT_FILE=$RUNNER_TEMP/playwright-output.txt" >> "$GITHUB_ENV"
+          exit "$PLAYWRIGHT_EXIT_CODE"
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ needs.preview-context.outputs.preview-url }}
           PLAYWRIGHT_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
 
+      - name: Protect Playwright Evidence
+        id: playwright-evidence
+        if: ${{ !cancelled() && steps.github-oidc-token.outcome == 'success' }}
+        shell: pwsh
+        run: ./scripts/ci/protectPlaywrightEvidence.ps1
+        env:
+          PLAYWRIGHT_VERCEL_TRUSTED_OIDC_TOKEN: ${{ steps.github-oidc-token.outputs.token }}
+
+      - name: Inspect Playwright Evidence
+        if: ${{ !cancelled() }}
+        run: |
+          echo "### Playwright evidence" >> "$GITHUB_STEP_SUMMARY"
+          echo "Deployment: $DEPLOYMENT_SHA. Checkout: $(git rev-parse HEAD). Runner exit: ${PLAYWRIGHT_EXIT_CODE:-unavailable}." >> "$GITHUB_STEP_SUMMARY"
+          echo "Configured projects: chromium, firefox, webkit; no shards. Reports and traces are test results, not application code coverage." >> "$GITHUB_STEP_SUMMARY"
+          for REPORT in playwright-report/index.html test-results/.last-run.json; do
+            if [ -s "$REPORT" ]; then
+              echo "Available: $REPORT" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "::warning::Unavailable Playwright evidence: $REPORT. Available artifacts may be partial."
+              echo "Missing: $REPORT" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
+          if [ -s test-results/.last-run.json ]; then
+            cp test-results/.last-run.json test-results/run-result.json
+          fi
+        env:
+          DEPLOYMENT_SHA: ${{ github.event.deployment.sha }}
+
       - name: Upload Playwright Report
-        if: always()
+        if: ${{ !cancelled() && steps.playwright-evidence.outcome == 'success' && (hashFiles('playwright-report/**') != '' || hashFiles('test-results/**') != '') }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: playwright-report
-          path: playwright-report/
+          path: |
+            playwright-report/
+            test-results/
           retention-days: 14
 
       - name: Post Playwright PR Comment
-        if: always()
+        if: ${{ !cancelled() && steps.playwright-evidence.outcome == 'success' }}
         continue-on-error: true
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
@@ -208,7 +239,7 @@ jobs:
             }
 
       - name: Enforce Playwright Result
-        if: always()
+        if: ${{ !cancelled() }}
         run: |
           if ! [[ "$PLAYWRIGHT_EXIT_CODE" =~ ^[0-9]+$ ]] || [ "$PLAYWRIGHT_EXIT_CODE" -ne 0 ]; then
             echo "Playwright tests failed or the runner could not complete."

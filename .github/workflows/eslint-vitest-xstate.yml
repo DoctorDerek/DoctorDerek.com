@@ -79,6 +79,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
@@ -90,11 +92,12 @@ jobs:
           cache: "pnpm"
 
       - name: Install Dependencies
-        run: pnpm install
+        id: dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Run Lint and Capture Output
         id: lint
-        if: always()
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           set +e
           pnpm lint 2>&1 | tee "$RUNNER_TEMP/lint-output.txt"
@@ -112,7 +115,7 @@ jobs:
           echo "LINT_OUTPUT_FILE=$RUNNER_TEMP/lint-output.txt" >> "$GITHUB_ENV"
 
       - name: Post Lint PR Comment
-        if: always() && github.event_name == 'pull_request'
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
         continue-on-error: true
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
@@ -168,9 +171,13 @@ jobs:
               });
             }
 
+      - name: Run Blocking TypeScript Typecheck
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: pnpm exec next typegen && pnpm exec tsc --noEmit --incremental false
+
       - name: Run Vitest and Capture Summary
         id: vitest
-        if: always()
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: |
           set +e
           pnpm vitest run --coverage --passWithNoTests 2>&1 | tee "$RUNNER_TEMP/vitest-output.txt"
@@ -179,9 +186,59 @@ jobs:
 
           echo "VITEST_EXIT_CODE=$VITEST_EXIT_CODE" >> "$GITHUB_ENV"
           echo "VITEST_OUTPUT_FILE=$RUNNER_TEMP/vitest-output.txt" >> "$GITHUB_ENV"
+          exit "$VITEST_EXIT_CODE"
+
+      - name: Inspect Vitest Evidence
+        if: ${{ !cancelled() }}
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          retries: 3
+          script: |
+            const fs = require('node:fs');
+            const path = require('node:path');
+            const expectedReports = ['coverage/lcov.info', 'coverage/coverage-final.json', 'coverage/index.html'];
+            const availableReports = expectedReports.filter(file => fs.existsSync(file) && fs.statSync(file).size > 0);
+            const missingReports = expectedReports.filter(file => !availableReports.includes(file));
+            let sourceFiles = [];
+            if (availableReports.includes('coverage/lcov.info')) {
+              sourceFiles = [...fs.readFileSync('coverage/lcov.info', 'utf8').matchAll(/^SF:(.+)$/gm)].map(match => match[1].trim());
+              if (sourceFiles.length === 0 || sourceFiles.some(file => !fs.existsSync(path.resolve(file)))) {
+                core.warning('Vitest LCOV source mappings are unavailable or reference missing files. Do not treat this as complete coverage.');
+              }
+            }
+            if (availableReports.includes('coverage/coverage-final.json')) {
+              try {
+                const jsonSources = Object.keys(JSON.parse(fs.readFileSync('coverage/coverage-final.json', 'utf8')));
+                const mappedSources = new Set(sourceFiles.map(file => path.resolve(file)));
+                if (jsonSources.length === 0 || jsonSources.length !== mappedSources.size || jsonSources.some(file => !mappedSources.has(path.resolve(file)))) {
+                  core.warning('Vitest JSON and LCOV source contributions differ. Available coverage may be partial.');
+                }
+              } catch {
+                core.warning('Vitest JSON coverage is unreadable. Preserve the available evidence without claiming complete coverage.');
+              }
+            }
+            if (missingReports.length > 0) {
+              core.warning(`Unavailable Vitest evidence: ${missingReports.join(', ')}. Available reports may be partial, not zero coverage.`);
+            }
+            const checkoutSha = (await exec.getExecOutput('git', ['rev-parse', 'HEAD'])).stdout.trim();
+            await core.summary
+              .addHeading('Vitest evidence')
+              .addRaw(`Single root package; no shards. Runner exit: ${process.env.VITEST_EXIT_CODE ?? 'unavailable'}. Codecov flag: vitest.\n\n`)
+              .addRaw(`Tested checkout: ${checkoutSha}. Report commit: ${context.payload.pull_request?.head.sha ?? context.sha}.\n\n`)
+              .addRaw(`Available: ${availableReports.join(', ') || 'none'}. Missing: ${missingReports.join(', ') || 'none'}. LCOV source files: ${sourceFiles.length}.\n\n`)
+              .addRaw('Report presence is not proof of complete execution. Inspect the runner result and missing-source warnings before comparing coverage.\n')
+              .write();
+
+      - name: Upload Vitest Coverage Evidence
+        if: ${{ !cancelled() && hashFiles('coverage/**') != '' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: vitest-coverage
+          path: coverage/
+          retention-days: 14
 
       - name: Post Vitest PR Comment
-        if: always() && github.event_name == 'pull_request'
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
         continue-on-error: true
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
@@ -238,6 +295,7 @@ jobs:
             }
 
       - name: Upload coverage to Codecov
+        if: ${{ !cancelled() && hashFiles('coverage/lcov.info') != '' }}
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           disable_search: true
@@ -246,7 +304,7 @@ jobs:
           flags: vitest
 
       - name: Enforce Test and Tooling Results
-        if: always()
+        if: ${{ !cancelled() }}
         run: |
           FAILED=0
 
@@ -265,7 +323,8 @@ jobs:
   xstate-analysis:
     name: Analyze XState v5 Topology
     needs: initialize-comments
-    if: github.event_name == 'pull_request'
+    continue-on-error: true
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -274,6 +333,7 @@ jobs:
       - name: Checkout Pull Request History
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Setup pnpm
@@ -299,7 +359,7 @@ jobs:
           XSTATE_DIFF_OUTPUT_DIRECTORY: xstate-diff-artifacts
 
       - name: Upload XState Diff Artifacts
-        if: always()
+        if: ${{ !cancelled() }}
         continue-on-error: true
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -313,7 +373,8 @@ jobs:
     needs:
       - initialize-comments
       - xstate-analysis
-    if: always() && github.event_name == 'pull_request'
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+    continue-on-error: true
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:

@@ -5,9 +5,9 @@ export type LighthouseCollectionConfiguration = {
 }
 
 type LighthouseEnvironment = {
-  LIGHTHOUSE_NUMBER_OF_RUNS?: string
-  LIGHTHOUSE_OUTPUT_DIRECTORY?: string
-  LIGHTHOUSE_TARGET_URL?: string
+  LIGHTHOUSE_NUMBER_OF_RUNS?: string | undefined
+  LIGHTHOUSE_OUTPUT_DIRECTORY?: string | undefined
+  LIGHTHOUSE_TARGET_URL?: string | undefined
 }
 
 export const LIGHTHOUSE_CATEGORIES = [

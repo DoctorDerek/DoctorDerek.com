@@ -111,7 +111,7 @@ const addTransitionExpression = (
       targetDescriptors,
       event,
       kind,
-      guard,
+      ...(guard === undefined ? {} : { guard }),
       priority,
       location: getSourceLocation(
         context.sourceFile,

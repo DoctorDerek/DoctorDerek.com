@@ -173,7 +173,7 @@ jobs:
 
       - name: Run Blocking TypeScript Typecheck
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: pnpm exec tsc --noEmit --incremental false
+        run: pnpm exec next typegen && pnpm exec tsc --noEmit --incremental false
 
       - name: Run Vitest and Capture Summary
         id: vitest

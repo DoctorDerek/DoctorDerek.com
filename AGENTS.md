@@ -24,7 +24,7 @@ You must mentally and explicitly process every task through this sequence to pre
 ## 3. GIT WORKFLOW & SEMANTIC COMMITS
 
 - **NO PARALLEL WORK:** You will work exactly ONE task, bug, feature, or package group at a time sequentially.
-- **The MCP Issue Mandate:** Before writing a single line of code, you MUST use the GitHub MCP server to open an issue for your task. The issue tracks your context and goal; any length or detail is acceptable.
+- **The GitHub Issue Mandate:** Before creating a task branch or changing code, use the available GitHub CLI or GitHub MCP capability to open an issue recording the approved objective, scope, and verification contract.
 - **Pull Request Linkage:** The PR you open MUST explicitly include the exact string `Closes #<IssueNumber>` in the PR description body to automatically link it to the issue you just created.
 - **Small, Atomic, Semantic Commits (CRITICAL):** You must ALWAYS clearly differentiate your work into discrete, small, atomic commits. Never bundle unrelated UI tweaks, TypeScript refactors, and core logic into a single monolithic commit. You must strictly use the format `<type>(<scope>): <subject>` based on these definitions:
   - `feat(scope):` A new feature for the user (not a new feature for a build script).
@@ -34,9 +34,10 @@ You must mentally and explicitly process every task through this sequence to pre
   - `style(formatting):` Code formatting (e.g., Prettier fixes, fixing missing semicolons) (no production code change).
   - `docs(scope):` Documentation updates (e.g., updating READMEs).
   - `test(scope):` Adding or refactoring tests (no production code change).
-- **The Human-in-the-Loop Handoff:** You are forbidden from pushing, pulling, or merging locally.
-  1.  _Your Role:_ Write code locally, make atomic semantic commits, and ALWAYS finish the task by running `pnpm lint` and `pnpm format` (committing any resulting fixes as `refactor(linting): _` and `style(formatting): _`). Then, open the PR via the GitHub MCP.
-  2.  _Mapachito’s Role:_ Mapachito handles all `git push` and `git pull` operations via GitHub Desktop, and manually reviews/merges PRs on the GitHub GUI. You must wait for this loop to close before advancing.
+- **The Human-in-the-Loop Handoff:** Agents may use Git, GitHub CLI, or GitHub MCP to publish approved, verified task branches; Mapachito alone performs final PR review and merge.
+  1.  _Your Role:_ Preserve unrelated work, synchronize main with a fast-forward when authorized, and create one local task branch. Make the approved atomic semantic commits sequentially, run the task’s complete verification contract, and ALWAYS finish with `pnpm lint` and `pnpm format`. Commit resulting fixes as `refactor(linting): _` or `style(formatting): _` only when those tools produce real changes. Push only the completed task branch and open or update a ready-for-review PR containing `Closes #<IssueNumber>`. Never mark it draft unless Mapachito explicitly requests a draft.
+  2.  _Mapachito’s Role:_ Mapachito reviews and merges the PR. Keep review corrections on the same branch as additional atomic commits and rerun affected checks. Do not begin another PR while this review gate remains open.
+  3.  _After Merge:_ When Mapachito confirms “Merged!” and authorizes synchronization, fast-forward local main and delete only the confirmed merged stale task branch locally and from origin. Never merge a PR for Mapachito, commit directly to main, force-push, rewrite shared history, or delete unverified branches.
 
 ## 4. TOOLING & PACKAGE MASTERY
 
@@ -80,7 +81,7 @@ You will strictly adhere to these 40 architectural pillars when writing or revie
 27. **Default Exports:** Use default exports for primary page and route components to perfectly align with modern file-system routing patterns.
 28. **No Barrel Files:** Import directly from source files; do not use `index.ts` re-exports, mathematically preventing circular dependency hell.
 29. **Measured Coverage:** Prove code reliability by measuring integration test coverage natively via Vitest and Codecov.
-30. **The GUI Cowboy:** Mapachito performs Git operations via GitHub Desktop; ensure commits are atomic, clean, and discrete to support this workflow.
+30. **Human Review and Merge:** Agents may publish approved, verified task branches using the Git authority above. Keep commits atomic, clean, and discrete for Mapachito’s review in GitHub Desktop or GitHub; Mapachito alone merges PRs.
 31. **Semantic Signal Prefixes:** Group events, signals, and handlers by clear, domain-specific namespace prefixes for instant scannability.
 32. **Autoload Statelessness:** Global utility files must be purely stateless; mutable state belongs strictly in Context, Redux, or XState.
 33. **Scoped Services/Handlers:** Localize active logic tightly to the specific component domain that owns it to prevent global namespace pollution.

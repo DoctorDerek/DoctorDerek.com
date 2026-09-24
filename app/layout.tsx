@@ -96,7 +96,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${restoraDisplay.variable} ${restoraText.variable}`}>
         <SiteThemeProvider>{children}</SiteThemeProvider>
-        <Analytics />
+        {process.env.VERCEL_ENV === "production" && <Analytics />}
       </body>
     </html>
   )

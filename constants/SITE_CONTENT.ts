@@ -35,11 +35,10 @@ export const INTRO_BIO_SHORT =
 
 export const ABOUT_BIO_LONG: string[] = [
   "I’m Dr. Derek Austin: an AI-native senior full-stack TypeScript product engineer and UI/UX engineer. Since 2019, I’ve specialized in TypeScript, React, Next.js, Tailwind CSS, and Node.js; since 2023, I’ve also specialized in React Native + Expo for iOS and Android.",
-  "I use frontier LLMs to increase velocity and quality, not to outsource judgment. I orchestrate AI coding agents using functional specifications, technical architecture, and persistent project context, then verify their output with my own review, automated testing, and manual QA.",
+  "I understand the product, decide what matters, design the system, build the software, make releases repeatable, verify the result, and explain the tradeoffs clearly.",
+  "I orchestrate AI coding agents using functional specifications, technical architecture, and persistent project context, then verify their output through human review, automated testing, and manual QA.",
   "My engineering loop is Plan → Build → Test → Reflect: decide what matters, build it, prove it works, and use the result to improve the next cycle.",
-  "Inside that loop, my Five-Step Forge is the execution protocol: 1PLAN → 2CHECK → 3WRITE → 4CHECK → 5RUN. The loop describes how I work; the forge defines the checkpoints that keep agentic work reliable. Before the forge, 0LIST audits canonical ownership and impacted files.",
-  "I maintain language-specific coding standards and 40 anti-slop engineering pillars so architecture, accessibility, performance, testing, and maintainability are explicit requirements instead of last-minute cleanup.",
-  "This approach lets me own products end-to-end across four product surfaces: desktop web, mobile web, iOS, and Android. On every surface, I make deliberate decisions about state, UI, testing, and releases.",
+  "I own products across web, iOS, and Android, making deliberate decisions about state, UI, testing, and releases on every surface. I define clear requirements for architecture, accessibility, performance, testing, and maintainability before implementation.",
   "Contact me if you need a high-autonomy code owner who can define, architect, build, verify, release, observe, and iterate a product in production.",
 ] as const
 

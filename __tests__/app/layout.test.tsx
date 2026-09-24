@@ -12,6 +12,10 @@ vi.mock("next/font/local", () => ({
   default: localFontMock,
 }))
 
+vi.mock("@vercel/analytics/next", () => ({
+  Analytics: () => <div data-testid="vercel-analytics" />,
+}))
+
 describe("root metadata", () => {
   it("publishes the canonical production identity", () => {
     expect(metadata.metadataBase?.toString()).toBe(
@@ -37,7 +41,7 @@ describe("root metadata", () => {
     })
   })
 
-  it("renders the English document and theme-provider boundary", () => {
+  it("renders the English document, portfolio content, and one analytics instance", () => {
     render(
       <RootLayout>
         <main>Portfolio content</main>
@@ -50,6 +54,7 @@ describe("root metadata", () => {
       "font-restora-text",
     )
     expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
+    expect(screen.getAllByTestId("vercel-analytics")).toHaveLength(1)
   })
 
   it("keeps the ExtraBold display face deferred", () => {

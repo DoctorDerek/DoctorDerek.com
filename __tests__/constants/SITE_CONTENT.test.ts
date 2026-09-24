@@ -26,15 +26,22 @@ describe("site copy quality gates", () => {
     )
   })
 
-  it("keeps the About CTA aligned with the complete code-owner lifecycle", () => {
+  it("keeps the About copy aligned with the approved product-engineer profile", () => {
+    expect(SITE_CONTENT.ABOUT_BIO_LONG[1]).toBe(
+      "I understand the product, decide what matters, explain tradeoffs clearly, architect the system, build the software, make releases repeatable, and verify the result.",
+    )
+    expect(SITE_CONTENT.ABOUT_BIO_LONG[2]).toBe(
+      "I orchestrate AI coding agents using functional specs, technical architecture, and persistent context, then I verify output through human code review, CI/CD, and manual QA.",
+    )
+    expect(SITE_CONTENT.ABOUT_BIO_LONG[4]).toMatch(/^I build products/)
     expect(SITE_CONTENT.ABOUT_BIO_LONG.at(-1)).toBe(
-      "Contact me if you need a high-autonomy code owner who can define, architect, build, verify, release, observe, and iterate a product in production.",
+      "Contact me if you need a product engineer who can define, architect, build, verify, release, observe, and iterate a product in production.",
     )
   })
 
   it("keeps the hiring target focused and excludes private logistics", () => {
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
-      "startup founders and small teams",
+      "engineering teams",
     )
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.body).toContain(
       "AI-native engineering",
@@ -53,8 +60,18 @@ describe("site copy quality gates", () => {
       "long-term, full-time remote role",
     )
     expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.subtext).toContain(
-      "full-stack SWE and code owner",
+      "senior full-stack product engineer at a US company",
     )
+    expect(SITE_CONTENT.AI_CONSULTANCY_PITCH.emailSubject).toBe(
+      "Full-Time Product Engineer Inquiry",
+    )
+    const hiringNarrative = [
+      ...SITE_CONTENT.ABOUT_BIO_LONG,
+      SITE_CONTENT.AI_CONSULTANCY_PITCH.body,
+      SITE_CONTENT.AI_CONSULTANCY_PITCH.subtext,
+      ...SITE_CONTENT.CONTACT_BULLETS,
+    ].join(" ")
+    expect(hiringNarrative).not.toMatch(/code owner|high-autonomy|startup/i)
     expect(JSON.stringify(SITE_CONTENT)).not.toMatch(PRIVATE_LOGISTICS_LANGUAGE)
   })
 
@@ -106,7 +123,7 @@ describe("site copy quality gates", () => {
 
     expect(SITE_CONTENT.CONTACT_BULLETS).toHaveLength(3)
     expect(SITE_CONTENT.CONTACT_BULLETS[0]).toMatch(/^I build and ship/)
-    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toMatch(/^As a code owner/)
+    expect(SITE_CONTENT.CONTACT_BULLETS[1]).toMatch(/^As a product engineer/)
     expect(SITE_CONTENT.CONTACT_BULLETS[2]).toMatch(
       /^I have delivered production-ready MVPs/,
     )

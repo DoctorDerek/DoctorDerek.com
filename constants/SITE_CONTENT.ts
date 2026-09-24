@@ -62,7 +62,7 @@ export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
 export const CONTACT_BULLETS: string[] = [
   "I build and ship full-stack TypeScript products across web, iOS, and Android with Next.js, React Native, and Expo, owning EAS Build/Submit, OTA updates, and releases to the App Store and Google Play.",
   "As a code owner, I take products from functional specification through production using deterministic architecture and AI-native workflows grounded in persistent context, human code review, automated testing, and manual QA.",
-  "I deliver production-ready MVPs in under 3 months without sacrificing performance: I have cut network payloads by 90% and reduced a key data visualization’s load time from more than 10 minutes to under 10 seconds.",
+  "I have delivered production-ready MVPs in under 3 months, including a 90% reduction in network payloads and a 60× improvement to a key data visualization’s load time.",
 ] as const
 export const CONTACT_CTA = "Email Me" as const
 export type WorkExperience = {

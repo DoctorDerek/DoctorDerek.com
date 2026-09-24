@@ -35,11 +35,11 @@ export const INTRO_BIO_SHORT =
 
 export const ABOUT_BIO_LONG: string[] = [
   "I’m Dr. Derek Austin: an AI-native senior full-stack TypeScript product engineer and UI/UX engineer. Since 2019, I’ve specialized in TypeScript, React, Next.js, Tailwind CSS, and Node.js; since 2023, I’ve also specialized in React Native + Expo for iOS and Android.",
-  "I understand the product, decide what matters, design the system, build the software, make releases repeatable, verify the result, and explain the tradeoffs clearly.",
-  "I orchestrate AI coding agents using functional specifications, technical architecture, and persistent project context, then verify their output through human review, automated testing, and manual QA.",
+  "I understand the product, decide what matters, explain tradeoffs clearly, architect the system, build the software, make releases repeatable, and verify the result.",
+  "I orchestrate AI coding agents using functional specs, technical architecture, and persistent context, then I verify output through human code review, CI/CD, and manual QA.",
   "My engineering loop is Plan → Build → Test → Reflect: decide what matters, build it, prove it works, and use the result to improve the next cycle.",
-  "I own products across web, iOS, and Android, making deliberate decisions about state, UI, testing, and releases on every surface. I define clear requirements for architecture, accessibility, performance, testing, and maintainability before implementation.",
-  "Contact me if you need a high-autonomy code owner who can define, architect, build, verify, release, observe, and iterate a product in production.",
+  "I build products across web, iOS, and Android, making deliberate decisions about state, UI, testing, and releases on every surface. I define clear requirements for architecture, accessibility, performance, testing, and maintainability before implementation.",
+  "Contact me if you need a product engineer who can define, architect, build, verify, release, observe, and iterate a product in production.",
 ] as const
 
 export type AiConsultancyPitch = {
@@ -52,16 +52,16 @@ export type AiConsultancyPitch = {
 
 export const AI_CONSULTANCY_PITCH: AiConsultancyPitch = {
   header: "What I Do Best",
-  body: "I help startup founders and small teams build full-stack TypeScript products, including privacy-sensitive and regulated applications, using AI-native engineering without the tech debt of vibe coding.",
+  body: "I help engineering teams build full-stack TypeScript products, including privacy-sensitive and regulated applications, using AI-native engineering without the tech debt of vibe coding.",
   ctaButtonText: "Contact",
   subtext:
-    "I’m actively seeking a long-term, full-time remote role as a full-stack SWE and code owner at a US startup.",
-  emailSubject: "Full-Time SWE / Code Owner Inquiry",
+    "I’m actively seeking a long-term, full-time remote role as a senior full-stack product engineer at a US company.",
+  emailSubject: "Full-Time Product Engineer Inquiry",
 } as const
 
 export const CONTACT_BULLETS: string[] = [
   "I build and ship full-stack TypeScript products across web, iOS, and Android with Next.js, React Native, and Expo, owning EAS Build/Submit, OTA updates, and releases to the App Store and Google Play.",
-  "As a code owner, I take products from functional specification through production using deterministic architecture and AI-native workflows grounded in persistent context, human code review, automated testing, and manual QA.",
+  "As a product engineer, I take products from functional specification through production using deterministic architecture and AI-native workflows grounded in persistent context, human code review, automated testing, and manual QA.",
   "I have delivered production-ready MVPs in under 3 months, including a 90% reduction in network payloads and a 60× improvement to a key data visualization’s load time.",
 ] as const
 export const CONTACT_CTA = "Email Me" as const

@@ -108,7 +108,7 @@ describe("site copy quality gates", () => {
     expect(SITE_CONTENT.CONTACT_BULLETS[0]).toMatch(/^I build and ship/)
     expect(SITE_CONTENT.CONTACT_BULLETS[1]).toMatch(/^As a code owner/)
     expect(SITE_CONTENT.CONTACT_BULLETS[2]).toMatch(
-      /^I deliver production-ready MVPs/,
+      /^I have delivered production-ready MVPs/,
     )
     expect(contactNarrative).toContain("full-stack TypeScript products")
     expect(contactNarrative).toContain("Next.js, React Native, and Expo")
@@ -117,9 +117,9 @@ describe("site copy quality gates", () => {
     expect(contactNarrative).toContain("deterministic architecture")
     expect(contactNarrative).toContain("human code review")
     expect(contactNarrative).toContain("under 3 months")
-    expect(contactNarrative).toContain("cut network payloads by 90%")
+    expect(contactNarrative).toContain("a 90% reduction in network payloads")
     expect(contactNarrative).toContain(
-      "more than 10 minutes to under 10 seconds",
+      "a 60× improvement to a key data visualization’s load time",
     )
   })
 

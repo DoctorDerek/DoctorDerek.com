@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import { describe, expect, it, vi } from "vitest"
+import { afterEach, describe, expect, it, vi } from "vitest"
 import RootLayout, { metadata } from "@/app/layout"
 
 const { localFontMock } = vi.hoisted(() => ({
@@ -17,6 +17,10 @@ vi.mock("@vercel/analytics/next", () => ({
 }))
 
 describe("root metadata", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+  })
+
   it("publishes the canonical production identity", () => {
     expect(metadata.metadataBase?.toString()).toBe(
       "https://www.doctorderek.com/",
@@ -41,21 +45,33 @@ describe("root metadata", () => {
     })
   })
 
-  it("renders the English document, portfolio content, and one analytics instance", () => {
-    render(
-      <RootLayout>
-        <main>Portfolio content</main>
-      </RootLayout>,
-    )
+  it.each([
+    ["production", 1],
+    ["preview", 0],
+    ["development", 0],
+    [undefined, 0],
+  ] as const)(
+    "renders the document and content with the correct analytics count for VERCEL_ENV=%s",
+    (deploymentEnvironment, analyticsCount) => {
+      vi.stubEnv("VERCEL_ENV", deploymentEnvironment)
 
-    expect(document.documentElement).toHaveAttribute("lang", "en")
-    expect(document.body).toHaveClass(
-      "font-restora-display",
-      "font-restora-text",
-    )
-    expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
-    expect(screen.getAllByTestId("vercel-analytics")).toHaveLength(1)
-  })
+      render(
+        <RootLayout>
+          <main>Portfolio content</main>
+        </RootLayout>,
+      )
+
+      expect(document.documentElement).toHaveAttribute("lang", "en")
+      expect(document.body).toHaveClass(
+        "font-restora-display",
+        "font-restora-text",
+      )
+      expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
+      expect(screen.queryAllByTestId("vercel-analytics")).toHaveLength(
+        analyticsCount,
+      )
+    },
+  )
 
   it("keeps the ExtraBold display face deferred", () => {
     expect(localFontMock).toHaveBeenCalledWith(

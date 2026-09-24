@@ -24,6 +24,7 @@
     "@headlessui/react": "^2",
     "@heroicons/react": "^2",
     "@rive-app/react-canvas-lite": "^4",
+    "@vercel/analytics": "^2",
     "@xstate/react": "^6",
     "@zip.js/zip.js": "^2",
     "motion": "^12",

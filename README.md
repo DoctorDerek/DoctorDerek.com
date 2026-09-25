@@ -1,12 +1,12 @@
 # DoctorDerek.com
 
-[![Production](https://img.shields.io/website?url=https%3A%2F%2Fwww.doctorderek.com%2F&up_message=live&down_message=offline&label=production&logo=vercel&logoColor=white)](https://www.doctorderek.com/) [![Codecov](https://codecov.io/gh/DoctorDerek/DoctorDerek.com/graph/badge.svg)](https://app.codecov.io/gh/DoctorDerek/DoctorDerek.com) [![ESLint, Vitest, and XState](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/eslint-vitest-xstate.yml/badge.svg?branch=main)](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/eslint-vitest-xstate.yml) [![Playwright](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/playwright.yml/badge.svg)](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/playwright.yml)
+[![Production](https://img.shields.io/website?url=https%3A%2F%2Fdoctorderek.com%2F&up_message=live&down_message=offline&label=production&logo=vercel&logoColor=white)](https://doctorderek.com/) [![Codecov](https://codecov.io/gh/DoctorDerek/DoctorDerek.com/graph/badge.svg)](https://app.codecov.io/gh/DoctorDerek/DoctorDerek.com) [![ESLint, Vitest, and XState](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/eslint-vitest-xstate.yml/badge.svg?branch=main)](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/eslint-vitest-xstate.yml) [![Playwright](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/playwright.yml/badge.svg)](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/playwright.yml)
 
-The public website and engineering portfolio of [Dr. Derek Austin](https://www.doctorderek.com/), built to present six live projects and the engineering behind them.
+The public website and engineering portfolio of [Dr. Derek Austin](https://doctorderek.com/), built to present six live projects and the engineering behind them.
 
 ## Mobile Web Lighthouse Measurements
 
-Latest successful automated Lighthouse scores for the canonical production website, measured with Lighthouse’s standard mobile emulation against [www.doctorderek.com](https://www.doctorderek.com/). The badges and linked HTML report come from the audit with the median performance score among five production runs.
+Latest successful automated Lighthouse scores for the canonical production website, measured with Lighthouse’s standard mobile emulation against [doctorderek.com](https://doctorderek.com/). The badges and linked HTML report come from the audit with the median performance score among five production runs.
 
 [![Mobile Web Lighthouse Performance](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdoctorderek.github.io%2FDoctorDerek.com%2Flighthouse-results.json&query=%24.performance&label=performance&suffix=%2F100&logo=lighthouse&logoColor=white&color=informational)](https://doctorderek.github.io/DoctorDerek.com/) [![Mobile Web Lighthouse Accessibility](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdoctorderek.github.io%2FDoctorDerek.com%2Flighthouse-results.json&query=%24.accessibility&label=accessibility&suffix=%2F100&logo=lighthouse&logoColor=white&color=informational)](https://doctorderek.github.io/DoctorDerek.com/) [![Mobile Web Lighthouse Best Practices](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdoctorderek.github.io%2FDoctorDerek.com%2Flighthouse-results.json&query=%24.bestPractices&label=best%20practices&suffix=%2F100&logo=lighthouse&logoColor=white&color=informational)](https://doctorderek.github.io/DoctorDerek.com/) [![Mobile Web Lighthouse SEO](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdoctorderek.github.io%2FDoctorDerek.com%2Flighthouse-results.json&query=%24.seo&label=SEO&suffix=%2F100&logo=lighthouse&logoColor=white&color=informational)](https://doctorderek.github.io/DoctorDerek.com/)
 
@@ -31,7 +31,7 @@ This repository contains the full-stack Next.js source code for my public portfo
 
 ## Links
 
-- [Live Website](https://www.doctorderek.com/)
+- [Live Website](https://doctorderek.com/)
 - [Medium Blog (@DoctorDerek)](https://doctorderek.medium.com/)
 - [GitHub (@DoctorDerek)](https://github.com/DoctorDerek)
 

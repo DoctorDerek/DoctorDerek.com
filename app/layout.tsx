@@ -46,7 +46,7 @@ const siteDescription =
   "AI-native senior full-stack TypeScript and UI/UX engineer Dr. Derek Austin: six live Next.js products with public source, CI/CD, and 92–100% Codecov coverage."
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.doctorderek.com/"),
+  metadataBase: new URL("https://doctorderek.com/"),
   title: siteTitle,
   description: siteDescription,
   alternates: {

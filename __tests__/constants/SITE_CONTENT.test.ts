@@ -102,6 +102,7 @@ describe("site copy quality gates", () => {
     )
 
     expect(doctorDerekProject?.projectTitle).toBe("DoctorDerek.com")
+    expect(doctorDerekProject?.liveUrl).toBe("https://doctorderek.com/")
     expect(doctorDerekProject?.summary).toContain("six live projects")
     expect(doctorDerekProject?.details).toContain("XState parallel machine")
     expect(doctorDerekProject?.details).toContain("Medium RSS feed")

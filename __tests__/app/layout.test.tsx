@@ -22,9 +22,7 @@ describe("root metadata", () => {
   })
 
   it("publishes the canonical production identity", () => {
-    expect(metadata.metadataBase?.toString()).toBe(
-      "https://www.doctorderek.com/",
-    )
+    expect(metadata.metadataBase?.toString()).toBe("https://doctorderek.com/")
     expect(metadata.alternates?.canonical).toBe("/")
     expect(metadata.description).toContain("six live Next.js products")
     expect(metadata.description).toContain("92–100% Codecov coverage")

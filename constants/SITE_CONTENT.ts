@@ -282,7 +282,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     details:
       "An XState parallel machine owns logo and background transitions, and fullPage.js handles section navigation. Motion animates interface elements, Rive renders the splash, Canvas draws particles, and Next.js fetches and cleans the Medium RSS feed.",
     tech: ["Next.js", "TypeScript", "XState", "Motion", "Rive"],
-    liveUrl: "https://www.doctorderek.com/",
+    liveUrl: "https://doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/DoctorDerek.com",
   },
 ] as const

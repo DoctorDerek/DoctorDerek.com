@@ -1,5 +1,6 @@
 "use client"
 
+import cx from "classix"
 import {
   useState,
   type CSSProperties,
@@ -8,7 +9,6 @@ import {
 } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import { SPRING_ROTATION_PRELOAD_DEGREES } from "@/constants/INTERACTIONS"
-import classNames from "@/utils/classNames"
 
 type FlipPreviewProps = {
   accessibleName: string
@@ -48,14 +48,14 @@ export default function FlipPreview({
 
   return (
     <div
-      className={classNames("perspective", containerClassName)}
+      className={cx("perspective", containerClassName)}
       style={{ ...containerStyle, perspective: "1000px" }}
     >
       <button
         type="button"
         aria-label={accessibleName}
         aria-pressed={isPressed}
-        className={classNames(
+        className={cx(
           "flip-preview-control focus-visible:ring-site-focus focus-visible:ring-offset-site-surface-strong ease-spring-soft block cursor-pointer rounded-xl bg-transparent p-0 text-left transition-transform duration-150 focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:outline-none active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100",
           className,
         )}

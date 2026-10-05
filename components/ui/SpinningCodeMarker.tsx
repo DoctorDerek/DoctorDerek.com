@@ -1,12 +1,12 @@
 "use client"
 
+import cx from "classix"
 import { useState } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
 import SpringRotation from "@/components/ui/SpringRotation"
 import { CODE_MARKER_ACTIVATION_ROTATION_DEGREES } from "@/constants/INTERACTIONS"
 import CodeIcon from "@/images/codeIcon.svg"
-import classNames from "@/utils/classNames"
 
 type SpinningCodeMarkerProps = {
   accessibleName: string
@@ -28,7 +28,7 @@ export default function SpinningCodeMarker({
 
   return (
     <div
-      className={classNames("animate-float absolute h-11 w-11", className)}
+      className={cx("animate-float absolute h-11 w-11", className)}
       style={{ animationDelay }}
     >
       {isInteractive && !shouldReduceMotion ? (

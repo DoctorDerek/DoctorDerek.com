@@ -1,5 +1,6 @@
 "use client"
 
+import cx from "classix"
 import { useRef, useState, type TouchEvent } from "react"
 import SpinningCodeMarker from "@/components/ui/SpinningCodeMarker"
 import {
@@ -8,7 +9,6 @@ import {
 } from "@/constants/CAREER_TIMELINE"
 import { getCareerCodeMarkerAccessibleName } from "@/constants/INTERACTIONS"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
-import classNames from "@/utils/classNames"
 
 const MINIMUM_HORIZONTAL_SWIPE_DISTANCE = 48
 
@@ -181,7 +181,7 @@ export default function WorkExperienceSection() {
                 type="button"
               >
                 <span
-                  className={classNames(
+                  className={cx(
                     "h-3 rounded-full transition-all",
                     activeCareerEraIndex === index
                       ? "w-7 bg-[#F38B57]"
@@ -244,7 +244,7 @@ export default function WorkExperienceSection() {
           >
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li
-                className={classNames(
+                className={cx(
                   "relative pr-10 pl-14",
                   index === 0 && "pt-10",
                   (index === 1 || index === 3) && "pt-16",
@@ -261,7 +261,7 @@ export default function WorkExperienceSection() {
                     item.duration,
                   )}
                   animationDelay={`${index * 0.2}s`}
-                  className={classNames(
+                  className={cx(
                     "left-0",
                     index === 0 && "top-[calc(10%-1.375rem)]",
                     (index === 1 || index === 3) && "top-[calc(20%-1.375rem)]",

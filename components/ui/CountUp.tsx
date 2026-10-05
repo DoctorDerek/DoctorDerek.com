@@ -1,8 +1,8 @@
 "use client"
 
+import cx from "classix"
 import { useEffect, useRef, useState } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
-import classNames from "@/utils/classNames"
 
 const easeOut = (progress: number) => 1 - Math.pow(1 - progress, 3)
 
@@ -77,10 +77,7 @@ export default function CountUp({
   const visibleValue = shouldReduceMotion ? to : displayedValue
 
   return (
-    <span
-      ref={elementReference}
-      className={classNames("inline-block", className)}
-    >
+    <span ref={elementReference} className={cx("inline-block", className)}>
       {formatCount(visibleValue, useGrouping)}
     </span>
   )

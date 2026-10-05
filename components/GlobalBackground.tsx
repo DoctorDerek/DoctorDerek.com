@@ -1,5 +1,6 @@
 "use client"
 
+import cx from "classix"
 import dynamic from "next/dynamic"
 import BackgroundPattern from "@/components/BackgroundPattern"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
@@ -11,7 +12,6 @@ import Background5 from "@/images/Background-5.svg?url"
 import Background6 from "@/images/Background-6.svg?url"
 import Background0 from "@/images/Background.svg?url"
 import { GlobalStateContext } from "@/machines/globalMachine"
-import classNames from "@/utils/classNames"
 
 const ParticleCanvas = dynamic(() => import("@/components/ParticleCanvas"), {
   ssr: false,
@@ -58,7 +58,7 @@ export default function GlobalBackground({
   return (
     <div
       data-ambient-motion={shouldRenderDeferredAmbientMotion}
-      className={classNames(
+      className={cx(
         "global-background pointer-events-none fixed inset-0 -z-20 h-full w-full",
         canAnimateBackgroundColor && "animate-rainbow-vivid",
       )}

@@ -1,7 +1,7 @@
 "use client"
 
+import cx from "classix"
 import { SOCIAL_LINKS, type SocialLink } from "@/constants/SITE_CONTENT"
-import classNames from "@/utils/classNames"
 import GlobalEmailCTA from "./GlobalEmailCTA"
 import Icon, { type IconName } from "./Icon"
 
@@ -21,21 +21,19 @@ export default function SocialLinks({
   showLabels?: boolean
 }) {
   return (
-    <div className={classNames(containerClasses)}>
+    <div className={containerClasses}>
       {SOCIAL_LINKS.map((link: SocialLink, index: number) => {
         const isEmail = link.id === "email"
 
         const content = (
           <>
             <div
-              className={classNames(iconClasses, "animate-float")}
+              className={cx(iconClasses, "animate-float")}
               style={{ animationDelay: `${index * 0.4}s` }}
             >
               <Icon name={link.id as IconName} fill={fill} />
             </div>
-            {showLabels && (
-              <span className={classNames(labelClasses)}>{link.label}</span>
-            )}
+            {showLabels && <span className={labelClasses}>{link.label}</span>}
           </>
         )
 
@@ -44,10 +42,7 @@ export default function SocialLinks({
             <GlobalEmailCTA
               key={link.id}
               accessibleName={link.label}
-              className={classNames(
-                linkClasses,
-                "[&_a]:flex [&_a]:items-center",
-              )}
+              className={cx(linkClasses, "[&_a]:flex [&_a]:items-center")}
             >
               {content}
             </GlobalEmailCTA>
@@ -61,7 +56,7 @@ export default function SocialLinks({
             aria-label={link.label}
             target="_blank"
             rel="noopener noreferrer"
-            className={classNames(linkClasses)}
+            className={linkClasses}
           >
             {content}
           </a>

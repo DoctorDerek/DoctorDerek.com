@@ -71,6 +71,42 @@ describe("FlipPreview", () => {
     expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })
   })
 
+  it("keeps container and control classes independent when optional classes change", () => {
+    const onActivate = vi.fn()
+    const { rerender } = render(
+      <FlipPreview
+        accessibleName="Flip portrait"
+        className="h-full w-full"
+        containerClassName="site-logo"
+        onActivate={onActivate}
+      >
+        Portrait
+      </FlipPreview>,
+    )
+
+    const control = screen.getByRole("button", { name: "Flip portrait" })
+    const originalControlClasses = control.className
+    expect(control).toHaveClass("flip-preview-control", "h-full", "w-full")
+    expect(control).not.toHaveClass("site-logo")
+    expect(control.parentElement).toHaveAttribute(
+      "class",
+      "perspective site-logo",
+    )
+
+    rerender(
+      <FlipPreview accessibleName="Flip portrait" onActivate={onActivate}>
+        Portrait
+      </FlipPreview>,
+    )
+
+    expect(control.className).toBe(
+      originalControlClasses.replace(" h-full w-full", ""),
+    )
+    expect(control.parentElement).toHaveAttribute("class", "perspective")
+    fireEvent.click(control)
+    expect(onActivate).toHaveBeenCalledOnce()
+  })
+
   it("does not synthesize a hover preview for touch input", () => {
     render(
       <FlipPreview accessibleName="Flip portrait" onActivate={vi.fn()}>

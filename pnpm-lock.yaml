@@ -35,6 +35,9 @@ importers:
       '@zip.js/zip.js':
         specifier: ^2
         version: 2.8.60
+      classix:
+        specifier: ^2
+        version: 2.2.19
       motion:
         specifier: ^12
         version: 12.43.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -2249,6 +2252,9 @@ packages:
 
   cjs-module-lexer@2.2.1:
     resolution: {integrity: sha512-Ca8swihM+/4yKecYHY52kgJd300hi2lADU/a1RxNTRe+RJ9jvqQlESpbz9DnG9mowez8qwXHB8qYdIUw9e+F5Q==}
+
+  classix@2.2.19:
+    resolution: {integrity: sha512-pKHsmrmWkENjkB1kz1ho/umyldzgqb4b3WysMDiJk6MqimgAhd6jjDQBe2SHEUp2VLkhD7W2JtivLI8219/LNQ==}
 
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
@@ -6669,6 +6675,8 @@ snapshots:
       zod: 3.25.76
 
   cjs-module-lexer@2.2.1: {}
+
+  classix@2.2.19: {}
 
   client-only@0.0.1: {}
 

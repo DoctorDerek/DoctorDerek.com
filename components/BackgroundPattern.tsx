@@ -1,8 +1,8 @@
 "use client"
 
+import cx from "classix"
 import Image from "next/image"
 import { useState } from "react"
-import classNames from "@/utils/classNames"
 
 export default function BackgroundPattern({ source }: { source: string }) {
   const [patternState, setPatternState] = useState({
@@ -43,7 +43,7 @@ export default function BackgroundPattern({ source }: { source: string }) {
         sizes="100vw"
         unoptimized
         loading="eager"
-        className={classNames(
+        className={cx(
           "background-pattern-layer absolute inset-0 z-10 h-full w-full object-cover mix-blend-overlay transition-opacity ease-linear",
           isActivePattern && "background-pattern-layer-active",
           isEnteringPattern && "background-pattern-layer-entering",

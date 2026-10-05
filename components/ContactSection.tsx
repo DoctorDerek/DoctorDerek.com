@@ -1,5 +1,6 @@
 "use client"
 
+import cx from "classix"
 import Image from "next/image"
 import { useState } from "react"
 import FlipPreview from "@/components/ui/FlipPreview"
@@ -16,7 +17,6 @@ import {
   PORTRAIT_IMAGE_SIZES,
 } from "@/constants/PORTRAITS"
 import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
-import classNames from "@/utils/classNames"
 
 export default function ContactSection() {
   const [flipCount, setFlipCount] = useState(0)
@@ -81,7 +81,7 @@ export default function ContactSection() {
                     {CONTACT_COLLAGE_PORTRAITS.map((portrait) => (
                       <div
                         key={portrait.sourceFilename}
-                        className={classNames(
+                        className={cx(
                           "relative min-h-0 min-w-0 overflow-hidden",
                           portrait.layoutClassName,
                         )}

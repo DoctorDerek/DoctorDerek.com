@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 import "@/styles/theme-toggle.css"
 import { Analytics } from "@vercel/analytics/next"
+import cx from "classix"
 import type { Metadata, Viewport } from "next"
 import localFont from "next/font/local"
 import SiteThemeProvider from "@/components/SiteThemeProvider"
@@ -94,7 +95,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${restoraDisplay.variable} ${restoraText.variable}`}>
+      <body className={cx(restoraDisplay.variable, restoraText.variable)}>
         <SiteThemeProvider>{children}</SiteThemeProvider>
         {process.env.VERCEL_ENV === "production" && <Analytics />}
       </body>

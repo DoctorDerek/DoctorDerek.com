@@ -1,6 +1,7 @@
 "use client"
 
 import ReactFullpage from "@fullpage/react-fullpage"
+import cx from "classix"
 import dynamic from "next/dynamic"
 import { useCallback, useRef, useState } from "react"
 import MotionAwareAmbience from "@/components/MotionAwareAmbience"
@@ -26,7 +27,6 @@ import {
   FullPageSection,
   MapacheFullPageProps,
 } from "@/types/MapacheFullPageProps"
-import classNames from "@/utils/classNames"
 import getFullPageMotionOptions from "@/utils/fullPageMotionOptions"
 
 const EndOfSiteCelebration = dynamic(
@@ -183,7 +183,7 @@ function PortfolioExperience({
               {sectionsContent.map((section, index) => (
                 <div
                   key={section.anchor}
-                  className={classNames(
+                  className={cx(
                     "section",
                     section.anchor === "home" ? "fp-noscroll" : "",
                   )}

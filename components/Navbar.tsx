@@ -1,9 +1,9 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
+import cx from "classix"
 import { useEffect, useRef, useState } from "react"
 import SiteSettings from "@/components/SiteSettings"
 import Logo from "@/components/ui/Logo"
 import SocialLinks from "@/components/ui/SocialLinks"
-import classNames from "@/utils/classNames"
 
 const navigation = [
   { name: "About", anchor: "about" },
@@ -79,7 +79,7 @@ export default function Navbar() {
       </div>
 
       <div
-        className={classNames(
+        className={cx(
           "pointer-events-none fixed inset-x-0 top-[7dvh] z-30 flex h-[calc(100svh-7dvh)] md:h-[calc(100dvh-7dvh)]",
           sidebarOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
@@ -87,7 +87,7 @@ export default function Navbar() {
       >
         <div className="relative flex w-full flex-col overflow-hidden">
           <div
-            className={classNames(
+            className={cx(
               "bg-site-surface-soft/70 absolute inset-0 backdrop-blur-sm",
               sidebarOpen
                 ? "pointer-events-auto opacity-100"
@@ -101,7 +101,7 @@ export default function Navbar() {
             id="site-navigation"
             ref={navElementRef}
             inert={!sidebarOpen ? true : undefined}
-            className={classNames(
+            className={cx(
               "bg-site-surface relative z-10 flex h-full min-h-0 w-11/12 flex-col overflow-hidden rounded-tr-3xl duration-500 md:w-full md:flex-row md:overflow-hidden",
               sidebarOpen
                 ? "pointer-events-auto translate-x-0"

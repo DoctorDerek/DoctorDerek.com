@@ -18,4 +18,19 @@ describe("SectionHeading", () => {
     )
     expect(heading.parentElement).not.toHaveClass("cursor-pointer")
   })
+
+  it.each([undefined, ""])(
+    "keeps only the base classes when className is %s",
+    (className) => {
+      render(
+        <SectionHeading className={className}>
+          <h2>Heading</h2>
+        </SectionHeading>,
+      )
+
+      expect(
+        screen.getByRole("heading", { name: "Heading" }).parentElement,
+      ).toHaveAttribute("class", "section-heading-entrance w-max")
+    },
+  )
 })

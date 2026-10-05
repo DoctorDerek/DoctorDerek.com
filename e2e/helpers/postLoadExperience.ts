@@ -2,6 +2,7 @@ import { expect, type Page } from "@playwright/test"
 import {
   BACKGROUND_COLOR_ANIMATION_DELAY_MILLISECONDS,
   DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
+  RIVE_IDLE_CALLBACK_TIMEOUT_MILLISECONDS,
   RIVE_START_DELAY_MILLISECONDS,
 } from "@/constants/STARTUP_TIMING"
 
@@ -25,6 +26,7 @@ export const installPostLoadExperienceController = async (page: Page) => {
       backgroundColorAnimationDelayMilliseconds,
       deferredTypographyDelayMilliseconds,
       riveStartDelayMilliseconds,
+      riveIdleCallbackTimeoutMilliseconds,
     }) => {
       const controlledPostLoadDelays = new Set([
         backgroundColorAnimationDelayMilliseconds,
@@ -38,6 +40,7 @@ export const installPostLoadExperienceController = async (page: Page) => {
       const browserIdleCallbacks = new Map<number, IdleRequestCallback>()
       const nativeClearTimeout = window.clearTimeout.bind(window)
       const nativeSetTimeout = window.setTimeout.bind(window)
+      const nativeRequestIdleCallback = window.requestIdleCallback?.bind(window)
       const nativeCancelIdleCallback = window.cancelIdleCallback?.bind(window)
       let nextPostLoadBoundaryCallbackId = -1
       let nextBrowserIdleCallbackId = -1_000
@@ -72,7 +75,17 @@ export const installPostLoadExperienceController = async (page: Page) => {
 
         nativeClearTimeout(timeoutId)
       }) as typeof window.clearTimeout
-      window.requestIdleCallback = ((callback: IdleRequestCallback) => {
+      window.requestIdleCallback = ((
+        callback: IdleRequestCallback,
+        options?: IdleRequestOptions,
+      ) => {
+        if (options?.timeout !== riveIdleCallbackTimeoutMilliseconds)
+          return nativeRequestIdleCallback
+            ? nativeRequestIdleCallback(callback, options)
+            : nativeSetTimeout(() =>
+                callback({ didTimeout: false, timeRemaining: () => 50 }),
+              )
+
         const browserIdleCallbackId = nextBrowserIdleCallbackId
         nextBrowserIdleCallbackId -= 1
         browserIdleCallbacks.set(browserIdleCallbackId, callback)
@@ -81,7 +94,9 @@ export const installPostLoadExperienceController = async (page: Page) => {
       window.cancelIdleCallback = ((browserIdleCallbackId: number) => {
         if (browserIdleCallbacks.delete(browserIdleCallbackId)) return
 
-        nativeCancelIdleCallback?.(browserIdleCallbackId)
+        if (nativeCancelIdleCallback)
+          nativeCancelIdleCallback(browserIdleCallbackId)
+        else nativeClearTimeout(browserIdleCallbackId)
       }) as typeof window.cancelIdleCallback
 
       Object.defineProperty(window, "__releasePostLoadBoundaryCallbacks", {
@@ -135,6 +150,8 @@ export const installPostLoadExperienceController = async (page: Page) => {
       deferredTypographyDelayMilliseconds:
         DEFERRED_TYPOGRAPHY_DELAY_MILLISECONDS,
       riveStartDelayMilliseconds: RIVE_START_DELAY_MILLISECONDS,
+      riveIdleCallbackTimeoutMilliseconds:
+        RIVE_IDLE_CALLBACK_TIMEOUT_MILLISECONDS,
     },
   )
 }

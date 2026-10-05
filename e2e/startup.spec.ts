@@ -19,6 +19,16 @@ test("loads Typewriter, Rive, and ambient layers in order", async ({
   await installPostLoadExperienceController(page)
   await page.goto("/")
 
+  expect(
+    await page.evaluate(
+      () =>
+        new Promise<boolean>((resolve) =>
+          window.requestIdleCallback(() => resolve(true)),
+        ),
+    ),
+  ).toBe(true)
+  expect(await page.evaluate(() => window.__browserIdleCallbackCount)).toBe(0)
+
   const ambientCanvases = page.locator("canvas")
   const ambientBackground = page.locator("[data-ambient-motion]")
   const backgroundPattern = ambientBackground.locator("img")

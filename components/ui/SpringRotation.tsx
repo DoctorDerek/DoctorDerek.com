@@ -1,8 +1,8 @@
 "use client"
 
+import cx from "classix"
 import { type CSSProperties, type ReactNode } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
-import classNames from "@/utils/classNames"
 
 type SpringRotationProps = {
   children: ReactNode
@@ -21,7 +21,7 @@ export default function SpringRotation({
 
   return (
     <div
-      className={classNames(
+      className={cx(
         "ease-spring-rotation transition-transform duration-[900ms] motion-reduce:transition-none",
         className,
       )}

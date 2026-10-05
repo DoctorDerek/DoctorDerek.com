@@ -1,3 +1,4 @@
+import cx from "classix"
 import FlipPreview from "@/components/ui/FlipPreview"
 import SpringRotation from "@/components/ui/SpringRotation"
 import {
@@ -7,7 +8,6 @@ import {
 import LogoDefault from "@/images/Logo-Default-Landscape.svg"
 import LogoSecondary from "@/images/Logo-Secondary-Portrait.svg"
 import { GlobalStateContext } from "@/machines/globalMachine"
-import classNames from "@/utils/classNames"
 
 type LogoProps = {
   className?: string
@@ -29,7 +29,7 @@ export default function Logo({ className }: LogoProps) {
           ? LOGO_CONTROL_ACCESSIBLE_NAMES.showAlternative
           : LOGO_CONTROL_ACCESSIBLE_NAMES.showPrimary
       }
-      containerClassName={classNames("site-logo", className)}
+      containerClassName={cx("site-logo", className)}
       className="h-full w-full"
       isPressed={!isAlternative}
       onActivate={() => send({ type: "TOGGLE_LOGO" })}

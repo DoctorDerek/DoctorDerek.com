@@ -1,7 +1,7 @@
 "use client"
 
+import cx from "classix"
 import { ReactNode } from "react"
-import classNames from "@/utils/classNames"
 
 type SectionHeadingProps = {
   children: ReactNode
@@ -13,7 +13,7 @@ export default function SectionHeading({
   className,
 }: SectionHeadingProps) {
   return (
-    <div className={classNames("section-heading-entrance w-max", className)}>
+    <div className={cx("section-heading-entrance w-max", className)}>
       {children}
     </div>
   )

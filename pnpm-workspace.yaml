@@ -6,8 +6,10 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
 
-minimumReleaseAgeExclude:
-  - brace-expansion@1.1.18
+minimumReleaseAge: 10080
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
+trustLockfile: false
 
 overrides:
   "@svgr/plugin-svgo>svgo": "3.3.4"

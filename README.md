@@ -41,11 +41,20 @@ Use [fnm](https://github.com/Schniz/fnm) for Node version management and [pnpm](
 
 ```powershell
 fnm env --use-on-cd | Out-String | Invoke-Expression
+fnm install
 fnm use
 corepack enable pnpm
 pnpm install
 pnpm dev
 ```
+
+## Automated maintenance
+
+DoctorDerek.com is the sole initial pilot for [MA’AM — Minimal-Attention Automated Maintenance](https://github.com/DoctorDerek/DoctorDerekCICD/blob/main/PACKAGE_UPDATER_SPEC.md). [renovate.json](renovate.json) references an immutable shared-policy revision and explicitly keeps `enabled: false`. Automatic maintenance remains paused; publishing this setup does not install an app or enable update PRs or auto-merge.
+
+Use the exact Node version in [.node-version](.node-version) and pnpm version in [package.json](package.json). [pnpm-workspace.yaml](pnpm-workspace.yaml) enforces seven-day release maturity, rejects unavailable publication timestamps, and checks frozen lockfiles as well as new resolution. Existing dependency overrides and approved install scripts remain in place. These installation rules apply while maintenance is paused.
+
+Activation requires separate approval and the [shared pilot setup and verification gates](https://github.com/DoctorDerek/DoctorDerekCICD/blob/main/USAGE.md#activation-evidence-gates). Vercel manages hosted Node minor/patch versions within the selected major; the local/CI pin does not control that rollout. No other repository is enrolled by this setup.
 
 ## Verification
 

@@ -38,11 +38,12 @@ describe("Portfolio", () => {
         .getAllByRole("heading", { level: 3 })
         .map((heading) => heading.textContent),
     ).toEqual([
+      "Mapachess",
+      "Pokédex",
       "What Are Your Values, Mapache?",
       "CRM",
-      "Calendar",
       "Weather",
-      "Pokédex",
+      "Calendar",
       "DoctorDerek.com",
     ])
     expect(PORTFOLIO_PROJECTS[0]?.tech).toEqual(

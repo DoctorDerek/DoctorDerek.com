@@ -217,20 +217,56 @@ export type PortfolioProject = {
   sourceUrl: string
 }
 
+export const PORTFOLIO_AVAILABILITY_LABEL = "Live on web"
+
 export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
+  {
+    projectTitle: "Mapachess",
+    summary:
+      "Free chess against 23 animal opponents, with hints for both sides and moves you can take back.",
+    details:
+      "I built Mapachess so you can try different moves and come back to a saved game later. An earlier version included LLM-powered chess coaching, but the advice wasn’t good enough even with Stockfish suggesting moves. So I removed it and added hints for both sides. You can play on the web today. Native apps are in development with React Native and Expo.",
+    tech: [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "React Native",
+      "Tailwind CSS",
+      "Expo",
+    ],
+    liveUrl: "https://mapachess.com/",
+    sourceUrl: "https://github.com/DoctorDerek/mapachess-expo",
+  },
+  {
+    projectTitle: "Pokédex",
+    summary:
+      "An unofficial Pokédex with 1,025 Pokémon to browse and search by type, generation, and more.",
+    details:
+      "Each Pokémon gets a page with its types, abilities, and all six base stats. I also use this project to show how I work with TypeScript: when I change a GraphQL query, I regenerate its types and let the compiler point out what needs updating.",
+    tech: [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "GraphQL",
+      "Tailwind CSS",
+      "TanStack Query",
+    ],
+    liveUrl: "https://portfolio-pokedex.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",
+  },
   {
     projectTitle: "What Are Your Values, Mapache?",
     summary:
-      "A private, offline values-clarification autobattler that ranks 100 included values plus any Custom Values you add.",
+      "A free, private game that helps you figure out your core values by comparing them two at a time.",
     details:
-      "The live Next.js game uses XState to schedule one pair at a time and IndexedDB to store rankings, Custom Values, undo/redo history, achievements, and JSON backups. The Expo apps await signed native releases.",
+      "In 2020, a productivity coach asked me what my values were. I tried sorting them by priority and ended up with 20 “high priority” values. So I built a game to compare them in pairs. By that evening, I’d found my top five: fun, health, curiosity, ingenuity, and creativity. They’ve stayed stable since. The rebuilt game includes 103 values plus any you add, and your choices stay on your device. It’s live on the web, with pre-release native apps built with React Native and Expo.",
     tech: [
-      "Next.js",
       "TypeScript",
-      "XState",
-      "Expo",
+      "React",
+      "Next.js",
       "React Native",
-      "Turborepo",
+      "Tailwind CSS",
+      "Expo",
     ],
     liveUrl: "https://www.whatareyourvaluesmapache.com/",
     sourceUrl: "https://github.com/DoctorDerek/what-are-your-values-mapache",
@@ -238,50 +274,40 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "CRM",
     summary:
-      "A local-first contact manager with search, age filters, favorites, sorting, and no account.",
+      "Keep track of contacts, mark your favorites, and arrange them how you like. No account required.",
     details:
-      "XState owns contact creation, editing, deletion, reset, and localStorage persistence. React Hook Form, Zod, and Headless UI handle validation and accessible modal dialogs.",
-    tech: ["Next.js", "TypeScript", "XState", "Tailwind CSS"],
+      "I made contacts reorderable from the keyboard as well as by dragging. You can also search by name, filter by age, and edit someone’s details. Your changes are saved in the browser, and the app tells you if it can’t save them.",
+    tech: ["TypeScript", "React", "Next.js", "Tailwind CSS"],
     liveUrl: "https://portfolio-crm.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-crm",
   },
   {
-    projectTitle: "Calendar",
-    summary:
-      "A responsive monthly calendar for creating, color-coding, reviewing, and deleting reminders.",
-    details:
-      "Redux Toolkit stores reminders, selected dates, dialogs, and display settings. Material UI and Day.js handle date-time entry, month navigation, daily agendas, and icon or appointment-time views.",
-    tech: ["Next.js", "TypeScript", "Redux Toolkit", "Material UI"],
-    liveUrl: "https://portfolio-calendar.doctorderek.com/",
-    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-calendar",
-  },
-  {
     projectTitle: "Weather",
     summary:
-      "A responsive current-weather search by city or optional browser location.",
+      "Check the current weather for a city, or let the app use your location.",
     details:
-      "Next.js keeps OpenWeatherMap requests and the API key on the server. Runtime validation rejects malformed responses. Accessible toasts report location-permission, missing-city, and service errors.",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "OpenWeather API"],
+      "I want an app to explain what went wrong when a request fails. This one tells you when it can’t find a city, use your location, or get weather data. I keep the OpenWeather API key on the server and check the response before the app uses it.",
+    tech: ["TypeScript", "React", "Next.js", "Tailwind CSS", "REST APIs"],
     liveUrl: "https://portfolio-weather.doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-weather",
   },
   {
-    projectTitle: "Pokédex",
+    projectTitle: "Calendar",
     summary:
-      "An unofficial GraphQL Pokédex with 1,025 statically generated detail pages.",
+      "Add a reminder, give it a color, and find it in the month view or your daily agenda.",
     details:
-      "Next.js builds every route from checked-in data. The app adds GraphQL search, a progressively expanding catalog, and touch-friendly dossiers with types, dimensions, abilities, and six base stats.",
-    tech: ["Next.js", "TypeScript", "GraphQL", "TanStack Query"],
-    liveUrl: "https://portfolio-pokedex.doctorderek.com/",
-    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-pokedex",
+      "I gave the month view a choice of reminder icons or appointment times, so you can choose how much detail to show. Open a day and its reminders appear in time order. Your reminders are saved in the browser, ready for when you come back.",
+    tech: ["TypeScript", "React", "Next.js", "Tailwind CSS", "Redux"],
+    liveUrl: "https://portfolio-calendar.doctorderek.com/",
+    sourceUrl: "https://github.com/DoctorDerek/doctorderek-portfolio-calendar",
   },
   {
     projectTitle: "DoctorDerek.com",
     summary:
-      "My public website and engineering portfolio, with six live projects, work history, testimonials, and a live Medium feed.",
+      "Where I share the software I build and what I learn while building it.",
     details:
-      "An XState parallel machine owns logo and background transitions, and fullPage.js handles section navigation. Motion animates interface elements, Rive renders the splash, Canvas draws particles, and Next.js fetches and cleans the Medium RSS feed.",
-    tech: ["Next.js", "TypeScript", "XState", "Motion", "Rive"],
+      "I love the details of UI/UX work: how you move between sections, how the logo reacts, and how the background changes. I built those interactions here, along with the particle effects. The site also pulls in my Medium articles, with images and excerpts to help you choose what to read.",
+    tech: ["TypeScript", "React", "Next.js", "Tailwind CSS", "Motion"],
     liveUrl: "https://doctorderek.com/",
     sourceUrl: "https://github.com/DoctorDerek/DoctorDerek.com",
   },

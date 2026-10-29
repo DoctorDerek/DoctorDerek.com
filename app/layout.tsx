@@ -44,7 +44,7 @@ const restoraText = localFont({
 const siteTitle =
   "Dr. Derek Austin | AI-Native Senior Full-Stack TypeScript Engineer · Next.js + React Native + Expo"
 const siteDescription =
-  "AI-native senior full-stack TypeScript and UI/UX engineer Dr. Derek Austin: six live Next.js products with public source, CI/CD, and 92–100% Codecov coverage."
+  "AI-native senior full-stack TypeScript and UI/UX engineer Dr. Derek Austin: seven live Next.js projects with public source and CI/CD."
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://doctorderek.com/"),

@@ -24,8 +24,8 @@ describe("root metadata", () => {
   it("publishes the canonical production identity", () => {
     expect(metadata.metadataBase?.toString()).toBe("https://doctorderek.com/")
     expect(metadata.alternates?.canonical).toBe("/")
-    expect(metadata.description).toContain("six live Next.js products")
-    expect(metadata.description).toContain("92–100% Codecov coverage")
+    expect(metadata.description).toContain("seven live Next.js projects")
+    expect(metadata.description).toContain("public source and CI/CD")
   })
 
   it("keeps social identity synchronized with the canonical metadata", () => {

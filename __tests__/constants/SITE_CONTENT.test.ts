@@ -93,19 +93,17 @@ describe("site copy quality gates", () => {
     const firstProject = SITE_CONTENT.PORTFOLIO_PROJECTS[0]
     const doctorDerekProject = SITE_CONTENT.PORTFOLIO_PROJECTS.at(-1)
 
-    expect(firstProject.projectTitle).toBe("What Are Your Values, Mapache?")
-    expect(firstProject.summary).toContain("values-clarification autobattler")
-    expect(firstProject.details).toContain("IndexedDB")
-    expect(firstProject.details).toContain("signed native releases")
-    expect(firstProject.liveUrl).toBe(
-      "https://www.whatareyourvaluesmapache.com/",
-    )
+    expect(firstProject.projectTitle).toBe("Mapachess")
+    expect(firstProject.summary).toContain("23 animal opponents")
+    expect(firstProject.details).toContain("hints for both sides")
+    expect(firstProject.details).toContain("Native apps are in development")
+    expect(firstProject.liveUrl).toBe("https://mapachess.com/")
 
     expect(doctorDerekProject?.projectTitle).toBe("DoctorDerek.com")
     expect(doctorDerekProject?.liveUrl).toBe("https://doctorderek.com/")
-    expect(doctorDerekProject?.summary).toContain("six live projects")
-    expect(doctorDerekProject?.details).toContain("XState parallel machine")
-    expect(doctorDerekProject?.details).toContain("Medium RSS feed")
+    expect(doctorDerekProject?.summary).toContain("the software I build")
+    expect(doctorDerekProject?.details).toContain("UI/UX work")
+    expect(doctorDerekProject?.details).toContain("Medium articles")
 
     const pokedexProject = SITE_CONTENT.PORTFOLIO_PROJECTS.find(
       (project) => project.projectTitle === "Pokédex",

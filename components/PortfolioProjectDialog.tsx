@@ -5,7 +5,10 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline"
 import { Fragment } from "react"
-import type { PortfolioProject } from "@/constants/SITE_CONTENT"
+import {
+  PORTFOLIO_AVAILABILITY_LABEL,
+  type PortfolioProject,
+} from "@/constants/SITE_CONTENT"
 
 export default function PortfolioProjectDialog({
   project,
@@ -16,7 +19,14 @@ export default function PortfolioProjectDialog({
 }) {
   return (
     <Transition.Root show={project !== null} as={Fragment}>
-      <Dialog as="div" className="relative z-[10000]" onClose={() => onClose()}>
+      <Dialog
+        as="div"
+        className="relative z-[10000]"
+        onClose={() => onClose()}
+        onKeyDown={(event) => {
+          if (event.key !== "Escape") event.stopPropagation()
+        }}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -29,8 +39,8 @@ export default function PortfolioProjectDialog({
           <div className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-[10000] w-screen overflow-y-auto overscroll-contain">
-          <div className="flex min-h-full items-end justify-center p-4 sm:items-center sm:p-6">
+        <div className="fixed inset-0 z-[10000] w-screen overscroll-contain">
+          <div className="flex h-dvh items-end justify-center p-4 sm:items-center sm:p-6">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -40,7 +50,7 @@ export default function PortfolioProjectDialog({
               leaveFrom="translate-y-0 opacity-100 sm:scale-100"
               leaveTo="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="scrollable-content border-site-border bg-site-surface-strong text-site-foreground relative max-h-[85dvh] w-full max-w-2xl transform overflow-y-auto rounded-3xl border p-6 shadow-2xl backdrop-blur-xl transition-all sm:p-10">
+              <Dialog.Panel className="scrollable-content border-site-border bg-site-surface-strong text-site-foreground relative max-h-full w-full max-w-2xl transform scroll-py-8 overflow-y-auto rounded-3xl border p-5 shadow-2xl backdrop-blur-xl transition-all sm:p-8">
                 {project && (
                   <>
                     <button
@@ -53,20 +63,20 @@ export default function PortfolioProjectDialog({
                     </button>
 
                     <p className="border-site-status-border bg-site-status-surface text-site-status-foreground mb-4 w-fit rounded-full border px-3 py-1 text-sm font-semibold">
-                      Live production
+                      {PORTFOLIO_AVAILABILITY_LABEL}
                     </p>
                     <Dialog.Title
                       as="h3"
-                      className="restorabold pr-12 text-4xl leading-tight sm:text-5xl"
+                      className="restorabold text-3xl leading-tight break-words sm:text-4xl"
                     >
                       {project.projectTitle}
                     </Dialog.Title>
-                    <p className="text-site-foreground-muted mt-6 text-lg leading-8 sm:text-xl">
+                    <p className="text-site-foreground-muted mt-4 text-lg leading-7 sm:text-xl sm:leading-8">
                       {project.details}
                     </p>
                     <ul
                       aria-label={project.projectTitle + " technologies"}
-                      className="mt-6 flex flex-wrap gap-2"
+                      className="mt-5 flex flex-wrap gap-2"
                     >
                       {project.tech.map((technology) => (
                         <li
@@ -77,7 +87,7 @@ export default function PortfolioProjectDialog({
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                       <a
                         href={project.liveUrl}
                         aria-label={"View " + project.projectTitle + " live"}

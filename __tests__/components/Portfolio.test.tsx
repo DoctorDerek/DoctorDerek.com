@@ -9,18 +9,6 @@ import { describe, expect, it, vi } from "vitest"
 import Portfolio from "@/components/Portfolio"
 import { PORTFOLIO_PROJECTS } from "@/constants/SITE_CONTENT"
 
-vi.mock("next/dynamic", async () => {
-  const { default: PortfolioProjectDialog } =
-    await import("@/components/PortfolioProjectDialog")
-
-  return {
-    default: (loadComponent: () => Promise<unknown>) => {
-      void loadComponent()
-      return PortfolioProjectDialog
-    },
-  }
-})
-
 vi.mock("@/components/MotionPreferenceProvider", () => ({
   useMotionPreference: () => ({ shouldReduceMotion: false }),
 }))
@@ -123,10 +111,15 @@ describe("Portfolio", () => {
         name: `Explore ${PORTFOLIO_PROJECTS[0].projectTitle}`,
       }),
     )
-    await screen.findByRole("dialog", {
+    const dialog = await screen.findByRole("dialog", {
       name: PORTFOLIO_PROJECTS[0].projectTitle,
     })
-    fireEvent.keyDown(document, { key: "Escape" })
+    const documentKeyDown = vi.fn()
+    document.addEventListener("keydown", documentKeyDown)
+    fireEvent.keyDown(dialog, { key: "Tab" })
+    expect(documentKeyDown).not.toHaveBeenCalled()
+    fireEvent.keyDown(dialog, { key: "Escape" })
+    document.removeEventListener("keydown", documentKeyDown)
     await waitFor(() => {
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     })

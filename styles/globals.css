@@ -354,3 +354,11 @@ body {
 html.light .site-logo {
   filter: invert(1);
 }
+
+@media (width < 48rem) {
+  .fp-section[data-anchor="portfolio"] .fp-controlArrow {
+    top: auto;
+    bottom: 1rem;
+    margin-top: 0;
+  }
+}

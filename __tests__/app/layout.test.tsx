@@ -1,10 +1,20 @@
 import { render, screen } from "@testing-library/react"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import RootLayout, { metadata } from "@/app/layout"
+import {
+  RESTORA_DISPLAY_CSS_VARIABLE,
+  RESTORA_TEXT_CSS_VARIABLE,
+} from "@/constants/TYPOGRAPHY"
 
 const { localFontMock } = vi.hoisted(() => ({
-  localFontMock: vi.fn(({ variable }: { variable: string }) => ({
-    variable: variable.replace("--", ""),
+  localFontMock: vi.fn(({ src }: { src: { weight: string }[] }) => ({
+    variable: `__variable_${src[0].weight}`,
+    style: {
+      fontFamily:
+        src[0].weight === "800"
+          ? '"restoraDisplay", "restoraDisplay Fallback", Georgia, "Times New Roman", serif'
+          : '"restoraText", "restoraText Fallback", Georgia, "Times New Roman", serif',
+    },
   })),
 }))
 
@@ -60,9 +70,19 @@ describe("root metadata", () => {
       )
 
       expect(document.documentElement).toHaveAttribute("lang", "en")
-      expect(document.body).toHaveClass(
-        "font-restora-display",
-        "font-restora-text",
+      expect(
+        getComputedStyle(document.body).getPropertyValue(
+          RESTORA_DISPLAY_CSS_VARIABLE,
+        ),
+      ).toBe(
+        '"restoraDisplay", "restoraDisplay Fallback", Georgia, "Times New Roman", serif',
+      )
+      expect(
+        getComputedStyle(document.body).getPropertyValue(
+          RESTORA_TEXT_CSS_VARIABLE,
+        ),
+      ).toBe(
+        '"restoraText", "restoraText Fallback", Georgia, "Times New Roman", serif',
       )
       expect(screen.getByRole("main")).toHaveTextContent("Portfolio content")
       expect(screen.queryAllByTestId("vercel-analytics")).toHaveLength(
@@ -76,7 +96,6 @@ describe("root metadata", () => {
       expect.objectContaining({
         display: "swap",
         preload: false,
-        variable: "--font-restora-display",
         src: [
           expect.objectContaining({
             path: "../vendor/fonts/restoraextrabold-1-webfont.woff2",
@@ -92,7 +111,6 @@ describe("root metadata", () => {
       expect.objectContaining({
         display: "swap",
         preload: false,
-        variable: "--font-restora-text",
         src: [
           expect.objectContaining({
             path: "../vendor/fonts/restora-1-webfont.woff2",

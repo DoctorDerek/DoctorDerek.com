@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>DoctorDerek/DoctorDerekCICD:maam#b630288d345c060c7ccb1e43cb1f193885969629"
+    "github>DoctorDerek/DoctorDerekCICD:maam#ec1582285ef67f8b50810a293f6bbe9e8c862a0d"
   ],
   "enabled": false
 }

@@ -1,10 +1,13 @@
 import "@/styles/globals.css"
 import "@/styles/theme-toggle.css"
 import { Analytics } from "@vercel/analytics/next"
-import cx from "classix"
 import type { Metadata, Viewport } from "next"
 import localFont from "next/font/local"
 import SiteThemeProvider from "@/components/SiteThemeProvider"
+import {
+  RESTORA_DISPLAY_CSS_VARIABLE,
+  RESTORA_TEXT_CSS_VARIABLE,
+} from "@/constants/TYPOGRAPHY"
 
 const restoraDisplay = localFont({
   src: [
@@ -18,7 +21,6 @@ const restoraDisplay = localFont({
   preload: false,
   fallback: ["Georgia", "Times New Roman", "serif"],
   adjustFontFallback: "Times New Roman",
-  variable: "--font-restora-display",
 })
 
 const restoraText = localFont({
@@ -38,7 +40,6 @@ const restoraText = localFont({
   preload: false,
   fallback: ["Georgia", "Times New Roman", "serif"],
   adjustFontFallback: "Times New Roman",
-  variable: "--font-restora-text",
 })
 
 const siteTitle =
@@ -95,7 +96,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cx(restoraDisplay.variable, restoraText.variable)}>
+      <body
+        style={
+          {
+            [RESTORA_DISPLAY_CSS_VARIABLE]: restoraDisplay.style.fontFamily,
+            [RESTORA_TEXT_CSS_VARIABLE]: restoraText.style.fontFamily,
+          } as React.CSSProperties
+        }
+      >
         <SiteThemeProvider>{children}</SiteThemeProvider>
         {process.env.VERCEL_ENV === "production" && <Analytics />}
       </body>

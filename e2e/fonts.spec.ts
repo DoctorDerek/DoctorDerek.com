@@ -94,6 +94,10 @@ const verifyDeferredRestoraLoading = async (
     page,
     RESTORA_DISPLAY_CSS_VARIABLE,
   )
+  expect(displayFontFamily).not.toBe("")
+  expect(await getRestoraFontFamily(page, RESTORA_TEXT_CSS_VARIABLE)).not.toBe(
+    "",
+  )
   const initialPrimaryHeadingFontFamily =
     await getPrimaryHeadingFontFamily(page)
   expect(normalizeFontFamilyList(initialPrimaryHeadingFontFamily)).toBe(

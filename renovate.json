@@ -3,5 +3,11 @@
   "extends": [
     "github>DoctorDerek/DoctorDerekCICD:maam#ec1582285ef67f8b50810a293f6bbe9e8c862a0d"
   ],
-  "enabled": false
+  "enabled": true,
+  "packageRules": [
+    {
+      "matchJsonata": ["$substring($now(), 0, 10) = '2026-11-05'"],
+      "schedule": ["* 8-11 5 11 *"]
+    }
+  ]
 }

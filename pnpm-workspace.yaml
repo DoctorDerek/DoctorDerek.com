@@ -15,3 +15,4 @@ overrides:
   "@svgr/plugin-svgo>svgo": "3.3.4"
   "brace-expansion@<1.1.18": "1.1.18"
   "next>postcss": "8.5.25"
+  "vite@>=8.0.0 <8.1.6": "8.1.6"

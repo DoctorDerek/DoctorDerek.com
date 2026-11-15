@@ -17,7 +17,7 @@ describe("TypeScript lint configuration", () => {
     "hooks/usePostLoadExperienceSchedule.ts",
     "machines/globalMachine.ts",
     "constants/STARTUP_TIMING.ts",
-    "utils/errors.ts",
+    "utils/medium.ts",
     "types/svg-url.d.ts",
     "scripts/ghost-assets/decryptGhostAssets.ts",
     "e2e/fonts.spec.ts",

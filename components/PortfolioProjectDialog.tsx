@@ -40,7 +40,7 @@ export default function PortfolioProjectDialog({
         </Transition.Child>
 
         <div className="fixed inset-0 z-[10000] w-screen overscroll-contain">
-          <div className="flex h-dvh items-end justify-center p-4 sm:items-center sm:p-6">
+          <div className="flex h-dvh items-end justify-center p-[min(--spacing(4),4vw)] sm:items-center sm:p-6">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -50,28 +50,29 @@ export default function PortfolioProjectDialog({
               leaveFrom="translate-y-0 opacity-100 sm:scale-100"
               leaveTo="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="scrollable-content border-site-border bg-site-surface-strong text-site-foreground relative max-h-full w-full max-w-2xl transform scroll-py-8 overflow-y-auto rounded-3xl border p-5 shadow-2xl backdrop-blur-xl transition-all sm:p-8">
+              <Dialog.Panel className="scrollable-content border-site-border bg-site-surface-strong text-site-foreground relative max-h-full w-full max-w-2xl min-w-0 transform scroll-py-8 overflow-y-auto rounded-3xl border p-[min(--spacing(5),5vw)] shadow-2xl backdrop-blur-xl transition-all sm:p-8">
                 {project && (
                   <>
-                    <button
-                      type="button"
-                      aria-label="Close project details"
-                      className="border-site-border bg-site-surface-soft text-site-foreground hover:bg-site-surface-hover focus-visible:ring-site-focus absolute top-4 right-4 rounded-full border p-2 transition-colors focus-visible:ring-4 focus-visible:outline-none"
-                      onClick={onClose}
-                    >
-                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-
-                    <p className="border-site-status-border bg-site-status-surface text-site-status-foreground mb-4 w-fit rounded-full border px-3 py-1 text-sm font-semibold">
-                      {PORTFOLIO_AVAILABILITY_LABEL}
-                    </p>
+                    <div className="mb-4 flex flex-wrap-reverse items-center justify-between gap-3">
+                      <p className="border-site-status-border bg-site-status-surface text-site-status-foreground min-w-0 rounded-full border px-3 py-1 text-sm font-semibold wrap-anywhere">
+                        {PORTFOLIO_AVAILABILITY_LABEL}
+                      </p>
+                      <button
+                        type="button"
+                        aria-label="Close project details"
+                        className="border-site-border bg-site-surface-soft text-site-foreground hover:bg-site-surface-hover focus-visible:ring-site-focus ml-auto shrink-0 rounded-full border p-2 transition-colors focus-visible:ring-4 focus-visible:outline-none"
+                        onClick={onClose}
+                      >
+                        <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
+                    </div>
                     <Dialog.Title
                       as="h3"
                       className="restorabold text-3xl leading-tight break-words sm:text-4xl"
                     >
                       {project.projectTitle}
                     </Dialog.Title>
-                    <p className="text-site-foreground-muted mt-4 text-lg leading-7 sm:text-xl sm:leading-8">
+                    <p className="text-site-foreground-muted mt-4 text-lg leading-7 wrap-anywhere sm:text-xl sm:leading-8">
                       {project.details}
                     </p>
                     <ul
@@ -81,7 +82,7 @@ export default function PortfolioProjectDialog({
                       {project.tech.map((technology) => (
                         <li
                           key={technology}
-                          className="border-site-border bg-site-surface-soft text-site-foreground rounded-full border px-3 py-1.5 text-sm font-semibold"
+                          className="border-site-border bg-site-surface-soft text-site-foreground max-w-full min-w-0 rounded-full border px-3 py-1.5 text-sm font-semibold wrap-anywhere"
                         >
                           {technology}
                         </li>
@@ -93,7 +94,7 @@ export default function PortfolioProjectDialog({
                         aria-label={"View " + project.projectTitle + " live"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ease-spring-bouncy site-focus-contrast inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-lg font-bold text-[#311B4D] shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:outline-none active:scale-95 sm:w-fit"
+                        className="ease-spring-bouncy site-focus-contrast inline-flex w-full min-w-0 flex-wrap items-center justify-center gap-3 rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-lg font-bold wrap-anywhere text-[#311B4D] shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:outline-none active:scale-95 sm:w-fit"
                       >
                         View live project
                         <ArrowTopRightOnSquareIcon
@@ -106,7 +107,7 @@ export default function PortfolioProjectDialog({
                         aria-label={"View " + project.projectTitle + " source"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ease-spring-bouncy border-site-border-strong bg-site-surface-soft text-site-foreground hover:bg-site-surface-hover focus-visible:ring-site-focus inline-flex w-full items-center justify-center gap-3 rounded-tr-3xl border px-6 py-4 text-lg font-bold shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:outline-none active:scale-95 sm:w-fit"
+                        className="ease-spring-bouncy border-site-border-strong bg-site-surface-soft text-site-foreground hover:bg-site-surface-hover focus-visible:ring-site-focus inline-flex w-full min-w-0 flex-wrap items-center justify-center gap-3 rounded-tr-3xl border px-6 py-4 text-lg font-bold wrap-anywhere shadow-xl transition-transform hover:scale-[1.02] focus-visible:ring-4 focus-visible:outline-none active:scale-95 sm:w-fit"
                       >
                         View source
                         <CodeBracketIcon

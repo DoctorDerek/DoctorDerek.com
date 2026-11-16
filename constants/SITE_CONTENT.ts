@@ -223,7 +223,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     projectTitle: "Mapachess",
     summary:
-      "Free chess against 23 animal opponents, with hints for both sides and moves you can take back.",
+      "Free chess against animal opponents, with hints for both sides and moves you can take back.",
     details:
       "I built Mapachess so you can try different moves and come back to a saved game later. An earlier version included LLM-powered chess coaching, but the advice wasn’t good enough even with Stockfish suggesting moves. So I removed it and added hints for both sides. You can play on the web today. Native apps are in development with React Native and Expo.",
     tech: [

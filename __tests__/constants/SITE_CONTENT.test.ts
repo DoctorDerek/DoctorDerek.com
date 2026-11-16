@@ -94,7 +94,7 @@ describe("site copy quality gates", () => {
     const doctorDerekProject = SITE_CONTENT.PORTFOLIO_PROJECTS.at(-1)
 
     expect(firstProject.projectTitle).toBe("Mapachess")
-    expect(firstProject.summary).toContain("23 animal opponents")
+    expect(firstProject.summary).toContain("against animal opponents")
     expect(firstProject.details).toContain("hints for both sides")
     expect(firstProject.details).toContain("Native apps are in development")
     expect(firstProject.liveUrl).toBe("https://mapachess.com/")

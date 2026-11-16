@@ -11,6 +11,16 @@ export default defineConfig({
   },
   test: {
     coverage: {
+      include: [
+        "app/**/*.{ts,tsx}",
+        "components/**/*.{ts,tsx}",
+        "constants/**/*.{ts,tsx}",
+        "hooks/**/*.{ts,tsx}",
+        "machines/**/*.{ts,tsx}",
+        "utils/**/*.{ts,tsx}",
+        "scripts/ghost-assets/**/*.ts",
+        "scripts/dependencies/dependabotMergePolicy.ts",
+      ],
       exclude: [
         ...coverageConfigDefaults.exclude,
         "scripts/ci/**",

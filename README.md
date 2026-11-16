@@ -2,7 +2,7 @@
 
 [![Production](https://img.shields.io/website?url=https%3A%2F%2Fdoctorderek.com%2F&up_message=live&down_message=offline&label=production&logo=vercel&logoColor=white)](https://doctorderek.com/) [![Codecov](https://codecov.io/gh/DoctorDerek/DoctorDerek.com/graph/badge.svg)](https://app.codecov.io/gh/DoctorDerek/DoctorDerek.com) [![ESLint, Vitest, and XState](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/eslint-vitest-xstate.yml/badge.svg?branch=main)](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/eslint-vitest-xstate.yml) [![Playwright](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/playwright.yml/badge.svg)](https://github.com/DoctorDerek/DoctorDerek.com/actions/workflows/playwright.yml)
 
-The public website and engineering portfolio of [Dr. Derek Austin](https://doctorderek.com/), built to present seven live projects and the engineering behind them.
+My website and portfolio, with live projects, source code, and the engineering decisions behind them.
 
 ## Mobile Web Lighthouse Measurements
 

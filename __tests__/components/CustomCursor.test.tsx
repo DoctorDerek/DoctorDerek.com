@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
+import { domAnimation } from "motion/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import CustomCursor from "@/components/ui/CustomCursor"
 
@@ -11,11 +12,8 @@ const { animationFeaturesLoaded, motionValues } = vi.hoisted(() => ({
   },
 }))
 
-vi.mock("@/utils/domAnimationFeatures", () => ({
-  default: "dom-animation-features",
-}))
-
-vi.mock("motion/react", () => ({
+vi.mock("motion/react", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("motion/react")>()),
   LazyMotion: ({
     children,
     features,
@@ -61,9 +59,7 @@ describe("CustomCursor", () => {
     render(<CustomCursor />)
 
     await vi.waitFor(() =>
-      expect(animationFeaturesLoaded).toHaveBeenCalledWith(
-        "dom-animation-features",
-      ),
+      expect(animationFeaturesLoaded).toHaveBeenCalledWith(domAnimation),
     )
 
     expect(screen.getByTestId("custom-cursor")).toHaveAttribute(

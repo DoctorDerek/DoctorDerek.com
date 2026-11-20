@@ -59,13 +59,17 @@ export default function GlobalBackground({
     <div
       data-ambient-motion={shouldRenderDeferredAmbientMotion}
       className={cx(
-        "global-background pointer-events-none fixed inset-0 -z-20 h-full w-full",
+        "pointer-events-none fixed inset-0 -z-20 h-full w-full bg-(--site-background-teal)",
         canAnimateBackgroundColor && "animate-rainbow-vivid",
       )}
     >
       <div
         aria-hidden="true"
-        className="global-background-color-overlay absolute inset-0 h-full w-full"
+        className={cx(
+          "absolute inset-0 h-full w-full bg-(--site-background-pink) opacity-0",
+          canAnimateBackgroundColor &&
+            "animate-rainbow-overlay will-change-[opacity]",
+        )}
       />
       {shouldRenderDeferredAmbientMotion && (
         <ParticleCanvas onReady={onAmbientMotionReady} />

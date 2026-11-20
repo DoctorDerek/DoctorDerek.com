@@ -9,9 +9,9 @@ describe("BackgroundPattern", () => {
     const pattern = screen.getByRole("presentation", { hidden: true })
     expect(pattern).toHaveAttribute("src", "/background-one.svg")
     expect(pattern).toHaveAttribute("draggable", "false")
-    expect(pattern).toHaveClass("background-pattern-layer-active")
-    expect(pattern).not.toHaveClass("background-pattern-layer-entering")
-    expect(pattern).toHaveStyle({ transitionDuration: "20s" })
+    expect(pattern).toHaveClass("opacity-60")
+    expect(pattern).not.toHaveClass("starting:opacity-0")
+    expect(pattern).toHaveClass("duration-[20s]")
   })
 
   it("crossfades between only the outgoing and incoming patterns", async () => {
@@ -31,11 +31,8 @@ describe("BackgroundPattern", () => {
       "presentation",
       { hidden: true },
     )
-    expect(outgoingPattern).not.toHaveClass("background-pattern-layer-active")
-    expect(incomingPattern).toHaveClass(
-      "background-pattern-layer-active",
-      "background-pattern-layer-entering",
-    )
+    expect(outgoingPattern).not.toHaveClass("opacity-60")
+    expect(incomingPattern).toHaveClass("opacity-60", "starting:opacity-0")
 
     fireEvent.transitionEnd(incomingPattern)
 

@@ -127,24 +127,11 @@ html.light {
   --site-background-green: #80cea5;
 }
 
-.global-background {
-  background-color: var(--site-background-teal);
-}
-
-.global-background-color-overlay {
-  background-color: var(--site-background-pink);
-  opacity: 0;
-}
-
-.animate-rainbow-vivid {
-  animation: rainbow-vivid-base 30s linear infinite;
-}
-
-.animate-rainbow-vivid .global-background-color-overlay {
-  animation:
+@theme {
+  --animate-rainbow-vivid: rainbow-vivid-base 30s linear infinite;
+  --animate-rainbow-overlay:
     rainbow-vivid-overlay-color 30s linear infinite,
     rainbow-vivid-overlay-opacity 30s linear infinite;
-  will-change: opacity;
 }
 
 @keyframes rainbow-vivid-base {
@@ -208,20 +195,6 @@ html.light {
   }
 }
 
-.background-pattern-layer {
-  opacity: 0;
-}
-
-.background-pattern-layer-active {
-  opacity: 0.6;
-}
-
-@starting-style {
-  .background-pattern-layer-entering {
-    opacity: 0;
-  }
-}
-
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -251,40 +224,12 @@ https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
   border-radius: 0.5rem;
 }
 
-.site-focus-contrast {
-  --site-focus: var(--site-focus-contrast);
-}
-
 /* Suppress focus rings on fullpage.js structural elements */
 .section:focus-visible,
 .fp-tableCell:focus-visible,
 .fp-overflow:focus-visible {
   box-shadow: none !important;
   outline: none !important;
-}
-
-.section-heading-entrance {
-  opacity: 0;
-  transform: perspective(1000px) translate3d(5rem, 0, -10rem) rotateX(-70deg)
-    rotateY(35deg) scale(0);
-  transform-origin: center;
-  transition:
-    transform 900ms cubic-bezier(0.51, 0.92, 0.24, 1.15),
-    opacity 450ms ease-out;
-}
-
-.active .section-heading-entrance {
-  opacity: 1;
-  transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0) rotateY(0)
-    scale(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .section-heading-entrance {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
 }
 
 /* HTML scroll behavior and font */
@@ -324,8 +269,8 @@ body {
   font-family: var(--font-restora-fallback);
 }
 
-.restoramedium {
-  font-weight: 500;
+@utility restoramedium {
+  @apply font-medium;
 }
 
 .restora-text-ready :where(a, p, h1, h2, h3, h4, button, .restoramedium) {
@@ -339,22 +284,13 @@ body {
   font-family: var(--font-restora-display);
 }
 
-.restorabold {
-  font-weight: 800;
+@utility restorabold {
+  @apply font-extrabold;
 }
 
 /* =========================== 
   Media queries
 ============================== */
-/* contact section image flip effect */
-.perspective {
-  perspective: 700px;
-}
-
-html.light .site-logo {
-  filter: invert(1);
-}
-
 @media (width < 48rem) {
   .fp-section[data-anchor="portfolio"] .fp-controlArrow {
     top: auto;

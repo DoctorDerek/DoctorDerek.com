@@ -12,7 +12,7 @@ describe("SectionHeading", () => {
 
     const heading = screen.getByRole("heading", { name: "Heading" })
     expect(heading.parentElement).toHaveClass(
-      "section-heading-entrance",
+      "in-[.active]:opacity-100",
       "w-max",
       "mb-8",
     )
@@ -30,7 +30,7 @@ describe("SectionHeading", () => {
 
       expect(
         screen.getByRole("heading", { name: "Heading" }).parentElement,
-      ).toHaveAttribute("class", "section-heading-entrance w-max")
+      ).toHaveClass("w-max", "motion-reduce:opacity-100")
     },
   )
 })

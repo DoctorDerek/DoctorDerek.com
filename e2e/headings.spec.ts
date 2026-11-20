@@ -8,7 +8,7 @@ test("animates the shared 3D entrance when motion is unrestricted", async ({
   await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
 
   const documentRoot = page.locator("html")
-  const headingEntrance = page.locator(".section-heading-entrance").filter({
+  const headingEntrance = page.locator("[data-heading-entrance]").filter({
     has: page.locator("h2").filter({ hasText: /^About$/ }),
   })
 
@@ -43,7 +43,7 @@ test("renders inactive headings statically for system reduced motion", async ({
   await page.emulateMedia({ reducedMotion: "reduce" })
   await page.goto("/")
 
-  const headingEntrance = page.locator(".section-heading-entrance").filter({
+  const headingEntrance = page.locator("[data-heading-entrance]").filter({
     has: page.locator("h2").filter({ hasText: /^About$/ }),
   })
 

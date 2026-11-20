@@ -106,12 +106,12 @@ describe("WorkExperienceSection", () => {
 
     expect(previousButton).toBeDisabled()
     expect(nextButton).toBeEnabled()
-    expect(track).toHaveStyle({ transform: "translateX(-0%)" })
+    expect(track).toHaveStyle({ "--career-offset": "0%" })
 
     fireEvent.click(nextButton)
 
     expect(previousButton).toBeEnabled()
-    expect(track).toHaveStyle({ transform: "translateX(-100%)" })
+    expect(track).toHaveStyle({ "--career-offset": "-100%" })
     expect(
       within(carousel).getByRole("button", {
         name: `Show ${ARCHITECT_EVOLUTION[1]?.duration}`,
@@ -125,14 +125,14 @@ describe("WorkExperienceSection", () => {
     )
 
     expect(track).toHaveStyle({
-      transform: `translateX(-${(ARCHITECT_EVOLUTION.length - 1) * 100}%)`,
+      "--career-offset": `-${(ARCHITECT_EVOLUTION.length - 1) * 100}%`,
     })
     expect(nextButton).toBeDisabled()
 
     fireEvent.click(previousButton)
 
     expect(track).toHaveStyle({
-      transform: `translateX(-${(ARCHITECT_EVOLUTION.length - 2) * 100}%)`,
+      "--career-offset": `-${(ARCHITECT_EVOLUTION.length - 2) * 100}%`,
     })
   })
 
@@ -208,7 +208,7 @@ describe("WorkExperienceSection", () => {
       changedTouches: [{ clientX: 220, clientY: 220 }],
     })
 
-    expect(track).toHaveStyle({ transform: "translateX(-0%)" })
+    expect(track).toHaveStyle({ "--career-offset": "0%" })
 
     fireEvent.touchStart(touchSurface, {
       changedTouches: [{ clientX: 280, clientY: 100 }],
@@ -217,7 +217,7 @@ describe("WorkExperienceSection", () => {
       changedTouches: [{ clientX: 180, clientY: 100 }],
     })
 
-    expect(track).toHaveStyle({ transform: "translateX(-100%)" })
+    expect(track).toHaveStyle({ "--career-offset": "-100%" })
 
     fireEvent.touchStart(touchSurface, {
       changedTouches: [{ clientX: 180, clientY: 100 }],
@@ -226,6 +226,6 @@ describe("WorkExperienceSection", () => {
       changedTouches: [{ clientX: 280, clientY: 100 }],
     })
 
-    expect(track).toHaveStyle({ transform: "translateX(-0%)" })
+    expect(track).toHaveStyle({ "--career-offset": "0%" })
   })
 })

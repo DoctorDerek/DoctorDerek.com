@@ -67,7 +67,7 @@ describe("EndOfSiteCelebration", () => {
     expect(captureConfettiProperties).toHaveBeenLastCalledWith(
       expect.objectContaining({
         "aria-hidden": "true",
-        className: "end-of-site-confetti",
+        className: "end-of-site-confetti fixed! z-20",
         height: 720,
         numberOfPieces: 240,
         recycle: false,

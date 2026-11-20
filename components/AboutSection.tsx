@@ -1,5 +1,6 @@
 "use client"
 
+import cx from "classix"
 import Image from "next/image"
 import { useState } from "react"
 import FlipPreview from "@/components/ui/FlipPreview"
@@ -48,38 +49,29 @@ export default function AboutSection() {
                 className="relative aspect-square w-full cursor-pointer"
                 rotationDegrees={flipCount * FLIP_ACTIVATION_ROTATION_DEGREES}
               >
-                <div
-                  className="absolute inset-0 overflow-hidden rounded-tr-[6rem] md:rounded-tr-[4.5rem]"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    WebkitBackfaceVisibility: "hidden",
-                  }}
-                >
+                <div className="absolute inset-0 overflow-hidden rounded-tr-[6rem] backface-hidden md:rounded-tr-[4.5rem]">
                   <Image
                     src={frontPortrait.src}
                     alt={frontPortrait.alt}
                     fill
                     sizes={PORTRAIT_IMAGE_SIZES.about}
-                    className="object-cover"
-                    style={{ objectPosition: frontPortrait.objectPosition }}
+                    className={cx(
+                      "object-cover",
+                      frontPortrait.positionClassName,
+                    )}
                   />
                 </div>
 
-                <div
-                  className="absolute inset-0 overflow-hidden rounded-tr-[6rem] md:rounded-tr-[4.5rem]"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    WebkitBackfaceVisibility: "hidden",
-                    transform: `rotateY(${FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
-                  }}
-                >
+                <div className="absolute inset-0 transform-[rotateY(180deg)] overflow-hidden rounded-tr-[6rem] backface-hidden md:rounded-tr-[4.5rem]">
                   <Image
                     src={backPortrait.src}
                     alt={backPortrait.alt}
                     fill
                     sizes={PORTRAIT_IMAGE_SIZES.about}
-                    className="object-cover"
-                    style={{ objectPosition: backPortrait.objectPosition }}
+                    className={cx(
+                      "object-cover",
+                      backPortrait.positionClassName,
+                    )}
                   />
                 </div>
               </SpringRotation>

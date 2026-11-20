@@ -13,7 +13,7 @@ import purplePoloAlternateProfileImage from "@/images/portraits/derek-austin-033
 
 type Portrait = {
   alt: string
-  objectPosition: string
+  positionClassName: string
   sourceFilename: string
   src: StaticImageData
 }
@@ -32,21 +32,21 @@ export const PORTRAIT_IMAGE_SIZES = {
 
 const redPoloStandingPortrait = {
   alt: "Dr. Derek Austin standing by the ocean in a red polo",
-  objectPosition: "63% 50%",
+  positionClassName: "object-[63%_50%]",
   sourceFilename: "Pixtore-03145.jpg",
   src: redPoloStandingImage,
 } satisfies Portrait
 
 const redPoloLeaningPortrait = {
   alt: "Dr. Derek Austin leaning against a wooden post in a red polo",
-  objectPosition: "58% 48%",
+  positionClassName: "object-[58%_48%]",
   sourceFilename: "Pixtore-03155.jpg",
   src: redPoloLeaningImage,
 } satisfies Portrait
 
 const redPoloRelaxedPortrait = {
   alt: "Dr. Derek Austin smiling by the ocean in a red polo",
-  objectPosition: "62% 52%",
+  positionClassName: "object-[62%_52%]",
   sourceFilename: "Pixtore-03165.jpg",
   src: redPoloRelaxedImage,
 } satisfies Portrait
@@ -54,7 +54,7 @@ const redPoloRelaxedPortrait = {
 const yellowPoloSeatedPortrait = {
   alt: "Dr. Derek Austin smiling beside the water in a yellow polo",
   layoutClassName: "",
-  objectPosition: "67% 50%",
+  positionClassName: "object-[67%_50%]",
   sizes: PORTRAIT_IMAGE_SIZES.contactHalf,
   sourceFilename: "Pixtore-03215.jpg",
   src: yellowPoloSeatedImage,
@@ -62,28 +62,28 @@ const yellowPoloSeatedPortrait = {
 
 const purplePoloSmilePortrait = {
   alt: "Dr. Derek Austin smiling by the ocean in a purple polo",
-  objectPosition: "55% 50%",
+  positionClassName: "object-[55%_50%]",
   sourceFilename: "Pixtore-03345.jpg",
   src: purplePoloSmileImage,
 } satisfies Portrait
 
 const purplePoloHeadshotPortrait = {
   alt: "Dr. Derek Austin smiling in a purple polo",
-  objectPosition: "50% 45%",
+  positionClassName: "object-[50%_45%]",
   sourceFilename: "Pixtore-03349.jpg",
   src: purplePoloHeadshotImage,
 } satisfies Portrait
 
 const purplePoloThoughtfulPortrait = {
   alt: "Dr. Derek Austin posing thoughtfully in a purple polo",
-  objectPosition: "50% 45%",
+  positionClassName: "object-[50%_45%]",
   sourceFilename: "Pixtore-03354.jpg",
   src: purplePoloThoughtfulImage,
 } satisfies Portrait
 
 const purplePoloStandingPortrait = {
   alt: "Dr. Derek Austin standing by the ocean in a purple polo",
-  objectPosition: "65% 50%",
+  positionClassName: "object-[65%_50%]",
   sourceFilename: "Pixtore-03359.jpg",
   src: purplePoloStandingImage,
 } satisfies Portrait
@@ -91,7 +91,7 @@ const purplePoloStandingPortrait = {
 const purplePoloCelebratingPortrait = {
   alt: "Dr. Derek Austin celebrating by the ocean in a purple polo",
   layoutClassName: "col-span-2",
-  objectPosition: "55% 49%",
+  positionClassName: "object-[55%_49%]",
   sizes: PORTRAIT_IMAGE_SIZES.contactFull,
   sourceFilename: "Pixtore-03361.jpg",
   src: purplePoloCelebratingImage,
@@ -100,7 +100,7 @@ const purplePoloCelebratingPortrait = {
 const purplePoloProfilePortrait = {
   alt: "Dr. Derek Austin in a thoughtful three-quarter portrait",
   layoutClassName: "",
-  objectPosition: "50% 60%",
+  positionClassName: "object-[50%_60%]",
   sizes: PORTRAIT_IMAGE_SIZES.contactHalf,
   sourceFilename: "Pixtore-03373.jpg",
   src: purplePoloProfileImage,
@@ -108,7 +108,7 @@ const purplePoloProfilePortrait = {
 
 const purplePoloAlternateProfilePortrait = {
   alt: "Dr. Derek Austin in a confident three-quarter portrait",
-  objectPosition: "50% 57%",
+  positionClassName: "object-[50%_57%]",
   sourceFilename: "Pixtore-03374.jpg",
   src: purplePoloAlternateProfileImage,
 } satisfies Portrait

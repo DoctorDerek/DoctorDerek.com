@@ -8,29 +8,23 @@ type SpringRotationProps = {
   children: ReactNode
   className?: string
   rotationDegrees: number
-  style?: CSSProperties
 }
 
 export default function SpringRotation({
   children,
   className,
   rotationDegrees,
-  style,
 }: SpringRotationProps) {
   const { shouldReduceMotion } = useMotionPreference()
 
   return (
     <div
       className={cx(
-        "ease-spring-rotation transition-transform duration-[900ms] motion-reduce:transition-none",
+        "ease-spring-rotation transform-[rotateY(var(--rotation))] duration-900 transform-3d motion-reduce:transition-none",
+        shouldReduceMotion ? "transition-none" : "transition-transform",
         className,
       )}
-      style={{
-        ...style,
-        transform: `rotateY(${rotationDegrees}deg)`,
-        transition: shouldReduceMotion ? "none" : undefined,
-        transformStyle: "preserve-3d",
-      }}
+      style={{ "--rotation": `${rotationDegrees}deg` } as CSSProperties}
     >
       {children}
     </div>

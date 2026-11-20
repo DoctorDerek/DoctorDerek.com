@@ -63,9 +63,11 @@ test("previews the logo and activates it through pointer and keyboard input", as
     .poll(() =>
       alternateLogoControl
         .locator(".wrapper")
-        .evaluate((card) => (card as HTMLElement).style.transform),
+        .evaluate((card) =>
+          (card as HTMLElement).style.getPropertyValue("--rotation"),
+        ),
     )
-    .toBe("rotateY(180deg)")
+    .toBe("180deg")
 
   await alternateLogoControl.press("Enter")
 
@@ -79,9 +81,11 @@ test("previews the logo and activates it through pointer and keyboard input", as
     .poll(() =>
       restoredLogoControl
         .locator(".wrapper")
-        .evaluate((card) => (card as HTMLElement).style.transform),
+        .evaluate((card) =>
+          (card as HTMLElement).style.getPropertyValue("--rotation"),
+        ),
     )
-    .toBe("rotateY(360deg)")
+    .toBe("360deg")
   expect(pageErrors).toEqual([])
 })
 
@@ -147,11 +151,11 @@ test.describe("touch portrait controls", () => {
     await aboutPortraitControl.tap()
     await expect
       .poll(() =>
-        aboutPortraitCard.evaluate(
-          (portraitCard) => (portraitCard as HTMLElement).style.transform,
+        aboutPortraitCard.evaluate((portraitCard) =>
+          (portraitCard as HTMLElement).style.getPropertyValue("--rotation"),
         ),
       )
-      .toBe("rotateY(180deg)")
+      .toBe("180deg")
 
     await page.goto("/#contact")
     await expect(page.locator("body")).toHaveClass(/fp-viewing-contact/)
@@ -166,9 +170,11 @@ test.describe("touch portrait controls", () => {
       .poll(() =>
         contactPortraitControl
           .locator(".wrapper")
-          .evaluate((card) => (card as HTMLElement).style.transform),
+          .evaluate((card) =>
+            (card as HTMLElement).style.getPropertyValue("--rotation"),
+          ),
       )
-      .toBe("rotateY(180deg)")
+      .toBe("180deg")
     const contactPortraitMosaic = contactPortraitControl.locator(
       ".contact-portrait-mosaic",
     )
@@ -184,9 +190,11 @@ test.describe("touch portrait controls", () => {
       .poll(() =>
         contactPortraitControl
           .locator(".wrapper")
-          .evaluate((card) => (card as HTMLElement).style.transform),
+          .evaluate((card) =>
+            (card as HTMLElement).style.getPropertyValue("--rotation"),
+          ),
       )
-      .toBe("rotateY(360deg)")
+      .toBe("360deg")
     expect(pageErrors).toEqual([])
   })
 })

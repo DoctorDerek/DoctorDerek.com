@@ -80,17 +80,17 @@ describe("ContactSection", () => {
     const portraitCard = portraitControl.querySelector(".wrapper")
 
     expect(portraitControl).toHaveAttribute("aria-pressed", "false")
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "0deg" })
 
     fireEvent.click(portraitControl)
 
     expect(portraitControl).toHaveAttribute("aria-pressed", "true")
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "180deg" })
 
     fireEvent.click(portraitControl)
 
     expect(portraitControl).toHaveAttribute("aria-pressed", "false")
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "360deg" })
   })
 
   it("keeps the reverse portrait face available at every breakpoint", () => {
@@ -145,9 +145,9 @@ describe("ContactSection", () => {
     const portraitControl = getPortraitControl()
     const portraitCard = portraitControl.querySelector(".wrapper")
 
-    expect(portraitCard).toHaveStyle({ transition: "none" })
+    expect(portraitCard).toHaveClass("transition-none")
 
     fireEvent.click(portraitControl)
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "180deg" })
   })
 })

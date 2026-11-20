@@ -44,11 +44,11 @@ export default function BackgroundPattern({ source }: { source: string }) {
         unoptimized
         loading="eager"
         className={cx(
-          "background-pattern-layer absolute inset-0 z-10 h-full w-full object-cover mix-blend-overlay transition-opacity ease-linear",
-          isActivePattern && "background-pattern-layer-active",
-          isEnteringPattern && "background-pattern-layer-entering",
+          "absolute inset-0 z-10 h-full w-full object-cover mix-blend-overlay transition-opacity duration-[20s] ease-linear",
+          isActivePattern ? "opacity-60" : "opacity-0",
+          isEnteringPattern && "starting:opacity-0",
         )}
-        style={{ transitionDuration: "20s" }}
+        data-pattern={isActivePattern ? "active" : "previous"}
         onTransitionEnd={isEnteringPattern ? finishCrossfade : undefined}
       />
     )

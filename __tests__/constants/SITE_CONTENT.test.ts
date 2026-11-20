@@ -96,7 +96,9 @@ describe("site copy quality gates", () => {
     expect(firstProject.projectTitle).toBe("Mapachess")
     expect(firstProject.summary).toContain("against animal opponents")
     expect(firstProject.details).toContain("hints for both sides")
-    expect(firstProject.details).toContain("Native apps are in development")
+    expect(firstProject.details).toContain(
+      "The pre-release React Native and Expo builds run on iOS and Android.",
+    )
     expect(firstProject.liveUrl).toBe("https://mapachess.com/")
 
     expect(doctorDerekProject?.projectTitle).toBe("DoctorDerek.com")

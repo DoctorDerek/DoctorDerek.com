@@ -26,26 +26,22 @@ export default function EndOfSiteCelebration({
     <>
       <Toaster
         position="bottom-center"
-        containerStyle={{ pointerEvents: "none", zIndex: 20 }}
+        containerClassName="pointer-events-none! z-20!"
         toastOptions={{
           duration: 5000,
-          style: {
-            background: "var(--site-surface-strong)",
-            border: "1px solid var(--site-border)",
-            color: "var(--site-foreground)",
-          },
+          className:
+            "bg-site-surface-strong! border! border-site-border! text-site-foreground!",
         }}
       />
       {isConfettiActive && (
         <ReactConfetti
           aria-hidden="true"
-          className="end-of-site-confetti"
+          className="end-of-site-confetti fixed! z-20"
           colors={MAPACHITO_VIVID_CONFETTI_COLORS}
           height={height}
           numberOfPieces={240}
           onConfettiComplete={onConfettiComplete}
           recycle={false}
-          style={{ position: "fixed", zIndex: 20 }}
           width={width}
         />
       )}

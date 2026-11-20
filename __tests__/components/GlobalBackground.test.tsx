@@ -76,9 +76,10 @@ describe("GlobalBackground", () => {
     expect(particleField).toBeInTheDocument()
     expect(container.firstChild).toHaveAttribute("data-ambient-motion", "true")
     expect(container.firstChild).toHaveClass("animate-rainbow-vivid")
-    expect(
-      container.querySelector(".global-background-color-overlay"),
-    ).toHaveAttribute("aria-hidden", "true")
+    expect(container.querySelector(".animate-rainbow-overlay")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    )
     expect(container.querySelector("[data-image-source]")).toHaveAttribute(
       "data-image-source",
       "/background-three.svg",

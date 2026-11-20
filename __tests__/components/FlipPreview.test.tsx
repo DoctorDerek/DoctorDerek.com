@@ -1,13 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import FlipPreview from "@/components/ui/FlipPreview"
-import { SPRING_ROTATION_PRELOAD_DEGREES } from "@/constants/INTERACTIONS"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
 }))
 
-const springPreloadTransform = `rotateY(${SPRING_ROTATION_PRELOAD_DEGREES}deg)`
+const springPreloadClass = "transform-[rotateY(-28deg)]"
 
 vi.mock("@/components/MotionPreferenceProvider", () => ({
   useMotionPreference: () => ({
@@ -35,8 +34,8 @@ describe("FlipPreview", () => {
 
     expect(control).toHaveAttribute("aria-pressed", "true")
     expect(control).toHaveClass("flip-preview-control")
-    expect(control.parentElement).toHaveClass("perspective")
-    expect(control.parentElement).toHaveStyle({ perspective: "1000px" })
+    expect(control.parentElement).toHaveClass("perspective-[62.5rem]")
+
     const preview = control.querySelector(".flip-preview-visual")
     expect(preview).toHaveClass(
       "pointer-events-none",
@@ -44,7 +43,7 @@ describe("FlipPreview", () => {
       "ease-spring-rotation",
       "duration-[700ms]",
     )
-    expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(preview).toHaveClass("transform-[rotateY(0deg)]")
     expect(control).toHaveClass("active:scale-[0.97]")
   })
 
@@ -59,16 +58,16 @@ describe("FlipPreview", () => {
     const preview = control.querySelector(".flip-preview-visual")
 
     fireEvent.pointerEnter(control, { pointerType: "mouse" })
-    expect(preview).toHaveStyle({ transform: springPreloadTransform })
+    expect(preview).toHaveClass(springPreloadClass)
 
     fireEvent.pointerLeave(control)
-    expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(preview).toHaveClass("transform-[rotateY(0deg)]")
 
     fireEvent.focus(control)
-    expect(preview).toHaveStyle({ transform: springPreloadTransform })
+    expect(preview).toHaveClass(springPreloadClass)
 
     fireEvent.blur(control)
-    expect(preview).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(preview).toHaveClass("transform-[rotateY(0deg)]")
   })
 
   it("keeps container and control classes independent when optional classes change", () => {
@@ -90,7 +89,7 @@ describe("FlipPreview", () => {
     expect(control).not.toHaveClass("site-logo")
     expect(control.parentElement).toHaveAttribute(
       "class",
-      "perspective site-logo",
+      "perspective-[62.5rem] site-logo",
     )
 
     rerender(
@@ -102,7 +101,10 @@ describe("FlipPreview", () => {
     expect(control.className).toBe(
       originalControlClasses.replace(" h-full w-full", ""),
     )
-    expect(control.parentElement).toHaveAttribute("class", "perspective")
+    expect(control.parentElement).toHaveAttribute(
+      "class",
+      "perspective-[62.5rem]",
+    )
     fireEvent.click(control)
     expect(onActivate).toHaveBeenCalledOnce()
   })
@@ -118,9 +120,9 @@ describe("FlipPreview", () => {
 
     fireEvent.pointerEnter(control, { pointerType: "touch" })
 
-    expect(control.querySelector(".flip-preview-visual")).toHaveStyle({
-      transform: "rotateY(0deg)",
-    })
+    expect(control.querySelector(".flip-preview-visual")).toHaveClass(
+      "transform-[rotateY(0deg)]",
+    )
   })
 
   it("contains pointer starts without blocking the public action", () => {
@@ -160,9 +162,9 @@ describe("FlipPreview", () => {
     fireEvent.click(control)
 
     expect(onActivate).toHaveBeenCalledOnce()
-    expect(control.querySelector(".flip-preview-visual")).toHaveStyle({
-      transform: "rotateY(0deg)",
-    })
+    expect(control.querySelector(".flip-preview-visual")).toHaveClass(
+      "transform-[rotateY(0deg)]",
+    )
   })
 
   it("keeps preview and tap transforms instantaneous when motion is reduced", () => {
@@ -177,9 +179,9 @@ describe("FlipPreview", () => {
 
     fireEvent.focus(control)
 
-    expect(control.querySelector(".flip-preview-visual")).toHaveStyle({
-      transform: "rotateY(0deg)",
-    })
+    expect(control.querySelector(".flip-preview-visual")).toHaveClass(
+      "transform-[rotateY(0deg)]",
+    )
     expect(control).toHaveClass(
       "motion-reduce:transition-none",
       "motion-reduce:active:scale-100",

@@ -1,7 +1,7 @@
 "use client"
 
 import cx from "classix"
-import { useRef, useState, type TouchEvent } from "react"
+import { useRef, useState, type CSSProperties, type TouchEvent } from "react"
 import SpinningCodeMarker from "@/components/ui/SpinningCodeMarker"
 import {
   CAREER_RAIL_PATHS,
@@ -106,9 +106,13 @@ export default function WorkExperienceSection() {
 
           <ol
             aria-label="Career eras"
-            className="relative flex transition-transform duration-500 ease-out"
+            className="relative flex transform-[translateX(var(--career-offset))] transition-transform duration-500 ease-out"
             id="work-experience-mobile-track"
-            style={{ transform: `translateX(-${activeCareerEraIndex * 100}%)` }}
+            style={
+              {
+                "--career-offset": `${-activeCareerEraIndex * 100}%`,
+              } as CSSProperties
+            }
           >
             {ARCHITECT_EVOLUTION.map((item, index) => (
               <li

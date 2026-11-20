@@ -56,18 +56,18 @@ describe("AboutSection", () => {
     const portraitControl = getPortraitControl()
     const portraitCard = getPortraitCard(portraitControl)
 
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "0deg" })
     expectRenderedPortraits([ABOUT_PORTRAITS[0], ABOUT_PORTRAITS[1]])
 
     fireEvent.click(portraitControl)
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "180deg" })
     expectRenderedPortraits([ABOUT_PORTRAITS[2], ABOUT_PORTRAITS[1]])
 
     fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "180deg" })
 
     fireEvent.click(portraitControl)
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(360deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "360deg" })
     expectRenderedPortraits([ABOUT_PORTRAITS[2], ABOUT_PORTRAITS[3]])
   })
 
@@ -104,7 +104,7 @@ describe("AboutSection", () => {
     const portraitLayout = portraitControl.closest(
       "[data-about-portrait-layout]",
     )
-    const portraitPerspective = portraitControl.closest(".perspective")
+    const portraitPerspective = portraitControl.parentElement
 
     expect(portraitLayout).toHaveClass(
       "max-w-[22rem]",
@@ -125,7 +125,7 @@ describe("AboutSection", () => {
 
     fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
 
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "0deg" })
     expect(intervalSpy).not.toHaveBeenCalled()
     intervalSpy.mockRestore()
   })
@@ -136,12 +136,12 @@ describe("AboutSection", () => {
     const portraitControl = getPortraitControl()
     const portraitCard = getPortraitCard(portraitControl)
 
-    expect(portraitCard).toHaveStyle({ transition: "none" })
+    expect(portraitCard).toHaveClass("transition-none")
 
     fireEvent.pointerEnter(portraitControl, { pointerType: "mouse" })
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "0deg" })
 
     fireEvent.click(portraitControl)
-    expect(portraitCard).toHaveStyle({ transform: "rotateY(180deg)" })
+    expect(portraitCard).toHaveStyle({ "--rotation": "180deg" })
   })
 })

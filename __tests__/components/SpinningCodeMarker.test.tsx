@@ -4,7 +4,6 @@ import SpinningCodeMarker from "@/components/ui/SpinningCodeMarker"
 import {
   CODE_MARKER_ACTIVATION_ROTATION_DEGREES,
   getCareerCodeMarkerAccessibleName,
-  SPRING_ROTATION_PRELOAD_DEGREES,
 } from "@/constants/INTERACTIONS"
 import { ARCHITECT_EVOLUTION } from "@/constants/SITE_CONTENT"
 
@@ -49,28 +48,28 @@ describe("SpinningCodeMarker", () => {
 
     expect(control).toHaveClass("h-11", "w-11")
     expect(floatingLayer).toHaveClass("h-11", "w-11")
-    expect(floatingLayer).toHaveStyle({ animationDelay: "0.4s" })
-    expect(rotationLayer).toHaveClass("duration-[900ms]")
-    expect(rotationLayer).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(floatingLayer).toHaveStyle({ "--float-delay": "0.4s" })
+    expect(rotationLayer).toHaveClass("duration-900")
+    expect(rotationLayer).toHaveStyle({ "--rotation": "0deg" })
 
     fireEvent.pointerEnter(control, { pointerType: "mouse" })
-    expect(control.querySelector(".flip-preview-visual")).toHaveStyle({
-      transform: `rotateY(${SPRING_ROTATION_PRELOAD_DEGREES}deg)`,
-    })
+    expect(control.querySelector(".flip-preview-visual")).toHaveClass(
+      "transform-[rotateY(-28deg)]",
+    )
 
     fireEvent.pointerLeave(control)
-    expect(control.querySelector(".flip-preview-visual")).toHaveStyle({
-      transform: "rotateY(0deg)",
+    expect(control.querySelector(".flip-preview-visual")).toHaveClass(
+      "transform-[rotateY(0deg)]",
+    )
+
+    fireEvent.click(control)
+    expect(rotationLayer).toHaveStyle({
+      "--rotation": `${CODE_MARKER_ACTIVATION_ROTATION_DEGREES}deg`,
     })
 
     fireEvent.click(control)
     expect(rotationLayer).toHaveStyle({
-      transform: `rotateY(${CODE_MARKER_ACTIVATION_ROTATION_DEGREES}deg)`,
-    })
-
-    fireEvent.click(control)
-    expect(rotationLayer).toHaveStyle({
-      transform: `rotateY(${CODE_MARKER_ACTIVATION_ROTATION_DEGREES * 2}deg)`,
+      "--rotation": `${CODE_MARKER_ACTIVATION_ROTATION_DEGREES * 2}deg`,
     })
   })
 

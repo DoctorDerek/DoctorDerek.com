@@ -142,6 +142,30 @@ for (const viewport of [
         })
 
         expect(layout.cardTop).toBeGreaterThanOrEqual(layout.headingBottom)
+        if (layout.scrollWidth > layout.clientWidth) {
+          const content = await card.evaluate((element) => {
+            const left =
+              element.getBoundingClientRect().left + element.clientLeft
+            return Array.from(
+              element.querySelectorAll("h3, p, li, button, span"),
+            ).map((child) => {
+              const range = document.createRange()
+              range.selectNodeContents(child)
+              const bounds = child.getBoundingClientRect()
+              const style = getComputedStyle(child)
+              return {
+                text: child.textContent?.trim(),
+                right: bounds.right - left,
+                textRight: range.getBoundingClientRect().right - left,
+                font: style.fontFamily,
+              }
+            })
+          })
+          await test.info().attach("portfolio-card-overflow", {
+            body: JSON.stringify({ title, layout, content }, null, 2),
+            contentType: "application/json",
+          })
+        }
         expect(layout.scrollWidth).toBeLessThanOrEqual(layout.clientWidth)
         expect(layout.overlapsControl).toBe(false)
 

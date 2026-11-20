@@ -3,10 +3,7 @@ import {
   CAREER_RAIL_PATHS,
   CAREER_RAIL_STROKE_WIDTH,
 } from "@/constants/CAREER_TIMELINE"
-import {
-  CODE_MARKER_ACTIVATION_ROTATION_DEGREES,
-  SPRING_ROTATION_PRELOAD_DEGREES,
-} from "@/constants/INTERACTIONS"
+import { CODE_MARKER_ACTIVATION_ROTATION_DEGREES } from "@/constants/INTERACTIONS"
 
 const CAREER_ERA_COUNT = 4
 
@@ -154,23 +151,18 @@ test("desktop code markers focus opposite their repeated forward spin", async ({
   expect(markerBounds!.width).toBeGreaterThanOrEqual(44)
 
   await markerControl.focus()
-  await expect(previewLayer).toHaveAttribute(
-    "style",
-    new RegExp(`rotateY\\(${SPRING_ROTATION_PRELOAD_DEGREES}deg\\)`),
+  await expect(previewLayer).toHaveClass(/rotateY\(-28deg\)/)
+
+  await markerControl.press("Enter")
+  await expect(rotationLayer).toHaveCSS(
+    "--rotation",
+    `${CODE_MARKER_ACTIVATION_ROTATION_DEGREES}deg`,
   )
 
   await markerControl.press("Enter")
-  await expect(rotationLayer).toHaveAttribute(
-    "style",
-    new RegExp(`rotateY\\(${CODE_MARKER_ACTIVATION_ROTATION_DEGREES}deg\\)`),
-  )
-
-  await markerControl.press("Enter")
-  await expect(rotationLayer).toHaveAttribute(
-    "style",
-    new RegExp(
-      `rotateY\\(${CODE_MARKER_ACTIVATION_ROTATION_DEGREES * 2}deg\\)`,
-    ),
+  await expect(rotationLayer).toHaveCSS(
+    "--rotation",
+    `${CODE_MARKER_ACTIVATION_ROTATION_DEGREES * 2}deg`,
   )
 })
 

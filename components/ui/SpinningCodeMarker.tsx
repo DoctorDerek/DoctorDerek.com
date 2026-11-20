@@ -1,7 +1,7 @@
 "use client"
 
 import cx from "classix"
-import { useState } from "react"
+import { useState, type CSSProperties } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
 import FlipPreview from "@/components/ui/FlipPreview"
 import SpringRotation from "@/components/ui/SpringRotation"
@@ -28,8 +28,11 @@ export default function SpinningCodeMarker({
 
   return (
     <div
-      className={cx("animate-float absolute h-11 w-11", className)}
-      style={{ animationDelay }}
+      className={cx(
+        "animate-float absolute h-11 w-11 [animation-delay:var(--float-delay)]",
+        className,
+      )}
+      style={{ "--float-delay": animationDelay } as CSSProperties}
     >
       {isInteractive && !shouldReduceMotion ? (
         <FlipPreview

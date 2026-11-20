@@ -37,8 +37,7 @@ export default function ContactSection() {
           <div className="ease-spring-bouncy mx-auto w-1/2 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:mx-0 md:h-1/2 md:w-full [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <FlipPreview
               accessibleName={PORTRAIT_CONTROL_ACCESSIBLE_NAMES.contact}
-              containerClassName="animate-float h-full w-full"
-              containerStyle={{ animationDelay: "1s" }}
+              containerClassName="animate-float h-full w-full [animation-delay:1s]"
               className="w-full"
               isPressed={isFlipped}
               onActivate={() =>
@@ -49,31 +48,18 @@ export default function ContactSection() {
                 className="wrapper relative aspect-square w-full max-w-[488px]"
                 rotationDegrees={flipCount * FLIP_ACTIVATION_ROTATION_DEGREES}
               >
-                <div
-                  className="front absolute inset-0 h-full w-full"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    WebkitBackfaceVisibility: "hidden",
-                  }}
-                >
+                <div className="front absolute inset-0 h-full w-full backface-hidden">
                   <Image
                     src={CONTACT_PORTRAIT.src}
                     alt={CONTACT_PORTRAIT.alt}
                     sizes={PORTRAIT_IMAGE_SIZES.contactFull}
-                    className="h-full w-full object-cover"
-                    style={{
-                      objectPosition: CONTACT_PORTRAIT.objectPosition,
-                    }}
+                    className={cx(
+                      "h-full w-full object-cover",
+                      CONTACT_PORTRAIT.positionClassName,
+                    )}
                   />
                 </div>
-                <div
-                  className="back absolute inset-0 h-full w-full"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    WebkitBackfaceVisibility: "hidden",
-                    transform: `rotateY(${FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
-                  }}
-                >
+                <div className="back absolute inset-0 h-full w-full transform-[rotateY(180deg)] backface-hidden">
                   <div
                     aria-hidden="true"
                     className="contact-portrait-mosaic bg-site-surface-deep grid h-full w-full grid-cols-2 grid-rows-[3fr_2fr] gap-0.5 overflow-hidden"
@@ -91,10 +77,10 @@ export default function ContactSection() {
                           alt=""
                           fill
                           sizes={portrait.sizes}
-                          className="object-cover"
-                          style={{
-                            objectPosition: portrait.objectPosition,
-                          }}
+                          className={cx(
+                            "object-cover",
+                            portrait.positionClassName,
+                          )}
                         />
                       </div>
                     ))}
@@ -115,7 +101,7 @@ export default function ContactSection() {
                 </p>
               ))}
             </div>
-            <GlobalEmailCTA className="ease-spring-bouncy site-focus-contrast mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
+            <GlobalEmailCTA className="ease-spring-bouncy mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 [--site-focus:var(--site-focus-contrast)] hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
               {CONTACT_CTA}
             </GlobalEmailCTA>
           </div>

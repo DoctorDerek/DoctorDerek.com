@@ -1,21 +1,14 @@
 "use client"
 
 import cx from "classix"
-import {
-  useState,
-  type CSSProperties,
-  type PointerEvent,
-  type ReactNode,
-} from "react"
+import { useState, type PointerEvent, type ReactNode } from "react"
 import { useMotionPreference } from "@/components/MotionPreferenceProvider"
-import { SPRING_ROTATION_PRELOAD_DEGREES } from "@/constants/INTERACTIONS"
 
 type FlipPreviewProps = {
   accessibleName: string
   children: ReactNode
   className?: string
   containerClassName?: string
-  containerStyle?: CSSProperties
   isPressed?: boolean
   onActivate: () => void
 }
@@ -25,7 +18,6 @@ export default function FlipPreview({
   children,
   className,
   containerClassName,
-  containerStyle,
   isPressed,
   onActivate,
 }: FlipPreviewProps) {
@@ -47,10 +39,7 @@ export default function FlipPreview({
   }
 
   return (
-    <div
-      className={cx("perspective", containerClassName)}
-      style={{ ...containerStyle, perspective: "1000px" }}
-    >
+    <div className={cx("perspective-[62.5rem]", containerClassName)}>
       <button
         type="button"
         aria-label={accessibleName}
@@ -68,14 +57,12 @@ export default function FlipPreview({
         onClick={handleActivate}
       >
         <div
-          className="flip-preview-visual ease-spring-rotation pointer-events-none h-full w-full transition-transform duration-[700ms] motion-reduce:transition-none"
-          style={{
-            transform: `rotateY(${
-              shouldReduceMotion || !isPreviewing
-                ? 0
-                : SPRING_ROTATION_PRELOAD_DEGREES
-            }deg)`,
-          }}
+          className={cx(
+            "flip-preview-visual ease-spring-rotation pointer-events-none h-full w-full transition-transform duration-[700ms] motion-reduce:transition-none",
+            shouldReduceMotion || !isPreviewing
+              ? "transform-[rotateY(0deg)]"
+              : "transform-[rotateY(-28deg)]",
+          )}
         >
           {children}
         </div>

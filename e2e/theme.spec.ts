@@ -34,7 +34,7 @@ test("defaults to dark and persists an explicit light choice", async ({
     "background-color",
     "rgba(0, 0, 0, 0)",
   )
-  await expect(themeToggle).toHaveClass(/theme-toggle--dark/)
+  await expect(themeToggle).toHaveAttribute("aria-pressed", "true")
   expect(await page.evaluate(() => localStorage.getItem("theme"))).toBeNull()
 
   await themeToggle.scrollIntoViewIfNeeded()
@@ -44,7 +44,7 @@ test("defaults to dark and persists an explicit light choice", async ({
   await expect(documentRoot).toHaveCSS("background-color", "rgb(128, 197, 197)")
   await expect(
     page.getByRole("button", { name: "Switch to dark theme" }),
-  ).toHaveClass(/theme-toggle--light/)
+  ).toHaveAttribute("aria-pressed", "false")
   expect(await page.evaluate(() => localStorage.getItem("theme"))).toBe("light")
 
   await page.reload()
@@ -54,7 +54,7 @@ test("defaults to dark and persists an explicit light choice", async ({
   await expect(documentRoot).toHaveCSS("background-color", "rgb(128, 197, 197)")
   await expect(
     page.getByRole("button", { name: "Switch to dark theme" }),
-  ).toHaveClass(/theme-toggle--light/)
+  ).toHaveAttribute("aria-pressed", "false")
   expect(hydrationFailures).toEqual([])
 })
 
@@ -68,7 +68,7 @@ test("ignores a dark system theme and keeps the dark default", async ({
   await expect(page.locator("html")).toHaveClass(/dark/)
   await expect(
     page.getByRole("button", { name: "Switch to light theme" }),
-  ).toHaveClass(/theme-toggle--dark/)
+  ).toHaveAttribute("aria-pressed", "true")
   expect(await page.evaluate(() => localStorage.getItem("theme"))).toBeNull()
 })
 
@@ -79,7 +79,7 @@ test("keeps the theme control static when system motion is reduced", async ({
   await page.goto("/")
   await openSettings(page)
 
-  await expect(page.locator(".theme-toggle-artwork .sun")).toHaveCSS(
+  await expect(page.locator("[data-artwork='sun']")).toHaveCSS(
     "transition-duration",
     "0s",
   )

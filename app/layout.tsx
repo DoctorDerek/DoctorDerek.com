@@ -1,5 +1,4 @@
 import "@/styles/globals.css"
-import "@/styles/theme-toggle.css"
 import { Analytics } from "@vercel/analytics/next"
 import type { Metadata, Viewport } from "next"
 import localFont from "next/font/local"

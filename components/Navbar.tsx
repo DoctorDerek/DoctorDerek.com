@@ -132,7 +132,7 @@ export default function Navbar() {
                   <SocialLinks
                     fill="currentColor"
                     containerClasses="text-site-foreground flex w-full items-center justify-between"
-                    linkClasses="site-focus-contrast flex items-center justify-center rounded-md p-1"
+                    linkClasses="[--site-focus:var(--site-focus-contrast)] flex items-center justify-center rounded-md p-1"
                     labelClasses="sr-only"
                     showLabels={true}
                   />

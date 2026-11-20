@@ -14,7 +14,7 @@ export default function AiConsultancySection() {
           {AI_CONSULTANCY_PITCH.body}
         </p>
         <a
-          className="ease-spring-bouncy site-focus-contrast inline-block w-full rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-center text-xl font-bold text-[#311B4D] shadow-xl transition-transform duration-300 hover:scale-105 active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl"
+          className="ease-spring-bouncy inline-block w-full rounded-tr-3xl bg-[#FFE366] px-6 py-4 text-center text-xl font-bold text-[#311B4D] shadow-xl transition-transform duration-300 [--site-focus:var(--site-focus-contrast)] hover:scale-105 active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl"
           href="#contact"
         >
           {AI_CONSULTANCY_PITCH.ctaButtonText}

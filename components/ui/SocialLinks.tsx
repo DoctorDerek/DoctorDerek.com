@@ -1,6 +1,7 @@
 "use client"
 
 import cx from "classix"
+import type { CSSProperties } from "react"
 import { SOCIAL_LINKS, type SocialLink } from "@/constants/SITE_CONTENT"
 import GlobalEmailCTA from "./GlobalEmailCTA"
 import Icon, { type IconName } from "./Icon"
@@ -28,8 +29,11 @@ export default function SocialLinks({
         const content = (
           <>
             <div
-              className={cx(iconClasses, "animate-float")}
-              style={{ animationDelay: `${index * 0.4}s` }}
+              className={cx(
+                iconClasses,
+                "animate-float [animation-delay:var(--float-delay)]",
+              )}
+              style={{ "--float-delay": `${index * 0.4}s` } as CSSProperties}
             >
               <Icon name={link.id as IconName} fill={fill} />
             </div>

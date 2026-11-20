@@ -40,15 +40,13 @@ describe("Logo", () => {
     const logoControl = screen.getByRole("button", {
       name: LOGO_CONTROL_ACCESSIBLE_NAMES.showAlternative,
     })
-    const logoSurface = screen
-      .getByLabelText("Default logo")
-      .closest(".site-logo")
+    const logoSurface = logoControl.parentElement
     const wrapper = screen.getByLabelText("Default logo").closest(".wrapper")
 
-    expect(logoSurface).toHaveClass("site-logo")
+    expect(logoSurface).toHaveClass("in-[html.light]:invert")
     expect(screen.getByLabelText("Secondary logo")).toBeInTheDocument()
     expect(logoControl).toHaveAttribute("aria-pressed", "false")
-    expect(wrapper).toHaveStyle({ transform: "rotateY(0deg)" })
+    expect(wrapper).toHaveStyle({ "--rotation": "0deg" })
 
     fireEvent.click(logoControl)
 
@@ -56,7 +54,7 @@ describe("Logo", () => {
       name: LOGO_CONTROL_ACCESSIBLE_NAMES.showPrimary,
     })
     expect(alternateLogoControl).toHaveAttribute("aria-pressed", "true")
-    expect(wrapper).toHaveStyle({ transform: "rotateY(180deg)" })
+    expect(wrapper).toHaveStyle({ "--rotation": "180deg" })
 
     fireEvent.click(alternateLogoControl)
 
@@ -65,7 +63,7 @@ describe("Logo", () => {
         name: LOGO_CONTROL_ACCESSIBLE_NAMES.showAlternative,
       }),
     ).toHaveAttribute("aria-pressed", "false")
-    expect(wrapper).toHaveStyle({ transform: "rotateY(360deg)" })
+    expect(wrapper).toHaveStyle({ "--rotation": "360deg" })
   })
 
   it("renders the alternate logo without a transition when motion is reduced", () => {
@@ -80,16 +78,12 @@ describe("Logo", () => {
     const wrapper = screen.getByLabelText("Default logo").closest(".wrapper")
 
     expect(wrapper).not.toBeNull()
-    expect(wrapper).toHaveStyle({
-      transform: "rotateY(0deg)",
-      transition: "none",
-    })
+    expect(wrapper).toHaveStyle({ "--rotation": "0deg" })
+    expect(wrapper).toHaveClass("transition-none")
 
     fireEvent.click(logoControl)
 
-    expect(wrapper).toHaveStyle({
-      transform: "rotateY(180deg)",
-      transition: "none",
-    })
+    expect(wrapper).toHaveStyle({ "--rotation": "180deg" })
+    expect(wrapper).toHaveClass("transition-none")
   })
 })

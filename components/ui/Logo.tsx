@@ -29,7 +29,7 @@ export default function Logo({ className }: LogoProps) {
           ? LOGO_CONTROL_ACCESSIBLE_NAMES.showAlternative
           : LOGO_CONTROL_ACCESSIBLE_NAMES.showPrimary
       }
-      containerClassName={cx("site-logo", className)}
+      containerClassName={cx("in-[html.light]:invert", className)}
       className="h-full w-full"
       isPressed={!isAlternative}
       onActivate={() => send({ type: "TOGGLE_LOGO" })}
@@ -38,23 +38,10 @@ export default function Logo({ className }: LogoProps) {
         className="wrapper relative h-full w-full"
         rotationDegrees={logoFlipCount * FLIP_ACTIVATION_ROTATION_DEGREES}
       >
-        <div
-          className="front h-full w-full"
-          style={{
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-          }}
-        >
+        <div className="front h-full w-full backface-hidden">
           <LogoDefault className="h-full w-full object-contain" />
         </div>
-        <div
-          className="back absolute top-0 left-0 h-full w-full"
-          style={{
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-            transform: `rotateY(${FLIP_ACTIVATION_ROTATION_DEGREES}deg)`,
-          }}
-        >
+        <div className="back absolute top-0 left-0 h-full w-full transform-[rotateY(180deg)] backface-hidden">
           <LogoSecondary className="h-full w-full object-contain" />
         </div>
       </SpringRotation>

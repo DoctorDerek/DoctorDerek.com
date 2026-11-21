@@ -107,7 +107,7 @@ export default function ContactSection() {
               tabIndex={0}
               onWheel={keepContactScroll}
               onTouchMove={keepContactScroll}
-              onKeyDown={(event) => {
+              onKeyDownCapture={(event) => {
                 if (
                   !event.altKey &&
                   !event.ctrlKey &&

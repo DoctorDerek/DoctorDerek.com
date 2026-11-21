@@ -51,6 +51,54 @@ test("keeps every section within the narrow mobile viewport", async ({
   }
 })
 
+test("keeps Contact's email action in view while keyboard users read the complete card", async ({
+  page,
+}) => {
+  await page.goto("/#contact")
+  const contact = page.locator('.fp-section[data-anchor="contact"]')
+  const card = contact.getByRole("region", { name: "Contact" })
+  const email = contact.getByRole("link", { name: /email me/i })
+  await expect(email).toBeInViewport({ ratio: 1 })
+  await card.focus()
+  await page.keyboard.press("End")
+  await expect
+    .poll(() =>
+      card.evaluate((e) => e.scrollHeight - e.scrollTop - e.clientHeight),
+    )
+    .toBeLessThanOrEqual(1)
+  await expect(contact).toHaveClass(/active/)
+  await expect(contact.locator(".fp-overflow")).toHaveJSProperty("scrollTop", 0)
+  await page.keyboard.press("Tab")
+  await expect(email).toBeFocused()
+})
+
+test("short slides fit outside their intentional text scrollers", async ({
+  page,
+}) => {
+  await page.goto("/")
+  for (const section of [
+    "intro",
+    "experience",
+    "consultancy",
+    "testimonials",
+  ]) {
+    await page.evaluate((anchor) => {
+      location.hash = "#" + anchor
+    }, section)
+    const active = page.locator(
+      '.fp-section.active[data-anchor="' + section + '"]',
+    )
+    await expect(active).toBeVisible()
+    const panels = active.locator(".fp-overflow")
+    expect(await panels.count()).toBeGreaterThan(0)
+    for (const item of await panels.all()) {
+      await expect
+        .poll(() => item.evaluate((e) => e.scrollHeight - e.clientHeight))
+        .toBeLessThanOrEqual(1)
+    }
+  }
+})
+
 test("keeps short-screen Blog cards clear of slide controls", async ({
   page,
 }) => {

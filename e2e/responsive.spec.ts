@@ -76,6 +76,7 @@ test("short slides fit outside their intentional text scrollers", async ({
   page,
 }) => {
   await page.goto("/")
+  await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
   for (const section of [
     "intro",
     "experience",

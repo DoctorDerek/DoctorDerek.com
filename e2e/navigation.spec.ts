@@ -48,7 +48,9 @@ test("scrolls the Contact card with End after navigating from Home", async ({
     .getByRole("navigation")
     .getByRole("link", { name: "Contact", exact: true })
     .click()
-  await expect(page.locator("body")).toHaveClass(/fp-viewing-contact/)
+  await expect(page.locator('.fp-section[data-anchor="contact"]')).toHaveClass(
+    /fp-completely/,
+  )
 
   const card = page.getByRole("region", { name: "Contact", exact: true })
   await card.focus()

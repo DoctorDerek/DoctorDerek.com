@@ -64,6 +64,47 @@ describe("ContactSection", () => {
     }
   })
 
+  it.each([
+    { layout: "overflows", scrollHeight: 200, forwarded: 0 },
+    { layout: "fits", scrollHeight: 100, forwarded: 3 },
+  ])(
+    "routes scroll input when the Contact card $layout",
+    ({ scrollHeight, forwarded }) => {
+      const outerInput = vi.fn()
+      render(
+        <div
+          onWheel={outerInput}
+          onTouchMove={outerInput}
+          onKeyDown={outerInput}
+        >
+          <ContactSection />
+        </div>,
+      )
+      const card = screen.getByRole("region", { name: "Contact" })
+      Object.defineProperties(card, {
+        clientHeight: { value: 100 },
+        scrollHeight: { value: scrollHeight },
+      })
+
+      fireEvent.wheel(card, { deltaY: 80 })
+      fireEvent.touchMove(card)
+      fireEvent.keyDown(card, { key: "End" })
+      expect(outerInput).toHaveBeenCalledTimes(forwarded)
+
+      outerInput.mockClear()
+      for (const input of [
+        { key: "Tab" },
+        { key: "End", altKey: true },
+        { key: "End", ctrlKey: true },
+        { key: "End", metaKey: true },
+      ]) {
+        fireEvent.keyDown(card, input)
+        expect(outerInput).toHaveBeenCalledOnce()
+        outerInput.mockClear()
+      }
+    },
+  )
+
   it("ends with the Contact CTA without persistent completion content", () => {
     render(<ContactSection />)
 

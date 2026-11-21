@@ -57,8 +57,8 @@ export default function WorkExperienceSection() {
   }
 
   return (
-    <div className="relative flex min-h-full w-full flex-col items-center justify-start py-12 pb-16 lg:h-full lg:justify-center lg:py-8">
-      <div className="bg-site-surface-deep rounded-bl-[3rem] px-6 py-6 backdrop-blur-md lg:ml-auto lg:w-fit lg:pr-8 lg:pb-8 lg:pl-16">
+    <div className="short-slide:py-3 relative flex min-h-full w-full flex-col items-center justify-start py-12 pb-16 lg:h-full lg:justify-center lg:py-8">
+      <div className="bg-site-surface-deep short-slide:py-2 rounded-bl-[3rem] px-6 py-6 backdrop-blur-md lg:ml-auto lg:w-fit lg:pr-8 lg:pb-8 lg:pl-16">
         <div className="flex flex-col items-end">
           <div className="w-max">
             <h2 className="text-site-foreground text-right text-3xl font-bold tracking-tight whitespace-nowrap drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
@@ -119,7 +119,7 @@ export default function WorkExperienceSection() {
                 aria-hidden={activeCareerEraIndex !== index}
                 aria-label={`${index + 1} of ${ARCHITECT_EVOLUTION.length}`}
                 aria-roledescription="slide"
-                className="relative min-h-60 w-full shrink-0 pt-12 pr-4 pb-12 pl-16"
+                className="short-slide:py-3 relative min-h-60 w-full shrink-0 pt-12 pr-4 pb-12 pl-16"
                 key={item.duration}
                 role="group"
               >

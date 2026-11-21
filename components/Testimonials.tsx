@@ -18,9 +18,9 @@ const Testimonials = () => {
 
       {TESTIMONIALS.map((item: Testimonial) => (
         <div key={item.name} className="slide">
-          <div className="flex h-full w-full items-center justify-center p-4 py-20 md:p-8">
-            <div className="ease-spring-soft border-site-border-faint bg-site-surface text-site-foreground mx-auto mt-16 w-full max-w-4xl scale-95 rounded-2xl border p-6 opacity-0 shadow-2xl backdrop-blur-md transition-all duration-700 md:mt-24 md:p-12 [.active_&]:scale-100 [.active_&]:opacity-100">
-              <div className="mb-8 flex items-center">
+          <div className="short-slide:py-11 flex h-full w-full items-center justify-center p-4 py-20 md:p-8">
+            <div className="ease-spring-soft border-site-border-faint bg-site-surface text-site-foreground short-slide:mt-10 mx-auto mt-16 w-full max-w-4xl scale-95 rounded-2xl border p-6 opacity-0 shadow-2xl backdrop-blur-md transition-all duration-700 md:mt-24 md:p-12 [.active_&]:scale-100 [.active_&]:opacity-100">
+              <div className="short-slide:mb-4 mb-8 flex items-center">
                 <div className="mr-6 shrink-0">
                   <Image
                     src={item.image || JohnDoe}

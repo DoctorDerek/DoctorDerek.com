@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@custom-variant contact-fit (@container contact (width < 42rem));
+@custom-variant short-slide (@media (width < theme(--breakpoint-xl)) and (height < 40rem));
+
 @theme {
   --spacing-160: 42rem;
   --spacing-176: 46rem;

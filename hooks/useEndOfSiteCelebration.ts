@@ -7,7 +7,6 @@ const END_OF_SITE_TOAST_ID = "end-of-doctorderek"
 const SCROLL_END_TOLERANCE_PIXELS = 2
 const TOUCH_INTENT_MINIMUM_DISTANCE_PIXELS = 24
 const DOWNWARD_KEYS = new Set(["ArrowDown", "PageDown"])
-const SCROLL_CONTAINER_SELECTOR = ".scrollable-content, .fp-overflow"
 
 const showEndOfSiteToast = async () => {
   const { toast } = await import("react-hot-toast")
@@ -28,28 +27,15 @@ const hasReachedContactEnd = (
   activeSection: HTMLElement,
   eventTarget: EventTarget | null,
 ) => {
-  const eventScrollContainer =
-    eventTarget instanceof Element
-      ? eventTarget.closest<HTMLElement>(SCROLL_CONTAINER_SELECTOR)
-      : null
-  const activeSectionScrollContainer =
-    activeSection.querySelector<HTMLElement>(".fp-overflow")
-  const scrollContainers = [
-    eventScrollContainer && activeSection.contains(eventScrollContainer)
-      ? eventScrollContainer
-      : null,
-    activeSectionScrollContainer,
-  ].filter(
-    (
-      scrollContainer,
-      index,
-      allScrollContainers,
-    ): scrollContainer is HTMLElement =>
-      scrollContainer !== null &&
-      allScrollContainers.indexOf(scrollContainer) === index,
+  if (
+    eventTarget instanceof Element &&
+    eventTarget.closest(".scrollable-content")
   )
+    return false
 
-  return scrollContainers.every(isAtScrollEnd)
+  const sectionScroller =
+    activeSection.querySelector<HTMLElement>(".fp-overflow")
+  return !sectionScroller || isAtScrollEnd(sectionScroller)
 }
 
 export default function useEndOfSiteCelebration(

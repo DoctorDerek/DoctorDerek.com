@@ -185,7 +185,6 @@ function PortfolioExperience({
                   key={section.anchor}
                   className={cx(
                     "section",
-                    section.anchor === "contact" && "@container/contact",
                     section.anchor === "home" ? "fp-noscroll" : "",
                   )}
                 >

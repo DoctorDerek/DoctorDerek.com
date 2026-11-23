@@ -28,21 +28,21 @@ export default function ContactSection() {
   const isFlipped = flipCount % 2 === 1
 
   return (
-    <div className="contact-fit:h-dvh contact-fit:min-h-0 contact-fit:pt-[max(--spacing(7),env(safe-area-inset-top))] contact-fit:pb-[max(--spacing(6),env(safe-area-inset-bottom))] flex min-h-full w-full py-10 md:py-20">
-      <div className="contact-fit:h-full contact-fit:min-h-0 contact-fit:justify-center contact-fit:gap-4 my-auto flex w-full flex-col md:flex-row md:items-stretch">
-        <div className="contact-fit:flex contact-fit:w-[90%] contact-fit:shrink-0 contact-fit:items-center contact-fit:justify-between contact-fit:gap-4 mx-auto w-[85%] md:flex md:w-1/2 md:flex-col md:pl-8 lg:w-[45%] lg:justify-start lg:pl-20">
-          <div className="py-2 md:mt-16 md:mb-2 lg:mb-0 lg:py-0">
+    <div className="flex h-dvh w-full pt-[max(--spacing(7),env(safe-area-inset-top))] pb-[max(--spacing(6),env(safe-area-inset-bottom))] xl:py-8">
+      <div className="my-auto flex h-full min-h-0 w-full flex-col justify-center gap-4 xl:flex-row xl:items-center xl:gap-0">
+        <div className="mx-auto flex w-[90%] shrink-0 flex-wrap items-center justify-between gap-x-4 gap-y-1 xl:w-[45%] xl:flex-col xl:flex-nowrap xl:items-stretch xl:justify-start xl:gap-0 xl:pl-20">
+          <div className="py-2 xl:mt-16 xl:py-0">
             <SectionHeading>
               <h2
                 id="contact-title"
-                className="text-site-foreground contact-fit:text-[clamp(2.25rem,11vw,5rem)] text-6xl drop-shadow-lg md:text-8xl lg:pt-8 lg:pb-14 lg:text-9xl"
+                className="text-site-foreground text-4xl drop-shadow-lg xl:pt-8 xl:pb-14 xl:text-9xl"
               >
                 Contact
               </h2>
             </SectionHeading>
           </div>
 
-          <div className="ease-spring-bouncy contact-fit:mx-0 contact-fit:w-[min(21vw,14dvh,7rem)] mx-auto w-1/2 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 md:mx-0 md:h-1/2 md:w-full [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
+          <div className="ease-spring-bouncy w-1/4 max-w-28 shrink-0 translate-y-12 scale-90 opacity-0 transition-all delay-200 duration-700 xl:h-1/2 xl:w-full xl:max-w-none [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
             <FlipPreview
               accessibleName={PORTRAIT_CONTROL_ACCESSIBLE_NAMES.contact}
               containerClassName="animate-float h-full w-full [animation-delay:1s]"
@@ -99,8 +99,8 @@ export default function ContactSection() {
           </div>
         </div>
 
-        <div className="ease-spring-soft contact-fit:mt-0 contact-fit:min-h-0 mx-auto mt-4 flex w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 md:mt-0 md:w-1/2 md:pl-8 lg:w-[55%] [.active_&]:translate-y-0 [.active_&]:opacity-100">
-          <div className="contact-fit:mt-0 contact-fit:flex contact-fit:min-h-0 contact-fit:flex-col contact-fit:gap-4 mx-auto mt-4 w-[90%] md:ml-0 md:w-11/12 lg:mr-0 lg:ml-auto lg:w-11/12 lg:pl-14">
+        <div className="ease-spring-soft mx-auto flex min-h-0 w-full translate-y-12 flex-col opacity-0 transition-all delay-300 duration-700 xl:max-h-full xl:w-[55%] xl:pl-8 [.active_&]:translate-y-0 [.active_&]:opacity-100">
+          <div className="mx-auto flex min-h-0 w-[90%] flex-col gap-4 xl:mr-0 xl:ml-auto xl:w-11/12 xl:gap-8 xl:pl-14">
             <div
               role="region"
               aria-labelledby="contact-title"
@@ -124,7 +124,7 @@ export default function ContactSection() {
                 )
                   keepContactScroll(event)
               }}
-              className="border-site-border-faint bg-site-surface text-site-foreground contact-fit:min-h-0 contact-fit:space-y-2 contact-fit:overflow-y-auto contact-fit:overscroll-contain contact-fit:p-4 contact-fit:text-base contact-fit:leading-normal space-y-4 rounded-xl border px-5 py-6 text-lg leading-7 shadow-xl backdrop-blur-md md:px-8 md:text-xl lg:pr-12 lg:text-2xl lg:leading-9"
+              className="border-site-border-faint bg-site-surface text-site-foreground min-h-0 space-y-2 overflow-y-auto overscroll-contain rounded-xl border p-4 text-base leading-normal shadow-xl backdrop-blur-md xl:space-y-4 xl:py-6 xl:pr-12 xl:pl-8 xl:text-2xl xl:leading-9"
             >
               {CONTACT_BULLETS.map((bullet) => (
                 <p key={bullet} className="flex">
@@ -133,7 +133,7 @@ export default function ContactSection() {
                 </p>
               ))}
             </div>
-            <GlobalEmailCTA className="ease-spring-bouncy contact-fit:mt-0 contact-fit:shrink-0 contact-fit:py-3 mt-8 inline-block w-full rounded-tr-3xl bg-[#F38B57] px-8 py-5 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 [--site-focus:var(--site-focus-contrast)] hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 md:w-max md:px-12 md:py-6 md:text-2xl">
+            <GlobalEmailCTA className="ease-spring-bouncy inline-block w-full shrink-0 rounded-tr-3xl bg-[#F38B57] px-4 py-3 text-center text-xl font-bold text-white shadow-xl transition-all duration-300 [--site-focus:var(--site-focus-contrast)] hover:scale-[1.02] hover:bg-[#ff9c6a] active:scale-95 xl:w-max xl:self-start xl:px-12 xl:py-6 xl:text-2xl">
               {CONTACT_CTA}
             </GlobalEmailCTA>
           </div>

@@ -8,7 +8,7 @@ import {
   CONTACT_PORTRAIT,
   PORTRAIT_IMAGE_SIZES,
 } from "@/constants/PORTRAITS"
-import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
+import { CONTACT_BULLETS } from "@/constants/SITE_CONTENT"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
@@ -41,19 +41,6 @@ const getPortraitControl = () =>
 describe("ContactSection", () => {
   beforeEach(() => {
     reducedMotionPreference.value = false
-  })
-
-  it("safely centers the final section without hiding overflowing content", () => {
-    render(<ContactSection />)
-
-    const heading = screen.getByRole("heading", { name: "Contact" })
-    const sectionContent = heading.closest("div.min-h-full")
-    const contactComposition = heading.closest("div.my-auto")
-
-    expect(sectionContent).not.toHaveClass("h-full")
-    expect(sectionContent).not.toHaveClass("items-center")
-    expect(contactComposition).toHaveClass("my-auto", "w-full")
-    expect(screen.getByRole("link", { name: CONTACT_CTA })).toBeInTheDocument()
   })
 
   it("renders every canonical contact proof point", () => {

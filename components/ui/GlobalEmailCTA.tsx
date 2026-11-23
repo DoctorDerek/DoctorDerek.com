@@ -20,6 +20,7 @@ export default function GlobalEmailCTA({
       subject={AI_CONSULTANCY_PITCH.emailSubject}
       className={className}
       aria-label={accessibleName}
+      tabIndex={0}
     >
       {children || "derekraustin+doctorderek@gmail.com"}
     </Email>

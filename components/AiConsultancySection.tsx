@@ -3,14 +3,14 @@ import { AI_CONSULTANCY_PITCH } from "@/constants/SITE_CONTENT"
 
 export default function AiConsultancySection() {
   return (
-    <div className="flex min-h-full w-full items-center justify-center p-4 py-20 md:p-8">
-      <div className="ease-spring-bouncy border-site-border bg-site-surface-soft text-site-foreground my-auto flex max-w-4xl translate-y-12 scale-95 flex-col rounded-2xl border p-6 opacity-0 backdrop-blur-md transition-all duration-700 md:p-12 [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
-        <SectionHeading className="mb-8">
-          <h2 className="text-4xl font-bold text-balance min-[375px]:text-5xl md:text-6xl">
+    <div className="mx-auto flex min-h-full w-11/12 items-center justify-center py-3 xl:w-full xl:p-8">
+      <div className="ease-spring-bouncy border-site-border bg-site-surface-soft text-site-foreground my-auto flex max-w-4xl min-w-0 translate-y-12 scale-95 flex-col rounded-2xl border p-4 opacity-0 backdrop-blur-md transition-all duration-700 xl:p-12 [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100">
+        <SectionHeading className="mb-4 max-w-full xl:mb-8">
+          <h2 className="text-4xl font-bold text-balance xl:text-6xl">
             {AI_CONSULTANCY_PITCH.header}
           </h2>
         </SectionHeading>
-        <p className="mb-10 text-xl leading-relaxed md:text-2xl">
+        <p className="mb-4 text-xl leading-snug xl:mb-10 xl:text-2xl xl:leading-relaxed">
           {AI_CONSULTANCY_PITCH.body}
         </p>
         <a
@@ -19,7 +19,7 @@ export default function AiConsultancySection() {
         >
           {AI_CONSULTANCY_PITCH.ctaButtonText}
         </a>
-        <p className="mt-6 text-lg opacity-90 md:text-xl">
+        <p className="mt-4 text-base opacity-90 xl:mt-6 xl:text-xl">
           {AI_CONSULTANCY_PITCH.subtext}
         </p>
       </div>

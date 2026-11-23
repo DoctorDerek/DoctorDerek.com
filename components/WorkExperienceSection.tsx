@@ -57,11 +57,11 @@ export default function WorkExperienceSection() {
   }
 
   return (
-    <div className="relative flex min-h-full w-full flex-col items-center justify-start py-12 pb-16 lg:h-full lg:justify-center lg:py-8">
-      <div className="bg-site-surface-deep rounded-bl-[3rem] px-6 py-6 backdrop-blur-md lg:ml-auto lg:w-fit lg:pr-8 lg:pb-8 lg:pl-16">
+    <div className="relative flex min-h-full w-full flex-col items-center justify-center xl:h-full xl:py-8">
+      <div className="bg-site-surface-deep max-w-full rounded-bl-[3rem] px-6 py-2 backdrop-blur-md xl:ml-auto xl:w-fit xl:pt-6 xl:pr-8 xl:pb-8 xl:pl-16">
         <div className="flex flex-col items-end">
-          <div className="w-max">
-            <h2 className="text-site-foreground text-right text-3xl font-bold tracking-tight whitespace-nowrap drop-shadow-md min-[375px]:text-3xl sm:text-4xl md:text-5xl lg:text-7xl">
+          <div className="max-w-full">
+            <h2 className="text-site-foreground text-right text-3xl font-bold tracking-tight wrap-break-word drop-shadow-md xl:text-7xl">
               Full-Stack SWE
               <br />
               Since 2004
@@ -73,7 +73,7 @@ export default function WorkExperienceSection() {
       <div
         aria-label="Career timeline"
         aria-roledescription="carousel"
-        className="mx-auto mt-6 w-[92%] max-w-xl lg:hidden"
+        className="mx-auto mt-6 w-[92%] max-w-xl xl:hidden"
         role="region"
       >
         <p aria-live="polite" className="sr-only">
@@ -119,7 +119,7 @@ export default function WorkExperienceSection() {
                 aria-hidden={activeCareerEraIndex !== index}
                 aria-label={`${index + 1} of ${ARCHITECT_EVOLUTION.length}`}
                 aria-roledescription="slide"
-                className="relative min-h-60 w-full shrink-0 pt-12 pr-4 pb-12 pl-16"
+                className="relative w-full shrink-0 py-3 pr-4 pl-16"
                 key={item.duration}
                 role="group"
               >
@@ -222,7 +222,7 @@ export default function WorkExperienceSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-7 hidden lg:block lg:h-[clamp(23rem,52vh,28rem)] lg:w-[min(74rem,92vw)]">
+      <div className="mx-auto mt-7 hidden xl:block xl:h-[clamp(23rem,52vh,28rem)] xl:w-[min(74rem,92vw)]">
         <div className="relative h-full w-full">
           <svg
             aria-hidden="true"

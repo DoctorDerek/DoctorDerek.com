@@ -35,3 +35,34 @@ test("keeps the closed drawer off the pointer path and the open drawer interacti
   await expect(page).toHaveURL(/#about$/)
   await expect(navigation).toHaveAttribute("inert")
 })
+
+test("scrolls the Contact card with End after navigating from Home", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 568 })
+  await page.emulateMedia({ reducedMotion: "reduce" })
+  await page.goto("/")
+  await expect(page.locator("body")).toHaveClass(/fp-viewing-home/)
+  await page.getByRole("button", { name: "Open navigation" }).click()
+  await page
+    .getByRole("navigation")
+    .getByRole("link", { name: "Contact", exact: true })
+    .click()
+  await expect(page.locator('.fp-section[data-anchor="contact"]')).toHaveClass(
+    /fp-completely/,
+  )
+
+  const card = page.getByRole("region", { name: "Contact", exact: true })
+  await card.focus()
+  await expect(card).toBeFocused()
+  const remaining = () =>
+    card.evaluate(
+      (element) =>
+        element.scrollHeight - element.clientHeight - element.scrollTop,
+    )
+  await expect.poll(remaining).toBeGreaterThan(1)
+  await page.keyboard.press("End")
+  await expect.poll(remaining).toBeLessThanOrEqual(1)
+  await page.keyboard.press("Tab")
+  await expect(page.getByRole("link", { name: "Email Me" })).toBeFocused()
+})

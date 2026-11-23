@@ -1,8 +1,5 @@
 import { expect, test, type Page } from "@playwright/test"
-import {
-  CAREER_RAIL_PATHS,
-  CAREER_RAIL_STROKE_WIDTH,
-} from "@/constants/CAREER_TIMELINE"
+import { CAREER_RAIL_PATHS } from "@/constants/CAREER_TIMELINE"
 import { CODE_MARKER_ACTIVATION_ROTATION_DEGREES } from "@/constants/INTERACTIONS"
 
 const CAREER_ERA_COUNT = 4
@@ -77,59 +74,22 @@ for (const viewport of [
   })
 }
 
-test("short desktop preserves the chronological columns and Figma rail", async ({
+test("advances the career carousel without scrolling at 1024px", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1024, height: 600 })
   await openWorkExperience(page)
 
-  const timeline = page.getByRole("list", {
-    name: "Desktop career timeline",
-  })
-  const geometry = await timeline.evaluate((timelineElement) => {
-    const careerEras = Array.from(
-      timelineElement.querySelectorAll<HTMLElement>(":scope > li"),
-    )
-    const railPath = timelineElement.parentElement?.querySelector(
-      '[data-career-rail="desktop"] path',
-    )
-
-    return {
-      durationBounds: careerEras.map((careerEra) => {
-        const bounds = careerEra
-          .querySelector("p:first-of-type")!
-          .getBoundingClientRect()
-        return { left: bounds.left, top: bounds.top }
-      }),
-      markerCenters: careerEras.map((careerEra) => {
-        const bounds = careerEra
-          .querySelector(".flip-preview-control")!
-          .getBoundingClientRect()
-        return {
-          x: bounds.left + bounds.width / 2,
-          y: bounds.top + bounds.height / 2,
-        }
-      }),
-      railPath: railPath?.getAttribute("d"),
-      railStrokeWidth: railPath?.getAttribute("stroke-width"),
-    }
-  })
-
-  const [currentEra, priorEra, olderEra, earliestEra] = geometry.durationBounds
-  expect(geometry.railPath).toBe(CAREER_RAIL_PATHS.desktop)
-  expect(geometry.railStrokeWidth).toBe(String(CAREER_RAIL_STROKE_WIDTH))
-  expect(Math.abs(currentEra!.left - priorEra!.left)).toBeLessThan(2)
-  expect(Math.abs(olderEra!.left - earliestEra!.left)).toBeLessThan(2)
-  expect(olderEra!.left).toBeGreaterThan(currentEra!.left + 200)
-  expect(priorEra!.top).toBeGreaterThan(currentEra!.top + 80)
-  expect(olderEra!.top).toBeGreaterThan(currentEra!.top + 40)
-  expect(earliestEra!.top).toBeGreaterThan(olderEra!.top + 80)
-
-  const [currentMarker, priorMarker, olderMarker, earliestMarker] =
-    geometry.markerCenters
-  expect(Math.abs(currentMarker!.x - priorMarker!.x)).toBeLessThan(2)
-  expect(Math.abs(olderMarker!.x - earliestMarker!.x)).toBeLessThan(2)
-  expect(olderMarker!.x).toBeGreaterThan(currentMarker!.x + 200)
+  const carousel = page.getByRole("region", { name: "Career timeline" })
+  const nextEra = carousel.getByRole("button", { name: "Show next career era" })
+  await expect(nextEra).toBeInViewport({ ratio: 1 })
+  await nextEra.click({ scroll: "none" })
+  await expect(
+    carousel.getByRole("group", {
+      name: `2 of ${CAREER_ERA_COUNT}`,
+      exact: true,
+    }),
+  ).toBeVisible()
 })
 
 test("desktop code markers focus opposite their repeated forward spin", async ({

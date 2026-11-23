@@ -8,7 +8,7 @@ import {
   CONTACT_PORTRAIT,
   PORTRAIT_IMAGE_SIZES,
 } from "@/constants/PORTRAITS"
-import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
+import { CONTACT_BULLETS } from "@/constants/SITE_CONTENT"
 
 const { reducedMotionPreference } = vi.hoisted(() => ({
   reducedMotionPreference: { value: false },
@@ -43,19 +43,6 @@ describe("ContactSection", () => {
     reducedMotionPreference.value = false
   })
 
-  it("safely centers the final section without hiding overflowing content", () => {
-    render(<ContactSection />)
-
-    const heading = screen.getByRole("heading", { name: "Contact" })
-    const sectionContent = heading.closest("div.min-h-full")
-    const contactComposition = heading.closest("div.my-auto")
-
-    expect(sectionContent).not.toHaveClass("h-full")
-    expect(sectionContent).not.toHaveClass("items-center")
-    expect(contactComposition).toHaveClass("my-auto", "w-full")
-    expect(screen.getByRole("link", { name: CONTACT_CTA })).toBeInTheDocument()
-  })
-
   it("renders every canonical contact proof point", () => {
     render(<ContactSection />)
 
@@ -63,6 +50,47 @@ describe("ContactSection", () => {
       expect(screen.getByText(bullet)).toBeInTheDocument()
     }
   })
+
+  it.each([
+    { layout: "overflows", scrollHeight: 200, forwarded: 0 },
+    { layout: "fits", scrollHeight: 100, forwarded: 3 },
+  ])(
+    "routes scroll input when the Contact card $layout",
+    ({ scrollHeight, forwarded }) => {
+      const outerInput = vi.fn()
+      render(
+        <div
+          onWheel={outerInput}
+          onTouchMove={outerInput}
+          onKeyDown={outerInput}
+        >
+          <ContactSection />
+        </div>,
+      )
+      const card = screen.getByRole("region", { name: "Contact" })
+      Object.defineProperties(card, {
+        clientHeight: { value: 100 },
+        scrollHeight: { value: scrollHeight },
+      })
+
+      fireEvent.wheel(card, { deltaY: 80 })
+      fireEvent.touchMove(card)
+      fireEvent.keyDown(card, { key: "End" })
+      expect(outerInput).toHaveBeenCalledTimes(forwarded)
+
+      outerInput.mockClear()
+      for (const input of [
+        { key: "Tab" },
+        { key: "End", altKey: true },
+        { key: "End", ctrlKey: true },
+        { key: "End", metaKey: true },
+      ]) {
+        fireEvent.keyDown(card, input)
+        expect(outerInput).toHaveBeenCalledOnce()
+        outerInput.mockClear()
+      }
+    },
+  )
 
   it("ends with the Contact CTA without persistent completion content", () => {
     render(<ContactSection />)

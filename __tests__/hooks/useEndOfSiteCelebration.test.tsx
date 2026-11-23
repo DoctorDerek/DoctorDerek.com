@@ -130,6 +130,29 @@ describe("useEndOfSiteCelebration", () => {
     await waitFor(() => expect(toast).toHaveBeenCalledOnce())
   })
 
+  it("lets the reader scroll to either end of the Contact card before celebrating outside it", async () => {
+    const { fullPageApiReference, scrollContainer } = createContactBoundary()
+    const card = document.createElement("div")
+    card.className = "scrollable-content"
+    const paragraph = document.createElement("p")
+    card.append(paragraph)
+    scrollContainer.append(card)
+    scrollContainer.scrollTop = 600
+    const { result } = renderHook(() =>
+      useEndOfSiteCelebration(fullPageApiReference, false),
+    )
+    act(() => result.current.beginContactVisit())
+
+    fireEvent.wheel(paragraph, { deltaY: 40 })
+    fireEvent.keyDown(paragraph, { key: "PageDown" })
+    fireTouch(paragraph, "touchstart", 100)
+    fireTouch(paragraph, "touchend", 60)
+    expect(result.current.isConfettiActive).toBe(false)
+
+    fireEvent.wheel(scrollContainer, { deltaY: 40 })
+    await waitFor(() => expect(toast).toHaveBeenCalledOnce())
+  })
+
   it("recognizes an upward touch gesture without reacting below its threshold", async () => {
     const { fullPageApiReference, scrollContainer } = createContactBoundary()
     scrollContainer.scrollTop = 600

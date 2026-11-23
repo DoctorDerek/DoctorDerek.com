@@ -2,7 +2,7 @@
 
 import cx from "classix"
 import Image from "next/image"
-import { useState, type SyntheticEvent } from "react"
+import { useState } from "react"
 import FlipPreview from "@/components/ui/FlipPreview"
 import GlobalEmailCTA from "@/components/ui/GlobalEmailCTA"
 import SectionHeading from "@/components/ui/SectionHeading"
@@ -17,11 +17,6 @@ import {
   PORTRAIT_IMAGE_SIZES,
 } from "@/constants/PORTRAITS"
 import { CONTACT_BULLETS, CONTACT_CTA } from "@/constants/SITE_CONTENT"
-
-function keepContactScroll(event: SyntheticEvent<HTMLDivElement>) {
-  if (event.currentTarget.scrollHeight > event.currentTarget.clientHeight)
-    event.stopPropagation()
-}
 
 export default function ContactSection() {
   const [flipCount, setFlipCount] = useState(0)
@@ -105,10 +100,10 @@ export default function ContactSection() {
               role="region"
               aria-labelledby="contact-title"
               tabIndex={0}
-              onWheel={keepContactScroll}
-              onTouchMove={keepContactScroll}
               onKeyDownCapture={(event) => {
                 if (
+                  event.currentTarget.scrollHeight >
+                    event.currentTarget.clientHeight &&
                   !event.altKey &&
                   !event.ctrlKey &&
                   !event.metaKey &&
@@ -122,9 +117,9 @@ export default function ContactSection() {
                     " ",
                   ].includes(event.key)
                 )
-                  keepContactScroll(event)
+                  event.stopPropagation()
               }}
-              className="border-site-border-faint bg-site-surface text-site-foreground min-h-0 space-y-2 overflow-y-auto overscroll-contain rounded-xl border p-4 text-base leading-normal shadow-xl backdrop-blur-md xl:space-y-4 xl:py-6 xl:pr-12 xl:pl-8 xl:text-2xl xl:leading-9"
+              className="scrollable-content border-site-border-faint bg-site-surface text-site-foreground min-h-0 space-y-2 overflow-y-auto overscroll-contain rounded-xl border p-4 text-base leading-normal shadow-xl backdrop-blur-md xl:space-y-4 xl:py-6 xl:pr-12 xl:pl-8 xl:text-2xl xl:leading-9"
             >
               {CONTACT_BULLETS.map((bullet) => (
                 <p key={bullet} className="flex">

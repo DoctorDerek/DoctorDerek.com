@@ -97,6 +97,18 @@ test("short slides fit outside their intentional text scrollers", async ({
         .poll(() => item.evaluate((e) => e.scrollHeight - e.clientHeight))
         .toBeLessThanOrEqual(1)
     }
+
+    if (section === "testimonials") {
+      const heading = active.getByRole("heading", { name: "What People Say" })
+      await expect(heading).toBeInViewport({ ratio: 1 })
+      const textOverflow = await heading.evaluate((element) =>
+        Math.max(
+          element.scrollWidth - element.clientWidth,
+          element.scrollHeight - element.clientHeight,
+        ),
+      )
+      expect(textOverflow).toBeLessThanOrEqual(1)
+    }
   }
 })
 

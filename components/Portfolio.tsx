@@ -23,7 +23,7 @@ export default function Portfolio() {
 
       {PORTFOLIO_PROJECTS.map((project, index) => (
         <div key={project.projectTitle} className="slide">
-          <div className="flex h-dvh w-full items-center justify-center px-4 py-20 sm:px-6 md:px-16 md:pt-[min(9rem,25dvh)] md:pb-10">
+          <div className="flex h-dvh w-full items-center justify-center px-4 pt-18 pb-24 sm:px-6 md:px-16 md:pt-[min(9rem,25dvh)] md:pb-10">
             <article
               aria-labelledby={"portfolio-project-" + index}
               className="scrollable-content ease-spring-bouncy border-site-border bg-site-surface-emphasis text-site-foreground max-h-full w-full max-w-4xl translate-y-12 scale-95 overflow-y-auto overscroll-contain rounded-3xl border p-4 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-700 sm:p-6 md:p-8 [.active_&]:translate-y-0 [.active_&]:scale-100 [.active_&]:opacity-100"

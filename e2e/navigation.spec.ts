@@ -48,12 +48,17 @@ test("scrolls the Contact card with End after navigating from Home", async ({
     .getByRole("navigation")
     .getByRole("link", { name: "Contact", exact: true })
     .click()
-  await expect(page.locator('.fp-section[data-anchor="contact"]')).toHaveClass(
-    /fp-completely/,
-  )
-
-  const card = page.getByRole("region", { name: "Contact", exact: true })
-  await card.focus()
+  const contact = page.locator('.fp-section[data-anchor="contact"]')
+  await expect(contact).toHaveClass(/fp-completely/)
+  await expect(
+    page.getByRole("navigation", { includeHidden: true }),
+  ).toHaveAttribute("inert")
+  const card = contact.getByRole("region", { name: "Contact", exact: true })
+  await page.keyboard.press("Tab")
+  await expect(
+    contact.getByRole("button", { name: /flip portrait/i }),
+  ).toBeFocused()
+  await page.keyboard.press("Tab")
   await expect(card).toBeFocused()
   const remaining = () =>
     card.evaluate(
@@ -65,4 +70,25 @@ test("scrolls the Contact card with End after navigating from Home", async ({
   await expect.poll(remaining).toBeLessThanOrEqual(1)
   await page.keyboard.press("Tab")
   await expect(page.getByRole("link", { name: "Email Me" })).toBeFocused()
+})
+
+test("reads Contact in both wheel directions without leaving the section", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 568 })
+  await page.emulateMedia({ reducedMotion: "reduce" })
+  await page.goto("/#contact")
+  const contact = page.locator('.fp-section[data-anchor="contact"]')
+  await expect(contact).toHaveClass(/fp-completely/)
+  const card = contact.getByRole("region", { name: "Contact" })
+  const position = () => card.evaluate((element) => element.scrollTop)
+
+  await card.hover()
+  await page.mouse.wheel(0, 80)
+  await expect.poll(position).toBeGreaterThan(50)
+  const previous = await position()
+  await page.mouse.wheel(0, -40)
+  await expect.poll(position).toBeLessThan(previous)
+  await expect(contact).toHaveClass(/fp-completely/)
+  await expect(page.getByText(/reached the end of my website/i)).toHaveCount(0)
 })

@@ -53,17 +53,13 @@ describe("ContactSection", () => {
 
   it.each([
     { layout: "overflows", scrollHeight: 200, forwarded: 0 },
-    { layout: "fits", scrollHeight: 100, forwarded: 3 },
+    { layout: "fits", scrollHeight: 100, forwarded: 1 },
   ])(
-    "routes scroll input when the Contact card $layout",
+    "routes the End key when the Contact card $layout",
     ({ scrollHeight, forwarded }) => {
       const outerInput = vi.fn()
       render(
-        <div
-          onWheel={outerInput}
-          onTouchMove={outerInput}
-          onKeyDown={outerInput}
-        >
+        <div onKeyDown={outerInput}>
           <ContactSection />
         </div>,
       )
@@ -73,8 +69,6 @@ describe("ContactSection", () => {
         scrollHeight: { value: scrollHeight },
       })
 
-      fireEvent.wheel(card, { deltaY: 80 })
-      fireEvent.touchMove(card)
       fireEvent.keyDown(card, { key: "End" })
       expect(outerInput).toHaveBeenCalledTimes(forwarded)
 

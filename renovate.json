@@ -5,10 +5,8 @@
   ],
   "enabled": true,
   "platformAutomerge": false,
-  "packageRules": [
-    {
-      "matchJsonata": ["$substring($now(), 0, 10) = '2026-11-05'"],
-      "schedule": ["* 8-11 5 11 *"]
-    }
-  ]
+  "schedule": ["* * 23-28 * *"],
+  "lockFileMaintenance": {
+    "schedule": ["* * 23-28 * *"]
+  }
 }
